@@ -1,0 +1,7 @@
+#Files
+secrets.py
+mami.log
+
+#Directories
+__pycache__/
+savedData/

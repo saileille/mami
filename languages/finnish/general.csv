@@ -1,0 +1,5 @@
+COMMAND.TEST.NAME;testi
+COMMAND.TEST.SHORTDESC;
+COMMAND.TEST.LONGDESC;
+COMMAND.TEST.MESSAGE;Täytyy keksiä joku suomenkielinen testi.
+COMMAND.NOT_FOUND;Komentoa `{commandName}` ei ole!

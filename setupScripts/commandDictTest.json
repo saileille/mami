@@ -1,0 +1,12 @@
+{
+	"test": {
+		"code": "test",
+		"name": "COMMAND.TEST.NAME",
+		"short_desc": "COMMAND.TEST.SHORTDESC",
+		"long_desc": "COMMAND.TEST.LONGDESC",
+		"hidden": false,
+		"owner_only": false,
+		"function": "test",
+		"CLASSNAME": "Command"
+	}
+}

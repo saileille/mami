@@ -1,0 +1,5 @@
+COMMAND.TEST.NAME;test
+COMMAND.TEST.SHORTDESC;
+COMMAND.TEST.LONGDESC;
+COMMAND.TEST.MESSAGE;Homura Did Nothing Wrong
+COMMAND.NOT_FOUND;Get your head on straight! Command `{commandName}` does not exist.

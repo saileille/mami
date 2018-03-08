@@ -1,6 +1,7 @@
 import csv
 import pickle
 import json
+import os
 
 pickle.DEFAULT_PROTOCOL = 4
 
@@ -46,7 +47,7 @@ async def getLanguageText(language, messageCode):
 	text = await getCsvVar(messageCode, "general", "languages\\" + language)
 	return text
 
-async def getLanguageVar(language, messageText):
+async def getLanguageCode(language, messageText):
 	variable = await getCsvVar(messageText, "general", "languages\\" + language, invert=1)
 	return variable
 
@@ -81,34 +82,14 @@ async def loadJson(filename, folder=""):
 	
 	return objects
 
-async def convertToObjectList(list):
-	from Command import Command
+async def savePickle(data, filename, folder=""):
+	filepath = await getFilePath(filename + ".db", folder)
 	
-	objectList = []
-	
-	if (list[0]["CLASSNAME"] == "Command"):
-		for item in list:
-			object = Command()
-			await object.valuesFromDict(item)
-			objectList.append(object)
-	
-	return objectList
+	with open(filepath, mode="wb") as file:
+		pickle.dump(data, file)
 
-async def convertToObjectDict(dict):
-	from Command import Command
-	
-	objectDict = {}
-	
-	if (list[0]["CLASSNAME"] == "Command"):
-		for key in dict:
-			object = Command()
-			await object.valuesFromDict(dict[key])
-			objectDict[object.code] = object
-	
-	return objectDict
-
-
-
-
+async def deleteFile(filename, folder=""):
+	filepath = await getFilePath(filename, folder)
+	os.remove(filepath)
 
 		

@@ -40,10 +40,7 @@ async def on_message(discordMessage):
 		return
 	
 	message = Message(discordMessage)
-	
-	#Loads user and server settings.
-	await message.getUserSettings()
-	await message.getServerSettings()
+	await message.getSettings()
 	
 	#Processes text and executes commands.
 	await message.separate()

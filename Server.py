@@ -6,11 +6,13 @@ class Server(object):
 	def __init__(
 		self
 		,language = defaultLanguage
+		,prefix = None
 		,shortcuts = {}
 		,lists = {}
 		,autoresponses = {}
 	):
 		self.language = language
+		self.prefix = prefix
 		self.shortcuts = shortcuts
 		self.lists = lists
 		self.autoresponses = autoresponses
@@ -18,6 +20,9 @@ class Server(object):
 	async def isDefault(self):
 		#Checks if the Server object is the default one.
 		if (self.language != self.defaultLanguage):
+			return False
+		
+		if (self.prefix != None):
 			return False
 		
 		if (len(self.shortcuts) > 0):

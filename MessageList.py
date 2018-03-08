@@ -120,7 +120,7 @@ class MessageList(object):
 		while (i < len(self.messages)):
 			if (len(msg) == 0):
 				if (self.messages[i].start_block):
-					msg += block
+					msg += self.block
 				
 				msg += self.messages[i].message
 			
@@ -128,11 +128,11 @@ class MessageList(object):
 				#itemLength = len(self.messages[i].message)
 				end = ""
 				if (self.messages[i].end_block):
-					end = block
+					end = self.block
 				
 				if (len((msg + self.messages[i].message + end).strip()) > self.characterLimit):
 					if (self.messages[i-1].end_block):
-						msg += block
+						msg += self.block
 					
 					messages.append(msg.strip())
 					msg = ""

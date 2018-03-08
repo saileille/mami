@@ -1,29 +1,30 @@
-async def commandHandler(commandCall, message):
-	#This function takes the command code as a string and passes it on to the appropriate function.
-	from fileIO import getLanguageVar
-	
-	#Command string is saved so that commandNotFound can access what was originally typed.
-	commandStr = commandCall.commands[0]
-	command = await getLanguageVar(message.server_settings.language, commandStr)
-	
-	if (command == "COMMAND.TEST.NAME"):
-		await eval("await test(message)")
-	
-	else:
-		await commandNotFound(message, commandStr)
-
-async def test(message):
+async def test(message, arguments):
+	#Test command.
 	from fileIO import getLanguageText
-	from bot import client
+	from bot import send
 	
-	msg = await getLanguageText(message.server_settings.language, "COMMAND.TEST.MESSAGE")
-	await client.send_message(message.discord_py.channel, msg)
+	msg = await getLanguageText(message.language, "COMMAND.TEST.MESSAGE")
+	await send(message.discord_py.channel, msg)
+
+async def prefixView(message, arguments):
+	#Shows the prefixes.
+	from bot import send
+	from Prefix import Prefix
+	
+	prefix = Prefix(message)
+	msg = await prefix.getPrefixStrings()
+	
+	await send(message.discord_py.channel, msg)
+
+async def prefixUser(message, arguments):
+	#Changes the user prefix.
+	pass
 
 async def commandNotFound(message, command):
 	from fileIO import getLanguageText
-	from bot import client
+	from bot import send
 	
-	msg = await getLanguageText(message.server_settings.language, "COMMAND.NOT_FOUND")
+	msg = await getLanguageText(message.language, "COMMAND.NOT_FOUND")
 	msg = msg.format(commandName=command)
 	
-	await client.send_message(message.discord_py.channel, msg)
+	await send(message.discord_py.channel, msg)

@@ -1,5 +1,6 @@
 import json
 import pickle
+import copy
 
 pickle.DEFAULT_PROTOCOL = 4
 
@@ -15,9 +16,10 @@ def saveCommandsPickle(commands):
 	
 	commandDict = {}
 	
-	print(commands)
+	commands2 = copy.deepcopy(commands)
 	
-	for command in commands:
+	for command in commands2:
+		convSubCommands(command)
 		commandDict[command.name] = command
 	
 	with open(fileList, mode="wb") as file:
@@ -25,6 +27,17 @@ def saveCommandsPickle(commands):
 	
 	with open(fileDict, mode="wb") as file:
 		pickle.dump(commandDict, file)
+
+def convSubCommands(command):
+	commandDict = {}
+	
+	for subCommand in command.sub_commands:
+		if (len(subCommand.sub_commands) > 0):
+			convSubCommands(subCommand)
+		
+		commandDict[subCommand.name] = subCommand
+	
+	command.sub_commands = commandDict
 
 def saveCommandsJson(commands):
 	listFile = getFilePath("commandList.json")

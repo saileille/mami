@@ -1,22 +1,25 @@
-COMMAND.TEST.NAME;test
-COMMAND.TEST.SHORTDESC;
-COMMAND.TEST.MESSAGE;Homura Did Nothing Wrong
+COMMAND.ARGUMENT_CONV.ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
 COMMAND.NOT_FOUND;Get your head on straight! Command `{commandName}` does not exist.
-COMMAND.PREFIX.NAME;prefix
-COMMAND.PREFIX.SHORTDESC;
-COMMAND.PREFIX.VIEW.NAME;view
-COMMAND.PREFIX.VIEW.SHORTDESC;Shows the defined prefixes and tells which one you should use.
-COMMAND.PREFIX.VIEW.DEFAULT_PREFIX;Default prefix is `{prefix}`
-COMMAND.PREFIX.VIEW.SERVER_PREFIX;Server prefix is `{prefix}`
-COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Server prefix is not defined
-COMMAND.PREFIX.VIEW.USER_PREFIX;User prefix is `{prefix}`
-COMMAND.PREFIX.VIEW.USER_PREFIX.NONE;User prefix is not defined
+COMMAND.PREFIX.SHORTDESC;For managing command prefixes.
+COMMAND.PREFIX.USER.ARGUMENTS;new_prefix
+COMMAND.PREFIX.USER.CHANGED;**{user}**, you have changed your prefix to `{prefix}`
+COMMAND.PREFIX.USER.NO_DIFFERENCE;Your prefix is already `{prefix}`
+COMMAND.PREFIX.USER.SHORTDESC;Changes the personal prefix of the user.
 COMMAND.PREFIX.VIEW.CORRECT.DEFAULT;Since neither server nor user prefix has been defined, use the default prefix `{prefix}`
 COMMAND.PREFIX.VIEW.CORRECT.SERVER;Since you have not defined your own prefix, but the server has, use the server prefix `{prefix}`
 COMMAND.PREFIX.VIEW.CORRECT.USER;Since you have defined your own prefix, use that one (`{prefix}`)
-COMMAND.PREFIX.USER.NAME;user
-COMMAND.PREFIX.USER.SHORTDESC;Changes the personal prefix of the user.
-COMMAND.PREFIX.USER.NO_DIFFERENCE;Your prefix is already `{prefix}`
-COMMAND.PREFIX.USER.CHANGED;**{user}**, you have changed your prefix to `{prefix}`
-COMMAND.PREFIX.USER.ARGUMENTS;new_prefix
-COMMAND.ARGUMENT_CONV.ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
+COMMAND.PREFIX.VIEW.DEFAULT_PREFIX;Default prefix is `{prefix}`
+COMMAND.PREFIX.VIEW.SERVER_PREFIX;Server prefix is `{prefix}`
+COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Server prefix is not defined
+COMMAND.PREFIX.VIEW.SHORTDESC;Shows the defined prefixes and tells which one you should use.
+COMMAND.PREFIX.VIEW.USER_PREFIX;User prefix is `{prefix}`
+COMMAND.PREFIX.VIEW.USER_PREFIX.NONE;User prefix is not defined
+COMMAND.SETTINGS.SERVER.DENY_PERMISSION.ARGUMENTS;command_name user_tag/role_tag
+COMMAND.SETTINGS.SERVER.DENY_PERMISSION.SHORTDESC;Link a user/role with inability to use a specific command.
+COMMAND.SETTINGS.SERVER.GIVE_PERMISSION.ARGUMENTS;command_name user_tag/role_tag/permission_name
+COMMAND.SETTINGS.SERVER.GIVE_PERMISSION.SHORTDESC;Link a user/role/permission with ability to use a specific command.
+COMMAND.SETTINGS.SERVER.SHORTDESC;Server-related configuration commands.
+COMMAND.SETTINGS.SHORTDESC;Contains configuration commands.
+COMMAND.TEST.MESSAGE;Homura Did Nothing Wrong
+COMMAND.TEST.SHORTDESC;Testing, testing... Homura Did Nothing Wrong...
+COMMAND.USE_DENIED;You do not have a permission to use `{command}`

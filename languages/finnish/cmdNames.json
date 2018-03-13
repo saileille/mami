@@ -1,0 +1,48 @@
+{
+	"sub_commands": {
+		"test": {
+			"name": "testi",
+			"sub_commands": {}
+		},
+		"prefix": {
+			"name": "prefiksi",
+			"sub_commands": {
+				"view": {
+					"name": "näytä",
+					"sub_commands": {}
+				},
+				"user": {
+					"name": "käyttäjä",
+					"sub_commands": {}
+				}
+			}
+		},
+		"settings": {
+			"name": "asetukset",
+			"sub_commands": {
+				"server": {
+					"name": "serveri",
+					"sub_commands": {
+						"permissions": {
+							"name": "luvat",
+							"sub_commands": {
+								"give": {
+									"name": "anna",
+									"sub_commands": {}
+								},
+								"deny": {
+									"name": "evää",
+									"sub_commands": {}
+								},
+								"undo": {
+									"name": "kumoa",
+									"sub_commands": {}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

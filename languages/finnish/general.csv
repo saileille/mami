@@ -1,22 +1,24 @@
-COMMAND.TEST.NAME;testi
-COMMAND.TEST.SHORTDESC;
-COMMAND.TEST.MESSAGE;Täytyy keksiä joku suomenkielinen testi.
+COMMAND.ARGUMENT_CONV.ERROR;`{argument}` ei ole numero. Varmista, että syötteesi on oikein, ja yritä uudestaan.
 COMMAND.NOT_FOUND;Komentoa `{commandName}` ei ole!
-COMMAND.PREFIX.NAME;prefiksi
-COMMAND.PREFIX.SHORTDESC;
-COMMAND.PREFIX.VIEW.NAME;näytä
-COMMAND.PREFIX.VIEW.SHORTDESC;Näyttää määritellyt prefiksit, ja kertoo mitä niistä käyttäjän kuuluu käyttää.
-COMMAND.PREFIX.VIEW.DEFAULT_PREFIX;Oletusprefiksi on `{prefix}`
-COMMAND.PREFIX.VIEW.SERVER_PREFIX;Serverin prefiksi on `{prefix}`
-COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Serverin prefiksiä ei ole määritelty
-COMMAND.PREFIX.VIEW.USER_PREFIX;Käyttäjän prefiksi on `{prefix}`
-COMMAND.PREFIX.VIEW.USER_PREFIX.NONE;Käyttäjän prefiksiä ei ole määritelty
+COMMAND.PREFIX.SHORTDESC;Komentojen prefiksien hallintaa.
+COMMAND.PREFIX.USER.ARGUMENTS;uusi_prefiksi
+COMMAND.PREFIX.USER.CHANGED;**{user}**, prefiksisi on nyt `{prefix}`
+COMMAND.PREFIX.USER.NO_DIFFERENCE;Prefiksisi on jo `{prefix}`
+COMMAND.PREFIX.USER.SHORTDESC;Vaihtaa käyttäjän henkilökohtaista prefiksiä.
 COMMAND.PREFIX.VIEW.CORRECT.DEFAULT;Koska serverin ja käyttäjän prefiksiä ei ole määritelty, käytä oletusprefiksiä `{prefix}`
 COMMAND.PREFIX.VIEW.CORRECT.SERVER;Koska et ole määritellyt omaa prefiksiäsi, mutta serveri on, käytä serverin prefiksiä `{prefix}`
 COMMAND.PREFIX.VIEW.CORRECT.USER;Koska olet määritellyt oman prefiksisi, käytä sitä (`{prefix}`)
-COMMAND.PREFIX.USER.NAME;käyttäjä
-COMMAND.PREFIX.USER.SHORTDESC;Vaihtaa käyttäjän henkilökohtaista prefiksiä.
-COMMAND.PREFIX.USER.NO_DIFFERENCE;Prefiksisi on jo `{prefix}`
-COMMAND.PREFIX.USER.CHANGED;**{user}**, prefiksisi on nyt `{prefix}`
-COMMAND.PREFIX.USER.ARGUMENTS;uusi_prefiksi
-COMMAND.ARGUMENT_CONV.ERROR;`{argument}` ei ole numero. Varmista, että syötteesi on oikein, ja yritä uudestaan.
+COMMAND.PREFIX.VIEW.DEFAULT_PREFIX;Oletusprefiksi on `{prefix}`
+COMMAND.PREFIX.VIEW.SERVER_PREFIX;Serverin prefiksi on `{prefix}`
+COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Serverin prefiksiä ei ole määritelty
+COMMAND.PREFIX.VIEW.SHORTDESC;Näyttää määritellyt prefiksit, ja kertoo mitä niistä käyttäjän kuuluu käyttää.
+COMMAND.PREFIX.VIEW.USER_PREFIX;Käyttäjän prefiksi on `{prefix}`
+COMMAND.PREFIX.VIEW.USER_PREFIX.NONE;Käyttäjän prefiksiä ei ole määritelty
+COMMAND.SETTINGS.SERVER.DENY_PERMISSION.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
+COMMAND.SETTINGS.SERVER.DENY_PERMISSION.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
+COMMAND.SETTINGS.SERVER.GIVE_PERMISSION.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+COMMAND.SETTINGS.SERVER.GIVE_PERMISSION.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
+COMMAND.SETTINGS.SERVER.SHORTDESC;Serveriin liittyvät konfiguraatiokomennot.
+COMMAND.SETTINGS.SHORTDESC;Pitää sisällään konfiguraatiokomentoja.
+COMMAND.TEST.MESSAGE;Täytyy keksiä joku suomenkielinen testi.
+COMMAND.TEST.SHORTDESC;Testikomento.

@@ -1,9 +1,7 @@
 from bot import client
 import logging
 from secrets import BOT_TOKEN
-#import os
 
-#FILE_DIRECTORY = os.getcwd()
 logger = logging.getLogger("discord")
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename="mami.log", encoding="utf-8", mode="w")
@@ -23,9 +21,6 @@ async def on_ready():
 	)
 	
 	print("Connected.")
-	
-	#For testing: uncomment for the window to remain.
-	#input()
 
 @client.event
 async def on_message(discordMessage):

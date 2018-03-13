@@ -38,7 +38,7 @@ class User(object):
 			newPrefix = None
 		
 		if (newPrefix == self.prefix):
-			msg = await getLanguageText(message.language, "COMMAND.PREFIX.USER.NO_DIFFERENCE")
+			msg = await getLanguageText(await message.getLanguage(), "COMMAND.PREFIX.USER.NO_DIFFERENCE")
 			msg = msg.format(prefix=self.prefix)
 			
 			await send(message.discord_py.channel, msg)
@@ -46,7 +46,7 @@ class User(object):
 		
 		self.prefix = newPrefix
 		
-		msg = await getLanguageText(message.language, "COMMAND.PREFIX.USER.CHANGED")
+		msg = await getLanguageText(await message.getLanguage(), "COMMAND.PREFIX.USER.CHANGED")
 		msg = msg.format(user=message.discord_py.author.display_name, prefix=newPrefixStr)
 		
 		await send(message.discord_py.channel, msg)
@@ -56,8 +56,4 @@ class User(object):
 		from fileIO import deleteFile
 		
 		folder = "savedData\\users"
-		
-		if (await self.isDefault() == False):
-			await savePickle(self, message.author.id, folder)
-		else:
-			await deleteFile(message.author.id + ".db", folder)
+		await savePickle(self, message.author.id, folder)

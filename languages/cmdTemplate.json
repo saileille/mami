@@ -1,0 +1,48 @@
+{
+	"sub_commands": {
+		"test": {
+			"name": "",
+			"sub_commands": {}
+		},
+		"prefix": {
+			"name": "",
+			"sub_commands": {
+				"view": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"user": {
+					"name": "",
+					"sub_commands": {}
+				}
+			}
+		},
+		"settings": {
+			"name": "",
+			"sub_commands": {
+				"server": {
+					"name": "",
+					"sub_commands": {
+						"permissions": {
+							"name": "",
+							"sub_commands": {
+								"give": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"deny": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"undo": {
+									"name": "",
+									"sub_commands": {}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

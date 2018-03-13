@@ -5,28 +5,29 @@ import copy
 pickle.DEFAULT_PROTOCOL = 4
 
 def getFilePath(filename, folder=""):
-	if (folder != ""):
-		return folder + "\\" + filepath
+	with open("filepath.txt", mode="r") as file:
+		filepath = file.read()
+		filepath += "\\"
 	
-	return filename
+	if (folder != ""):
+		return filepath + folder + "\\" + filename
+	
+	return filepath + filename
 
 def saveCommandsPickle(commands):
-	fileList = getFilePath("commandList.db")
-	fileDict = getFilePath("commandDict.db")
+	fileList = getFilePath("commandList.db", "staticData")
+	fileDict = getFilePath("commandDict.db", "staticData")
 	
-	commandDict = {}
-	
-	commands2 = copy.deepcopy(commands)
-	
-	for command in commands2:
-		convSubCommands(command)
-		commandDict[command.name] = command
+	commandDict = copy.deepcopy(commands)
+	convSubCommands(commandDict)
 	
 	with open(fileList, mode="wb") as file:
 		pickle.dump(commands, file)
 	
 	with open(fileDict, mode="wb") as file:
 		pickle.dump(commandDict, file)
+	
+	saveCommandNameTemplate(commandDict)
 
 def convSubCommands(command):
 	commandDict = {}
@@ -40,25 +41,10 @@ def convSubCommands(command):
 	command.sub_commands = commandDict
 
 def saveCommandsJson(commands):
-	listFile = getFilePath("commandList.json")
-	dictFile = getFilePath("commandDict.json")
-	testListFile = getFilePath("commandListTest.json")
-	testDictFile = getFilePath("commandDictTest.json")
+	template = getFilePath("cmdTemplate.json", "languages")
 	
-	commandDict = getCommandDict(commands)
-	commandList = getCommandList(commandDict)
-	
-	with open(testListFile, mode="w", encoding="utf-8") as file:
-		json.dump(commandList, file, ensure_ascii=False, indent="\t")
-	
-	with open(testDictFile, mode="w", encoding="utf-8") as file:
-		json.dump(commandDict, file, ensure_ascii=False, indent="\t")
-	
-	with open(listFile, mode="w", encoding="utf-8") as file:
-		json.dump(commandList, file, ensure_ascii=False, separators=(",", ":"))
-	
-	with open(dictFile, mode="w", encoding="utf-8") as file:
-		json.dump(commandDict, file, ensure_ascii=False, separators=(",", ":"))
+	with open(template, mode="w", encoding="utf-8") as file:
+		json.dump(commands, file, ensure_ascii=False, indent="\t")
 
 def getCommandDict(commands):
 	commandDict = {}
@@ -77,5 +63,35 @@ def getCommandList(commandDict):
 	
 	return commandList
 
-
+def saveCommandNameTemplate(commands):
+	filepath = getFilePath("commandNames.json", "languages")
 	
+	commands = commands.__dict__
+	simpleCommands = {}
+	
+	simpleCommands["sub_commands"] = getSimpleSubCommands(commands["sub_commands"])
+	
+	saveCommandsJson(simpleCommands)
+
+def getSimpleSubCommands(command):
+	simpleCommands = {}
+	
+	for key in command:
+		sub_command = command[key].__dict__
+		
+		simpleCommands[key] = {}
+		simpleCommands[key]["name"] = ""
+		
+		simpleCommands[key]["sub_commands"] = getSimpleSubCommands(sub_command["sub_commands"])
+	
+	return simpleCommands
+
+def convToDict(dict):
+	#Converts objects inside dict to dict.
+	newDict = {}
+	
+	for key in dict:
+		newDict[key] = dict[key].__dict__
+		newDict[key]["sub_commands"] = convToDict(newDict[key]["sub_commands"])
+	
+	return newDict

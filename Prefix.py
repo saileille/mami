@@ -6,13 +6,14 @@ class Prefix(object):
 	default = getCsvVarSync("DEFAULT_PREFIX", "basic", "staticData")
 	
 	def __init__(self, message):
+		self.user = message.user_settings.prefix
+		
 		if (message.discord_py.server != None):
 			self.server = message.server_settings.prefix
+			self.language = message.server_settings.language
 		else:
 			self.server = None
-		
-		self.user = message.user_settings.prefix
-		self.language = message.language
+			self.language = message.user_settings.language
 	
 	async def getPrefixStrings(self):
 		from fileIO import getLanguageText

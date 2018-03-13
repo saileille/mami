@@ -25,20 +25,26 @@ class Command(object):
 		self.argument_types = argument_types
 		self.function = function
 	
-	async def call(self, message, callIndex, commandLevel):
+	async def call(self, message, callIndex, commandIndex):
 		commandCall = message.calls[callIndex]
 		
-		if (commandCall.prefix_valid == False):
-			await commandCall.validatePrefix(message, self.all_prefixes)
-			
-			if (commandCall.prefix_valid == False):
-				return
+		if (await commandCall.validatePrefix(message, self.all_prefixes) == False):
+			#Validating the prefix. Execution will not continue if invalid.
+			return
 		
 		if (await self.checkOwnerOnly(message) == False):
 			#TODO: function to inform the user of the inability to use this command.
 			return
 		
-		await self.checkSubCommands(message, callIndex, commandLevel)
+		if (commandIndex != -1
+			and await self.getPermission(message, commandCall, commandIndex) == False):
+			
+			#Stops the loop if the user does not have permission for this command.
+			
+			await self.useDenied(message, commandCall, commandIndex)
+			return
+		
+		await self.checkSubCommands(message, callIndex, commandIndex)
 	
 	async def checkOwnerOnly(self, message):
 		from fileIO import getCsvVar
@@ -49,62 +55,84 @@ class Command(object):
 		
 		return True
 	
-	async def checkSubCommands(self, message, callIndex, commandLevel):
+	async def checkSubCommands(self, message, callIndex, commandIndex):
 		from fileIO import getLanguageCode
 		from commandFunctions import commandNotFound
+		from bot import send
 		
 		commandCall = message.calls[callIndex]
-		incrementedCommandLevel = commandLevel + 1
 		
-		if (incrementedCommandLevel < len(commandCall.commands)):
+		if (commandIndex != -1):
+			commandCode = commandCall.commands[commandIndex]
+		else:
+			commandCode = None
+		
+		nextCommandIndex = commandIndex + 1
+		if (nextCommandIndex < len(commandCall.commands)):
+			nextCommandCode = commandCall.commands[nextCommandIndex]
+		else:
+			nextCommandCode = None
+		
+		if (nextCommandIndex < len(commandCall.commands)):
 			#If there are more commands in the call.
 			
-			commandStrIncr = commandCall.commands[incrementedCommandLevel]
-			commandKey = await getLanguageCode(message.language, commandStrIncr)
-			
-			try:
-				await self.sub_commands[commandKey].call(message, callIndex, incrementedCommandLevel)
-			except KeyError:
-				await commandNotFound(self, await commandCall.getCommandString())
+			if (nextCommandCode in self.sub_commands):
+				await self.sub_commands[nextCommandCode].call(message, callIndex, commandIndex + 1)
+			else:
+				#await commandNotFound(self, await commandCall.getCommandString())
+				
+				if (len(self.sub_commands) == 0):
+					msg = await self.getSimpleHelp(message, commandCall, commandIndex)
+					await send(message.discord_py.channel, msg)
+				else:
+					#If the command was wrong.
+					await self.displaySubCommands(message, commandCall, commandIndex)
 			
 			return
 		
-		
 		if (len(self.sub_commands) > 0):
 			#If the command has sub-commands but none were used...
-			await self.displaySubCommands(message, await commandCall.getCommandString())
+			await self.displaySubCommands(message, commandCall, commandIndex)
 			return
 		
 		if (len(commandCall.arguments) < self.min_arguments):
 			#If not enough arguments were given.
-			await self.getSimpleHelp(message, await commandCall.getCommandString())
+			msg = await self.getSimpleHelp(message, commandCall, commandIndex)
+			await send(message.discord_py.channel, msg)
 			return
 		
 		#Converting all the arguments to the proper data types. Returns True if successful.
-		success = await commandCall.convertArguments(self, message)
+		errorMsg = await commandCall.convertArguments(self, await message.getLanguage())
 		
-		if (success == True):
+		if (errorMsg == ""):
 			await self.function(message, commandCall.arguments)
 		else:
-			await self.getSimpleHelp(message, await commandCall.getCommandString())
+			errorMsg += await self.getSimpleHelp(message, await commandCall.command_string)
+			await send(message.discord_py.channel, errorMsg)
 	
-	async def displaySubCommands(self, message, commandStr):
+	async def displaySubCommands(self, message, commandCall, commandIndex):
 		#Used when an incomplete command gets typed.
 		
 		from fileIO import getLanguageText
+		from fileIO import getCommandName
 		from bot import send
 		from Prefix import Prefix
 		
 		prefix = await Prefix(message).getPrefix()
+		await commandCall.trimCommandStrings(commandIndex)
+		commandStr = await commandCall.getCommandString()
 		
-		commandStr = prefix + commandStr + "."
+		if (commandStr != ""):
+			commandStr += "."
+		
+		commandStr = prefix + commandStr
 		subCommands = []
 		
 		for key in self.sub_commands:
 			sub_command = self.sub_commands[key]
 			
-			subCmdName = await getLanguageText(message.language, sub_command.name)
-			subCmdDesc = await getLanguageText(message.language, sub_command.short_desc)
+			subCmdName = await getCommandName(await message.getLanguage(), sub_command.name, commandCall.commands)
+			subCmdDesc = await getLanguageText(await message.getLanguage(), sub_command.short_desc)
 			
 			subCmdStr = commandStr + subCmdName + " - " + subCmdDesc
 			subCommands.append(subCmdStr)
@@ -117,18 +145,53 @@ class Command(object):
 		msg += "```"
 		await send(message.discord_py.channel, msg)
 	
-	async def getSimpleHelp(self, message, commandStr):
+	async def getSimpleHelp(self, message, commandCall, commandIndex):
 		#Shows a simple syntax of the command, and displays the short description.
 		#Informs the user about what is needed for the command.
 		
 		from fileIO import getLanguageText
+		
+		commandStr = await commandCall.getTrimmedCommandString(message, commandIndex)
+		argumentStr = await getLanguageText(await message.getLanguage(), self.argument_help)
+		shortDesc = await getLanguageText(await message.getLanguage(), self.short_desc)
+		
+		if (argumentStr != ""):
+			argumentStr = " [" + argumentStr + "]"
+		else:
+			argumentStr = ""
+		
+		msg = "```" + commandStr + argumentStr + "```" + shortDesc
+		return msg
+	
+	async def getPermission(self, message, commandCall, commandIndex):
+		userPermissions = message.discord_py.author.permissions_in(message.discord_py.channel)
+		
+		#Admins get past everything.
+		"""
+		if (userPermissions.administrator == True):
+			return True
+		"""
+		
+		commandList = commandCall.commands[:commandIndex + 1]
+		permissionKey = ".".join(commandList)
+		
+		#Checking server-wide permissions (channel-specific permissions should come before).
+		if (permissionKey in message.server_settings.permissions):
+			permission = message.server_settings.permissions[permissionKey]
+			
+			print(await permission.toDict())
+			return await permission.checkPermission(message.discord_py.author, userPermissions)
+		
+		return True
+	
+	async def useDenied(self, message, commandCall, commandIndex):
+		#Called when a user is not allowed to use a command.
 		from bot import send
-		from Prefix import Prefix
+		from fileIO import getLanguageText
 		
-		prefix = await Prefix(message).getPrefix()
-		commandStr = prefix + commandStr
-		argumentStr = await getLanguageText(message.language, self.argument_help)
-		shortDesc = await getLanguageText(message.language, self.short_desc)
+		commandStr = await commandCall.getTrimmedCommandString(message, commandIndex)
 		
-		msg = "```" + commandStr + " [" + argumentStr + "]```" + shortDesc
+		msg = await getLanguageText(await message.getLanguage(), "COMMAND.USE_DENIED")
+		msg = msg.format(command=commandStr)
+		
 		await send(message.discord_py.channel, msg)

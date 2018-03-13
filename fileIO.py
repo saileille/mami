@@ -44,12 +44,54 @@ def getCsvVarSync(variable, filename, folder="", invert=0):
 				return row[1 - invert]
 
 async def getLanguageText(language, messageCode):
+	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
+	defaultLanguage = "english"
 	text = await getCsvVar(messageCode, "general", "languages\\" + language)
+	
+	if (text == None):
+		text = await getCsvVar(messageCode, "general", "languages\\" + defaultLanguage)
+	
+	if (text == None):
+		return messageCode
+	
 	return text
 
 async def getLanguageCode(language, messageText):
-	variable = await getCsvVar(messageText, "general", "languages\\" + language, invert=1)
-	return variable
+	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
+	code = await getCsvVar(messageText, "general", "languages\\" + language, invert=1)
+	
+	if (code == None):
+		#If not found, tries to find the code from the default language.
+		code = await getCsvVar(messageText, "general", "languages\\" + defaultLanguage, invert=1)
+	
+	return code
+
+async def getCommandCode(language, text, prevCodes=[]):
+	#prevCodes is a list of codes found previously.
+	#Used to direct the search to the right path.
+	
+	cmdDict = await loadJson("cmdNames", "languages\\" + language)
+	
+	for code in prevCodes:
+		cmdDict = cmdDict["sub_commands"][code]
+	
+	for key in cmdDict["sub_commands"]:
+		if (text == cmdDict["sub_commands"][key]["name"]):
+			return key
+
+async def getCommandName(language, code, prevCodes):
+	#prevCodes is used to locate the proper command sub-directory.
+	#code indicates the end of search and the name we want.
+	
+	cmdDict = await loadJson("cmdNames", "languages\\" + language)
+	
+	for prevCode in prevCodes:
+		if (prevCode == None):
+			break
+		
+		cmdDict = cmdDict["sub_commands"][prevCode]
+	
+	return cmdDict["sub_commands"][code]["name"]
 
 async def loadPickle(filename, folder="", default=None):
 	filepath = await getFilePath(filename + ".db", folder)
@@ -73,14 +115,7 @@ async def loadJson(filename, folder=""):
 	with open(filepath, mode="r", encoding="utf-8") as file:
 		jsonObject = json.load(file)
 	
-	#We are presuming the structure contains several objects.
-	if (type(jsonObject) is list):
-		objects = await convertToObjectList(jsonObject)
-	else:
-		#Must otherwise be a dictionary.
-		objects = await convertToObjectDict(jsonObject)
-	
-	return objects
+	return jsonObject
 
 async def savePickle(data, filename, folder=""):
 	filepath = await getFilePath(filename + ".db", folder)
@@ -90,6 +125,17 @@ async def savePickle(data, filename, folder=""):
 
 async def deleteFile(filename, folder=""):
 	filepath = await getFilePath(filename, folder)
-	os.remove(filepath)
+	
+	try:
+		os.remove(filepath)
+	except FileNotFoundError:
+		pass
 
-		
+async def getPermissions():
+	filepath = await getFilePath("permissions.txt", "staticData")
+	
+	with open(filepath, mode="r", encoding="utf-8") as file:
+		permissionText = file.read()
+	
+	permissionList = permissionText.split("\n")
+	return permissionList

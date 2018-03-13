@@ -8,7 +8,6 @@ class Message(object):
 		self.calls = []
 		self.user_settings = None
 		self.server_settings = None
-		self.language = None
 	
 	async def separate(self):
 		from CommandCall import CommandCall
@@ -26,7 +25,7 @@ class Message(object):
 			if (self.discord_py.server != None):
 				prefixList.append(self.server_settings.prefix)
 			
-			await call.process(prefixList)
+			await call.process(prefixList, await self.getLanguage())
 			
 			if (call.arguments != None and call.commands != None):
 				commandCalls.append(call)
@@ -35,27 +34,27 @@ class Message(object):
 	
 	async def executeCommands(self):
 		from fileIO import loadPickle
-		from fileIO import getLanguageCode
 		from commandFunctions import commandNotFound
 		
 		commands = await loadPickle("commandDict", folder="staticData")
 		
 		#Going through every command call.
 		for i in range(len(self.calls)):
-			commandCall = self.calls[i]
-			commandStr = commandCall.commands[0]
+			#commandCall = self.calls[i]
+			#commandKey = commandCall.commands[0]
 			
-			commandKey = await getLanguageCode(self.language, commandStr)
+			await commands.call(self, i, -1)
 			
+			"""
 			try:
 				#This function contains all necessary checks etc.
 				await commands[commandKey].call(self, i, 0)
 			except KeyError:
-				await commandNotFound(self, commandStr)
+				await commandNotFound(self, await commandCall.getCommandString())
+			"""
 	
 	async def getUserSettings(self):
 		from fileIO import loadPickle
-		from fileIO import getCsvVar
 		from User import User
 		
 		self.user_settings = await loadPickle(
@@ -80,6 +79,9 @@ class Message(object):
 		
 		if (self.discord_py.server != None):
 			await self.getServerSettings()
-			self.language = self.server_settings.language
+	
+	async def getLanguage(self):
+		if (self.discord_py.server != None):
+			return self.server_settings.language
 		else:
-			self.language = self.user_settings.language
+			return self.user_settings.language

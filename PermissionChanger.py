@@ -1,3 +1,7 @@
+from fileIO import getPermissions
+from Permission import Permission
+from StringHandler import StringHandler
+
 class PermissionChanger(object):
 	def __init__(self, arguments):
 		self.arguments = arguments
@@ -34,8 +38,6 @@ class PermissionChanger(object):
 		return True
 	
 	async def parseCommands(self, language):
-		from StringHandler import StringHandler
-		
 		#Looping through arguments, getting valid commands.
 		for i in range(len(self.arguments)):
 			stringHandler = StringHandler(self.arguments[i])
@@ -59,11 +61,7 @@ class PermissionChanger(object):
 			self.valid_change = False
 	
 	async def parseMentions(self):
-		#Handles permission names as well.
-		
-		from StringHandler import StringHandler
-		from fileIO import getPermissions
-		
+		#Handles mentions and permission names.
 		for argument in self.arguments:
 			stringHandler = StringHandler(argument)
 			idDict = await stringHandler.getIdFromMention()
@@ -89,9 +87,6 @@ class PermissionChanger(object):
 	
 	async def updatePermissions(self, settingObject, type):
 		#Makes the changes to the settings object.
-		
-		from Permission import Permission
-		
 		for command_code in self.command_codes:
 			if (command_code in settingObject.permissions):
 				permission = settingObject.permissions[command_code]

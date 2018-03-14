@@ -1,6 +1,9 @@
+from fileIO import getCsvVarSync
+from fileIO import savePickle
+
+#Server settings and configuration class.
+
 class Server(object):
-	from fileIO import getCsvVarSync
-	
 	defaultLanguage = getCsvVarSync("DEFAULT_LANGUAGE", "basic", "staticData")
 	
 	def __init__(
@@ -54,10 +57,5 @@ class Server(object):
 			del self.permissions[key]
 	
 	async def save(self, message):
-		from fileIO import savePickle
-		from fileIO import deleteFile
-		
-		#await self.cleanPermissions()
-		
 		folder = "savedData\\servers"
-		await savePickle(self, message.server.id, folder)
+		await savePickle(self, message.discord_py.server.id, folder)

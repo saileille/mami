@@ -1,6 +1,7 @@
+from fileIO import getCsvVarSync
+from MessagePart import MessagePart
+
 class MessageList(object):
-	from fileIO import getCsvVarSync
-	
 	block = "```"
 	characterLimit = int(getCsvVarSync("MAX_CHARACTERS", "basic", "staticData"))
 	
@@ -9,8 +10,12 @@ class MessageList(object):
 		self.messages = []
 	
 	async def getMessageList(self):
-		from MessagePart import MessagePart
 		#Let's do this, motherfucker.
+		
+		if (len(self.text) <= self.characterLimit):
+			#No need to go over this if the message does not need to be split.
+			self.messages = [self.text]
+			return 
 		
 		#List to contain all message parts.
 		self.messages = [MessagePart(self.text, False, False)]
@@ -27,8 +32,6 @@ class MessageList(object):
 		await self.getMessages()
 	
 	async def fragmentList(self, separator):
-		from MessagePart import MessagePart
-		
 		newList = []
 		
 		#For block counting. Paired = no active block; pairless = active block.

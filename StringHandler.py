@@ -1,3 +1,6 @@
+import re
+from fileIO import getCommandCode
+
 #Has all sorts of string-conversion functions.
 
 class StringHandler(object):
@@ -10,9 +13,6 @@ class StringHandler(object):
 	
 	async def getCommandCodeList(self, language):
 		#Converts the command string to a list of command codes.
-		
-		from fileIO import getCommandCode
-		
 		commandList = self.text.split(".")
 		
 		codeList = []
@@ -28,7 +28,6 @@ class StringHandler(object):
 	async def getIdFromMention(self):
 		#Returns a dictionary which tells if the mention is a user or role mention, and extracts the ID.
 		#If not a role or user mention, returns None
-		import re
 		
 		isUser = re.fullmatch(self.userMention, self.text)
 		if (isUser != None):

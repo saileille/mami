@@ -1,8 +1,9 @@
+from fileIO import getCsvVarSync
+from fileIO import getLanguageText
+
 #Class for displaying the prefixes, and telling the user which one to use.
 
 class Prefix(object):
-	from fileIO import getCsvVarSync
-	
 	default = getCsvVarSync("DEFAULT_PREFIX", "basic", "staticData")
 	
 	def __init__(self, message):
@@ -16,8 +17,6 @@ class Prefix(object):
 			self.language = message.user_settings.language
 	
 	async def getPrefixStrings(self):
-		from fileIO import getLanguageText
-		
 		msg = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.DEFAULT_PREFIX")
 		msg = msg.format(prefix=self.default)
 		
@@ -44,9 +43,6 @@ class Prefix(object):
 	
 	async def getPrefixText(self):
 		#Used for prefix.view - tells the user which prefix to use.
-		
-		from fileIO import getLanguageText
-		
 		if (self.user != None):
 			string = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.CORRECT.USER")
 			string = string.format(prefix=self.user)

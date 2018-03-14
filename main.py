@@ -1,5 +1,9 @@
-from bot import client
 import logging
+from bot import client
+from discord import Game
+from fileIO import getBotToken
+from fileIO import getCsvVar
+from Message import Message
 from secrets import BOT_TOKEN
 
 logger = logging.getLogger("discord")
@@ -10,9 +14,6 @@ logger.addHandler(handler)
 
 @client.event
 async def on_ready():
-	from fileIO import getCsvVar
-	from discord import Game
-	
 	defaultPrefix = await getCsvVar("DEFAULT_PREFIX", "basic", "staticData")
 	await client.change_presence(
 		game = Game(
@@ -23,13 +24,17 @@ async def on_ready():
 	print("Connected.")
 
 @client.event
-async def on_message(discordMessage):
-	from Message import Message
-	from User import User
-	from Server import Server
-	from fileIO import loadPickle
-	from fileIO import getCsvVar
+async def on_message(message):
+	await handleMessage(message)
+
+@client.event
+async def on_message_edit(oldMsg, newMsg):
+	if (oldMsg.content == newMsg.content):
+		return
 	
+	await handleMessage(newMsg)
+
+async def handleMessage(discordMessage):
 	#Mami does not have to deal with bots.
 	if (discordMessage.author.bot == True):
 		return
@@ -41,4 +46,4 @@ async def on_message(discordMessage):
 	await message.separate()
 	await message.executeCommands()
 
-client.run(BOT_TOKEN)
+client.run(getBotToken())

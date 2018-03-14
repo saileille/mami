@@ -1,6 +1,10 @@
+from bot import send
+from fileIO import getCsvVarSync
+from fileIO import getLanguageText
+from fileIO import savePickle
+from Prefix import Prefix
+
 class User(object):
-	from fileIO import getCsvVarSync
-	
 	defaultLanguage = getCsvVarSync("DEFAULT_LANGUAGE", "basic", "staticData")
 	
 	def __init__(
@@ -27,10 +31,6 @@ class User(object):
 		return True
 	
 	async def changePrefix(self, message, newPrefix):
-		from Prefix import Prefix
-		from bot import send
-		from fileIO import getLanguageText
-		
 		#For display purposes.
 		newPrefixStr = newPrefix
 		
@@ -52,8 +52,5 @@ class User(object):
 		await send(message.discord_py.channel, msg)
 	
 	async def save(self, message):
-		from fileIO import savePickle
-		from fileIO import deleteFile
-		
 		folder = "savedData\\users"
 		await savePickle(self, message.author.id, folder)

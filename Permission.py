@@ -76,10 +76,6 @@ class Permission(object):
 			return None
 		
 		roles.sort(key=lambda role: role.position, reverse=True)
-		"""
-		for role in roles:
-			print("{number}: {name}".format(number=role.position, name=role.name))
-		"""
 		
 		for role in roles:
 			#The ID was found among the user IDs.

@@ -1,7 +1,7 @@
 import csv
-import pickle
 import json
 import os
+import pickle
 
 pickle.DEFAULT_PROTOCOL = 4
 
@@ -139,3 +139,11 @@ async def getPermissions():
 	
 	permissionList = permissionText.split("\n")
 	return permissionList
+
+def getBotToken():
+	filepath = getFilePathSync("token.txt", "staticData")
+	
+	with open(filepath, mode="r", encoding="utf-8") as file:
+		token = file.read()
+	
+	return token

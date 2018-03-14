@@ -1,16 +1,16 @@
+from bot import send
+from fileIO import getLanguageText
+from PermissionChanger import PermissionChanger
+from Prefix import Prefix
+
 async def test(message, arguments):
 	#Test command.
-	from fileIO import getLanguageText
-	from bot import send
 	
 	msg = await getLanguageText(await message.getLanguage(), "COMMAND.TEST.MESSAGE")
 	await send(message.discord_py.channel, msg)
 
 async def prefixView(message, arguments):
 	#Shows the prefixes.
-	from bot import send
-	from Prefix import Prefix
-	
 	prefix = Prefix(message)
 	msg = await prefix.getPrefixStrings()
 	
@@ -24,9 +24,6 @@ async def prefixUser(message, arguments):
 	await message.user_settings.save(message.discord_py)
 
 async def settingsServerPermissionsGive(message, arguments):
-	from PermissionChanger import PermissionChanger
-	from bot import send
-	
 	permissionChanger = PermissionChanger(arguments)
 	success = await permissionChanger.changePermissions(message.server_settings, await message.getLanguage(), type="allow")
 	
@@ -37,9 +34,6 @@ async def settingsServerPermissionsGive(message, arguments):
 	await send(message.discord_py.channel, "Succ")
 
 async def settingsServerPermissionsDeny(message, arguments):
-	from PermissionChanger import PermissionChanger
-	from bot import send
-	
 	permissionChanger = PermissionChanger(arguments)
 	success = await permissionChanger.changePermissions(message.server_settings, await message.getLanguage(), type="deny")
 	
@@ -50,9 +44,6 @@ async def settingsServerPermissionsDeny(message, arguments):
 	await send(message.discord_py.channel, "Succ")
 
 async def settingsServerPermissionsUndo(message, arguments):
-	from PermissionChanger import PermissionChanger
-	from bot import send
-	
 	permissionChanger = PermissionChanger(arguments)
 	success = await permissionChanger.changePermissions(message.server_settings, await message.getLanguage(), type="undo")
 	
@@ -63,9 +54,6 @@ async def settingsServerPermissionsUndo(message, arguments):
 	await send(message.discord_py.channel, "Succ")
 
 async def commandNotFound(message, command):
-	from fileIO import getLanguageText
-	from bot import send
-	
 	msg = await getLanguageText(await message.getLanguage(), "COMMAND.NOT_FOUND")
 	msg = msg.format(commandName=command)
 	

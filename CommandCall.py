@@ -1,6 +1,10 @@
+from fileIO import getCommandCode
+from fileIO import getCsvVarSync
+from fileIO import getLanguageText
+from Prefix import Prefix
+from StringHandler import StringHandler
+
 class CommandCall(object):
-	from fileIO import getCsvVarSync
-	
 	defaultPrefix = getCsvVarSync("DEFAULT_PREFIX", "basic", "staticData")
 	
 	def __init__(
@@ -78,9 +82,6 @@ class CommandCall(object):
 	
 	async def convertArguments(self, command, language):
 		#Converts the arguments of the call according to the specification in Command object.
-		
-		from fileIO import getLanguageText
-		
 		newArguments = []
 		for i in range(len(self.arguments)):
 			argument = self.arguments[i]
@@ -110,10 +111,6 @@ class CommandCall(object):
 	
 	async def convertCommands(self, language):
 		#Converts the command string to a list of command codes.
-		
-		from fileIO import getCommandCode
-		from StringHandler import StringHandler
-		
 		commandText = await self.getCommandString()
 		self.commands = await StringHandler(commandText).getCommandCodeList(language)
 	
@@ -131,8 +128,6 @@ class CommandCall(object):
 	
 	async def getTrimmedCommandString(self, message, commandIndex):
 		#Gives command string of a specified length (determined by commandIndex).
-		from Prefix import Prefix
-		
 		prefix = await Prefix(message).getPrefix()
 		await self.trimCommandStrings(commandIndex)
 		commandStr = await self.getCommandString()

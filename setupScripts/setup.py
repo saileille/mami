@@ -3,7 +3,7 @@ from commandFunctions import *
 import ioScripts
 
 commands = Command(
-	name = "root"
+	name = "head"
 	,all_prefixes = True
 	,sub_commands = [
 		Command(
@@ -28,7 +28,6 @@ commands = Command(
 					name = "user"
 					,short_desc = "COMMAND.PREFIX.USER.SHORTDESC"
 					,long_desc = "prefix.user"
-					,min_arguments = 1
 					,argument_help = "COMMAND.PREFIX.USER.ARGUMENTS"
 					,argument_types = [
 						"string"
@@ -44,6 +43,9 @@ commands = Command(
 				Command(
 					name = "server"
 					,short_desc = "COMMAND.SETTINGS.SERVER.SHORTDESC"
+					,default_permissions = [
+						"manage_server"
+					]
 					,sub_commands = [
 						Command(
 							name = "permissions"
@@ -53,7 +55,6 @@ commands = Command(
 									name = "give"
 									,short_desc = "COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC"
 									,long_desc = "settings.server.permissions.give"
-									,min_arguments = 2
 									,argument_help = "COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS"
 									,argument_types = [
 										"string"
@@ -65,7 +66,6 @@ commands = Command(
 									name = "deny"
 									,short_desc = "COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC"
 									,long_desc = "settings.server.permissions.deny"
-									,min_arguments = 2
 									,argument_help = "COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS"
 									,argument_types = [
 										"string"
@@ -77,7 +77,6 @@ commands = Command(
 									name = "undo"
 									,short_desc = "COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC"
 									,long_desc = "settings.server.permissions.undo"
-									,min_arguments = 2
 									,argument_help = "COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS"
 									,argument_types = [
 										"string"

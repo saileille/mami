@@ -8,9 +8,9 @@ class Command(object):
 		,hidden = False
 		,owner_only = False
 		,all_prefixes = False
-		,min_arguments = 0
 		,argument_help = ""
 		,argument_types = []
+		,default_permissions = []
 		,function = None
 	):
 		self.name = name
@@ -20,7 +20,7 @@ class Command(object):
 		self.hidden = hidden
 		self.owner_only = owner_only
 		self.all_prefixes = all_prefixes
-		self.min_arguments = min_arguments
 		self.argument_help = argument_help
 		self.argument_types = argument_types
+		self.default_permissions = default_permissions
 		self.function = function

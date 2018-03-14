@@ -1,3 +1,9 @@
+from CommandCall import CommandCall
+from commandFunctions import commandNotFound
+from fileIO import loadPickle
+from Server import Server
+from User import User
+
 class Message(object):
 	def __init__(
 		self
@@ -10,8 +16,6 @@ class Message(object):
 		self.server_settings = None
 	
 	async def separate(self):
-		from CommandCall import CommandCall
-		
 		#Separates the message according to its lines.
 		lines = self.discord_py.content.split("\n")
 		
@@ -33,10 +37,7 @@ class Message(object):
 		self.calls = commandCalls
 	
 	async def executeCommands(self):
-		from fileIO import loadPickle
-		from commandFunctions import commandNotFound
-		
-		commands = await loadPickle("commandDict", folder="staticData")
+		commands = await loadPickle("commands", folder="staticData")
 		
 		#Going through every command call.
 		for i in range(len(self.calls)):
@@ -54,9 +55,6 @@ class Message(object):
 			"""
 	
 	async def getUserSettings(self):
-		from fileIO import loadPickle
-		from User import User
-		
 		self.user_settings = await loadPickle(
 			self.discord_py.author.id
 			,"savedData\\users"
@@ -64,9 +62,6 @@ class Message(object):
 		)
 	
 	async def getServerSettings(self):
-		from fileIO import loadPickle
-		from Server import Server
-		
 		self.server_settings = await loadPickle(
 			self.discord_py.server.id
 			,"savedData\\servers"

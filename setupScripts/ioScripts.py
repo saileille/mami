@@ -1,6 +1,6 @@
+import copy
 import json
 import pickle
-import copy
 
 pickle.DEFAULT_PROTOCOL = 4
 
@@ -15,15 +15,15 @@ def getFilePath(filename, folder=""):
 	return filepath + filename
 
 def saveCommandsPickle(commands):
-	fileList = getFilePath("commandList.db", "staticData")
-	fileDict = getFilePath("commandDict.db", "staticData")
+	#fileList = getFilePath("commandList.db", "staticData")
+	fileDict = getFilePath("commands.db", "staticData")
 	
 	commandDict = copy.deepcopy(commands)
 	convSubCommands(commandDict)
-	
+	"""
 	with open(fileList, mode="wb") as file:
 		pickle.dump(commands, file)
-	
+	"""
 	with open(fileDict, mode="wb") as file:
 		pickle.dump(commandDict, file)
 	

@@ -24,3 +24,18 @@ class Command(object):
 		self.argument_types = argument_types
 		self.default_permissions = default_permissions
 		self.function = function
+	
+	def getDict(self):
+		dictionary = {}
+		
+		if (self.name != "head"):
+			#Emits the top layer code.
+			dictionary["name"] = ""
+		
+		dictionary["sub_commands"] = {}
+		
+		#Returns a dictionary of the object.
+		for sub_command in self.sub_commands:
+			dictionary["sub_commands"][sub_command.name] = sub_command.getDict()
+		
+		return dictionary

@@ -1,3 +1,5 @@
+from fileIO import getLanguageText
+
 #Class to keep track of command permissions.
 
 class Permission(object):
@@ -11,7 +13,7 @@ class Permission(object):
 		self.roles = roles
 		self.permissions = permissions
 	
-	async def isDefault(self):
+	async def isDefault(self, cmdPermissions):
 		#Checks if the Permission object is the default one.
 		
 		if (len(self.users) > 0):
@@ -20,10 +22,27 @@ class Permission(object):
 		if (len(self.roles) > 0):
 			return False
 		
-		if (len(self.permissions) > 0):
+		if (await self.defaultCommandPermissions(cmdPermissions) == False):
 			return False
 		
 		return True
+	
+	async def forceDefault(self):
+		#Converts the object to its default state.
+		self.users = {}
+		self.roles = {}
+		self.permissions = []
+	
+	async def defaultCommandPermissions(self, cmdPermissions):
+		#Checks if the permission list is the default one.
+		if (len(cmdPermissions) == len(self.permissions)):
+			for permission in self.permissions:
+				if (permission not in cmdPermissions):
+					return False
+			
+			return True
+		
+		return False
 	
 	async def checkPermission(self, user, userPermissions):
 		#Checks for the user ID.
@@ -113,3 +132,109 @@ class Permission(object):
 				break
 		
 		return allAllowed
+	
+	async def getPermissionString(self, discordMessage, language):
+		#Gives a human-readable representation of who can use the command.
+		#Returns a list, use StringHandler object for chapter divide.
+		stringList = []
+		stringList += await self.getPermissionStringUsers(discordMessage, language)
+		stringList += await self.getPermissionStringRoles(discordMessage, language)
+		stringList += await self.getPermissionStringPermissions(language)
+		
+		if (len(stringList) == 0):
+			stringList.append(await getLanguageText(language, "NO_PERMISSIONS"))
+		
+		return stringList
+	
+	async def getPermissionStringUsers(self, discordMessage, language):
+		stringList = []
+		allowed = []
+		blocked = []
+		
+		for id in self.users:
+			member = discordMessage.server.get_member(id)
+			
+			if (member != None):
+				name = member.display_name
+			else:
+				name = "[undefined]"
+			
+			memberDict = {
+				"name": name
+				,"id": id
+			}
+			
+			if (self.users[id] == "allow"):
+				allowed.append(memberDict)
+			else:
+				blocked.append(memberDict)
+		
+		
+		if (len(allowed) > 0):
+			string = await getLanguageText(language, "PERMISSION.USERS.ALLOWED")
+			
+			for user in allowed:
+				string += "\n - {name} ({id})".format(name=user["name"], id=user["id"])
+			
+			stringList.append(string)
+		
+		if (len(blocked) > 0):
+			string = await getLanguageText(language, "PERMISSION.USERS.BLOCKED")
+			
+			for user in blocked:
+				string += "\n - {name} ({id})".format(name=user["name"], id=user["id"])
+			
+			stringList.append(string)
+		
+		return stringList
+	
+	async def getPermissionStringRoles(self, discordMessage, language):
+		stringList = []
+		allowed = []
+		blocked = []
+		
+		for id in self.roles:
+			for role in discordMessage.server.roles:
+				if (id == role.id):
+					roleDict = {"name": role.name}
+					break
+			else:
+				roleDict = {"name": "[undefined]"}
+			
+			roleDict["id"] = id
+			
+			if (self.roles[id] == "allow"):
+				allowed.append(roleDict)
+			else:
+				blocked.append(roleDict)
+		
+		if (len(allowed) > 0):
+			string = await getLanguageText(language, "PERMISSION.ROLES.ALLOWED")
+			
+			for role in allowed:
+				string += "\n - {name} ({id})".format(name=role["name"], id=role["id"])
+			
+			stringList.append(string)
+		
+		if (len(blocked) > 0):
+			string = await getLanguageText(language, "PERMISSION.ROLES.BLOCKED")
+			
+			for role in blocked:
+				string += "\n - {name} ({id})".format(name=role["name"], id=role["id"])
+			
+			stringList.append(string)
+		
+		return stringList
+	
+	async def getPermissionStringPermissions(self, language):
+		stringList = []
+		
+		if (len(self.permissions) > 0):
+			string = await getLanguageText(language, "PERMISSION.PERMISSIONS.ALLOWED")
+			
+			for permission in self.permissions:
+				string += "\n" + permission
+			
+			stringList.append(string)
+		
+		return stringList

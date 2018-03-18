@@ -1,3 +1,4 @@
+CHANNEL;Kanava
 COMMAND.ARGUMENT_CONV.ERROR;`{argument}` ei ole numero. Varmista, että syötteesi on oikein, ja yritä uudestaan.
 COMMAND.NOT_FOUND;Komentoa `{commandName}` ei ole!
 COMMAND.PREFIX.SHORTDESC;Komentojen prefiksien hallintaa.
@@ -14,11 +15,31 @@ COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Serverin prefiksiä ei ole määritelty
 COMMAND.PREFIX.VIEW.SHORTDESC;Näyttää määritellyt prefiksit, ja kertoo mitä niistä käyttäjän kuuluu käyttää.
 COMMAND.PREFIX.VIEW.USER_PREFIX;Käyttäjän prefiksi on `{prefix}`
 COMMAND.PREFIX.VIEW.USER_PREFIX.NONE;Käyttäjän prefiksiä ei ole määritelty
-COMMAND.SETTINGS.SERVER.DENY_PERMISSION.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
-COMMAND.SETTINGS.SERVER.DENY_PERMISSION.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
-COMMAND.SETTINGS.SERVER.GIVE_PERMISSION.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
-COMMAND.SETTINGS.SERVER.GIVE_PERMISSION.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Hallinnoi kanavan komentolupia.
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
+COMMAND.SETTINGS.CHANNEL.SHORTDESC;Kanavaan liittyvät konfiguraatiokomennot.
+COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
+COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
+COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
+COMMAND.SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Hallinnoi serverin komentolupia.
+COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
 COMMAND.SETTINGS.SERVER.SHORTDESC;Serveriin liittyvät konfiguraatiokomennot.
 COMMAND.SETTINGS.SHORTDESC;Pitää sisällään konfiguraatiokomentoja.
 COMMAND.TEST.MESSAGE;Täytyy keksiä joku suomenkielinen testi.
 COMMAND.TEST.SHORTDESC;Testikomento.
+COMMAND.USE_DENIED;Sinulla ei ole oikeuksia käyttää komentoa `{command}`
+NO_PERMISSIONS;Ei komentolupia.
+PERMISSION.CLEARED;Komentoluvat tyhjennetty.
+PERMISSION.PERMISSIONS.ALLOWED;Komento on sallittu seuraavat oikeudet omaaville käyttäjille:
+PERMISSION.ROLES.ALLOWED;Komento on sallittu seuraaville rooleille:
+PERMISSION.ROLES.BLOCKED;Komento on kielletty seuraavilta rooleilta:
+PERMISSION.USERS.ALLOWED;Komento on sallittu seuraaville käyttäjille:
+PERMISSION.USERS.BLOCKED;Komento on kielletty seuraavilta käyttäjiltä:
+SERVER;Serveri

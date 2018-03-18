@@ -1,3 +1,4 @@
+CHANNEL;Channel
 COMMAND.ARGUMENT_CONV.ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
 COMMAND.NOT_FOUND;Get your head on straight! Command `{commandName}` does not exist.
 COMMAND.PREFIX.SHORTDESC;For managing command prefixes.
@@ -14,12 +15,31 @@ COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Server prefix is not defined
 COMMAND.PREFIX.VIEW.SHORTDESC;Shows the defined prefixes and tells which one you should use.
 COMMAND.PREFIX.VIEW.USER_PREFIX;User prefix is `{prefix}`
 COMMAND.PREFIX.VIEW.USER_PREFIX.NONE;User prefix is not defined
-COMMAND.SETTINGS.SERVER.DENY_PERMISSION.ARGUMENTS;command_name user_tag/role_tag
-COMMAND.SETTINGS.SERVER.DENY_PERMISSION.SHORTDESC;Link a user/role with inability to use a specific command.
-COMMAND.SETTINGS.SERVER.GIVE_PERMISSION.ARGUMENTS;command_name user_tag/role_tag/permission_name
-COMMAND.SETTINGS.SERVER.GIVE_PERMISSION.SHORTDESC;Link a user/role/permission with ability to use a specific command.
+COMMAND.SETTINGS.CHANNEL.SHORTDESC;Channel-related configuration commands.
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;command_name user_tag/role_tag
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;command_name user_tag/role_tag/permission_name
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Manage channel's command permissions.
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;command_name user_tag/role_tag/permission_name
+COMMAND.SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
+COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;command_name user_tag/role_tag
+COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
+COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;command_name user_tag/role_tag/permission_name
+COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
+COMMAND.SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Manage server's command permissions.
+COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;command_name user_tag/role_tag/permission_name
+COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
 COMMAND.SETTINGS.SERVER.SHORTDESC;Server-related configuration commands.
 COMMAND.SETTINGS.SHORTDESC;Contains configuration commands.
 COMMAND.TEST.MESSAGE;Homura Did Nothing Wrong
 COMMAND.TEST.SHORTDESC;Testing, testing... Homura Did Nothing Wrong...
 COMMAND.USE_DENIED;You do not have a permission to use `{command}`
+NO_PERMISSIONS;No command permissions.
+PERMISSION.CLEARED;Permissions cleared.
+PERMISSION.PERMISSIONS.ALLOWED;The command is authorised for users with following permissions:
+PERMISSION.ROLES.ALLOWED;The command is authorised for following roles:
+PERMISSION.ROLES.BLOCKED;The command is unauthorised for following roles:
+PERMISSION.USERS.ALLOWED;The command is authorised for following users:
+PERMISSION.USERS.BLOCKED;The command is unauthorised for following users:
+SERVER;Server

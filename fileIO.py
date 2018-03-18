@@ -3,6 +3,7 @@ import json
 import os
 import pickle
 
+
 pickle.DEFAULT_PROTOCOL = 4
 
 async def getFilePath(filename, folder=""):
@@ -45,15 +46,15 @@ def getCsvVarSync(variable, filename, folder="", invert=0):
 
 async def getLanguageText(language, messageCode):
 	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
-	defaultLanguage = "english"
 	text = await getCsvVar(messageCode, "general", "languages\\" + language)
 	
 	if (text == None):
 		text = await getCsvVar(messageCode, "general", "languages\\" + defaultLanguage)
+		
+		if (text == None):
+			return messageCode
 	
-	if (text == None):
-		return messageCode
-	
+	text.replace("\\n", "\n")
 	return text
 
 async def getLanguageCode(language, messageText):
@@ -147,3 +148,11 @@ def getBotToken():
 		token = file.read()
 	
 	return token
+
+async def loadCommands():
+	commands = await loadPickle("commands", "staticData")
+	return commands
+
+async def getDefaultLanguage():
+	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
+	return defaultLanguage

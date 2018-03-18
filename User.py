@@ -1,17 +1,13 @@
 from bot import send
-from fileIO import getCsvVarSync
 from fileIO import getLanguageText
-from fileIO import savePickle
 from Prefix import Prefix
 
 class User(object):
-	defaultLanguage = getCsvVarSync("DEFAULT_LANGUAGE", "basic", "staticData")
-	
 	def __init__(
 		self
 		,prefix = None
 		,rpg_character = None
-		,language = defaultLanguage
+		,language = None
 	):
 		self.prefix = prefix
 		self.rpg_character = rpg_character
@@ -25,10 +21,15 @@ class User(object):
 		if (self.rpg_character != None):
 			return False
 		
-		if (self.language != self.defaultLanguage):
+		if (self.language != None):
 			return False
 		
 		return True
+	
+	async def forceDefault(self):
+		self.prefix = None
+		self.rpg_character = None
+		self.language = None
 	
 	async def changePrefix(self, message, newPrefix):
 		#For display purposes.
@@ -50,7 +51,3 @@ class User(object):
 		msg = msg.format(user=message.discord_py.author.display_name, prefix=newPrefixStr)
 		
 		await send(message.discord_py.channel, msg)
-	
-	async def save(self, message):
-		folder = "savedData\\users"
-		await savePickle(self, message.author.id, folder)

@@ -37,10 +37,49 @@
 								"undo": {
 									"name": "kumoa",
 									"sub_commands": {}
+								},
+								"clear": {
+									"name": "tyhjennä",
+									"sub_commands": {}
 								}
 							}
 						}
 					}
+				},
+				"channel": {
+					"name": "kanava",
+					"sub_commands": {
+						"permissions": {
+							"name": "luvat",
+							"sub_commands": {
+								"give": {
+									"name": "anna",
+									"sub_commands": {}
+								},
+								"deny": {
+									"name": "evää",
+									"sub_commands": {}
+								},
+								"undo": {
+									"name": "kumoa",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "tyhjennä",
+									"sub_commands": {}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"info": {
+			"name": "info",
+			"sub_commands": {
+				"permissions": {
+					"name": "luvat",
+					"sub_commands": {}
 				}
 			}
 		}

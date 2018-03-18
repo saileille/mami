@@ -1,5 +1,5 @@
 from fileIO import getCsvVarSync
-from fileIO import savePickle
+from StringHandler import StringHandler
 
 #Server settings and configuration class.
 
@@ -47,15 +47,29 @@ class Server(object):
 		
 		return True
 	
+	async def forceDefault(self):
+		#Forces the object to its default values.
+		self.language = self.defaultLanguage
+		self.prefix = None
+		self.shortcuts = {}
+		self.lists = {}
+		self.autoresponses = {}
+		self.permissions = {}
+	
 	async def cleanPermissions(self):
 		deleteKeys = []
 		for key in self.permissions:
-			if (await self.permissions[key].isDefault() == True):
+			cmdObject = await StringHandler(key).getCommandFromString()
+			
+			if (await self.permissions[key].isDefault(cmdObject.default_permissions) == True):
 				deleteKeys.append(key)
 		
 		for key in deleteKeys:
 			del self.permissions[key]
 	
-	async def save(self, message):
-		folder = "savedData\\servers"
-		await savePickle(self, message.discord_py.server.id, folder)
+	async def deletePermissions(self, commandCodes):
+		#Deletes the given permission keys.
+		
+		for key in commandCodes:
+			if (key in self.permissions):
+				del self.permissions[key]

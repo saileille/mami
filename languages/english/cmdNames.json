@@ -37,10 +37,49 @@
 								"undo": {
 									"name": "undo",
 									"sub_commands": {}
+								},
+								"clear": {
+									"name": "clear",
+									"sub_commands": {}
 								}
 							}
 						}
 					}
+				},
+				"channel": {
+					"name": "channel",
+					"sub_commands": {
+						"permissions": {
+							"name": "permissions",
+							"sub_commands": {
+								"give": {
+									"name": "give",
+									"sub_commands": {}
+								},
+								"deny": {
+									"name": "deny",
+									"sub_commands": {}
+								},
+								"undo": {
+									"name": "undo",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "clear",
+									"sub_commands": {}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"info": {
+			"name": "info",
+			"sub_commands": {
+				"permissions": {
+					"name": "permissions",
+					"sub_commands": {}
 				}
 			}
 		}

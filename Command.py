@@ -5,6 +5,7 @@ from fileIO import getCsvVar
 from fileIO import getLanguageCode
 from fileIO import getLanguageText
 from Permission import Permission
+from PermissionChanger import PermissionChanger
 from Prefix import Prefix
 
 class Command(object):
@@ -160,38 +161,27 @@ class Command(object):
 	
 	async def getPermission(self, message, commandCall, commandIndex):
 		userPermissions = message.discord_py.author.permissions_in(message.discord_py.channel)
-		
-		#Admins get past everything.
 		"""
+		#Admins get past everything.
 		if (userPermissions.administrator == True):
 			return True
 		"""
-		
 		commandList = commandCall.commands[:commandIndex + 1]
 		permissionKey = ".".join(commandList)
 		
+		#Channel permission check. If none specified, moves to server permission check.
+		if (permissionKey in message.channel_settings.permissions):
+			permission = message.channel_settings.permissions[permissionKey]
+			
+			#print(await permission.toDict())
+			return await permission.checkPermission(message.discord_py.author, userPermissions)
+		
+		#Server permission check.
 		#Adds a default Permission object if the command is lacking one for this server.
-		if (permissionKey not in message.server_settings.permissions):
-			message.server_settings.permissions[permissionKey] = Permission(
-				permissions = self.default_permissions
-			)
-			
-			await message.server_settings.save(message)
+		permission = await PermissionChanger([], None, None).getPermissionObject(permissionKey, message.server_settings.permissions)
 		
-		"""
-		if (await self.noGivenPermissions(message, permissionKey)):
-			#No given permissions.
-			for defaultPermission in self.default_permissions:
-				if (eval("userPermissions." + defaultPermission + " == False")):
-					return False
-			
-			return True
-		"""
-		
-		permission = message.server_settings.permissions[permissionKey]
-		
-		print(await permission.toDict())
-		#Checking server-wide permissions (channel-specific permissions should come before).
+		#print(await permission.toDict())
+		#Checking server-wide permissions.
 		return await permission.checkPermission(message.discord_py.author, userPermissions)
 	
 	async def useDenied(self, message, commandCall, commandIndex):
@@ -202,15 +192,3 @@ class Command(object):
 		msg = msg.format(command=commandStr)
 		
 		await send(message.discord_py.channel, msg)
-	
-	"""
-	async def noGivenPermissions(self, message, permissionKey):
-		#Checks if the command has user-given permissions.
-		return (
-			(
-				permissionKey in message.server_settings.permissions
-				and await message.server_settings.permissions[permissionKey].isDefault() == True
-			) or
-			permissionKey not in message.server_settings.permissions
-		)
-	"""

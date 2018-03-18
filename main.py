@@ -4,7 +4,6 @@ from discord import Game
 from fileIO import getBotToken
 from fileIO import getCsvVar
 from Message import Message
-from secrets import BOT_TOKEN
 
 logger = logging.getLogger("discord")
 logger.setLevel(logging.DEBUG)
@@ -41,6 +40,16 @@ async def handleMessage(discordMessage):
 	
 	message = Message(discordMessage)
 	await message.getSettings()
+	
+	print("\nSERVER")
+	for key in message.server_settings.permissions:
+		print(key)
+		print(message.server_settings.permissions[key].__dict__)
+	
+	print("\nCHANNEL")
+	for key in message.channel_settings.permissions:
+		print(key)
+		print(message.channel_settings.permissions[key].__dict__)
 	
 	#Processes text and executes commands.
 	await message.separate()

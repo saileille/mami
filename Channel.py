@@ -1,16 +1,22 @@
+from Server import Server
+
 #Channel-specific configuration.
 
-class Channel(object):
+class Channel(Server):
 	def __init__(
 		self
+		,language = None
+		,prefix = None
+		,shortcuts = {}
+		,lists = {}
+		,autoresponses = {}
 		,permissions = {}
 	):
-		self.permissions = permissions
-	
-	async def isDefault(self):
-		#Checks if the channel is the default object.
-		
-		if (len(self.permissions) > 0):
-			return False
-		
-		return True
+		super().__init__(
+			language
+			,prefix
+			,shortcuts
+			,lists
+			,autoresponses
+			,permissions
+		)

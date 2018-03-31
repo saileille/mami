@@ -124,7 +124,7 @@ class Message(object):
 		folder = "savedData\\channels"
 		filename = self.discord_py.channel.id
 		
-		if (await self.user_settings.isDefault() == False):
+		if (await self.channel_settings.isDefault() == False):
 			await savePickle(self.channel_settings, filename, folder)
 		else:
 			await deleteFile(filename + ".db", folder)

@@ -48,21 +48,26 @@ async def getLanguageText(language, messageCode):
 	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
 	text = await getCsvVar(messageCode, "general", "languages\\" + language)
 	
+	
 	if (text == None):
+		"""
 		text = await getCsvVar(messageCode, "general", "languages\\" + defaultLanguage)
 		
 		if (text == None):
 			return messageCode
+		"""
+		return messageCode
 	
 	text.replace("\\n", "\n")
 	return text
 
+#Finds the CSV code. No longer needed.
 async def getLanguageCode(language, messageText):
-	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
 	code = await getCsvVar(messageText, "general", "languages\\" + language, invert=1)
 	
 	if (code == None):
 		#If not found, tries to find the code from the default language.
+		defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
 		code = await getCsvVar(messageText, "general", "languages\\" + defaultLanguage, invert=1)
 	
 	return code
@@ -74,6 +79,7 @@ async def getCommandCode(language, text, prevCodes=[]):
 	cmdDict = await loadJson("cmdNames", "languages\\" + language)
 	
 	for code in prevCodes:
+		#Goes to the current location.
 		cmdDict = cmdDict["sub_commands"][code]
 	
 	for key in cmdDict["sub_commands"]:
@@ -97,7 +103,7 @@ async def getCommandName(language, code, prevCodes):
 async def loadPickle(filename, folder="", default=None):
 	filepath = await getFilePath(filename + ".db", folder)
 	
-	#Exception handling is only done if the default object exists.
+	#Exception handling is only done if the default object has been explicitly given.
 	if (default != None):
 		try:
 			with open(filepath, mode="rb") as file:

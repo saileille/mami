@@ -8,9 +8,9 @@ from StringHandler import StringHandler
 class PermissionChanger(object):
 	def __init__(
 		self
-		,arguments
-		,language
-		,operation
+		,arguments = []
+		,language = None
+		,operation = None
 	):
 		self.arguments = arguments
 		self.language = language

@@ -52,7 +52,11 @@ class Permission(object):
 			return allowed
 		
 		#Checks for the role IDs.
-		allowed = await self.checkRoleIds(user.roles)
+		#Inside try-except in case of command being executed in DMs.
+		try:
+			allowed = await self.checkRoleIds(user.roles)
+		except AttributeError:
+			pass
 		
 		if (allowed == True or allowed == False):
 			return allowed

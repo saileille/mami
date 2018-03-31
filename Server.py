@@ -73,3 +73,13 @@ class Server(object):
 		for key in commandCodes:
 			if (key in self.permissions):
 				del self.permissions[key]
+	
+	async def getPermissionsPerCommand(self, permissionDict):
+		#Assigns the permissions to the dictionary.
+		#This function is slightly different for channel.
+		
+		for key in self.permissions:
+			if (key not in permissionDict):
+				permissionDict[key] = {}
+			
+			permissionDict[key]["server"] = self.permissions[key]

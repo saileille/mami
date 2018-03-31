@@ -1,6 +1,7 @@
 from bot import send
 from commandFunctionsRedirect import *
 from fileIO import getLanguageText
+from fileIO import loadPickle
 from Permission import Permission
 from PermissionChanger import PermissionChanger
 from Prefix import Prefix
@@ -51,33 +52,25 @@ async def settingsChannelPermissionsClear(message, arguments):
 	await clearPermissions(message, arguments, "channel")
 
 async def infoPermissions(message, arguments):
-	#Shows command permissions in both server and channel.
+	#Shows command permissions for all commands on this server, and all channel-specific permissions.
+	
 	language = await message.getLanguage()
-	permissionChanger = PermissionChanger(arguments, language, "clear")
-	await permissionChanger.parseCommands()
+	permissionDict = {}
 	
-	if (permissionChanger.valid_change == False):
-		return
+	for channel in message.discord_py.server.channels:
+		try:
+			channelSettings = await loadPickle(channel.id, "savedData\\channels")
+			await channelSettings.getPermissionsPerCommand(permissionDict, channel.id)
+		except FileNotFoundError:
+			pass
 	
-	msgList = []
-	for i in range(len(permissionChanger.command_codes)):
-		code = permissionChanger.command_codes[i]
-		msgList.append("**" + permissionChanger.command_strings[i] + "**")
-		
-		permissionType = await getLanguageText(language, "SERVER")
-		msgList.append("*" + permissionType + "*")
-		
-		serverPermission = await permissionChanger.getPermissionObject(code, message.server_settings.permissions)
-		msgList += await serverPermission.getPermissionString(message.discord_py, language)
-		
-		permissionType = await getLanguageText(language, "CHANNEL")
-		msgList.append("*" + permissionType + "*")
-		
-		channelPermission = await permissionChanger.getPermissionObject(code, message.channel_settings.permissions)
-		msgList += await channelPermission.getPermissionString(message.discord_py, language)
+	await message.server_settings.getPermissionsPerCommand(permissionDict)
+	print(permissionDict)
 	
-	msg = await StringHandler(list=msgList).getChapterDivide()
-	await send(message.discord_py.channel, msg)
+	stringHandler = StringHandler(dict=permissionDict)
+	msgString = await stringHandler.getPermissionInfoText(message.discord_py, language)
+	
+	await send(message.discord_py.channel, msgString)
 
 async def commandNotFound(message, command):
 	msg = await getLanguageText(await message.getLanguage(), "COMMAND.NOT_FOUND")

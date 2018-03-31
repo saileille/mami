@@ -15,9 +15,6 @@ class CommandCall(object):
 		self.prefix = None
 		self.command_strings = None
 		
-		#Validation happens at the first command check.
-		self.prefix_valid = False
-		
 		self.commands = []
 		self.arguments = []
 	
@@ -55,16 +52,15 @@ class CommandCall(object):
 	
 	async def validatePrefix(self, message, allPrefixesAllowed):
 		if (allPrefixesAllowed == True):
-			self.prefix_valid = True
-			return
+			return True
 		
 		#User prefix check.
 		if (message.user_settings.prefix != None):
 			#Not sure why we need to check for None. Come back to this later.
 			if (message.user_settings.prefix == self.prefix):
-				self.prefix_valid = True
+				return True
 			
-			return
+			return False
 		
 		#Server prefix check.
 		if (message.discord_py.server != None):
@@ -72,13 +68,15 @@ class CommandCall(object):
 			#Alternative would be to make a ghost server object.
 			if (message.server_settings.prefix != None):
 				if (message.server_settings.prefix == self.prefix):
-					self.prefix_valid = True
+					return True
 				
-				return
+				return False
 		
 		#Default prefix check.
 		if (self.defaultPrefix == self.prefix):
-			self.prefix_valid = True
+			return True
+		
+		return False
 	
 	async def convertArguments(self, command, language):
 		#Converts the arguments of the call according to the specification in Command object.

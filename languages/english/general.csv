@@ -35,7 +35,9 @@ COMMAND.SETTINGS.SHORTDESC;Contains configuration commands.
 COMMAND.TEST.MESSAGE;Homura Did Nothing Wrong
 COMMAND.TEST.SHORTDESC;Testing, testing... Homura Did Nothing Wrong...
 COMMAND.USE_DENIED;You do not have a permission to use `{command}`
+INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER;There are no customised command permissions on the server.
 NO_PERMISSIONS;No command permissions.
+OVERRIDDEN_CHANNELS;Overridden channels
 PERMISSION.CLEARED;Permissions cleared.
 PERMISSION.PERMISSIONS.ALLOWED;The command is authorised for users with following permissions:
 PERMISSION.ROLES.ALLOWED;The command is authorised for following roles:

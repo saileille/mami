@@ -7,6 +7,7 @@ from fileIO import getLanguageText
 from Permission import Permission
 from PermissionChanger import PermissionChanger
 from Prefix import Prefix
+from StringHandler import StringHandler
 
 class Command(object):
 	def __init__(
@@ -176,9 +177,19 @@ class Command(object):
 			#print(await permission.toDict())
 			return await permission.checkPermission(message.discord_py.author, userPermissions)
 		
+		#If the channel does not belong to a server, we get the default thing.
+		if (message.server_settings == None):
+			cmdObject = await StringHandler(permissionKey).getCommandFromString()
+			
+			permission = Permission()
+			await permission.forceDefault()
+			permission.permissions = cmdObject.default_permissions
+			
+			return await permission.checkPermission(message.discord_py.author, userPermissions)
+		
 		#Server permission check.
 		#Adds a default Permission object if the command is lacking one for this server.
-		permission = await PermissionChanger([], None, None).getPermissionObject(permissionKey, message.server_settings.permissions)
+		permission = await PermissionChanger().getPermissionObject(permissionKey, message.server_settings.permissions)
 		
 		#print(await permission.toDict())
 		#Checking server-wide permissions.

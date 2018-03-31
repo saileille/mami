@@ -16,7 +16,7 @@ async def on_ready():
 	defaultPrefix = await getCsvVar("DEFAULT_PREFIX", "basic", "staticData")
 	await client.change_presence(
 		game = Game(
-			name = "{prefix}help | {prefix}invite".format(prefix=defaultPrefix)
+			name = "{prefix}prefix.view to get started".format(prefix=defaultPrefix)
 		)
 	)
 	
@@ -41,10 +41,11 @@ async def handleMessage(discordMessage):
 	message = Message(discordMessage)
 	await message.getSettings()
 	
-	print("\nSERVER")
-	for key in message.server_settings.permissions:
-		print(key)
-		print(message.server_settings.permissions[key].__dict__)
+	if (message.server_settings != None):
+		print("\nSERVER")
+		for key in message.server_settings.permissions:
+			print(key)
+			print(message.server_settings.permissions[key].__dict__)
 	
 	print("\nCHANNEL")
 	for key in message.channel_settings.permissions:

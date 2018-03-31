@@ -163,10 +163,6 @@ commands = Command(
 					name = "permissions"
 					,short_desc = "COMMAND.INFO.PERMISSIONS.SHORTDESC"
 					,long_desc = "info.permissions"
-					,argument_help = "COMMAND.INFO.PERMISSIONS.ARGUMENTS"
-					,argument_types = [
-						"string"
-					]
 					,function = infoPermissions
 				)
 			]

@@ -4,7 +4,22 @@ async def test():
 async def prefixView():
 	return
 
-async def prefixUser():
+async def prefixServerChange():
+	return
+
+async def prefixServerClear():
+	return
+
+async def prefixChannelChange():
+	return
+
+async def prefixChannelClear():
+	return
+
+async def prefixUserChange():
+	return
+
+async def prefixUserClear():
 	return
 
 async def settingsServerPermissionsGive():
@@ -32,4 +47,13 @@ async def settingsChannelPermissionsClear():
 	return
 
 async def infoPermissions():
+	return
+
+async def serverLanguage():
+	return
+
+async def channelLanguage():
+	return
+
+async def userLanguage():
 	return

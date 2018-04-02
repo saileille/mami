@@ -1,53 +1,33 @@
-from bot import send
-from fileIO import getLanguageText
-from Prefix import Prefix
+from fileIO import getDefaultLanguage
+from SettingObject import SettingObject
 
-class User(object):
+class User(SettingObject):
 	def __init__(
 		self
+		,language = None
 		,prefix = None
 		,rpg_character = None
-		,language = None
 	):
-		self.prefix = prefix
+		super().__init__(
+			language
+			,prefix
+		)
 		self.rpg_character = rpg_character
-		self.language = language
 	
+	#Checks if the User object is the default one.
 	async def isDefault(self):
-		#Checks if the User object is the default one.
+		if (self.language != await getDefaultLanguage()):
+			return False
+		
 		if (self.prefix != None):
 			return False
 		
 		if (self.rpg_character != None):
 			return False
 		
-		if (self.language != None):
-			return False
-		
 		return True
 	
 	async def forceDefault(self):
+		self.language = None
 		self.prefix = None
 		self.rpg_character = None
-		self.language = None
-	
-	async def changePrefix(self, message, newPrefix):
-		#For display purposes.
-		newPrefixStr = newPrefix
-		
-		if (newPrefix == Prefix(message).default):
-			newPrefix = None
-		
-		if (newPrefix == self.prefix):
-			msg = await getLanguageText(await message.getLanguage(), "COMMAND.PREFIX.USER.NO_DIFFERENCE")
-			msg = msg.format(prefix=self.prefix)
-			
-			await send(message.discord_py.channel, msg)
-			return
-		
-		self.prefix = newPrefix
-		
-		msg = await getLanguageText(await message.getLanguage(), "COMMAND.PREFIX.USER.CHANGED")
-		msg = msg.format(user=message.discord_py.author.display_name, prefix=newPrefixStr)
-		
-		await send(message.discord_py.channel, msg)

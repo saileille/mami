@@ -25,27 +25,83 @@ commands = Command(
 					,function = prefixView
 				)
 				,Command(
+					name = "server"
+					,short_desc = "COMMAND.PREFIX.SERVER.SHORTDESC"
+					,sub_commands = [
+						Command(
+							name = "change"
+							,short_desc = "COMMAND.PREFIX.SERVER.CHANGE.SHORTDESC"
+							,long_desc = "prefix.server.change"
+							,argument_help = "COMMAND.PREFIX.SERVER.CHANGE.ARGUMENTS"
+							,argument_types = [
+								"string"
+							]
+							,function = prefixServerChange
+						)
+						,Command(
+							name = "clear"
+							,short_desc = "COMMAND.PREFIX.SERVER.CLEAR.SHORTDESC"
+							,long_desc = "prefix.server.clear"
+							,function = prefixServerClear
+						)
+					]
+				)
+				,Command(
+					name = "channel"
+					,short_desc = "COMMAND.PREFIX.CHANNEL.SHORTDESC"
+					,sub_commands = [
+						Command(
+							name = "change"
+							,short_desc = "COMMAND.PREFIX.CHANNEL.CHANGE.SHORTDESC"
+							,long_desc = "prefix.channel.change"
+							,argument_help = "COMMAND.PREFIX.CHANNEL.CHANGE.ARGUMENTS"
+							,argument_types = [
+								"string"
+							]
+							,function = prefixChannelChange
+						)
+						,Command(
+							name = "clear"
+							,short_desc = "COMMAND.PREFIX.CHANNEL.CLEAR.SHORTDESC"
+							,long_desc = "prefix.channel.clear"
+							,function = prefixChannelClear
+						)
+					]
+				)
+				,Command(
 					name = "user"
 					,short_desc = "COMMAND.PREFIX.USER.SHORTDESC"
-					,long_desc = "prefix.user"
-					,argument_help = "COMMAND.PREFIX.USER.ARGUMENTS"
-					,argument_types = [
-						"string"
+					,sub_commands = [
+						Command(
+							name = "change"
+							,short_desc = "COMMAND.PREFIX.USER.CHANGE.SHORTDESC"
+							,long_desc = "prefix.user.change"
+							,argument_help = "COMMAND.PREFIX.USER.CHANGE.ARGUMENTS"
+							,argument_types = [
+								"string"
+							]
+							,function = prefixUserChange
+						)
+						,Command(
+							name = "clear"
+							,short_desc = "COMMAND.PREFIX.USER.CLEAR.SHORTDESC"
+							,long_desc = "prefix.user.clear"
+							,function = prefixUserClear
+						)
 					]
-					,function = prefixUser
 				)
 			]
 		)
 		,Command(
 			name = "settings"
 			,short_desc = "COMMAND.SETTINGS.SHORTDESC"
-			,default_permissions = [
-				"manage_server"
-			]
 			,sub_commands = [
 				Command(
 					name = "server"
 					,short_desc = "COMMAND.SETTINGS.SERVER.SHORTDESC"
+					,default_permissions = [
+						"manage_server"
+					]
 					,sub_commands = [
 						Command(
 							name = "permissions"
@@ -96,11 +152,24 @@ commands = Command(
 								)
 							]
 						)
+						,Command(
+							name = "language"
+							,short_desc = "COMMAND.SETTINGS.SERVER.LANGUAGE.SHORTDESC"
+							,long_desc = "settings.server.language"
+							,argument_help = "COMMAND.SETTINGS.SERVER.LANGUAGE.ARGUMENTS"
+							,argument_types = [
+								"string"
+							]
+							,function = serverLanguage
+						)
 					]
 				)
 				,Command(
 					name = "channel"
 					,short_desc = "COMMAND.SETTINGS.CHANNEL.SHORTDESC"
+					,default_permissions = [
+						"manage_server"
+					]
 					,sub_commands = [
 						Command(
 							name = "permissions"
@@ -150,6 +219,32 @@ commands = Command(
 									,function = settingsChannelPermissionsClear
 								)
 							]
+						)
+						,Command(
+							name = "language"
+							,short_desc = "COMMAND.SETTINGS.CHANNEL.LANGUAGE.SHORTDESC"
+							,long_desc = "settings.channel.language"
+							,argument_help = "COMMAND.SETTINGS.CHANNEL.LANGUAGE.ARGUMENTS"
+							,argument_types = [
+								"string"
+							]
+							,function = channelLanguage
+						)
+					]
+				)
+				,Command(
+					name = "user"
+					,short_desc = "COMMAND.SETTINGS.USER.SHORTDESC"
+					,sub_commands = [
+						Command(
+							name = "language"
+							,short_desc = "COMMAND.SETTINGS.USER.LANGUAGE.SHORTDESC"
+							,long_desc = "settings.user.language"
+							,argument_help = "COMMAND.SETTINGS.USER.LANGUAGE.ARGUMENTS"
+							,argument_types = [
+								"string"
+							]
+							,function = userLanguage
 						)
 					]
 				)

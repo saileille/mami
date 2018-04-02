@@ -13,7 +13,42 @@
 				},
 				"user": {
 					"name": "user",
-					"sub_commands": {}
+					"sub_commands": {
+						"change": {
+							"name": "change",
+							"sub_commands": {}
+						},
+						"clear": {
+							"name": "clear",
+							"sub_commands": {}
+						}
+					}
+				},
+				"server": {
+					"name": "server",
+					"sub_commands": {
+						"change": {
+							"name": "change",
+							"sub_commands": {}
+						},
+						"clear": {
+							"name": "clear",
+							"sub_commands": {}
+						}
+					}
+				},
+				"channel": {
+					"name": "channel",
+					"sub_commands": {
+						"change": {
+							"name": "change",
+							"sub_commands": {}
+						},
+						"clear": {
+							"name": "clear",
+							"sub_commands": {}
+						}
+					}
 				}
 			}
 		},
@@ -43,6 +78,10 @@
 									"sub_commands": {}
 								}
 							}
+						},
+						"language": {
+							"name": "language",
+							"sub_commands": {}
 						}
 					}
 				},
@@ -69,6 +108,19 @@
 									"sub_commands": {}
 								}
 							}
+						},
+						"language": {
+							"name": "language",
+							"sub_commands": {}
+						}
+					}
+				},
+				"user": {
+					"name": "user",
+					"sub_commands": {
+						"language": {
+							"name": "language",
+							"sub_commands": {}
 						}
 					}
 				}

@@ -6,9 +6,7 @@ COMMAND.PREFIX.USER.ARGUMENTS;uusi_prefiksi
 COMMAND.PREFIX.USER.CHANGED;**{user}**, prefiksisi on nyt `{prefix}`
 COMMAND.PREFIX.USER.NO_DIFFERENCE;Prefiksisi on jo `{prefix}`
 COMMAND.PREFIX.USER.SHORTDESC;Vaihtaa käyttäjän henkilökohtaista prefiksiä.
-COMMAND.PREFIX.VIEW.CORRECT.DEFAULT;Koska serverin ja käyttäjän prefiksiä ei ole määritelty, käytä oletusprefiksiä `{prefix}`
-COMMAND.PREFIX.VIEW.CORRECT.SERVER;Koska et ole määritellyt omaa prefiksiäsi, mutta serveri on, käytä serverin prefiksiä `{prefix}`
-COMMAND.PREFIX.VIEW.CORRECT.USER;Koska olet määritellyt oman prefiksisi, käytä sitä (`{prefix}`)
+COMMAND.PREFIX.VIEW.CORRECT;Käytä prefiksiä `{prefix}`
 COMMAND.PREFIX.VIEW.DEFAULT_PREFIX;Oletusprefiksi on `{prefix}`
 COMMAND.PREFIX.VIEW.SERVER_PREFIX;Serverin prefiksi on `{prefix}`
 COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Serverin prefiksiä ei ole määritelty
@@ -35,6 +33,9 @@ COMMAND.SETTINGS.SHORTDESC;Pitää sisällään konfiguraatiokomentoja.
 COMMAND.TEST.MESSAGE;Täytyy keksiä joku suomenkielinen testi.
 COMMAND.TEST.SHORTDESC;Testikomento.
 COMMAND.USE_DENIED;Sinulla ei ole oikeuksia käyttää komentoa `{command}`
+LANGUAGE_CHANGED;Kieli muutettu!
+LANGUAGE.ENGLISH;englanti
+LANGUAGE.FINNISH;suomi
 NO_PERMISSIONS;Ei komentolupia.
 PERMISSION.CLEARED;Komentoluvat tyhjennetty.
 PERMISSION.PERMISSIONS.ALLOWED;Komento on sallittu seuraavat oikeudet omaaville käyttäjille:

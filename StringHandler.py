@@ -143,3 +143,13 @@ class StringHandler(object):
 		
 		self.list = msgList
 		return await self.getChapterDivide()
+	
+	#Gives either server, channel or user settings as a settingObject.
+	async def getSettingObject(self, message):
+		if (self.text == "server"):
+			return message.server_settings
+		
+		if (self.text == "channel"):
+			return message.channel_settings
+		
+		return message.user_settings

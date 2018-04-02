@@ -1,6 +1,5 @@
 from Channel import Channel
 from CommandCall import CommandCall
-from commandFunctions import commandNotFound
 from fileIO import deleteFile
 from fileIO import getDefaultLanguage
 from fileIO import loadCommands
@@ -22,12 +21,12 @@ class Message(object):
 		self.user_settings = None
 		self.server_settings = None
 		self.channel_settings = None
+		self.language = None
 	
 	async def separate(self):
 		#Separates the message according to its lines.
 		lines = self.discord_py.content.split("\n")
 		
-		commandCalls = []
 		#Processes commands and organises them.
 		for line in lines:
 			call = CommandCall(line)
@@ -36,22 +35,18 @@ class Message(object):
 			
 			if (self.discord_py.server != None):
 				prefixList.append(self.server_settings.prefix)
+				prefixList.append(self.channel_settings.prefix)
 			
-			await call.process(prefixList, await self.getLanguage())
+			await call.process(prefixList, self.language)
 			
 			if (call.arguments != None and call.commands != None):
-				commandCalls.append(call)
-		
-		self.calls = commandCalls
+				self.calls.append(call)
 	
 	async def executeCommands(self):
 		commands = await loadCommands()
 		
 		#Going through every command call.
 		for i in range(len(self.calls)):
-			#commandCall = self.calls[i]
-			#commandKey = commandCall.commands[0]
-			
 			await commands.call(self, i, -1)
 	
 	async def getUserSettings(self):
@@ -79,28 +74,37 @@ class Message(object):
 			self.channel_settings = channel
 	
 	async def getSettings(self):
-		#Loads user and server settings.
+		#Loads user, channel and server settings, and sets up the language.
 		await self.getUserSettings()
 		await self.getChannelSettings()
 		
 		if (self.discord_py.server != None):
 			await self.getServerSettings()
+		
+		await self.getLanguage()
 	
+	#Assigning the language as an attribute to limit calculation and avoid hassle with async and sync.
 	async def getLanguage(self):
 		if (self.channel_settings.language != None):
-			return self.channel_settings.language
+			#If channel language has been defined, that is used.
+			self.language = self.channel_settings.language
+			return
 		
 		if (self.discord_py.server != None):
-			#If in server...
+			#If in server, user's language is not even considered.
 			if (self.server_settings.language != None):
-				return self.server_settings.language
+				self.language = self.server_settings.language
+				return
 			
-			return await getDefaultLanguage
+			self.language = await getDefaultLanguage()
+			return
 		
 		if (self.user_settings.language != None):
-			return self.user_settings.language
+			#If in private channel...
+			self.language = self.user_settings.language
+			return
 		
-		return await getDefaultLanguage
+		self.language = await getDefaultLanguage()
 	
 	async def saveServer(self):
 		folder = "savedData\\servers"
@@ -124,7 +128,15 @@ class Message(object):
 		folder = "savedData\\channels"
 		filename = self.discord_py.channel.id
 		
-		if (await self.channel_settings.isDefault() == False):
+		if (await self.channel_settings.isDefault(self.server_settings.language) == False):
 			await savePickle(self.channel_settings, filename, folder)
 		else:
 			await deleteFile(filename + ".db", folder)
+	
+	#Saves server, user and channel in one function.
+	async def save(self):
+		if (self.server_settings != None):
+			await self.saveServer()
+			await self.saveChannel()
+		
+		await self.saveUser()

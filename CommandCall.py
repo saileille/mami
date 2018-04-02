@@ -14,7 +14,6 @@ class CommandCall(object):
 		self.raw_text = raw_text
 		self.prefix = None
 		self.command_strings = None
-		
 		self.commands = []
 		self.arguments = []
 	
@@ -55,22 +54,19 @@ class CommandCall(object):
 			return True
 		
 		#User prefix check.
-		if (message.user_settings.prefix != None):
-			#Not sure why we need to check for None. Come back to this later.
-			if (message.user_settings.prefix == self.prefix):
-				return True
-			
-			return False
+		prefixCheck = await message.user_settings.checkPrefix(self.prefix)
+		if (prefixCheck != None):
+			return prefixCheck
 		
-		#Server prefix check.
+		#Channel and server prefix checks.
 		if (message.discord_py.server != None):
-			#Causes exception if the server is not checked for None value.
-			#Alternative would be to make a ghost server object.
-			if (message.server_settings.prefix != None):
-				if (message.server_settings.prefix == self.prefix):
-					return True
-				
-				return False
+			prefixCheck = await message.channel_settings.checkPrefix(self.prefix)
+			if (prefixCheck != None):
+				return prefixCheck
+			
+			prefixCheck = await message.server_settings.checkPrefix(self.prefix)
+			if (prefixCheck != None):
+				return prefixCheck
 		
 		#Default prefix check.
 		if (self.defaultPrefix == self.prefix):
@@ -95,7 +91,6 @@ class CommandCall(object):
 					argument = int(argument)
 				elif (type == "float"):
 					argument = float(argument)
-			
 			except ValueError:
 				msg = await getLanguageText(language, "COMMAND.ARGUMENT_CONV.ERROR")
 				msg = msg.format(argument=argument)

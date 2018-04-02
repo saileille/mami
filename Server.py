@@ -1,33 +1,36 @@
 from fileIO import getCsvVarSync
+from fileIO import getDefaultLanguage
+from SettingObject import SettingObject
 from StringHandler import StringHandler
 
 #Server settings and configuration class.
-
-class Server(object):
-	defaultLanguage = getCsvVarSync("DEFAULT_LANGUAGE", "basic", "staticData")
-	
+class Server(SettingObject):
 	def __init__(
 		self
-		,language = defaultLanguage
+		,language = None
 		,prefix = None
 		,shortcuts = {}
 		,lists = {}
 		,autoresponses = {}
 		,permissions = {}
 	):
-		self.language = language
-		self.prefix = prefix
+		super().__init__(
+			language
+			,prefix
+		)
 		self.shortcuts = shortcuts
 		self.lists = lists
 		self.autoresponses = autoresponses
 		self.permissions = permissions
 	
+	#Checks if the Server object is the default one.
 	async def isDefault(self):
-		#Checks if the Server object is the default one.
-		
 		await self.cleanPermissions()
 		
-		if (self.language != self.defaultLanguage):
+		if (
+			self.language != await getDefaultLanguage()
+			and self.language != None
+		):
 			return False
 		
 		if (self.prefix != None):
@@ -47,9 +50,9 @@ class Server(object):
 		
 		return True
 	
+	#Forces the object to its default values.
 	async def forceDefault(self):
-		#Forces the object to its default values.
-		self.language = self.defaultLanguage
+		self.language = None
 		self.prefix = None
 		self.shortcuts = {}
 		self.lists = {}
@@ -67,17 +70,15 @@ class Server(object):
 		for key in deleteKeys:
 			del self.permissions[key]
 	
+	#Deletes the given permission keys.
 	async def deletePermissions(self, commandCodes):
-		#Deletes the given permission keys.
-		
 		for key in commandCodes:
 			if (key in self.permissions):
 				del self.permissions[key]
 	
+	#Assigns the permissions to the dictionary.
+	#This function is slightly different for channel.
 	async def getPermissionsPerCommand(self, permissionDict):
-		#Assigns the permissions to the dictionary.
-		#This function is slightly different for channel.
-		
 		for key in self.permissions:
 			if (key not in permissionDict):
 				permissionDict[key] = {}

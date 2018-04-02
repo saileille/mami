@@ -45,7 +45,7 @@ def getCsvVarSync(variable, filename, folder="", invert=0):
 				return row[1 - invert]
 
 async def getLanguageText(language, messageCode):
-	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
+	defaultLanguage = await getDefaultLanguage()
 	text = await getCsvVar(messageCode, "general", "languages\\" + language)
 	
 	
@@ -67,7 +67,7 @@ async def getLanguageCode(language, messageText):
 	
 	if (code == None):
 		#If not found, tries to find the code from the default language.
-		defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
+		defaultLanguage = await getDefaultLanguage()
 		code = await getCsvVar(messageText, "general", "languages\\" + defaultLanguage, invert=1)
 	
 	return code

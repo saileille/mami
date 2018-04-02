@@ -1,14 +1,30 @@
 CHANNEL;Channel
 COMMAND.ARGUMENT_CONV.ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
-COMMAND.NOT_FOUND;Get your head on straight! Command `{commandName}` does not exist.
+COMMAND.PREFIX.CHANNEL.CHANGE.ARGUMENTS;new_prefix
+COMMAND.PREFIX.CHANNEL.CHANGE.COMPLETED;Channel prefix is now `{prefix}`
+COMMAND.PREFIX.CHANNEL.CHANGE.NO_DIFFERENCE;The channel prefix is already `{prefix}`
+COMMAND.PREFIX.CHANNEL.CHANGE.SHORTDESC;Changes the channel prexix.
+COMMAND.PREFIX.CHANNEL.CLEAR.CLEARED;Channel prefix erased.
+COMMAND.PREFIX.CHANNEL.CLEAR.SHORTDESC;Erases the channel prefix.
+COMMAND.PREFIX.CHANNEL.SHORTDESC;Change or erase the channel prefix.
+COMMAND.PREFIX.SERVER.CHANGE.ARGUMENTS;new_prefix
+COMMAND.PREFIX.SERVER.CHANGE.COMPLETED;Server prefix is now `{prefix}`
+COMMAND.PREFIX.SERVER.CHANGE.NO_DIFFERENCE;The server prefix is already `{prefix}`
+COMMAND.PREFIX.SERVER.CHANGE.SHORTDESC;Changes the server prefix.
+COMMAND.PREFIX.SERVER.CLEAR.CLEARED;Server prefix erased.
+COMMAND.PREFIX.SERVER.CLEAR.SHORTDESC;Erases the server prefix.
+COMMAND.PREFIX.SERVER.SHORTDESC;Change or erase the server prefix.
 COMMAND.PREFIX.SHORTDESC;For managing command prefixes.
-COMMAND.PREFIX.USER.ARGUMENTS;new_prefix
-COMMAND.PREFIX.USER.CHANGED;**{user}**, you have changed your prefix to `{prefix}`
-COMMAND.PREFIX.USER.NO_DIFFERENCE;Your prefix is already `{prefix}`
-COMMAND.PREFIX.USER.SHORTDESC;Changes the personal prefix of the user.
-COMMAND.PREFIX.VIEW.CORRECT.DEFAULT;Since neither server nor user prefix has been defined, use the default prefix `{prefix}`
-COMMAND.PREFIX.VIEW.CORRECT.SERVER;Since you have not defined your own prefix, but the server has, use the server prefix `{prefix}`
-COMMAND.PREFIX.VIEW.CORRECT.USER;Since you have defined your own prefix, use that one (`{prefix}`)
+COMMAND.PREFIX.USER.CHANGE.ARGUMENTS;new_prefix
+COMMAND.PREFIX.USER.CHANGE.COMPLETED;**{user}**, you have changed your prefix to `{prefix}`
+COMMAND.PREFIX.USER.CHANGE.NO_DIFFERENCE;Your prefix is already `{prefix}`
+COMMAND.PREFIX.USER.CHANGE.SHORTDESC;Changes the personal prefix of the user.
+COMMAND.PREFIX.USER.CLEAR.CLEARED;Your prefix has been cleared.
+COMMAND.PREFIX.USER.CLEAR.SHORTDESC;Erases the user prefix.
+COMMAND.PREFIX.USER.SHORTDESC;Change or erase the user prefix.
+COMMAND.PREFIX.VIEW.CHANNEL_PREFIX;Channel prefix is `{prefix}`
+COMMAND.PREFIX.VIEW.CHANNEL_PREFIX.NONE;Channel prefix is not defined
+COMMAND.PREFIX.VIEW.CORRECT;Use the prefix `{prefix}`
 COMMAND.PREFIX.VIEW.DEFAULT_PREFIX;Default prefix is `{prefix}`
 COMMAND.PREFIX.VIEW.SERVER_PREFIX;Server prefix is `{prefix}`
 COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Server prefix is not defined
@@ -36,6 +52,9 @@ COMMAND.TEST.MESSAGE;Homura Did Nothing Wrong
 COMMAND.TEST.SHORTDESC;Testing, testing... Homura Did Nothing Wrong...
 COMMAND.USE_DENIED;You do not have a permission to use `{command}`
 INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER;There are no customised command permissions on the server.
+LANGUAGE_CHANGED;Language changed!
+LANGUAGE.ENGLISH;English
+LANGUAGE.FINNISH;Finnish
 NO_PERMISSIONS;No command permissions.
 OVERRIDDEN_CHANNELS;Overridden channels
 PERMISSION.CLEARED;Permissions cleared.

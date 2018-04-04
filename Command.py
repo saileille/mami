@@ -197,7 +197,7 @@ class Command(object):
 		#Called when a user is not allowed to use a command.
 		commandStr = await commandCall.getTrimmedCommandString(message, commandIndex)
 		
-		msg = await getLanguageText(message.language, "COMMAND.USE_DENIED")
+		msg = await getLanguageText(message.language, "USE_DENIED")
 		msg = msg.format(command=commandStr)
 		
 		await send(message.discord_py.channel, msg)

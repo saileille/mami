@@ -81,7 +81,16 @@
 						},
 						"language": {
 							"name": "language",
-							"sub_commands": {}
+							"sub_commands": {
+								"change": {
+									"name": "change",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "clear",
+									"sub_commands": {}
+								}
+							}
 						}
 					}
 				},
@@ -111,7 +120,16 @@
 						},
 						"language": {
 							"name": "language",
-							"sub_commands": {}
+							"sub_commands": {
+								"change": {
+									"name": "change",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "clear",
+									"sub_commands": {}
+								}
+							}
 						}
 					}
 				},
@@ -120,7 +138,16 @@
 					"sub_commands": {
 						"language": {
 							"name": "language",
-							"sub_commands": {}
+							"sub_commands": {
+								"change": {
+									"name": "change",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "clear",
+									"sub_commands": {}
+								}
+							}
 						}
 					}
 				}

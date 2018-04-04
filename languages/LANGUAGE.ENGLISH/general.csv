@@ -1,66 +1,154 @@
 CHANNEL;Channel
-COMMAND.ARGUMENT_CONV.ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
-COMMAND.PREFIX.CHANNEL.CHANGE.ARGUMENTS;new_prefix
-COMMAND.PREFIX.CHANNEL.CHANGE.COMPLETED;Channel prefix is now `{prefix}`
-COMMAND.PREFIX.CHANNEL.CHANGE.NO_DIFFERENCE;The channel prefix is already `{prefix}`
-COMMAND.PREFIX.CHANNEL.CHANGE.SHORTDESC;Changes the channel prexix.
-COMMAND.PREFIX.CHANNEL.CLEAR.CLEARED;Channel prefix erased.
-COMMAND.PREFIX.CHANNEL.CLEAR.SHORTDESC;Erases the channel prefix.
-COMMAND.PREFIX.CHANNEL.SHORTDESC;Change or erase the channel prefix.
-COMMAND.PREFIX.SERVER.CHANGE.ARGUMENTS;new_prefix
-COMMAND.PREFIX.SERVER.CHANGE.COMPLETED;Server prefix is now `{prefix}`
-COMMAND.PREFIX.SERVER.CHANGE.NO_DIFFERENCE;The server prefix is already `{prefix}`
-COMMAND.PREFIX.SERVER.CHANGE.SHORTDESC;Changes the server prefix.
-COMMAND.PREFIX.SERVER.CLEAR.CLEARED;Server prefix erased.
-COMMAND.PREFIX.SERVER.CLEAR.SHORTDESC;Erases the server prefix.
-COMMAND.PREFIX.SERVER.SHORTDESC;Change or erase the server prefix.
-COMMAND.PREFIX.SHORTDESC;For managing command prefixes.
-COMMAND.PREFIX.USER.CHANGE.ARGUMENTS;new_prefix
-COMMAND.PREFIX.USER.CHANGE.COMPLETED;**{user}**, you have changed your prefix to `{prefix}`
-COMMAND.PREFIX.USER.CHANGE.NO_DIFFERENCE;Your prefix is already `{prefix}`
-COMMAND.PREFIX.USER.CHANGE.SHORTDESC;Changes the personal prefix of the user.
-COMMAND.PREFIX.USER.CLEAR.CLEARED;Your prefix has been cleared.
-COMMAND.PREFIX.USER.CLEAR.SHORTDESC;Erases the user prefix.
-COMMAND.PREFIX.USER.SHORTDESC;Change or erase the user prefix.
-COMMAND.PREFIX.VIEW.CHANNEL_PREFIX;Channel prefix is `{prefix}`
-COMMAND.PREFIX.VIEW.CHANNEL_PREFIX.NONE;Channel prefix is not defined
-COMMAND.PREFIX.VIEW.CORRECT;Use the prefix `{prefix}`
-COMMAND.PREFIX.VIEW.DEFAULT_PREFIX;Default prefix is `{prefix}`
-COMMAND.PREFIX.VIEW.SERVER_PREFIX;Server prefix is `{prefix}`
-COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Server prefix is not defined
-COMMAND.PREFIX.VIEW.SHORTDESC;Shows the defined prefixes and tells which one you should use.
-COMMAND.PREFIX.VIEW.USER_PREFIX;User prefix is `{prefix}`
-COMMAND.PREFIX.VIEW.USER_PREFIX.NONE;User prefix is not defined
-COMMAND.SETTINGS.CHANNEL.SHORTDESC;Channel-related configuration commands.
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;command_name user_tag/role_tag
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;command_name user_tag/role_tag/permission_name
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Manage channel's command permissions.
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;command_name user_tag/role_tag/permission_name
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
-COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;command_name user_tag/role_tag
-COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
-COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;command_name user_tag/role_tag/permission_name
-COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
-COMMAND.SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Manage server's command permissions.
-COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;command_name user_tag/role_tag/permission_name
-COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
-COMMAND.SETTINGS.SERVER.SHORTDESC;Server-related configuration commands.
-COMMAND.SETTINGS.SHORTDESC;Contains configuration commands.
-COMMAND.TEST.MESSAGE;Homura Did Nothing Wrong
-COMMAND.TEST.SHORTDESC;Testing, testing... Homura Did Nothing Wrong...
-COMMAND.USE_DENIED;You do not have a permission to use `{command}`
-INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER;There are no customised command permissions on the server.
-LANGUAGE_CHANGED;Language changed!
+SERVER;Server
+ARGUMENT_CONV_ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
+
+#prefix
+PREFIX.SHORTDESC;For managing command prefixes.
+
+#prefix.channel
+PREFIX.CHANNEL.SHORTDESC;Change or erase the channel prefix.
+
+#prefix.channel.change
+PREFIX.CHANNEL.CHANGE.SHORTDESC;Changes the channel prexix.
+PREFIX.CHANNEL.CHANGE.ARGUMENTS;new_prefix
+PREFIX.CHANNEL.CHANGE.COMPLETED;Channel prefix is now `{prefix}`
+PREFIX.CHANNEL.CHANGE.NO_DIFFERENCE;The channel prefix is already `{prefix}`
+
+#prefix.channel.clear
+PREFIX.CHANNEL.CLEAR.SHORTDESC;Erases the channel prefix.
+PREFIX.CHANNEL.CLEAR.CLEARED;Channel prefix erased.
+
+#prefix.server
+PREFIX.SERVER.SHORTDESC;Change or erase the server prefix.
+
+#prefix.server.change
+PREFIX.SERVER.CHANGE.SHORTDESC;Changes the server prefix.
+PREFIX.SERVER.CHANGE.ARGUMENTS;new_prefix
+PREFIX.SERVER.CHANGE.COMPLETED;Server prefix is now `{prefix}`
+PREFIX.SERVER.CHANGE.NO_DIFFERENCE;The server prefix is already `{prefix}`
+
+#prefix.server.clear
+PREFIX.SERVER.CLEAR.SHORTDESC;Erases the server prefix.
+PREFIX.SERVER.CLEAR.CLEARED;Server prefix erased.
+
+#prefix.user
+PREFIX.USER.SHORTDESC;Change or erase the user prefix.
+
+#prefix.user.change
+PREFIX.USER.CHANGE.SHORTDESC;Changes the personal prefix of the user.
+PREFIX.USER.CHANGE.ARGUMENTS;new_prefix
+PREFIX.USER.CHANGE.COMPLETED;**{user}**, you have changed your prefix to `{prefix}`
+PREFIX.USER.CHANGE.NO_DIFFERENCE;Your prefix is already `{prefix}`
+
+#prefix.user.clear
+PREFIX.USER.CLEAR.SHORTDESC;Erases the user prefix.
+PREFIX.USER.CLEAR.CLEARED;Your prefix has been erased.
+
+#prefix.view
+PREFIX.VIEW.SHORTDESC;Shows the defined prefixes and tells which one you should use.
+PREFIX.VIEW.DEFAULT_PREFIX;Default prefix is `{prefix}`
+PREFIX.VIEW.SERVER_PREFIX;Server prefix is `{prefix}`
+PREFIX.VIEW.SERVER_PREFIX.NONE;Server prefix is not defined
+PREFIX.VIEW.CHANNEL_PREFIX;Channel prefix is `{prefix}`
+PREFIX.VIEW.CHANNEL_PREFIX.NONE;Channel prefix is not defined
+PREFIX.VIEW.USER_PREFIX;User prefix is `{prefix}`
+PREFIX.VIEW.USER_PREFIX.NONE;User prefix is not defined
+PREFIX.VIEW.CORRECT;Use the prefix `{prefix}`
+
+#settings
+SETTINGS.SHORTDESC;Contains configuration commands.
+
+#settings.channel
+SETTINGS.CHANNEL.SHORTDESC;Channel-related configuration commands.
+
+#settings.channel.language
+SETTINGS.CHANNEL.LANGUAGE.SHORTDESC;Change or reset the channel language.
+
+#settings.channel.language.change
+SETTINGS.CHANNEL.LANGUAGE.CHANGE.SHORTDESC;Change the channel language.
+SETTINGS.CHANNEL.LANGUAGE.CHANGE.ARGUMENTS;language
+SETTINGS.CHANNEL.LANGUAGE.CHANGE.CHANGED;Channel language changed.
+
+#settings.channel.language.clear
+SETTINGS.CHANNEL.LANGUAGE.CLEAR.SHORTDESC;Reset the channel language.
+SETTINGS.CHANNEL.LANGUAGE.CLEAR.RESET;Channel language reset.
+
+#settings.channel.permissions
+SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Manage channel's command permissions.
+
+#settings.channel.permissions.deny
+SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
+SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;command_name user_tag/role_tag
+
+#settings.channel.permissions.give
+SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
+SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;command_name user_tag/role_tag/permission_name
+
+#settings.channel.permissions.undo
+SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
+SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;command_name user_tag/role_tag/permission_name
+
+#settings.server
+SETTINGS.SERVER.SHORTDESC;Server-related configuration commands.
+
+#settings.server.language
+SETTINGS.SERVER.LANGUAGE.SHORTDESC;Change or reset the server language.
+
+#settings.server.language.change
+SETTINGS.SERVER.LANGUAGE.CHANGE.SHORTDESC;Change the server language.
+SETTINGS.SERVER.LANGUAGE.CHANGE.ARGUMENTS;language
+SETTINGS.SERVER.LANGUAGE.CHANGE.CHANGED;Server language changed.
+
+#settings.server.language.clear
+SETTINGS.SERVER.LANGUAGE.CLEAR.SHORTDESC;Reset the server language.
+SETTINGS.SERVER.LANGUAGE.CLEAR.RESET;Server language reset.
+
+#settings.server.permissions
+SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Manage server's command permissions.
+
+#settings.server.permissions.deny
+SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
+SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;command_name user_tag/role_tag
+
+#settings.server.permissions.give
+SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
+SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;command_name user_tag/role_tag/permission_name
+
+#settings.server.permissions.undo
+SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
+SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;command_name user_tag/role_tag/permission_name
+
+#settings.user
+SETTINGS.USER.SHORTDESC;User-related configuration commands.
+
+#settings.user.language
+SETTINGS.USER.LANGUAGE.SHORTDESC;Change or reset user language.
+
+#settings.user.language.change
+SETTINGS.USER.LANGUAGE.CHANGE.SHORTDESC;Change the user language.
+SETTINGS.USER.LANGUAGE.CHANGE.ARGUMENTS;language
+SETTINGS.USER.LANGUAGE.CHANGE.CHANGED;User language changed!
+
+#settings.user.language.clear
+SETTINGS.USER.LANGUAGE.CLEAR.SHORTDESC;Reset the user language.
+SETTINGS.USER.LANGUAGE.CLEAR.RESET;User language has been reset.
+
+#test
+TEST.SHORTDESC;Testing, testing... Homura Did Nothing Wrong...
+TEST.MESSAGE;Homura Did Nothing Wrong
+
+#Languages
 LANGUAGE.ENGLISH;English
 LANGUAGE.FINNISH;Finnish
+
+#Generic permission-related
+PERMISSION.USERS_ALLOWED;The command is authorised for following users:
+PERMISSION.USERS_BLOCKED;The command is unauthorised for following users:
+PERMISSION.ROLES_ALLOWED;The command is authorised for following roles:
+PERMISSION.ROLES_BLOCKED;The command is unauthorised for following roles:
+PERMISSION.PERMISSIONS_ALLOWED;The command is authorised for users with following permissions:
 NO_PERMISSIONS;No command permissions.
 OVERRIDDEN_CHANNELS;Overridden channels
-PERMISSION.CLEARED;Permissions cleared.
-PERMISSION.PERMISSIONS.ALLOWED;The command is authorised for users with following permissions:
-PERMISSION.ROLES.ALLOWED;The command is authorised for following roles:
-PERMISSION.ROLES.BLOCKED;The command is unauthorised for following roles:
-PERMISSION.USERS.ALLOWED;The command is authorised for following users:
-PERMISSION.USERS.BLOCKED;The command is unauthorised for following users:
-SERVER;Server
+USE_DENIED;You do not have a permission to use `{command}`
+INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER;There are no customised command permissions on the server.
+PERMISSIONS_CLEARED;Permissions cleared.

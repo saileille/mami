@@ -23,7 +23,7 @@ class SettingObject(object):
 		if (newPrefix == self.prefix):
 			msg = await getLanguageText(
 				message.language
-				,"COMMAND.PREFIX." + className + ".CHANGE.NO_DIFFERENCE"
+				,"PREFIX." + className + ".CHANGE.NO_DIFFERENCE"
 			)
 			msg = msg.format(prefix=self.prefix)
 			
@@ -32,7 +32,7 @@ class SettingObject(object):
 		
 		self.prefix = newPrefix
 		
-		msg = await getLanguageText(message.language, "COMMAND.PREFIX." + className + ".CHANGE.COMPLETED")
+		msg = await getLanguageText(message.language, "PREFIX." + className + ".CHANGE.COMPLETED")
 		msg = msg.format(user=message.discord_py.author.display_name, prefix=self.prefix)
 		
 		await message.save()
@@ -43,7 +43,7 @@ class SettingObject(object):
 		self.prefix = None
 		await message.save()
 		
-		msg = await getLanguageText(message.language, "COMMAND.PREFIX." + className + ".CLEAR.CLEARED")
+		msg = await getLanguageText(message.language, "PREFIX." + className + ".CLEAR.CLEARED")
 		await send(message.discord_py.channel, msg)
 	
 	async def changePermissions(self, message, arguments, operation):
@@ -66,10 +66,11 @@ class SettingObject(object):
 		await self.deletePermissions(permissionChanger.command_codes)
 		await message.save()
 		
-		msg = await getLanguageText(message.language, "PERMISSION.CLEARED")
+		msg = await getLanguageText(message.language, "PERMISSIONS_CLEARED")
 		await send(message.discord_py.channel, msg)
 	
 	async def changeLanguage(self, message, arguments):
+		className = type(self).__name__.upper()
 		languageName = " ".join(arguments)
 		languageCode = await getLanguageCode(message.language, languageName)
 		
@@ -82,9 +83,24 @@ class SettingObject(object):
 				message.discord_py.channel
 				,await getLanguageText(
 					message.language
-					,"LANGUAGE_CHANGED"
+					,"SETTINGS." + className + ".LANGUAGE.CHANGE.CHANGED"
 				)
 			)
+	
+	async def clearLanguage(self, message):
+		className = type(self).__name__.upper()
+		
+		self.language = None
+		await message.save()
+		await message.getLanguage()
+		
+		await send(
+			message.discord_py.channel
+			,await getLanguageText(
+				message.language
+				,"SETTINGS." + className + ".LANGUAGE.CLEAR.RESET"
+			)
+		)
 	
 	#Returns True if valid prefix, False if not, and None if undetermined.
 	async def checkPrefix(self, usedPrefix):

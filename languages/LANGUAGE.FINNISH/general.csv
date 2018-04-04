@@ -1,46 +1,154 @@
 CHANNEL;Kanava
-COMMAND.ARGUMENT_CONV.ERROR;`{argument}` ei ole numero. Varmista, että syötteesi on oikein, ja yritä uudestaan.
-COMMAND.NOT_FOUND;Komentoa `{commandName}` ei ole!
-COMMAND.PREFIX.SHORTDESC;Komentojen prefiksien hallintaa.
-COMMAND.PREFIX.USER.ARGUMENTS;uusi_prefiksi
-COMMAND.PREFIX.USER.CHANGED;**{user}**, prefiksisi on nyt `{prefix}`
-COMMAND.PREFIX.USER.NO_DIFFERENCE;Prefiksisi on jo `{prefix}`
-COMMAND.PREFIX.USER.SHORTDESC;Vaihtaa käyttäjän henkilökohtaista prefiksiä.
-COMMAND.PREFIX.VIEW.CORRECT;Käytä prefiksiä `{prefix}`
-COMMAND.PREFIX.VIEW.DEFAULT_PREFIX;Oletusprefiksi on `{prefix}`
-COMMAND.PREFIX.VIEW.SERVER_PREFIX;Serverin prefiksi on `{prefix}`
-COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE;Serverin prefiksiä ei ole määritelty
-COMMAND.PREFIX.VIEW.SHORTDESC;Näyttää määritellyt prefiksit, ja kertoo mitä niistä käyttäjän kuuluu käyttää.
-COMMAND.PREFIX.VIEW.USER_PREFIX;Käyttäjän prefiksi on `{prefix}`
-COMMAND.PREFIX.VIEW.USER_PREFIX.NONE;Käyttäjän prefiksiä ei ole määritelty
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Hallinnoi kanavan komentolupia.
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
-COMMAND.SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
-COMMAND.SETTINGS.CHANNEL.SHORTDESC;Kanavaan liittyvät konfiguraatiokomennot.
-COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
-COMMAND.SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
-COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
-COMMAND.SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
-COMMAND.SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Hallinnoi serverin komentolupia.
-COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
-COMMAND.SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
-COMMAND.SETTINGS.SERVER.SHORTDESC;Serveriin liittyvät konfiguraatiokomennot.
-COMMAND.SETTINGS.SHORTDESC;Pitää sisällään konfiguraatiokomentoja.
-COMMAND.TEST.MESSAGE;Täytyy keksiä joku suomenkielinen testi.
-COMMAND.TEST.SHORTDESC;Testikomento.
-COMMAND.USE_DENIED;Sinulla ei ole oikeuksia käyttää komentoa `{command}`
-LANGUAGE_CHANGED;Kieli muutettu!
+SERVER;Serveri
+ARGUMENT_CONV_ERROR;`{argument}` ei ole numero. Varmista, että syötteesi on oikein, ja yritä uudestaan.
+
+#prefix
+PREFIX.SHORTDESC;Komentojen prefiksien hallintaa.
+
+#prefix.channel
+PREFIX.CHANNEL.SHORTDESC;Vaihda tai pyyhi kanavan prefiksi.
+
+#prefix.channel.change
+PREFIX.CHANNEL.CHANGE.SHORTDESC;Vaihtaa kanavan prefiksin.
+PREFIX.CHANNEL.CHANGE.ARGUMENTS;uusi_prefiksi
+PREFIX.CHANNEL.CHANGE.COMPLETED;Kanavan prefiksi on nyt `{prefix}`
+PREFIX.CHANNEL.CHANGE.NO_DIFFERENCE;Kanavan prefiksi on jo `{prefix}`
+
+#prefix.channel.clear
+PREFIX.CHANNEL.CLEAR.SHORTDESC;Pyyhkii kanavan prefiksin.
+PREFIX.CHANNEL.CLEAR.CLEARED;Kanavan prefiksi pyyhitty.
+
+#prefix.server
+PREFIX.SERVER.SHORTDESC;Vaihda tai pyyhi serverin prefiksi.
+
+#prefix.server.change
+PREFIX.SERVER.CHANGE.SHORTDESC;Vaihtaa serverin prefiksin.
+PREFIX.SERVER.CHANGE.ARGUMENTS;uusi_prefiksi
+PREFIX.SERVER.CHANGE.COMPLETED;Serverin prefiksi on nyt `{prefix}`
+PREFIX.SERVER.CHANGE.NO_DIFFERENCE;Serverin prefiksi on jo `{prefix}`
+
+#prefix.server.clear
+PREFIX.SERVER.CLEAR.SHORTDESC;Pyyhkii serverin prefiksin.
+PREFIX.SERVER.CLEAR.CLEARED;Serverin prefiksi pyyhitty.
+
+#prefix.user
+PREFIX.USER.SHORTDESC;Vaihda tai pyyhi oma prefiksisi.
+
+#prefix.user.change
+PREFIX.USER.CHANGE.SHORTDESC;Vaihtaa käyttäjän henkilökohtaisen prefiksin.
+PREFIX.USER.CHANGE.ARGUMENTS;uusi_prefiksi
+PREFIX.USER.CHANGE.COMPLETED;**{user}**, prefiksisi on nyt `{prefix}`
+PREFIX.USER.CHANGE.NO_DIFFERENCE;Prefiksisi on jo `{prefix}`
+
+#prefix.user.clear
+PREFIX.USER.CLEAR.SHORTDESC;Pyyhkii henkilökohtaisen prefiksisi.
+PREFIX.USER.CLEAR.CLEARED;Prefiksisi on pyyhitty.
+
+#prefix.view
+PREFIX.VIEW.SHORTDESC;Näyttää määritellyt prefiksit, ja kertoo mitä niistä käyttäjän kuuluu käyttää.
+PREFIX.VIEW.DEFAULT_PREFIX;Oletusprefiksi on `{prefix}`
+PREFIX.VIEW.SERVER_PREFIX;Serverin prefiksi on `{prefix}`
+PREFIX.VIEW.SERVER_PREFIX.NONE;Serverin prefiksiä ei ole määritelty
+PREFIX.VIEW.CHANNEL_PREFIX;Kanavan prefiksi on `{prefix}`
+PREFIX.VIEW.CHANNEL_PREFIX.NONE;Kanavan prefiksiä ei ole määritelty
+PREFIX.VIEW.USER_PREFIX;Käyttäjän prefiksi on `{prefix}`
+PREFIX.VIEW.USER_PREFIX.NONE;Käyttäjän prefiksiä ei ole määritelty
+PREFIX.VIEW.CORRECT;Käytä prefiksiä `{prefix}`
+
+#settings
+SETTINGS.SHORTDESC;Pitää sisällään konfiguraatiokomentoja.
+
+#settings.channel
+SETTINGS.CHANNEL.SHORTDESC;Kanavaan liittyvät konfiguraatiokomennot.
+
+#settings.channel.language
+SETTINGS.CHANNEL.LANGUAGE.SHORTDESC;Vaihda tai resetoi kanavan kieli.
+
+#settings.channel.language.change
+SETTINGS.CHANNEL.LANGUAGE.CHANGE.SHORTDESC;Vaihda kanavan kieli.
+SETTINGS.CHANNEL.LANGUAGE.CHANGE.ARGUMENTS;kieli
+SETTINGS.CHANNEL.LANGUAGE.CHANGE.CHANGED;Kanavan kieli vaihdettu.
+
+#settings.channel.language.clear
+SETTINGS.CHANNEL.LANGUAGE.CLEAR.SHORTDESC;Resetoi kanavan kieli.
+SETTINGS.CHANNEL.LANGUAGE.CLEAR.RESET;Kanavan kieli resetoitu.
+
+#settigs.channel.permissions
+SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Hallinnoi kanavan komentolupia.
+
+#settings.channel.permissions.deny
+SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
+SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
+
+#settings.channel.permissions.give
+SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
+SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+
+#settings.channel.permissions.undo
+SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
+SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+
+#settings.server
+SETTINGS.SERVER.SHORTDESC;Serveriin liittyvät konfiguraatiokomennot.
+
+#settings.server.language
+SETTINGS.SERVER.LANGUAGE.SHORTDESC;Vaihda tai resetoi serverin kieli.
+
+#settings.server.language.change
+SETTINGS.SERVER.LANGUAGE.CHANGE.SHORTDESC;Vaihda serverin kieli.
+SETTINGS.SERVER.LANGUAGE.CHANGE.ARGUMENTS;kieli
+SETTINGS.SERVER.LANGUAGE.CHANGE.CHANGED;Serverin kieli vaihdettu.
+
+#settings.server.language.clear
+SETTINGS.SERVER.LANGUAGE.CLEAR.SHORTDESC;Resetoi serverin kieli.
+SETTINGS.SERVER.LANGUAGE.CLEAR.RESET;Serverin kieli resetoitu.
+
+#settings.server.permissions
+SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Hallinnoi serverin komentolupia.
+
+#settings.server.permissions.deny
+SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
+SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
+
+#settings.server.permissions.give
+SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
+SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+
+#settings.server.permissions.undo
+SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
+SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+
+#settings.user
+SETTINGS.USER.SHORTDESC;Käyttäjään liittyvät konfiguraatiokomennot.
+
+#settings.user.language
+SETTINGS.USER.LANGUAGE.SHORTDESC;Vaihda tai resetoi käyttäjän kieli.
+
+#settings.user.language.change
+SETTINGS.USER.LANGUAGE.CHANGE.SHORTDESC;Vaihda käyttäjän kieli.
+SETTINGS.USER.LANGUAGE.CHANGE.ARGUMENTS;kieli
+SETTINGS.USER.LANGUAGE.CHANGE.CHANGED;Kieli muutettu!
+
+#settings.user.language.clear
+SETTINGS.USER.LANGUAGE.CLEAR.SHORTDESC;Resetoi käyttäjän kieli.
+SETTINGS.USER.LANGUAGE.CLEAR.RESET;Kieli on resetoitu.
+
+#test
+TEST.SHORTDESC;Testikomento.
+TEST.MESSAGE;Moshimoshi, Mami desu.
+
+#Languages
 LANGUAGE.ENGLISH;englanti
 LANGUAGE.FINNISH;suomi
+
+#Generic permission-related
+PERMISSION.USERS_ALLOWED;Komento on sallittu seuraaville käyttäjille:
+PERMISSION.USERS_BLOCKED;Komento on kielletty seuraavilta käyttäjiltä:
+PERMISSION.ROLES_ALLOWED;Komento on sallittu seuraaville rooleille:
+PERMISSION.ROLES_BLOCKED;Komento on kielletty seuraavilta rooleilta:
+PERMISSION.PERMISSIONS_ALLOWED;Komento on sallittu seuraavat oikeudet omaaville käyttäjille:
 NO_PERMISSIONS;Ei komentolupia.
-PERMISSION.CLEARED;Komentoluvat tyhjennetty.
-PERMISSION.PERMISSIONS.ALLOWED;Komento on sallittu seuraavat oikeudet omaaville käyttäjille:
-PERMISSION.ROLES.ALLOWED;Komento on sallittu seuraaville rooleille:
-PERMISSION.ROLES.BLOCKED;Komento on kielletty seuraavilta rooleilta:
-PERMISSION.USERS.ALLOWED;Komento on sallittu seuraaville käyttäjille:
-PERMISSION.USERS.BLOCKED;Komento on kielletty seuraavilta käyttäjiltä:
-SERVER;Serveri
+OVERRIDDEN_CHANNELS;Yliajetut kanavat
+USE_DENIED;Sinulla ei ole lupaa käyttää komentoa `{command}`
+INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER;Serverillä ei ole kustomoituja komentolupia.
+PERMISSIONS_CLEARED;Komentoluvat tyhjennetty.

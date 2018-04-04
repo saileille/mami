@@ -49,11 +49,20 @@ async def settingsChannelPermissionsClear():
 async def infoPermissions():
 	return
 
-async def serverLanguage():
+async def changeServerLanguage():
 	return
 
-async def channelLanguage():
+async def changeChannelLanguage():
 	return
 
-async def userLanguage():
+async def changeUserLanguage():
+	return
+
+async def clearServerLanguage():
+	return
+
+async def clearChannelLanguage():
+	return
+
+async def clearUserLanguage():
 	return

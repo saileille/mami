@@ -1,5 +1,4 @@
 from bot import send
-from commandFunctionsRedirect import *
 from fileIO import getLanguageText
 from fileIO import loadPickle
 from Permission import Permission
@@ -9,7 +8,7 @@ from StringHandler import StringHandler
 
 #Test command.
 async def test(message, arguments):
-	msg = await getLanguageText(message.language, "COMMAND.TEST.MESSAGE")
+	msg = await getLanguageText(message.language, "TEST.MESSAGE")
 	await send(message.discord_py.channel, msg)
 
 #Shows the prefixes.
@@ -85,18 +84,27 @@ async def infoPermissions(message, arguments):
 	
 	await send(message.discord_py.channel, msgString)
 
-async def serverLanguage(message, arguments):
+async def changeServerLanguage(message, arguments):
 	await message.server_settings.changeLanguage(message, arguments)
 
-async def channelLanguage(message, arguments):
+async def changeChannelLanguage(message, arguments):
 	await message.channel_settings.changeLanguage(message, arguments)
 
-async def userLanguage(message, arguments):
+async def changeUserLanguage(message, arguments):
 	await message.user_settings.changeLanguage(message, arguments)
+
+async def clearServerLanguage(message, arguments):
+	await message.server_settings.clearLanguage(message)
+
+async def clearChannelLanguage(message, arguments):
+	await message.channel_settings.clearLanguage(message)
+
+async def clearUserLanguage(message, arguments):
+	await message.user_settings.clearLanguage(message)
 
 """
 async def commandNotFound(message, command):
-	msg = await getLanguageText(message.language, "COMMAND.NOT_FOUND")
+	msg = await getLanguageText(message.language, "NOT_FOUND")
 	msg = msg.format(commandName=command)
 	
 	await send(message.discord_py.channel, msg)

@@ -81,7 +81,16 @@
 						},
 						"language": {
 							"name": "kieli",
-							"sub_commands": {}
+							"sub_commands": {
+								"change": {
+									"name": "muuta",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "tyhjennä",
+									"sub_commands": {}
+								}
+							}
 						}
 					}
 				},
@@ -111,7 +120,16 @@
 						},
 						"language": {
 							"name": "kieli",
-							"sub_commands": {}
+							"sub_commands": {
+								"change": {
+									"name": "muuta",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "tyhjennä",
+									"sub_commands": {}
+								}
+							}
 						}
 					}
 				},
@@ -120,7 +138,16 @@
 					"sub_commands": {
 						"language": {
 							"name": "kieli",
-							"sub_commands": {}
+							"sub_commands": {
+								"change": {
+									"name": "muuta",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "tyhjennä",
+									"sub_commands": {}
+								}
+							}
 						}
 					}
 				}

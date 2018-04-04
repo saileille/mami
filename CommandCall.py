@@ -92,7 +92,7 @@ class CommandCall(object):
 				elif (type == "float"):
 					argument = float(argument)
 			except ValueError:
-				msg = await getLanguageText(language, "COMMAND.ARGUMENT_CONV.ERROR")
+				msg = await getLanguageText(language, "ARGUMENT_CONV_ERROR")
 				msg = msg.format(argument=argument)
 				
 				return msg

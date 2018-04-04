@@ -28,8 +28,14 @@ async def getCsvVar(variable, filename, folder="", invert=0):
 	with open(filepath, encoding="utf-8", mode="r") as file:
 		reader = csv.reader(file, dialect="excel", delimiter=";")
 		for row in reader:
-			if (row[0 + invert] == variable):
-				return row[1 - invert]
+			#Checking the length so that empty rows can be allowed.
+			#Checking the first character of the first row in case of comment.
+			if (
+				len(row) == 2
+				and row[0][0] != "#"
+				):
+				if (row[0 + invert] == variable):
+					return row[1 - invert]
 
 def getCsvVarSync(variable, filename, folder="", invert=0):
 	#Gets a specific variable from a CSV file.
@@ -41,8 +47,14 @@ def getCsvVarSync(variable, filename, folder="", invert=0):
 	with open(filepath, encoding="utf-8", mode="r") as file:
 		reader = csv.reader(file, dialect="excel", delimiter=";")
 		for row in reader:
-			if (row[0 + invert] == variable):
-				return row[1 - invert]
+			#Checking the length so that empty rows can be allowed.
+			#Checking the first character of the first row in case of comment.
+			if (
+				len(row) == 2
+				and row[0][0] != "#"
+				):
+				if (row[0 + invert] == variable):
+					return row[1 - invert]
 
 async def getLanguageText(language, messageCode):
 	defaultLanguage = await getDefaultLanguage()

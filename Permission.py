@@ -175,7 +175,7 @@ class Permission(object):
 		
 		
 		if (len(allowed) > 0):
-			string = await getLanguageText(language, "PERMISSION.USERS.ALLOWED")
+			string = await getLanguageText(language, "PERMISSION.USERS_ALLOWED")
 			
 			for user in allowed:
 				string += "\n - {name} ({id})".format(name=user["name"], id=user["id"])
@@ -183,7 +183,7 @@ class Permission(object):
 			stringList.append(string)
 		
 		if (len(blocked) > 0):
-			string = await getLanguageText(language, "PERMISSION.USERS.BLOCKED")
+			string = await getLanguageText(language, "PERMISSION.USERS_BLOCKED")
 			
 			for user in blocked:
 				string += "\n - {name} ({id})".format(name=user["name"], id=user["id"])
@@ -213,7 +213,7 @@ class Permission(object):
 				blocked.append(roleDict)
 		
 		if (len(allowed) > 0):
-			string = await getLanguageText(language, "PERMISSION.ROLES.ALLOWED")
+			string = await getLanguageText(language, "PERMISSION.ROLES_ALLOWED")
 			
 			for role in allowed:
 				string += "\n - {name} ({id})".format(name=role["name"], id=role["id"])
@@ -221,7 +221,7 @@ class Permission(object):
 			stringList.append(string)
 		
 		if (len(blocked) > 0):
-			string = await getLanguageText(language, "PERMISSION.ROLES.BLOCKED")
+			string = await getLanguageText(language, "PERMISSION.ROLES_BLOCKED")
 			
 			for role in blocked:
 				string += "\n - {name} ({id})".format(name=role["name"], id=role["id"])
@@ -234,7 +234,7 @@ class Permission(object):
 		stringList = []
 		
 		if (len(self.permissions) > 0):
-			string = await getLanguageText(language, "PERMISSION.PERMISSIONS.ALLOWED")
+			string = await getLanguageText(language, "PERMISSION.PERMISSIONS_ALLOWED")
 			
 			for permission in self.permissions:
 				string += "\n" + permission

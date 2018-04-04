@@ -18,31 +18,31 @@ class Prefix(object):
 		self.language = message.language
 	
 	async def getPrefixStrings(self):
-		msg = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.DEFAULT_PREFIX")
+		msg = await getLanguageText(self.language, "PREFIX.VIEW.DEFAULT_PREFIX")
 		msg = msg.format(prefix=self.default)
 		
 		string = ""
 		if (self.server != None):
-			string = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.SERVER_PREFIX")
+			string = await getLanguageText(self.language, "PREFIX.VIEW.SERVER_PREFIX")
 			string = string.format(prefix=self.server)
 		else:
-			string = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.SERVER_PREFIX.NONE")
+			string = await getLanguageText(self.language, "PREFIX.VIEW.SERVER_PREFIX.NONE")
 		
 		msg += "\n" + string
 		
 		if (self.channel != None):
-			string = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.CHANNEL_PREFIX")
+			string = await getLanguageText(self.language, "PREFIX.VIEW.CHANNEL_PREFIX")
 			string = string.format(prefix=self.channel)
 		else:
-			string = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.CHANNEL_PREFIX.NONE")
+			string = await getLanguageText(self.language, "PREFIX.VIEW.CHANNEL_PREFIX.NONE")
 		
 		msg += "\n" + string
 		
 		if (self.user != None):
-			string = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.USER_PREFIX")
+			string = await getLanguageText(self.language, "PREFIX.VIEW.USER_PREFIX")
 			string = string.format(prefix=self.user)
 		else:
-			string = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.USER_PREFIX.NONE")
+			string = await getLanguageText(self.language, "PREFIX.VIEW.USER_PREFIX.NONE")
 		
 		msg += "\n" + string + "\n\n"
 		msg += await self.getPrefixText()
@@ -60,7 +60,7 @@ class Prefix(object):
 		else:
 			prefix = self.default
 		
-		text = await getLanguageText(self.language, "COMMAND.PREFIX.VIEW.CORRECT")
+		text = await getLanguageText(self.language, "PREFIX.VIEW.CORRECT")
 		text = text.format(prefix=prefix)
 		return text
 	

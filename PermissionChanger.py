@@ -148,7 +148,7 @@ class PermissionChanger(object):
 			msgList.append("**" + self.command_strings[i] + "**")
 			msgList += await self.permission_objects[i].getPermissionString(message.discord_py, self.language)
 		
-		msg = await StringHandler(list=msgList).getChapterDivide()
+		msg = "\n\n".join(msgList)
 		await send(message.discord_py.channel, msg)
 	
 	async def undoUserPermissions(self, i):

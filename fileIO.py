@@ -18,6 +18,14 @@ def getFilePathSync(filename, folder=""):
 	
 	return filename
 
+async def readTextFile(filename, folder=""):
+	filepath = await getFilePath(filename + ".txt", folder)
+	
+	with open(filepath, encoding="utf-8", mode="r") as file:
+		text = file.read()
+	
+	return text
+
 async def getCsvVar(variable, filename, folder="", invert=0):
 	#Gets a specific variable from a CSV file.
 	#CSV is used for simple variables.
@@ -60,7 +68,6 @@ async def getLanguageText(language, messageCode):
 	defaultLanguage = await getDefaultLanguage()
 	text = await getCsvVar(messageCode, "general", "languages\\" + language)
 	
-	
 	if (text == None):
 		"""
 		text = await getCsvVar(messageCode, "general", "languages\\" + defaultLanguage)
@@ -70,7 +77,7 @@ async def getLanguageText(language, messageCode):
 		"""
 		return messageCode
 	
-	text.replace("\\n", "\n")
+	text = text.replace("\\n", "\n")
 	return text
 
 #Finds the CSV code. No longer needed.
@@ -174,3 +181,17 @@ async def loadCommands():
 async def getDefaultLanguage():
 	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
 	return defaultLanguage
+
+#Returns a list of folders in the languages folder, i.e. all available languages.
+async def getExistingLanguages(language):
+	languages = []
+	for folder in os.listdir("languages"):
+		if (os.path.isdir(os.path.join("languages", folder))):
+			languages.append(
+				await getLanguageText(
+					language
+					,folder
+				)
+			)
+	
+	return languages

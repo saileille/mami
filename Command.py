@@ -1,8 +1,10 @@
 from bot import send
 from fileIO import getCommandName
 from fileIO import getCsvVar
+from fileIO import getExistingLanguages
 from fileIO import getLanguageCode
 from fileIO import getLanguageText
+from fileIO import readTextFile
 from Permission import Permission
 from PermissionChanger import PermissionChanger
 from Prefix import Prefix
@@ -134,28 +136,25 @@ class Command(object):
 			subCmdStr = commandStr + subCmdName + " - " + subCmdDesc
 			subCommands.append(subCmdStr)
 		
-		msg = "```"
-		
+		msg = ""
 		for subCommand in subCommands:
-			msg += "\n" + subCommand
+			msg += "```" + subCommand + "```"
 		
-		msg += "```"
 		await send(message.discord_py.channel, msg)
 	
+	#Shows a simple syntax of the command, and displays the long description.
+	#Informs the user about what is needed for the command.
 	async def getSimpleHelp(self, message, commandCall, commandIndex):
-		#Shows a simple syntax of the command, and displays the short description.
-		#Informs the user about what is needed for the command.
-		
 		commandStr = await commandCall.getTrimmedCommandString(message, commandIndex)
 		argumentStr = await getLanguageText(message.language, self.argument_help)
-		shortDesc = await getLanguageText(message.language, self.short_desc)
+		desc = await self.getLongDesc(message.language)
 		
 		if (argumentStr != ""):
 			argumentStr = " [" + argumentStr + "]"
 		else:
 			argumentStr = ""
 		
-		msg = "```" + commandStr + argumentStr + "```" + shortDesc
+		msg = "```" + commandStr + argumentStr + "```" + desc
 		return msg
 	
 	async def getPermission(self, message, commandCall, commandIndex):
@@ -201,3 +200,12 @@ class Command(object):
 		msg = msg.format(command=commandStr)
 		
 		await send(message.discord_py.channel, msg)
+	
+	async def getLongDesc(self, language):
+		existingLanguages = await getExistingLanguages(language)
+		languagesString = "\n".join(existingLanguages)
+		
+		desc = await readTextFile(self.long_desc, "languages\\" + language + "\\descriptions")
+		desc = desc.format(languages=languagesString)
+		
+		return desc

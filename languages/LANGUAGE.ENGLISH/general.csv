@@ -76,17 +76,21 @@ SETTINGS.CHANNEL.LANGUAGE.CLEAR.RESET;Channel language reset.
 #settings.channel.permissions
 SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Manage channel's command permissions.
 
+#settings.channel.permissions.clear
+SETTINGS.CHANNEL.PERMISSIONS.CLEAR.SHORTDESC;Reset all command permissions for the selected commands.
+SETTINGS.CHANNEL.PERMISSIONS.CLEAR.ARGUMENTS;command_names
+
 #settings.channel.permissions.deny
 SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
-SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;command_name user_tag/role_tag
+SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;command_names user_tag/role_tag
 
 #settings.channel.permissions.give
 SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
-SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;command_name user_tag/role_tag/permission_name
+SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;command_names user_tag/role_tag/permission_name
 
 #settings.channel.permissions.undo
 SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
-SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;command_name user_tag/role_tag/permission_name
+SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;command_names user_tag/role_tag/permission_name
 
 #settings.server
 SETTINGS.SERVER.SHORTDESC;Server-related configuration commands.
@@ -105,6 +109,10 @@ SETTINGS.SERVER.LANGUAGE.CLEAR.RESET;Server language reset.
 
 #settings.server.permissions
 SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Manage server's command permissions.
+
+#settings.server.permissions.clear
+SETTINGS.SERVER.PERMISSIONS.CLEAR.SHORTDESC;Reset all command permissions for the selected commands.
+SETTINGS.SERVER.PERMISSIONS.CLEAR.ARGUMENTS;command_names
 
 #settings.server.permissions.deny
 SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
@@ -138,6 +146,7 @@ TEST.SHORTDESC;Testing, testing... Homura Did Nothing Wrong...
 TEST.MESSAGE;Homura Did Nothing Wrong
 
 #Languages
+INVALID_LANGUAGE_NAME;The language `{language}` does not exist. Available languages:\n{languages}
 LANGUAGE.ENGLISH;English
 LANGUAGE.FINNISH;Finnish
 

@@ -1,4 +1,5 @@
 from bot import send
+from fileIO import getExistingLanguages
 from fileIO import getLanguageCode
 from fileIO import getLanguageText
 from PermissionChanger import PermissionChanger
@@ -86,6 +87,14 @@ class SettingObject(object):
 					,"SETTINGS." + className + ".LANGUAGE.CHANGE.CHANGED"
 				)
 			)
+		else:
+			msg = await getLanguageText(message.language, "INVALID_LANGUAGE_NAME")
+			msg = msg.format(
+				language = languageName
+				,languages = "\n".join(await getExistingLanguages(message.language))
+			)
+			
+			await send(message.discord_py.channel, msg)
 	
 	async def clearLanguage(self, message):
 		className = type(self).__name__.upper()

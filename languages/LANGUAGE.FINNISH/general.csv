@@ -73,20 +73,24 @@ SETTINGS.CHANNEL.LANGUAGE.CHANGE.CHANGED;Kanavan kieli vaihdettu.
 SETTINGS.CHANNEL.LANGUAGE.CLEAR.SHORTDESC;Resetoi kanavan kieli.
 SETTINGS.CHANNEL.LANGUAGE.CLEAR.RESET;Kanavan kieli resetoitu.
 
-#settigs.channel.permissions
+#settings.channel.permissions
 SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Hallinnoi kanavan komentolupia.
+
+#settings.channel.permissions.clear
+SETTINGS.CHANNEL.PERMISSIONS.CLEAR.SHORTDESC;Resetoi kaikki valittujen komentojen oikeudet.
+SETTINGS.CHANNEL.PERMISSIONS.CLEAR.ARGUMENTS;komentojen_nimet
 
 #settings.channel.permissions.deny
 SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
-SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
+SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;komentojen_nimet käyttäjätägi/roolitägi
 
 #settings.channel.permissions.give
 SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
-SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;komentojen_nimet käyttäjätägi/roolitägi/oikeuden_nimi
 
 #settings.channel.permissions.undo
 SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
-SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;komentojen_nimet käyttäjätägi/roolitägi/oikeuden_nimi
 
 #settings.server
 SETTINGS.SERVER.SHORTDESC;Serveriin liittyvät konfiguraatiokomennot.
@@ -105,6 +109,10 @@ SETTINGS.SERVER.LANGUAGE.CLEAR.RESET;Serverin kieli resetoitu.
 
 #settings.server.permissions
 SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Hallinnoi serverin komentolupia.
+
+#settings.server.permissions.clear
+SETTINGS.SERVER.PERMISSIONS.CLEAR.SHORTDESC;Resetoi kaikki valittujen komentojen oikeudet.
+SETTINGS.SERVER.PERMISSIONS.CLEAR.ARGUMENTS;komentojen_nimet
 
 #settings.server.permissions.deny
 SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
@@ -138,6 +146,7 @@ TEST.SHORTDESC;Testikomento.
 TEST.MESSAGE;Moshimoshi, Mami desu.
 
 #Languages
+INVALID_LANGUAGE_NAME;Kieltä `{language}` ei ole olemassa. Valittavissa olevat kielet:\n{languages}
 LANGUAGE.ENGLISH;englanti
 LANGUAGE.FINNISH;suomi
 

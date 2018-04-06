@@ -95,16 +95,6 @@ class StringHandler(object):
 		
 		return isRole
 	
-	async def getChapterDivide(self):
-		string = ""
-		for item in self.list:
-			if (string != ""):
-				string += "\n\n"
-			
-			string += item
-		
-		return string
-	
 	#Returns a nice text thing. (Well said!)
 	async def getPermissionInfoText(self, discordMessage, language):
 		msgList = []
@@ -141,8 +131,7 @@ class StringHandler(object):
 				await getLanguageText(language, "INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER")
 			)
 		
-		self.list = msgList
-		return await self.getChapterDivide()
+		return "\n\n".join(msgList)
 	
 	#Gives either server, channel or user settings as a settingObject.
 	async def getSettingObject(self, message):

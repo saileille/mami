@@ -1,10 +1,14 @@
-from bot import send
-from fileIO import getLanguageText
-from fileIO import loadPickle
+from DictHandler import DictHandler
 from Permission import Permission
 from PermissionChanger import PermissionChanger
 from Prefix import Prefix
-from StringHandler import StringHandler
+
+from bot import send
+from fileIO import getLanguageText
+from fileIO import loadPickle
+from lewdPictures import getLewds
+from synchronisation import synchroniseChannel
+from synchronisation import unsynchroniseChannel
 
 #Test command.
 async def test(message, arguments):
@@ -70,7 +74,7 @@ async def settingsChannelPermissionsClear(message, arguments):
 async def infoPermissions(message, arguments):
 	permissionDict = {}
 	
-	for channel in message.discord_py.server.channels:
+	for channel in message.discord_py.guild.channels:
 		try:
 			channelSettings = await loadPickle(channel.id, "savedData\\channels")
 			await channelSettings.getPermissionsPerCommand(permissionDict, channel.id)
@@ -79,8 +83,8 @@ async def infoPermissions(message, arguments):
 	
 	await message.server_settings.getPermissionsPerCommand(permissionDict)
 	
-	stringHandler = StringHandler(dict=permissionDict)
-	msgString = await stringHandler.getPermissionInfoText(message.discord_py, message.language)
+	dictHandler = DictHandler(permissionDict)
+	msgString = await dictHandler.getPermissionInfoText(message.discord_py, message.language)
 	
 	await send(message.discord_py.channel, msgString)
 
@@ -101,6 +105,18 @@ async def clearChannelLanguage(message, arguments):
 
 async def clearUserLanguage(message, arguments):
 	await message.user_settings.clearLanguage(message)
+
+async def serverSync(message, arguments):
+	return
+
+async def channelSync(message, arguments):
+	await synchroniseChannel(message, arguments)
+
+async def channelUnsync(message, arguments):
+	await unsynchroniseChannel(message, arguments)
+
+async def lewd(message, arguments):
+	await getLewds(message, arguments)
 
 """
 async def commandNotFound(message, command):

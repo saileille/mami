@@ -1,9 +1,9 @@
+from PermissionChanger import PermissionChanger
+
 from bot import send
 from fileIO import getExistingLanguages
 from fileIO import getLanguageCode
 from fileIO import getLanguageText
-from PermissionChanger import PermissionChanger
-from Prefix import Prefix
 
 #All sorts of functions shared between server, channel and user settings
 class SettingObject(object):
@@ -16,15 +16,13 @@ class SettingObject(object):
 		self.prefix = prefix
 	
 	async def changePrefix(self, message, arguments):
-		#Getting the correct texts for return message.
 		className = type(self).__name__.upper()
-		
 		newPrefix = " ".join(arguments)
 		
 		if (newPrefix == self.prefix):
 			msg = await getLanguageText(
 				message.language
-				,"PREFIX." + className + ".CHANGE.NO_DIFFERENCE"
+				,"PREFIX.{TYPE}.CHANGE.NO_DIFFERENCE".format(TYPE=className)
 			)
 			msg = msg.format(prefix=self.prefix)
 			
@@ -33,7 +31,10 @@ class SettingObject(object):
 		
 		self.prefix = newPrefix
 		
-		msg = await getLanguageText(message.language, "PREFIX." + className + ".CHANGE.COMPLETED")
+		msg = await getLanguageText(
+			message.language
+			,"PREFIX.{TYPE}.CHANGE.COMPLETED".format(TYPE=className)
+		)
 		msg = msg.format(user=message.discord_py.author.display_name, prefix=self.prefix)
 		
 		await message.save()
@@ -44,7 +45,10 @@ class SettingObject(object):
 		self.prefix = None
 		await message.save()
 		
-		msg = await getLanguageText(message.language, "PREFIX." + className + ".CLEAR.CLEARED")
+		msg = await getLanguageText(
+			message.language
+			,"PREFIX.{TYPE}.CLEAR.CLEARED".format(TYPE=className)
+		)
 		await send(message.discord_py.channel, msg)
 	
 	async def changePermissions(self, message, arguments, operation):
@@ -84,7 +88,7 @@ class SettingObject(object):
 				message.discord_py.channel
 				,await getLanguageText(
 					message.language
-					,"SETTINGS." + className + ".LANGUAGE.CHANGE.CHANGED"
+					,"SETTINGS.{TYPE}.LANGUAGE.CHANGE.CHANGED".format(TYPE=className)
 				)
 			)
 		else:
@@ -107,7 +111,7 @@ class SettingObject(object):
 			message.discord_py.channel
 			,await getLanguageText(
 				message.language
-				,"SETTINGS." + className + ".LANGUAGE.CLEAR.RESET"
+				,"SETTINGS.{TYPE}.LANGUAGE.CLEAR.RESET".format(TYPE=className)
 			)
 		)
 	

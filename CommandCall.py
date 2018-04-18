@@ -59,7 +59,7 @@ class CommandCall(object):
 			return prefixCheck
 		
 		#Channel and server prefix checks.
-		if (message.discord_py.server != None):
+		if (message.discord_py.guild != None):
 			prefixCheck = await message.channel_settings.checkPrefix(self.prefix)
 			if (prefixCheck != None):
 				return prefixCheck
@@ -83,8 +83,8 @@ class CommandCall(object):
 			try:
 				type = command.argument_types[i]
 			except IndexError:
-				#If there are more than the minimum amount of arguments, the last conversion rule will be used.
-				type = command.argument_types[-1]
+				#If there are more than the minimum amount of arguments.
+				type = command.optional_arguments_type
 			
 			try:
 				if (type == "int"):

@@ -10,6 +10,7 @@ class Command(object):
 		,all_prefixes = False
 		,argument_help = ""
 		,argument_types = []
+		,optional_arguments_type = None
 		,default_permissions = []
 		,function = None
 	):
@@ -22,6 +23,7 @@ class Command(object):
 		self.all_prefixes = all_prefixes
 		self.argument_help = argument_help
 		self.argument_types = argument_types
+		self.optional_arguments_type = optional_arguments_type
 		self.default_permissions = default_permissions
 		self.function = function
 	

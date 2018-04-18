@@ -1,26 +1,23 @@
 import re
-from bot import client
 from fileIO import getCommandCode
 from fileIO import getCommandName
-from fileIO import getLanguageText
 from fileIO import loadCommands
 
-#Has all sorts of string-conversion functions, both to and from string.
-
+#Has all sorts of string-conversion functions.
 class StringHandler(object):
 	#Regex patterns
-	userMention = "<@!?([0-9]{18})>"
-	roleMention = "<@&([0-9]{18})>"
+	#Mentioning works, as well as writing a letter indicating the type, and ID.
+	regexPatterns = {
+		"user": "<@!?([0-9]{18})>|u([0-9]{18})"
+		,"role": "<@&([0-9]{18})>|r([0-9]{18})"
+		,"channel": "<#([0-9]{18})>|c([0-9]{18})"
+	}
 	
 	def __init__(
 		self
 		,text = None
-		,list = None
-		,dict = None
 	):
 		self.text = text
-		self.list = list
-		self.dict = dict
 	
 	async def getCommandCodeList(self, language):
 		#Converts the command string to a list of command codes.
@@ -57,8 +54,8 @@ class StringHandler(object):
 	
 	#Takes the absolute command code, returns localised command name.
 	#Used for e.g. getting command permissions to show to the user.
-	async def getLocalisedCommandString(self, language, commandCode):
-		codeList = commandCode.split(".")
+	async def getLocalisedCommandString(self, language):
+		codeList = self.text.split(".")
 		nameList = []
 		for i in range(len(codeList)):
 			nameList.append(
@@ -68,70 +65,40 @@ class StringHandler(object):
 		commandName = ".".join(nameList)
 		return commandName
 	
+	async def getId(self, type):
+		idMatch = re.fullmatch(self.regexPatterns[type], self.text)
+		
+		if (idMatch != None):
+			for i in range(1, 3):
+				id = idMatch.group(i)
+				if (id != None):
+					return int(id)
+		
+		return None
+	
 	#Returns a dictionary which tells if the mention is a user or role mention, and extracts the ID.
 	#If not a role or user mention, returns None
-	async def getIdFromMention(self):
-		isUser = re.fullmatch(self.userMention, self.text)
-		if (isUser != None):
-			id = isUser.group(1)
-			
+	async def getUserOrChannelId(self):
+		userId = await self.getId("user")
+		
+		if (userId != None):
 			dictionary = {
 				"type": "user"
-				,"id": id
+				,"id": userId
 			}
 			
 			return dictionary
 		
-		isRole = re.fullmatch(self.roleMention, self.text)
-		if (isRole != None):
-			id = isRole.group(1)
-			
+		roleId = await self.getId("role")
+		if (roleId != None):
 			dictionary = {
 				"type": "role"
-				,"id": id
+				,"id": roleId
 			}
 			
 			return dictionary
 		
-		return isRole
-	
-	#Returns a nice text thing. (Well said!)
-	async def getPermissionInfoText(self, discordMessage, language):
-		msgList = []
-		
-		for key in self.dict:
-			msgList.append(
-				await self.getLocalisedCommandString(language, key)
-			)
-			
-			if ("server" in self.dict[key]):
-				permissionObject = self.dict[key]["server"]
-				
-				msgList.append(
-					await getLanguageText(language, "SERVER")
-				)
-				
-				msgList += await permissionObject.getPermissionString(discordMessage, language)
-			
-			if ("channels" in self.dict[key]):
-				msgList.append(
-					await getLanguageText(language, "OVERRIDDEN_CHANNELS")
-				)
-				
-				for channelKey in self.dict[key]["channels"]:
-					#Get the channel object.
-					channelObject = client.get_channel(channelKey)
-					msgList.append(channelObject.name)
-					
-					permissionObject = self.dict[key]["channels"][channelKey]
-					msgList += await permissionObject.getPermissionString(discordMessage, language)
-		
-		if (len(msgList) == 0):
-			msgList.append(
-				await getLanguageText(language, "INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER")
-			)
-		
-		return "\n\n".join(msgList)
+		return None
 	
 	#Gives either server, channel or user settings as a settingObject.
 	async def getSettingObject(self, message):

@@ -2,7 +2,7 @@ import csv
 import json
 import os
 import pickle
-
+import urllib.request
 
 pickle.DEFAULT_PROTOCOL = 4
 
@@ -91,9 +91,9 @@ async def getLanguageCode(language, messageText):
 	
 	return code
 
+#Used to direct the search to the right path.
 async def getCommandCode(language, text, prevCodes=[]):
 	#prevCodes is a list of codes found previously.
-	#Used to direct the search to the right path.
 	
 	cmdDict = await loadJson("cmdNames", "languages\\" + language)
 	
@@ -120,7 +120,8 @@ async def getCommandName(language, code, prevCodes):
 	return cmdDict["sub_commands"][code]["name"]
 
 async def loadPickle(filename, folder="", default=None):
-	filepath = await getFilePath(filename + ".db", folder)
+	filename = "{filename}.db".format(filename=filename)
+	filepath = await getFilePath(filename, folder)
 	
 	#Exception handling is only done if the default object has been explicitly given.
 	if (default != None):
@@ -143,8 +144,15 @@ async def loadJson(filename, folder=""):
 	
 	return jsonObject
 
+async def loadJsonFromWeb(urlAddress):
+	with urllib.request.urlopen(urlAddress) as url:
+		jsonObject = json.loads(url.read().decode())
+	
+	return jsonObject
+
 async def savePickle(data, filename, folder=""):
-	filepath = await getFilePath(filename + ".db", folder)
+	filename = "{filename}.db".format(filename=filename)
+	filepath = await getFilePath(filename, folder)
 	
 	with open(filepath, mode="wb") as file:
 		pickle.dump(data, file)
@@ -195,3 +203,24 @@ async def getExistingLanguages(language):
 			)
 	
 	return languages
+
+async def saveSync(existingSyncs, folder):
+	if (len(existingSyncs) > 0):
+		await savePickle(existingSyncs, "syncdata", folder)
+	else:
+		await deleteFile("syncdata.db", folder)
+
+async def loadSync(type):
+	folder = "savedData\\" + type
+	return await loadPickle("syncdata", folder, default=[])
+
+async def getLewdList():
+	folder = "staticData\\lewds"
+	pictureNames = []
+	
+	for dirpath, dirnames, filenames in os.walk(folder):
+		for file in filenames:
+			if (file.startswith("nonlewd")):
+				pictureNames.append(await getFilePath(file, folder))
+	
+	return pictureNames

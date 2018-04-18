@@ -91,6 +91,10 @@
 									"sub_commands": {}
 								}
 							}
+						},
+						"sync_with": {
+							"name": "",
+							"sub_commands": {}
 						}
 					}
 				},
@@ -130,6 +134,19 @@
 									"sub_commands": {}
 								}
 							}
+						},
+						"sync": {
+							"name": "",
+							"sub_commands": {
+								"add": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"del": {
+									"name": "",
+									"sub_commands": {}
+								}
+							}
 						}
 					}
 				},
@@ -161,6 +178,10 @@
 					"sub_commands": {}
 				}
 			}
+		},
+		"lewd": {
+			"name": "",
+			"sub_commands": {}
 		}
 	}
 }

@@ -34,6 +34,7 @@ commands = Command(
 							,argument_types = [
 								"string"
 							]
+							,optional_arguments_type = "string"
 							,function = prefixServerChange
 						)
 						,Command(
@@ -55,6 +56,7 @@ commands = Command(
 							,argument_types = [
 								"string"
 							]
+							,optional_arguments_type = "string"
 							,function = prefixChannelChange
 						)
 						,Command(
@@ -76,6 +78,7 @@ commands = Command(
 							,argument_types = [
 								"string"
 							]
+							,optional_arguments_type = "string"
 							,function = prefixUserChange
 						)
 						,Command(
@@ -95,7 +98,7 @@ commands = Command(
 					name = "server"
 					,short_desc = "SETTINGS.SERVER.SHORTDESC"
 					,default_permissions = [
-						"manage_server"
+						"manage_guild"
 					]
 					,sub_commands = [
 						Command(
@@ -111,6 +114,7 @@ commands = Command(
 										"string"
 										,"string"
 									]
+									,optional_arguments_type = "string"
 									,function = settingsServerPermissionsGive
 								)
 								,Command(
@@ -122,6 +126,7 @@ commands = Command(
 										"string"
 										,"string"
 									]
+									,optional_arguments_type = "string"
 									,function = settingsServerPermissionsDeny
 								)
 								,Command(
@@ -133,6 +138,7 @@ commands = Command(
 										"string"
 										,"string"
 									]
+									,optional_arguments_type = "string"
 									,function = settingsServerPermissionsUndo
 								)
 								,Command(
@@ -143,6 +149,7 @@ commands = Command(
 									,argument_types = [
 										"string"
 									]
+									,optional_arguments_type = "string"
 									,function = settingsServerPermissionsClear
 								)
 							]
@@ -159,6 +166,7 @@ commands = Command(
 									,argument_types = [
 										"string"
 									]
+									,optional_arguments_type = "string"
 									,function = changeServerLanguage
 								)
 								,Command(
@@ -168,13 +176,27 @@ commands = Command(
 								)
 							]
 						)
+						,Command(
+							name = "sync_with"
+							,short_desc = "SETTINGS.SERVER.SYNC_WITH.SHORTDESC"
+							,long_desc = "settings.server.sync_with"
+							,argument_help = "SETTINGS.SERVER.SYNC_WITH.ARGUMENTS"
+							,argument_types = [
+								"string"
+							]
+							,optional_arguments_type = "string"
+							,default_permissions = [
+								"administrator"
+							]
+							,function = serverSync
+						)
 					]
 				)
 				,Command(
 					name = "channel"
 					,short_desc = "SETTINGS.CHANNEL.SHORTDESC"
 					,default_permissions = [
-						"manage_server"
+						"manage_guild"
 					]
 					,sub_commands = [
 						Command(
@@ -190,6 +212,7 @@ commands = Command(
 										"string"
 										,"string"
 									]
+									,optional_arguments_type = "string"
 									,function = settingsChannelPermissionsGive
 								)
 								,Command(
@@ -201,6 +224,7 @@ commands = Command(
 										"string"
 										,"string"
 									]
+									,optional_arguments_type = "string"
 									,function = settingsChannelPermissionsDeny
 								)
 								,Command(
@@ -212,6 +236,7 @@ commands = Command(
 										"string"
 										,"string"
 									]
+									,optional_arguments_type = "string"
 									,function = settingsChannelPermissionsUndo
 								)
 								,Command(
@@ -222,6 +247,7 @@ commands = Command(
 									,argument_types = [
 										"string"
 									]
+									,optional_arguments_type = "string"
 									,function = settingsChannelPermissionsClear
 								)
 							]
@@ -238,12 +264,47 @@ commands = Command(
 									,argument_types = [
 										"string"
 									]
+									,optional_arguments_type = "string"
 									,function = changeChannelLanguage
 								)
 								,Command(
 									name = "clear"
 									,short_desc = "SETTINGS.CHANNEL.LANGUAGE.CLEAR.SHORTDESC"
 									,function = clearChannelLanguage
+								)
+							]
+						)
+						,Command(
+							name = "sync"
+							,short_desc = "SETTINGS.CHANNEL.SYNC.SHORTDESC"
+							,default_permissions = [
+								"administrator"
+							]
+							,sub_commands = [
+								Command(
+									name = "add"
+									,short_desc = "SETTINGS.CHANNEL.SYNC.ADD.SHORTDESC"
+									,long_desc = "settings.channel.sync.add"
+									,argument_help = "SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS"
+									,argument_types = [
+										"string"
+									]
+									,optional_arguments_type = "string"
+									,default_permissions = [
+										"administrator"
+									]
+									,function = channelSync
+								)
+								,Command(
+									name = "del"
+									,short_desc = "SETTINGS.CHANNEL.SYNC.DEL.SHORTDESC"
+									,long_desc = "settings.channel.sync.del"
+									,argument_help = "SETTINGS.CHANNEL.SYNC.DEL.ARGUMENTS"
+									,optional_arguments_type = "string"
+									,default_permissions =[
+										"administrator"
+									]
+									,function = channelUnsync
 								)
 							]
 						)
@@ -265,6 +326,7 @@ commands = Command(
 									,argument_types = [
 										"string"
 									]
+									,optional_arguments_type = "string"
 									,function = changeUserLanguage
 								)
 								,Command(
@@ -288,6 +350,11 @@ commands = Command(
 					,function = infoPermissions
 				)
 			]
+		)
+		,Command(
+			name = "lewd"
+			,short_desc = "LEWD.SHORTDESC"
+			,function = lewd
 		)
 	]
 )

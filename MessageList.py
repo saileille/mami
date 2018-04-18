@@ -154,6 +154,6 @@ class MessageList(object):
 		
 		sentMessages = []
 		for message in self.messages:
-			sentMessages.append(await client.send_message(channel, message))
+			sentMessages.append(await channel.send(message))
 		
 		return sentMessages

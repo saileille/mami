@@ -1,14 +1,13 @@
+from Prefix import Prefix
+
 from bot import send
+from permissionFunctions import checkCommandPermission
 from fileIO import getCommandName
 from fileIO import getCsvVar
 from fileIO import getExistingLanguages
 from fileIO import getLanguageCode
 from fileIO import getLanguageText
 from fileIO import readTextFile
-from Permission import Permission
-from PermissionChanger import PermissionChanger
-from Prefix import Prefix
-from StringHandler import StringHandler
 
 class Command(object):
 	def __init__(
@@ -22,6 +21,7 @@ class Command(object):
 		,all_prefixes = False
 		,argument_help = ""
 		,argument_types = []
+		,optional_arguments_type = None
 		,default_permissions = []
 		,function = None
 	):
@@ -34,6 +34,7 @@ class Command(object):
 		self.all_prefixes = all_prefixes
 		self.argument_help = argument_help
 		self.argument_types = argument_types
+		self.optional_arguments_type = optional_arguments_type
 		self.default_permissions = default_permissions
 		self.function = function
 	
@@ -50,8 +51,14 @@ class Command(object):
 		
 		if (
 			commandIndex != -1
-			and await self.getPermission(message, commandCall, commandIndex) == False
-			):
+			and await checkCommandPermission(
+				message.discord_py.author
+				,message.server_settings
+				,message.channel_settings
+				,commandCall.commands[:commandIndex + 1]
+				,message.discord_py.channel
+			) == False
+		):
 			#Stops the loop if the user does not have permission for this command.
 			
 			await self.useDenied(message, commandCall, commandIndex)
@@ -100,8 +107,8 @@ class Command(object):
 			await self.displaySubCommands(message, commandCall, commandIndex)
 			return
 		
-		if (len(commandCall.arguments) < len(self.argument_types)):
-			#If not enough arguments were given.
+		if (await self.validateArgumentCount(len(commandCall.arguments)) == False):
+			#If right amount of arguments were not given.
 			msg = await self.getSimpleHelp(message, commandCall, commandIndex)
 			await send(message.discord_py.channel, msg)
 			return
@@ -114,6 +121,17 @@ class Command(object):
 		else:
 			errorMsg += await self.getSimpleHelp(message, await commandCall.command_string)
 			await send(message.discord_py.channel, errorMsg)
+	
+	async def validateArgumentCount(self, argumentCount):
+		minArgumentCount = len(self.argument_types)
+		
+		if (argumentCount == minArgumentCount):
+			return True
+		
+		if (argumentCount > minArgumentCount and self.optional_arguments_type != None):
+			return True
+		
+		return False
 	
 	async def displaySubCommands(self, message, commandCall, commandIndex):
 		#Used when an incomplete command gets typed.
@@ -157,41 +175,6 @@ class Command(object):
 		msg = "```" + commandStr + argumentStr + "```" + desc
 		return msg
 	
-	async def getPermission(self, message, commandCall, commandIndex):
-		userPermissions = message.discord_py.author.permissions_in(message.discord_py.channel)
-		"""
-		#Admins get past everything.
-		if (userPermissions.administrator == True):
-			return True
-		"""
-		commandList = commandCall.commands[:commandIndex + 1]
-		permissionKey = ".".join(commandList)
-		
-		#Channel permission check. If none specified, moves to server permission check.
-		if (permissionKey in message.channel_settings.permissions):
-			permission = message.channel_settings.permissions[permissionKey]
-			
-			#print(await permission.toDict())
-			return await permission.checkPermission(message.discord_py.author, userPermissions)
-		
-		#If the channel does not belong to a server, we get the default thing.
-		if (message.server_settings == None):
-			cmdObject = await StringHandler(permissionKey).getCommandFromString()
-			
-			permission = Permission()
-			await permission.forceDefault()
-			permission.permissions = cmdObject.default_permissions
-			
-			return await permission.checkPermission(message.discord_py.author, userPermissions)
-		
-		#Server permission check.
-		#Adds a default Permission object if the command is lacking one for this server.
-		permission = await PermissionChanger().getPermissionObject(permissionKey, message.server_settings.permissions)
-		
-		#print(await permission.toDict())
-		#Checking server-wide permissions.
-		return await permission.checkPermission(message.discord_py.author, userPermissions)
-	
 	async def useDenied(self, message, commandCall, commandIndex):
 		#Called when a user is not allowed to use a command.
 		commandStr = await commandCall.getTrimmedCommandString(message, commandIndex)
@@ -205,7 +188,10 @@ class Command(object):
 		existingLanguages = await getExistingLanguages(language)
 		languagesString = "\n".join(existingLanguages)
 		
-		desc = await readTextFile(self.long_desc, "languages\\" + language + "\\descriptions")
-		desc = desc.format(languages=languagesString)
+		try:
+			desc = await readTextFile(self.long_desc, "languages\\" + language + "\\descriptions")
+			desc = desc.format(languages=languagesString)
+		except FileNotFoundError:
+			desc = await getLanguageText(language, self.short_desc)
 		
 		return desc

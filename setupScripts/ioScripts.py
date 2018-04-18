@@ -16,7 +16,6 @@ def getFilePath(filename, folder=""):
 	return root + filename
 
 def saveCommandsPickle(commands):
-	#fileList = getFilePath("commandList.db", "staticData")
 	fileDict = getFilePath("commands.db", "staticData")
 	
 	commandDict = copy.deepcopy(commands)
@@ -92,14 +91,23 @@ def updateCommandNames(commands):
 					json.dump(jsonObject, file, ensure_ascii=False, indent="\t")
 
 def updateSubCommands(commands, localisation):
+	#Removing old ones.
+	removeKeys = []
+	for key in localisation["sub_commands"]:
+		if (key not in commands["sub_commands"]):
+			removeKeys.append(key)
+	
+	for key in removeKeys:
+		del localisation["sub_commands"][key]
+	
+	#Adding new ones.
 	for key in commands["sub_commands"]:
 		command = commands["sub_commands"][key]
 		
-		if (key in localisation["sub_commands"]):
-			updateSubCommands(command, localisation["sub_commands"][key])
-		else:
+		if (key not in localisation["sub_commands"]):
 			localisation["sub_commands"][key] = {
-				"name": ""
+				"name": "COMMANDNAME_HERE"
 				,"sub_commands": {}
 			}
-			updateSubCommands(command, localisation["sub_commands"][key])
+		
+		updateSubCommands(command, localisation["sub_commands"][key])

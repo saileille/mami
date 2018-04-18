@@ -15,7 +15,7 @@ logger.addHandler(handler)
 async def on_ready():
 	defaultPrefix = await getCsvVar("DEFAULT_PREFIX", "basic", "staticData")
 	await client.change_presence(
-		game = Game(
+		activity = Game(
 			name = "{prefix}prefix.view to get started".format(prefix=defaultPrefix)
 		)
 	)
@@ -40,17 +40,6 @@ async def handleMessage(discordMessage):
 	
 	message = Message(discordMessage)
 	await message.getSettings()
-	
-	if (message.server_settings != None):
-		print("\nSERVER")
-		for key in message.server_settings.permissions:
-			print(key)
-			print(message.server_settings.permissions[key].__dict__)
-	
-	print("\nCHANNEL")
-	for key in message.channel_settings.permissions:
-		print(key)
-		print(message.channel_settings.permissions[key].__dict__)
 	
 	#Processes text and executes commands.
 	await message.separate()

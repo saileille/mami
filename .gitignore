@@ -6,3 +6,4 @@ filepath.txt
 #Directories
 __pycache__/
 savedData/
+todo/

@@ -66,3 +66,15 @@ async def clearChannelLanguage():
 
 async def clearUserLanguage():
 	return
+
+async def serverSync():
+	return
+
+async def channelSync():
+	return
+
+async def channelUnsync():
+	return
+
+async def lewd():
+	return

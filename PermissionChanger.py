@@ -81,7 +81,7 @@ class PermissionChanger(object):
 	async def parseMentions(self):
 		#Handles mentions and permission names.
 		for argument in self.arguments:
-			idDict = await StringHandler(argument).getIdFromMention()
+			idDict = await StringHandler(argument).getUserOrChannelId()
 			
 			if (idDict != None):
 				if (idDict["type"] == "user"):

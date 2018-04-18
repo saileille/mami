@@ -1,12 +1,15 @@
 from Channel import Channel
 from CommandCall import CommandCall
-from fileIO import deleteFile
+from Server import Server
+from User import User
+
 from fileIO import getDefaultLanguage
 from fileIO import loadCommands
 from fileIO import loadPickle
-from fileIO import savePickle
-from Server import Server
-from User import User
+from settingObjectIO import loadChannelSettings
+from settingObjectIO import loadServerSettings
+from settingObjectIO import loadUserSettings
+from settingObjectIO import saveSettingObject
 
 class Message(object):
 	def __init__(
@@ -33,7 +36,7 @@ class Message(object):
 			
 			prefixList = [self.user_settings.prefix]
 			
-			if (self.discord_py.server != None):
+			if (self.discord_py.guild != None):
 				prefixList.append(self.server_settings.prefix)
 				prefixList.append(self.channel_settings.prefix)
 			
@@ -49,94 +52,43 @@ class Message(object):
 		for i in range(len(self.calls)):
 			await commands.call(self, i, -1)
 	
-	async def getUserSettings(self):
-		try:
-			self.user_settings = await loadPickle(self.discord_py.author.id, "savedData\\users")
-		except FileNotFoundError:
-			user = User()
-			await user.forceDefault()
-			self.user_settings = user
-	
-	async def getServerSettings(self):
-		try:
-			self.server_settings = await loadPickle(self.discord_py.server.id, "savedData\\servers")
-		except FileNotFoundError:
-			server = Server()
-			await server.forceDefault()
-			self.server_settings = server
-	
-	async def getChannelSettings(self):
-		try:
-			self.channel_settings = await loadPickle(self.discord_py.channel.id, "savedData\\channels")
-		except FileNotFoundError:
-			channel = Channel()
-			await channel.forceDefault()
-			self.channel_settings = channel
-	
+	#Loads user, channel and server settings, and sets up the language.
 	async def getSettings(self):
-		#Loads user, channel and server settings, and sets up the language.
-		await self.getUserSettings()
-		await self.getChannelSettings()
+		self.user_settings = await loadUserSettings(self.discord_py.author.id)
+		self.channel_settings = await loadChannelSettings(self.discord_py.channel.id)
 		
-		if (self.discord_py.server != None):
-			await self.getServerSettings()
+		if (self.discord_py.guild != None):
+			self.server_settings = await loadServerSettings(self.discord_py.guild.id)
 		
 		await self.getLanguage()
 	
-	#Assigning the language as an attribute to limit calculation and avoid hassle with async and sync.
+	#Assigning the language as an attribute to limit processing and to avoid hassle with async and sync.
 	async def getLanguage(self):
+		#If channel language has been defined, that is used.
 		if (self.channel_settings.language != None):
-			#If channel language has been defined, that is used.
 			self.language = self.channel_settings.language
 			return
 		
-		if (self.discord_py.server != None):
-			#If in server, user's language is not even considered.
+		if (self.discord_py.guild != None):
 			if (self.server_settings.language != None):
 				self.language = self.server_settings.language
 				return
 			
+			#If in server, user's language is not even considered.
 			self.language = await getDefaultLanguage()
 			return
 		
+		#If in private channel...
 		if (self.user_settings.language != None):
-			#If in private channel...
 			self.language = self.user_settings.language
 			return
 		
 		self.language = await getDefaultLanguage()
 	
-	async def saveServer(self):
-		folder = "savedData\\servers"
-		filename = self.discord_py.server.id
-		
-		if (await self.server_settings.isDefault() == False):
-			await savePickle(self.server_settings, filename, folder)
-		else:
-			await deleteFile(filename + ".db", folder)
-	
-	async def saveUser(self):
-		folder = "savedData\\users"
-		filename = self.discord_py.author.id
-		
-		if (await self.user_settings.isDefault() == False):
-			await savePickle(self.user_settings, filename, folder)
-		else:
-			await deleteFile(filename + ".db", folder)
-	
-	async def saveChannel(self):
-		folder = "savedData\\channels"
-		filename = self.discord_py.channel.id
-		
-		if (await self.channel_settings.isDefault(self.server_settings.language) == False):
-			await savePickle(self.channel_settings, filename, folder)
-		else:
-			await deleteFile(filename + ".db", folder)
-	
 	#Saves server, user and channel in one function.
 	async def save(self):
 		if (self.server_settings != None):
-			await self.saveServer()
-			await self.saveChannel()
+			await saveSettingObject(self.server_settings, self.discord_py.guild.id)
+			await saveSettingObject(self.channel_settings, self.discord_py.channel.id)
 		
-		await self.saveUser()
+		await saveSettingObject(self.user_settings, self.discord_py.author.id)

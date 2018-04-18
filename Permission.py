@@ -156,7 +156,8 @@ class Permission(object):
 		blocked = []
 		
 		for id in self.users:
-			member = discordMessage.server.get_member(id)
+			print("ID: " + repr(id))
+			member = discordMessage.guild.get_member(id)
 			
 			if (member != None):
 				name = member.display_name
@@ -198,7 +199,7 @@ class Permission(object):
 		blocked = []
 		
 		for id in self.roles:
-			for role in discordMessage.server.roles:
+			for role in discordMessage.guild.roles:
 				if (id == role.id):
 					roleDict = {"name": role.name}
 					break

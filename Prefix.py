@@ -9,7 +9,7 @@ class Prefix(object):
 		self.user = message.user_settings.prefix
 		self.channel = message.channel_settings.prefix
 		
-		if (message.discord_py.server != None):
+		if (message.discord_py.guild != None):
 			#If in a server...
 			self.server = message.server_settings.prefix
 		else:

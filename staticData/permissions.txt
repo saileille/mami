@@ -3,7 +3,7 @@ kick_members
 ban_members
 administrator
 manage_channels
-manage_server
+manage_guild
 add_reactions
 view_audit_logs
 read_messages

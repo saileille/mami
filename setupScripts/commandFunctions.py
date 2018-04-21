@@ -78,3 +78,6 @@ async def channelUnsync():
 
 async def lewd():
 	return
+
+async def nsfwLewd():
+	return

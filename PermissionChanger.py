@@ -1,9 +1,10 @@
 import copy
 
-from bot import send
-from fileIO import getPermissions
 from Permission import Permission
 from StringHandler import StringHandler
+
+from fileIO import getPermissions
+from sendFunctions import send
 
 class PermissionChanger(object):
 	def __init__(

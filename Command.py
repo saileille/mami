@@ -1,6 +1,5 @@
 from Prefix import Prefix
 
-from bot import send
 from permissionFunctions import checkCommandPermission
 from fileIO import getCommandName
 from fileIO import getCsvVar
@@ -8,6 +7,7 @@ from fileIO import getExistingLanguages
 from fileIO import getLanguageCode
 from fileIO import getLanguageText
 from fileIO import readTextFile
+from sendFunctions import send
 
 class Command(object):
 	def __init__(
@@ -24,6 +24,7 @@ class Command(object):
 		,optional_arguments_type = None
 		,default_permissions = []
 		,function = None
+		,nsfw_function = None
 	):
 		self.name = name
 		self.short_desc = short_desc
@@ -37,6 +38,7 @@ class Command(object):
 		self.optional_arguments_type = optional_arguments_type
 		self.default_permissions = default_permissions
 		self.function = function
+		self.nsfw_function = nsfw_function
 	
 	async def call(self, message, callIndex, commandIndex):
 		commandCall = message.calls[callIndex]
@@ -69,7 +71,7 @@ class Command(object):
 	async def checkOwnerOnly(self, message):
 		if (self.owner_only == True):
 			ownerId = await getCsvVar("OWNER_ID", "basic", "staticData")
-			return message.discord_py.author.id == ownerId
+			return message.discord_py.author.id == int(ownerId)
 		
 		return True
 	
@@ -87,9 +89,8 @@ class Command(object):
 		else:
 			nextCommandCode = None
 		
+		#If there are more commands in the call.
 		if (nextCommandIndex < len(commandCall.commands)):
-			#If there are more commands in the call.
-			
 			if (nextCommandCode in self.sub_commands):
 				await self.sub_commands[nextCommandCode].call(message, callIndex, commandIndex + 1)
 			else:
@@ -102,13 +103,13 @@ class Command(object):
 			
 			return
 		
+		#If the command has sub-commands but none were given...
 		if (len(self.sub_commands) > 0):
-			#If the command has sub-commands but none were used...
 			await self.displaySubCommands(message, commandCall, commandIndex)
 			return
 		
+		#If right amount of arguments were not given.
 		if (await self.validateArgumentCount(len(commandCall.arguments)) == False):
-			#If right amount of arguments were not given.
 			msg = await self.getSimpleHelp(message, commandCall, commandIndex)
 			await send(message.discord_py.channel, msg)
 			return
@@ -117,10 +118,35 @@ class Command(object):
 		errorMsg = await commandCall.convertArguments(self, message.language)
 		
 		if (errorMsg == ""):
-			await self.function(message, commandCall.arguments)
+			await self.launchCommand(message, commandCall.arguments)
 		else:
 			errorMsg += await self.getSimpleHelp(message, await commandCall.command_string)
 			await send(message.discord_py.channel, errorMsg)
+	
+	#Procedures involving command launching.
+	#Checks for NSFW functions, too.
+	async def launchCommand(self, message, arguments):
+		#If an ordinary channel, normal function is executed.
+		#If there is no normal function, the command is blocked.
+		if (message.discord_py.channel.is_nsfw() == False):
+			if (self.function != None):
+				await self.function(message, arguments)
+			else:
+				await send(
+					message.discord_py.channel
+					,await getLanguageText(
+						message.language
+						,"NSFW_COMMAND"
+					)
+				)
+		
+		#If an NSFW channel, the NSFW function is executed.
+		#If NSFW function does not exist, normal function is executed.
+		else:
+			if (self.nsfw_function == None):
+				await self.function(message, arguments)
+			else:
+				await self.nsfw_function(message, arguments)
 	
 	async def validateArgumentCount(self, argumentCount):
 		minArgumentCount = len(self.argument_types)

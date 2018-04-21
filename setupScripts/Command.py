@@ -13,6 +13,7 @@ class Command(object):
 		,optional_arguments_type = None
 		,default_permissions = []
 		,function = None
+		,nsfw_function = None
 	):
 		self.name = name
 		self.short_desc = short_desc
@@ -26,6 +27,7 @@ class Command(object):
 		self.optional_arguments_type = optional_arguments_type
 		self.default_permissions = default_permissions
 		self.function = function
+		self.nsfw_function = nsfw_function
 	
 	def getDict(self):
 		dictionary = {}

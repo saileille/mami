@@ -3,7 +3,7 @@
 from StringHandler import StringHandler
 
 from bot import client
-from bot import send
+from sendFunctions import send
 from fileIO import getLanguageText
 from fileIO import loadSync
 from fileIO import saveSync

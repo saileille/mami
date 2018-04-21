@@ -355,6 +355,7 @@ commands = Command(
 			name = "lewd"
 			,short_desc = "LEWD.SHORTDESC"
 			,function = lewd
+			,nsfw_function = nsfwLewd
 		)
 	]
 )

@@ -1,19 +1,24 @@
-from fileIO import getCsvVarSync
+from discord import File
+
 from MessagePart import MessagePart
+
+from bot import client
+from fileIO import getCsvVarSync
 
 class MessageList(object):
 	block = "```"
 	characterLimit = int(getCsvVarSync("MAX_CHARACTERS", "basic", "staticData"))
 	
-	def __init__(self, text):
+	def __init__(self, text, files):
 		self.text = text
+		self.files = files
 		self.messages = []
 	
 	async def getMessageList(self):
 		#Let's do this, motherfucker.
 		
-		if (len(self.text) <= self.characterLimit):
-			#No need to go over this if the message does not need to be split.
+		#No need to go over this if the message does not need to be split.
+		if (self.text == None or len(self.text) <= self.characterLimit):
 			self.messages = [self.text]
 			return 
 		
@@ -150,10 +155,39 @@ class MessageList(object):
 		self.messages = messages
 	
 	async def sendMessages(self, channel):
-		from bot import client
-		
 		sentMessages = []
-		for message in self.messages:
-			sentMessages.append(await channel.send(message))
+		
+		for i in range(len(self.messages)):
+			if (i == 0 and self.files != None):
+				await self.convertToFileObjects()
+				
+				if (len(self.files) == 1):
+					sentMessages.append(
+						await channel.send(
+							content = self.messages[i]
+							,file = self.files[i]
+						)
+					)
+				else:
+					sentMessages.append(
+						await channel.send(
+							content = self.messages[i]
+							,files = self.files
+						)
+					)
+			else:
+				sentMessages.append(
+					await channel.send(self.messages[i])
+				)
 		
 		return sentMessages
+	
+	#Converts the file paths to objects of File class.
+	async def convertToFileObjects(self):
+		fileObjects = []
+		for filePath in self.files:
+			fileObjects.append(
+				File(filePath)
+			)
+		
+		self.files = fileObjects

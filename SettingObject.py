@@ -1,9 +1,9 @@
 from PermissionChanger import PermissionChanger
 
-from bot import send
 from fileIO import getExistingLanguages
 from fileIO import getLanguageCode
 from fileIO import getLanguageText
+from sendFunctions import send
 
 #All sorts of functions shared between server, channel and user settings
 class SettingObject(object):

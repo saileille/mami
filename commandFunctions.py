@@ -3,10 +3,10 @@ from Permission import Permission
 from PermissionChanger import PermissionChanger
 from Prefix import Prefix
 
-from bot import send
 from fileIO import getLanguageText
 from fileIO import loadPickle
 from lewdPictures import getLewds
+from sendFunctions import send
 from synchronisation import synchroniseChannel
 from synchronisation import unsynchroniseChannel
 
@@ -116,7 +116,10 @@ async def channelUnsync(message, arguments):
 	await unsynchroniseChannel(message, arguments)
 
 async def lewd(message, arguments):
-	await getLewds(message, arguments)
+	await getLewds(message, arguments, nsfw=False)
+
+async def nsfwLewd(message, arguments):
+	await getLewds(message, arguments, nsfw=True)
 
 """
 async def commandNotFound(message, command):

@@ -9,6 +9,7 @@ from lewdPictures import getLewds
 from sendFunctions import send
 from synchronisation import synchroniseChannel
 from synchronisation import unsynchroniseChannel
+from synchronisation import viewChannelSyncs
 
 #Test command.
 async def test(message, arguments):
@@ -114,6 +115,9 @@ async def channelSync(message, arguments):
 
 async def channelUnsync(message, arguments):
 	await unsynchroniseChannel(message, arguments)
+
+async def channelSyncView(message, arguments):
+	await viewChannelSyncs(message)
 
 async def lewd(message, arguments):
 	await getLewds(message, arguments, nsfw=False)

@@ -63,7 +63,7 @@ class SettingObject(object):
 	#Clears all given permissions for specific command(s)
 	async def clearPermissions(self, message, arguments):
 		permissionChanger = PermissionChanger(arguments, message.language, "clear")
-		await permissionChanger.parseCommands()
+		await permissionChanger.parseCommands(message)
 		
 		if (permissionChanger.valid_change == False):
 			return

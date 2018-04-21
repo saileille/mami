@@ -301,10 +301,16 @@ commands = Command(
 									,long_desc = "settings.channel.sync.del"
 									,argument_help = "SETTINGS.CHANNEL.SYNC.DEL.ARGUMENTS"
 									,optional_arguments_type = "string"
-									,default_permissions =[
+									,default_permissions = [
 										"administrator"
 									]
 									,function = channelUnsync
+								)
+								,Command(
+									name = "view"
+									,short_desc = "SETTINGS.CHANNEL.SYNC.VIEW.SHORTDESC"
+									,long_desc = "settings.channel.sync.view"
+									,function = channelSyncView
 								)
 							]
 						)

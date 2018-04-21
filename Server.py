@@ -1,7 +1,9 @@
-from fileIO import getCsvVarSync
-from fileIO import getDefaultLanguage
 from SettingObject import SettingObject
 from StringHandler import StringHandler
+
+from bot import client
+from fileIO import getCsvVarSync
+from fileIO import getDefaultLanguage
 
 #Server settings and configuration class.
 class Server(SettingObject):
@@ -58,6 +60,10 @@ class Server(SettingObject):
 		self.lists = {}
 		self.autoresponses = {}
 		self.permissions = {}
+	
+	#Returns a boolean indicating whether the server exists.
+	async def isValid(self, id):
+		return bool(client.get_guild(id))
 	
 	async def cleanPermissions(self):
 		deleteKeys = []

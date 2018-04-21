@@ -1,5 +1,7 @@
 from Server import Server
 
+from bot import client
+
 #Channel-specific configuration.
 
 class Channel(Server):
@@ -47,6 +49,10 @@ class Channel(Server):
 			return False
 		
 		return True
+	
+	#Returns a boolean indicating whether the channel exists.
+	async def isValid(self, id):
+		return bool(client.get_channel(id))
 	
 	#Assigns the permissions to the dictionary.
 	#This function is slightly different for server.

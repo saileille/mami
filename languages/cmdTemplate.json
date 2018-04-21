@@ -145,6 +145,10 @@
 								"del": {
 									"name": "",
 									"sub_commands": {}
+								},
+								"view": {
+									"name": "",
+									"sub_commands": {}
 								}
 							}
 						}

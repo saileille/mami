@@ -3,7 +3,9 @@ import copy
 from Permission import Permission
 from StringHandler import StringHandler
 
+from fileIO import getLanguageText
 from fileIO import getPermissions
+from idFunctions import isPossibleId
 from sendFunctions import send
 
 class PermissionChanger(object):
@@ -25,61 +27,71 @@ class PermissionChanger(object):
 		self.permission_objects = []
 	
 	async def changePermissions(self, message, settingObject):
-		await self.parseArguments()
+		await self.parseArguments(message)
 		
 		if (self.valid_change == False):
 			return
 		
-		#print(self.__dict__)
 		await self.updatePermissions(message, settingObject)
 	
-	async def parseArguments(self):
+	async def parseArguments(self, message):
 		#Handles commands, user tags, etc. and returns success as a boolean.
 		
-		await self.parseCommands()
+		await self.parseCommands(message)
 		
 		if (self.valid_change == False):
 			#TODO: Message to inform the user of the faulty input.
 			return
 		
-		await self.parseMentions()
+		await self.parseMentions(message)
 	
-	async def parseCommands(self):
+	async def parseCommands(self, message):
 		#Looping through arguments, getting valid commands.
-		for i in range(len(self.arguments)):
-			stringHandler = StringHandler(self.arguments[i])
-			codeList = await stringHandler.getCommandCodeList(self.language)
+		while (0 < len(self.arguments)):
+			codeList = await StringHandler(self.arguments[0]).getCommandCodeList(self.language)
 			
+			#Valid command lists never have None as the last item.
 			if (codeList[-1] != None):
-				#Valid command lists never have None as the last item.
+				self.command_strings.append(self.arguments[0])
+				self.arguments = self.arguments[1:]
+				
 				codeString = ".".join(codeList)
 				self.command_codes.append(codeString)
 			else:
-				if (self.operation != "clear"):
-					#This one is not a command, thence looping is stopped.
-					#Proceeding to user/role tags and permissions next.
-					#Command strings are stored for later use.
+				#This one is not a command, thence looping is stopped.
+				#Proceeding to user/role tags and permissions next.
+				
+				#If clearing, all arguments must be commands.
+				if (self.operation == "clear"):	
+					msg = await getLanguageText(message.language, "INVALID_COMMAND")
+					msg = msg.format(command=self.arguments[0])
 					
-					self.command_strings = self.arguments[:i]
-					self.arguments = self.arguments[i:]
+					await send(message.discord_py.channel, msg)
+					self.valid_change = False
+					return
 				
 				break
 		
-		if (self.operation == "clear"):
-			self.command_strings = self.arguments[:len(self.command_codes)]
-		
-		if (
-			len(self.command_codes) == 0
-			or (
-				len(self.arguments) == 0
-				and self.operation != "clear"
-			)
-		):
-			#No command or argument was given.
-			print("No command or argument was given")
+		#No commands...
+		if (len(self.command_codes) == 0):
+			msg = await getLanguageText(message.language, "INVALID_COMMAND")
+			msg = msg.format(command=self.arguments[0])
+			
+			await send(message.discord_py.channel, msg)
 			self.valid_change = False
+			return
+		
+		#No arguments...
+		if (len(self.arguments) == 0 and self.operation != "clear"):
+			await send(
+				message.discord_py.channel
+				,await getLanguageText(message.language, "NO_ROLE_USER_PERMISSION_TAGS")
+			)
+			
+			self.valid_change = False
+			return
 	
-	async def parseMentions(self):
+	async def parseMentions(self, message):
 		#Handles mentions and permission names.
 		for argument in self.arguments:
 			idDict = await StringHandler(argument).getUserOrChannelId()
@@ -99,9 +111,16 @@ class PermissionChanger(object):
 				continue
 			
 			#If the input was not recognised.
-			print("Argument " + argument + " not recognised")
+			if (await isPossibleId(argument) == True):
+				msg = await getLanguageText(message.language, "INVALID_ROLE_USER_ID")
+			else:
+				msg = await getLanguageText(message.language, "INVALID_ROLE_USER_PERMISSION")
+			
+			msg = msg.format(argument=argument)
+			
+			await send(message.discord_py.channel, msg)
 			self.valid_change = False
-			return
+			break
 	
 	async def updatePermissions(self, message, settingObject):
 		#Makes the changes to the settings object.
@@ -167,7 +186,6 @@ class PermissionChanger(object):
 			self.permission_objects[i].permissions.remove(permissionName)
 	
 	async def addUserPermissions(self, i):
-		print(self.permission_objects[i].__dict__)
 		for id in self.user_ids:
 			self.permission_objects[i].users[id] = self.operation
 	
@@ -193,3 +211,39 @@ class PermissionChanger(object):
 		permission.permissions = cmdObject.default_permissions
 		
 		return permission
+	
+	def __str__(self):
+		text = "PERMISSIONCHANGER OBJECT\n\nArguments:"
+		for argument in self.arguments:
+			text += "\n" + argument
+		
+		text += "\n\nLanguage: " + self.language
+		text += "\nOperation: " + self.operation
+		
+		text += "\n\nCommand Strings:"
+		for commandString in self.command_strings:
+			text += "\n" + commandString
+		
+		text += "\n\nCommand Codes:"
+		for commandCode in self.command_codes:
+			text += "\n" + commandCode
+		
+		text += "\n\nUser IDs:"
+		for userId in self.user_ids:
+			text += "\n" + userId
+		
+		text += "\n\nRole IDs:"
+		for roleId in self.role_ids:
+			text += "\n" + roleId
+		
+		text += "\n\nPermissions:"
+		for permission in self.permissions:
+			text += "\n" + permission
+		
+		text += "\nValid Change: " + repr(self.valid_change)
+		
+		text += "\n\nPermission Objects:"
+		for permissionObject in self.permission_objects:
+			text += "\n" + permissionObject
+		
+		return text

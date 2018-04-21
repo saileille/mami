@@ -212,7 +212,10 @@ async def saveSync(existingSyncs, folder):
 
 async def loadSync(type):
 	folder = "savedData\\" + type
-	return await loadPickle("syncdata", folder, default=[])
+	syncs = await loadPickle("syncdata", folder, default=[])
+	
+	print(syncs)
+	return syncs
 
 async def getLewdList():
 	folder = "staticData\\lewds"

@@ -156,7 +156,6 @@ class Permission(object):
 		blocked = []
 		
 		for id in self.users:
-			print("ID: " + repr(id))
 			member = discordMessage.guild.get_member(id)
 			
 			if (member != None):

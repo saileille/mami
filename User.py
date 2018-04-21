@@ -1,5 +1,7 @@
-from fileIO import getDefaultLanguage
 from SettingObject import SettingObject
+
+from bot import client
+from fileIO import getDefaultLanguage
 
 class User(SettingObject):
 	def __init__(
@@ -31,3 +33,7 @@ class User(SettingObject):
 		self.language = None
 		self.prefix = None
 		self.rpg_character = None
+	
+	#Returns a boolean indicating whether the user exists.
+	async def isValid(self, id):
+		return bool(client.get_user(id))

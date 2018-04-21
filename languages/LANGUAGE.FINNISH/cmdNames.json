@@ -145,6 +145,10 @@
 								"del": {
 									"name": "poista",
 									"sub_commands": {}
+								},
+								"view": {
+									"name": "näytä",
+									"sub_commands": {}
 								}
 							}
 						}
@@ -180,7 +184,7 @@
 			}
 		},
 		"lewd": {
-			"name": "irstas",
+			"name": "säädytön",
 			"sub_commands": {}
 		}
 	}

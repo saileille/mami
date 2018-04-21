@@ -28,7 +28,6 @@ async def checkCommandPermission(
 	if (permissionKey in channelSettings.permissions):
 		permission = channelSettings.permissions[permissionKey]
 		
-		#print(await permission.toDict())
 		return await permission.checkPermission(userObject, userPermissions)
 	
 	#If the channel does not belong to a server, we get the default thing.
@@ -45,6 +44,5 @@ async def checkCommandPermission(
 	#Adds a default Permission object if the command is lacking one for this server.
 	permission = await PermissionChanger().getPermissionObject(permissionKey, serverSettings.permissions)
 	
-	#print(await permission.toDict())
 	#Checking server-wide permissions.
 	return await permission.checkPermission(userObject, userPermissions)

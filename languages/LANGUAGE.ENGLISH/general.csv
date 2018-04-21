@@ -1,6 +1,23 @@
+#Miscellaneous
 CHANNEL;Channel
 SERVER;Server
 ARGUMENT_CONV_ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
+CHANNEL_NOT_FOUND;Unable to find channel with ID `{id}`. Make sure the ID is correct, and that {botName} can see the channel.
+NOT_TEXT_CHANNEL_ON_SERVER;The channel with ID `{id}` is either private or a voice channel.
+USER_NOT_ON_SYNC_SERVER;You are not a member of the server where channel with ID `{id}` is located.
+UNKNOWN_CHANNEL;[Unknown Channel]
+INVALID_CHANNEL_ID_NUMBER;`{id}` is not a valid channel tag or ID reference for a channel. Did you mean to write `c{id}`?
+INVALID_CHANNEL_ID_NON_NUMBER;`{id}` is not a valid channel tag or ID reference for a channel.
+INVALID_COMMAND;`{command}` is not a valid command name.
+
+#info
+INFO.SHORTDESC;Information about various things, including the bot. Worth checking out!
+
+#info.permissions
+INFO.PERMISSIONS.SHORTDESC;Lists all given command permissions on this server, including channel-specific permissions.
+
+#lewd
+LEWD.SHORTDESC;L-lewd...
 
 #prefix
 PREFIX.SHORTDESC;For managing command prefixes.
@@ -92,6 +109,24 @@ SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;command_names user_tag/role_tag/perm
 SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
 SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;command_names user_tag/role_tag/permission_name
 
+#settings.channel.sync
+SETTINGS.CHANNEL.SYNC.SHORTDESC;Manage channel's synchronisation settings.
+
+#settings.channel.sync.add
+SETTINGS.CHANNEL.SYNC.ADD.SHORTDESC;Synchronise the channel with other channel(s).
+SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS;channel_tags
+NO_PERMISSION_TO_SYNC_CHANNEL;You do not have the permissions required to synchronise channel `{name}`.
+CHANNELS_SYNCED;The following channels have been synchronised with this channel:{channelSyncList}
+
+#settings.channel.sync.del
+SETTINGS.CHANNEL.SYNC.DEL.SHORTDESC;Remove existing synchronisation.
+CHANNEL_SYNCS_REMOVED;Synchronisations removed.
+
+#settings.channel.sync.view
+SETTINGS.CHANNEL.SYNC.VIEW.SHORTDESC;Displays the synchronisations this server's channels have.
+ALL_CHANNEL_SYNCS;Synchronised channels:{channelSyncList}
+NO_CHANNEL_SYNCS;No channels have been synchronised.
+
 #settings.server
 SETTINGS.SERVER.SHORTDESC;Server-related configuration commands.
 
@@ -161,3 +196,6 @@ OVERRIDDEN_CHANNELS;Overridden channels
 USE_DENIED;You do not have a permission to use `{command}`
 INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER;There are no customised command permissions on the server.
 PERMISSIONS_CLEARED;Permissions cleared.
+NO_ROLE_USER_PERMISSION_TAGS;You only wrote command names, but you also need to tell to whom the permission modifications shall apply (user/role tags or permission codes).
+INVALID_ROLE_USER_ID;`{argument}` is not a valid user/role tag or ID reference, or a permission code. Did you mean `u{argument}` or `r{argument}`?
+INVALID_ROLE_USER_PERMISSION;`{argument}` is not a valid user/role tag or ID reference, or a permission code.

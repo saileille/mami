@@ -1,6 +1,23 @@
+#Miscellaneous
 CHANNEL;Kanava
 SERVER;Serveri
 ARGUMENT_CONV_ERROR;`{argument}` ei ole numero. Varmista, että syötteesi on oikein, ja yritä uudestaan.
+CHANNEL_NOT_FOUND;Kanavaa ID:llä `{id}` ei löytynyt. Varmista, että ID on oikein, ja että {botName} näkee kanavan.
+NOT_TEXT_CHANNEL_ON_SERVER;Kanava ID:llä `{id}` on joko yksityinen tai äänikanava.
+USER_NOT_ON_SYNC_SERVER;Et ole jäsen sillä serverillä, missä kanava, jonka ID on `{id}` sijaitsee.
+UNKNOWN_CHANNEL;[Tuntematon Kanava]
+INVALID_CHANNEL_ID_NUMBER;`{id}` ei ole kelvollinen kanavatägi tai ID-viittaus kanavalle. Pitikö sinun kirjoittaa `c{id}`?
+INVALID_CHANNEL_ID_NON_NUMBER;`{id}` ei ole kelvollinen kanavatägi tai ID-viittaus kanavalle.
+INVALID_COMMAND;`{command}` ei ole komennon nimi.
+
+#info
+INFO.SHORTDESC;Tietoa monenlaisista asioista, kuten tästä botista. Kannattaa kurkata!
+
+#info.permissions
+INFO.PERMISSIONS.SHORTDESC;Listaa kaikki annetut komentoluvat, mukaan lukien kanavakohtaiset luvat.
+
+#lewd
+LEWD.SHORTDESC;Säädytöntä menoa...
 
 #prefix
 PREFIX.SHORTDESC;Komentojen prefiksien hallintaa.
@@ -92,6 +109,24 @@ SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;komentojen_nimet käyttäjätägi/ro
 SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
 SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;komentojen_nimet käyttäjätägi/roolitägi/oikeuden_nimi
 
+#settings.channel.sync
+SETTINGS.CHANNEL.SYNC.SHORTDESC;Hallinnoi kanavan synkronisaatioasetuksia.
+
+#settings.channel.sync.add
+SETTINGS.CHANNEL.SYNC.ADD.SHORTDESC;Synkronoi toisen kanavan tai kanavien kanssa.
+SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS;kanavatägit
+NO_PERMISSION_TO_SYNC_CHANNEL;Sinulla ei ole tarvittavia lupia synkronoimaan kanavaa `{name}`.
+CHANNELS_SYNCED;Seuraavat kanavat on synkronoitu tämän kanavan kanssa:{channelSyncList}
+
+#settings.channel.sync.del
+SETTINGS.CHANNEL.SYNC.DEL.SHORTDESC;Poista olemassaoleva synkronisaatio.
+CHANNEL_SYNCS_REMOVED;Synkronisaatiot poistettu.
+
+#settings.channel.sync.view
+SETTINGS.CHANNEL.SYNC.VIEW.SHORTDESC;Näyttää serverin kanavilla olevat synkronoinnit.
+ALL_CHANNEL_SYNCS;Synkronoidut kanavat:{channelSyncList}
+NO_CHANNEL_SYNCS;Mitään kanavia ei ole synkronoitu.
+
 #settings.server
 SETTINGS.SERVER.SHORTDESC;Serveriin liittyvät konfiguraatiokomennot.
 
@@ -161,3 +196,6 @@ OVERRIDDEN_CHANNELS;Yliajetut kanavat
 USE_DENIED;Sinulla ei ole lupaa käyttää komentoa `{command}`
 INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER;Serverillä ei ole kustomoituja komentolupia.
 PERMISSIONS_CLEARED;Komentoluvat tyhjennetty.
+NO_ROLE_USER_PERMISSION_TAGS;Kirjoitit vain komentojen nimiä, mutta sinun täytyy myös kertoa ketä lupamuutokset koskevat (käyttäjä/roolitägeillä tai oikeuksien nimillä).
+INVALID_ROLE_USER_ID;`{argument}` ei ole käyttäjä/roolitägi, ID-viitaus, eikä oikeuden nimi. Tarkoititko `u{argument}` tai `r{argument}`?
+INVALID_ROLE_USER_PERMISSION;`{argument}` ei ole käyttäjä/roolitägi, ID-viitaus, eikä oikeuden nimi.

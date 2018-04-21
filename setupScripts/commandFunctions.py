@@ -76,6 +76,9 @@ async def channelSync():
 async def channelUnsync():
 	return
 
+async def channelSyncView():
+	return
+
 async def lewd():
 	return
 

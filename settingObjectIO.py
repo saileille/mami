@@ -22,11 +22,14 @@ async def saveSettingObject(saveObject, id, language=None, syncList=None):
 	else:
 		isDefault = await saveObject.isDefault(language)
 	
-	if (isDefault == False):
-		await savePickle(saveObject, id, folder)
-	else:
-		idString = "{id}.db".format(id=id)
-		await deleteFile(idString, folder)
+	if (await saveObject.isValid(id) == True):
+		if (isDefault == False):
+			await savePickle(saveObject, id, folder)
+		else:
+			await deleteFile(
+				"{id}.db".format(id=id)
+				,folder
+			)
 	
 	#If this is the first iteration.
 	if (syncList == None):
@@ -36,8 +39,6 @@ async def saveSettingObject(saveObject, id, language=None, syncList=None):
 		syncList.remove(id)
 		nextId = syncList[0]
 		await saveSettingObject(saveObject, nextId, language, syncList)
-
-#Loads Server, Channel or User object.
 
 #Loads a Server object.
 async def loadServerSettings(id):

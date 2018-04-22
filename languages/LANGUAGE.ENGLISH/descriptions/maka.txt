@@ -1,0 +1,1 @@
+This commands presents you with a near-authentic Maka Laugh™. If no arguments are given, the resulting laugh will be 3 to 200 characters long. If one argument is given, the laugh will be of that length, and if two arguments are given, the laugh length will be something in-between that (the order of the numbers is irrelevant).

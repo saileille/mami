@@ -176,7 +176,7 @@ class Command(object):
 		if (errorMsg == ""):
 			await self.launchCommand(message, commandCall.arguments)
 		else:
-			errorMsg += await self.getSimpleHelp(message, await commandCall.command_string)
+			errorMsg += await self.getSimpleHelp(message, commandCall, commandIndex)
 			await send(message.discord_py.channel, errorMsg)
 	
 	#Procedures involving command launching.
@@ -268,7 +268,7 @@ class Command(object):
 		desc = await self.getLongDesc(message.language)
 		
 		if (argumentStr != ""):
-			argumentStr = " [" + argumentStr + "]"
+			argumentStr = " " + argumentStr
 		else:
 			argumentStr = ""
 		

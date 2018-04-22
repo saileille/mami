@@ -1,0 +1,1 @@
+Tämä komento antaa sinulle lähes autenttisen Maka-naurun™. Jos argumentteja ei anneta, nauru on 3-200 merkkiä pitkä. Jos annetaan yksi argumentti, nauru on juuri niin pitkä, ja kahden argumentin kanssa nauru on jotain siltä väliltä (numeroiden järjestyksellä ei ole väliä).

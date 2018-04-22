@@ -20,6 +20,10 @@ INFO.PERMISSIONS.SHORTDESC;Listaa kaikki annetut komentoluvat, mukaan lukien kan
 #lewd
 LEWD.SHORTDESC;Säädytöntä menoa...
 
+#maka
+MAKA.SHORTDESC;Pahoittelen jo etukäteen.
+MAKA.ARGUMENTS;<min naurun pituus> <max naurun pituus>
+
 #prefix
 PREFIX.SHORTDESC;Komentojen prefiksien hallintaa.
 
@@ -28,7 +32,7 @@ PREFIX.CHANNEL.SHORTDESC;Vaihda tai pyyhi kanavan prefiksi.
 
 #prefix.channel.change
 PREFIX.CHANNEL.CHANGE.SHORTDESC;Vaihtaa kanavan prefiksin.
-PREFIX.CHANNEL.CHANGE.ARGUMENTS;uusi_prefiksi
+PREFIX.CHANNEL.CHANGE.ARGUMENTS;[uusi prefiksi]
 PREFIX.CHANNEL.CHANGE.COMPLETED;Kanavan prefiksi on nyt `{prefix}`
 PREFIX.CHANNEL.CHANGE.NO_DIFFERENCE;Kanavan prefiksi on jo `{prefix}`
 
@@ -41,7 +45,7 @@ PREFIX.SERVER.SHORTDESC;Vaihda tai pyyhi serverin prefiksi.
 
 #prefix.server.change
 PREFIX.SERVER.CHANGE.SHORTDESC;Vaihtaa serverin prefiksin.
-PREFIX.SERVER.CHANGE.ARGUMENTS;uusi_prefiksi
+PREFIX.SERVER.CHANGE.ARGUMENTS;[uusi prefiksi]
 PREFIX.SERVER.CHANGE.COMPLETED;Serverin prefiksi on nyt `{prefix}`
 PREFIX.SERVER.CHANGE.NO_DIFFERENCE;Serverin prefiksi on jo `{prefix}`
 
@@ -54,7 +58,7 @@ PREFIX.USER.SHORTDESC;Vaihda tai pyyhi oma prefiksisi.
 
 #prefix.user.change
 PREFIX.USER.CHANGE.SHORTDESC;Vaihtaa käyttäjän henkilökohtaisen prefiksin.
-PREFIX.USER.CHANGE.ARGUMENTS;uusi_prefiksi
+PREFIX.USER.CHANGE.ARGUMENTS;[uusi prefiksi]
 PREFIX.USER.CHANGE.COMPLETED;**{user}**, prefiksisi on nyt `{prefix}`
 PREFIX.USER.CHANGE.NO_DIFFERENCE;Prefiksisi on jo `{prefix}`
 
@@ -84,7 +88,7 @@ SETTINGS.CHANNEL.LANGUAGE.SHORTDESC;Vaihda tai resetoi kanavan kieli.
 
 #settings.channel.language.change
 SETTINGS.CHANNEL.LANGUAGE.CHANGE.SHORTDESC;Vaihda kanavan kieli.
-SETTINGS.CHANNEL.LANGUAGE.CHANGE.ARGUMENTS;kieli
+SETTINGS.CHANNEL.LANGUAGE.CHANGE.ARGUMENTS;[kieli]
 SETTINGS.CHANNEL.LANGUAGE.CHANGE.CHANGED;Kanavan kieli vaihdettu.
 
 #settings.channel.language.clear
@@ -96,26 +100,26 @@ SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Hallinnoi kanavan komentolupia.
 
 #settings.channel.permissions.clear
 SETTINGS.CHANNEL.PERMISSIONS.CLEAR.SHORTDESC;Resetoi kaikki valittujen komentojen oikeudet.
-SETTINGS.CHANNEL.PERMISSIONS.CLEAR.ARGUMENTS;komentojen_nimet
+SETTINGS.CHANNEL.PERMISSIONS.CLEAR.ARGUMENTS;[komentojen nimet]
 
 #settings.channel.permissions.deny
 SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
-SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;komentojen_nimet käyttäjätägi/roolitägi
+SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;[komentojen nimet] [käyttäjä/roolitägit]
 
 #settings.channel.permissions.give
 SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
-SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;komentojen_nimet käyttäjätägi/roolitägi/oikeuden_nimi
+SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;[komentojen nimet] [käyttäjä- tai roolitägit/oikeuden nimet]
 
 #settings.channel.permissions.undo
 SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
-SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;komentojen_nimet käyttäjätägi/roolitägi/oikeuden_nimi
+SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;[komentojen nimet] [käyttäjä- tai roolitägit/oikeuden nimet]
 
 #settings.channel.sync
 SETTINGS.CHANNEL.SYNC.SHORTDESC;Hallinnoi kanavan synkronisaatioasetuksia.
 
 #settings.channel.sync.add
 SETTINGS.CHANNEL.SYNC.ADD.SHORTDESC;Synkronoi toisen kanavan tai kanavien kanssa.
-SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS;kanavatägit
+SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS;[kanavatägit]
 NO_PERMISSION_TO_SYNC_CHANNEL;Sinulla ei ole tarvittavia lupia synkronoimaan kanavaa `{name}`.
 CHANNELS_SYNCED;Seuraavat kanavat on synkronoitu tämän kanavan kanssa:{channelSyncList}
 
@@ -136,7 +140,7 @@ SETTINGS.SERVER.LANGUAGE.SHORTDESC;Vaihda tai resetoi serverin kieli.
 
 #settings.server.language.change
 SETTINGS.SERVER.LANGUAGE.CHANGE.SHORTDESC;Vaihda serverin kieli.
-SETTINGS.SERVER.LANGUAGE.CHANGE.ARGUMENTS;kieli
+SETTINGS.SERVER.LANGUAGE.CHANGE.ARGUMENTS;[kieli]
 SETTINGS.SERVER.LANGUAGE.CHANGE.CHANGED;Serverin kieli vaihdettu.
 
 #settings.server.language.clear
@@ -148,19 +152,19 @@ SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Hallinnoi serverin komentolupia.
 
 #settings.server.permissions.clear
 SETTINGS.SERVER.PERMISSIONS.CLEAR.SHORTDESC;Resetoi kaikki valittujen komentojen oikeudet.
-SETTINGS.SERVER.PERMISSIONS.CLEAR.ARGUMENTS;komentojen_nimet
+SETTINGS.SERVER.PERMISSIONS.CLEAR.ARGUMENTS;[komentojen nimet]
 
 #settings.server.permissions.deny
 SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Estä käyttäjää/roolia käyttämästä tiettyä komentoa.
-SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi
+SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;[komentojen nimet] [käyttä/roolitägit]
 
 #settings.server.permissions.give
 SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC;Anna käyttäjälle/roolille/oikeudelle lupa käyttää tiettyä komentoa.
-SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;[komentojen nimet] [käyttäjä- tai roolitägit/oikeuden nimet]
 
 #settings.server.permissions.undo
 SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC;Pyyhi käyttäjä/rooli/oikeus annetuista komentoluvista.
-SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;komennon_nimi käyttäjätägi/roolitägi/oikeuden_nimi
+SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;[komentojen nimet] [käyttäjä- tai roolitägit/oikeuden nimet]
 
 #settings.user
 SETTINGS.USER.SHORTDESC;Käyttäjään liittyvät konfiguraatiokomennot.
@@ -170,7 +174,7 @@ SETTINGS.USER.LANGUAGE.SHORTDESC;Vaihda tai resetoi käyttäjän kieli.
 
 #settings.user.language.change
 SETTINGS.USER.LANGUAGE.CHANGE.SHORTDESC;Vaihda käyttäjän kieli.
-SETTINGS.USER.LANGUAGE.CHANGE.ARGUMENTS;kieli
+SETTINGS.USER.LANGUAGE.CHANGE.ARGUMENTS;[kieli]
 SETTINGS.USER.LANGUAGE.CHANGE.CHANGED;Kieli muutettu!
 
 #settings.user.language.clear

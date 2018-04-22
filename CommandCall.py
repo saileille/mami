@@ -88,9 +88,17 @@ class CommandCall(object):
 			
 			try:
 				if (type == "int"):
-					argument = int(argument)
+					try:
+						argument = int(argument)
+					
+					#Cannot convert straight to int from string representation of float.
+					except ValueError:
+						argument = float(argument)
+						argument = int(argument)
+				
 				elif (type == "float"):
 					argument = float(argument)
+			
 			except ValueError:
 				msg = await getLanguageText(language, "ARGUMENT_CONV_ERROR")
 				msg = msg.format(argument=argument)

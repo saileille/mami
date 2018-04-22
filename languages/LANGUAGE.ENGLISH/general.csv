@@ -20,6 +20,10 @@ INFO.PERMISSIONS.SHORTDESC;Lists all given command permissions on this server, i
 #lewd
 LEWD.SHORTDESC;L-lewd...
 
+#maka
+MAKA.SHORTDESC;I apologise in advance.
+MAKA.ARGUMENTS;<min laugh length> <max laugh length>
+
 #prefix
 PREFIX.SHORTDESC;For managing command prefixes.
 
@@ -28,7 +32,7 @@ PREFIX.CHANNEL.SHORTDESC;Change or erase the channel prefix.
 
 #prefix.channel.change
 PREFIX.CHANNEL.CHANGE.SHORTDESC;Changes the channel prexix.
-PREFIX.CHANNEL.CHANGE.ARGUMENTS;new_prefix
+PREFIX.CHANNEL.CHANGE.ARGUMENTS;[new prefix]
 PREFIX.CHANNEL.CHANGE.COMPLETED;Channel prefix is now `{prefix}`
 PREFIX.CHANNEL.CHANGE.NO_DIFFERENCE;The channel prefix is already `{prefix}`
 
@@ -41,7 +45,7 @@ PREFIX.SERVER.SHORTDESC;Change or erase the server prefix.
 
 #prefix.server.change
 PREFIX.SERVER.CHANGE.SHORTDESC;Changes the server prefix.
-PREFIX.SERVER.CHANGE.ARGUMENTS;new_prefix
+PREFIX.SERVER.CHANGE.ARGUMENTS;[new prefix]
 PREFIX.SERVER.CHANGE.COMPLETED;Server prefix is now `{prefix}`
 PREFIX.SERVER.CHANGE.NO_DIFFERENCE;The server prefix is already `{prefix}`
 
@@ -54,7 +58,7 @@ PREFIX.USER.SHORTDESC;Change or erase the user prefix.
 
 #prefix.user.change
 PREFIX.USER.CHANGE.SHORTDESC;Changes the personal prefix of the user.
-PREFIX.USER.CHANGE.ARGUMENTS;new_prefix
+PREFIX.USER.CHANGE.ARGUMENTS;[new prefix]
 PREFIX.USER.CHANGE.COMPLETED;**{user}**, you have changed your prefix to `{prefix}`
 PREFIX.USER.CHANGE.NO_DIFFERENCE;Your prefix is already `{prefix}`
 
@@ -84,7 +88,7 @@ SETTINGS.CHANNEL.LANGUAGE.SHORTDESC;Change or reset the channel language.
 
 #settings.channel.language.change
 SETTINGS.CHANNEL.LANGUAGE.CHANGE.SHORTDESC;Change the channel language.
-SETTINGS.CHANNEL.LANGUAGE.CHANGE.ARGUMENTS;language
+SETTINGS.CHANNEL.LANGUAGE.CHANGE.ARGUMENTS;[language]
 SETTINGS.CHANNEL.LANGUAGE.CHANGE.CHANGED;Channel language changed.
 
 #settings.channel.language.clear
@@ -96,26 +100,26 @@ SETTINGS.CHANNEL.PERMISSIONS.SHORTDESC;Manage channel's command permissions.
 
 #settings.channel.permissions.clear
 SETTINGS.CHANNEL.PERMISSIONS.CLEAR.SHORTDESC;Reset all command permissions for the selected commands.
-SETTINGS.CHANNEL.PERMISSIONS.CLEAR.ARGUMENTS;command_names
+SETTINGS.CHANNEL.PERMISSIONS.CLEAR.ARGUMENTS;[command names]
 
 #settings.channel.permissions.deny
 SETTINGS.CHANNEL.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
-SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;command_names user_tag/role_tag
+SETTINGS.CHANNEL.PERMISSIONS.DENY.ARGUMENTS;[command names] [user/role tags]
 
 #settings.channel.permissions.give
 SETTINGS.CHANNEL.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
-SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;command_names user_tag/role_tag/permission_name
+SETTINGS.CHANNEL.PERMISSIONS.GIVE.ARGUMENTS;[command_names] [user or role tags/permission names]
 
 #settings.channel.permissions.undo
 SETTINGS.CHANNEL.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
-SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;command_names user_tag/role_tag/permission_name
+SETTINGS.CHANNEL.PERMISSIONS.UNDO.ARGUMENTS;[command names] [user or role tags/permission names]
 
 #settings.channel.sync
 SETTINGS.CHANNEL.SYNC.SHORTDESC;Manage channel's synchronisation settings.
 
 #settings.channel.sync.add
 SETTINGS.CHANNEL.SYNC.ADD.SHORTDESC;Synchronise the channel with other channel(s).
-SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS;channel_tags
+SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS;[channel tags]
 NO_PERMISSION_TO_SYNC_CHANNEL;You do not have the permissions required to synchronise channel `{name}`.
 CHANNELS_SYNCED;The following channels have been synchronised with this channel:{channelSyncList}
 
@@ -136,7 +140,7 @@ SETTINGS.SERVER.LANGUAGE.SHORTDESC;Change or reset the server language.
 
 #settings.server.language.change
 SETTINGS.SERVER.LANGUAGE.CHANGE.SHORTDESC;Change the server language.
-SETTINGS.SERVER.LANGUAGE.CHANGE.ARGUMENTS;language
+SETTINGS.SERVER.LANGUAGE.CHANGE.ARGUMENTS;[language]
 SETTINGS.SERVER.LANGUAGE.CHANGE.CHANGED;Server language changed.
 
 #settings.server.language.clear
@@ -148,19 +152,19 @@ SETTINGS.SERVER.PERMISSIONS.SHORTDESC;Manage server's command permissions.
 
 #settings.server.permissions.clear
 SETTINGS.SERVER.PERMISSIONS.CLEAR.SHORTDESC;Reset all command permissions for the selected commands.
-SETTINGS.SERVER.PERMISSIONS.CLEAR.ARGUMENTS;command_names
+SETTINGS.SERVER.PERMISSIONS.CLEAR.ARGUMENTS;[command names]
 
 #settings.server.permissions.deny
 SETTINGS.SERVER.PERMISSIONS.DENY.SHORTDESC;Link a user/role with inability to use a specific command.
-SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;command_name user_tag/role_tag
+SETTINGS.SERVER.PERMISSIONS.DENY.ARGUMENTS;[command names] [user/role tags]
 
 #settings.server.permissions.give
 SETTINGS.SERVER.PERMISSIONS.GIVE.SHORTDESC;Link a user/role/permission with ability to use a specific command.
-SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;command_name user_tag/role_tag/permission_name
+SETTINGS.SERVER.PERMISSIONS.GIVE.ARGUMENTS;[command names] [user or role tags/permission names]
 
 #settings.server.permissions.undo
 SETTINGS.SERVER.PERMISSIONS.UNDO.SHORTDESC;Erase a user/role/permission from the given permissions.
-SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;command_name user_tag/role_tag/permission_name
+SETTINGS.SERVER.PERMISSIONS.UNDO.ARGUMENTS;[command names] [user or role tags/permission names]
 
 #settings.user
 SETTINGS.USER.SHORTDESC;User-related configuration commands.
@@ -170,7 +174,7 @@ SETTINGS.USER.LANGUAGE.SHORTDESC;Change or reset user language.
 
 #settings.user.language.change
 SETTINGS.USER.LANGUAGE.CHANGE.SHORTDESC;Change the user language.
-SETTINGS.USER.LANGUAGE.CHANGE.ARGUMENTS;language
+SETTINGS.USER.LANGUAGE.CHANGE.ARGUMENTS;[language]
 SETTINGS.USER.LANGUAGE.CHANGE.CHANGED;User language changed!
 
 #settings.user.language.clear

@@ -1,4 +1,5 @@
 from DictHandler import DictHandler
+from MakaLaugh import MakaLaugh
 from Permission import Permission
 from PermissionChanger import PermissionChanger
 from Prefix import Prefix
@@ -124,6 +125,16 @@ async def lewd(message, arguments):
 
 async def nsfwLewd(message, arguments):
 	await getLewds(message, arguments, nsfw=True)
+
+async def maka(message, arguments):
+	if (len(arguments) == 0):
+		maka = MakaLaugh()
+	elif(len(arguments) == 1):
+		maka = MakaLaugh(min=arguments[0], max=arguments[0])
+	else:
+		maka = MakaLaugh(min=arguments[0], max=arguments[1])
+	
+	await maka.sendLaugh(message)
 
 """
 async def commandNotFound(message, command):

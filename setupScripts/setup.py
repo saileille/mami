@@ -366,6 +366,14 @@ commands = Command(
 			,function = lewd
 			,nsfw_function = nsfwLewd
 		)
+		,Command(
+			name = "maka"
+			,short_desc = "MAKA.SHORTDESC"
+			,long_desc = "maka"
+			,argument_help = "MAKA.ARGUMENTS"
+			,optional_arguments_type = "int"
+			,function = maka
+		)
 	]
 )
 

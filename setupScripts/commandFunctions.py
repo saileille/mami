@@ -1,86 +1,89 @@
-async def test():
+def test():
 	return
 
-async def prefixView():
+def prefixView():
 	return
 
-async def prefixServerChange():
+def prefixServerChange():
 	return
 
-async def prefixServerClear():
+def prefixServerClear():
 	return
 
-async def prefixChannelChange():
+def prefixChannelChange():
 	return
 
-async def prefixChannelClear():
+def prefixChannelClear():
 	return
 
-async def prefixUserChange():
+def prefixUserChange():
 	return
 
-async def prefixUserClear():
+def prefixUserClear():
 	return
 
-async def settingsServerPermissionsGive():
+def settingsServerPermissionsGive():
 	return
 
-async def settingsServerPermissionsDeny():
+def settingsServerPermissionsDeny():
 	return
 
-async def settingsServerPermissionsUndo():
+def settingsServerPermissionsUndo():
 	return
 
-async def settingsServerPermissionsClear():
+def settingsServerPermissionsClear():
 	return
 
-async def settingsChannelPermissionsGive():
+def settingsChannelPermissionsGive():
 	return
 
-async def settingsChannelPermissionsDeny():
+def settingsChannelPermissionsDeny():
 	return
 
-async def settingsChannelPermissionsUndo():
+def settingsChannelPermissionsUndo():
 	return
 
-async def settingsChannelPermissionsClear():
+def settingsChannelPermissionsClear():
 	return
 
-async def infoPermissions():
+def infoPermissions():
 	return
 
-async def changeServerLanguage():
+def changeServerLanguage():
 	return
 
-async def changeChannelLanguage():
+def changeChannelLanguage():
 	return
 
-async def changeUserLanguage():
+def changeUserLanguage():
 	return
 
-async def clearServerLanguage():
+def clearServerLanguage():
 	return
 
-async def clearChannelLanguage():
+def clearChannelLanguage():
 	return
 
-async def clearUserLanguage():
+def clearUserLanguage():
 	return
 
-async def serverSync():
+def serverSync():
 	return
 
-async def channelSync():
+def channelSync():
 	return
 
-async def channelUnsync():
+def channelUnsync():
 	return
 
-async def channelSyncView():
+def channelSyncView():
 	return
 
-async def lewd():
+def lewd():
 	return
 
-async def nsfwLewd():
+def nsfwLewd():
+	return
+
+def maka():
 	return

@@ -186,6 +186,10 @@
 		"lewd": {
 			"name": "lewd",
 			"sub_commands": {}
+		},
+		"maka": {
+			"name": "maka",
+			"sub_commands": {}
 		}
 	}
 }

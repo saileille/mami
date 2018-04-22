@@ -117,7 +117,7 @@ async def getSyncChannelString(id, message):
 		if (channelObject.guild != message.discord_py.guild):
 			text += " - {name}".format(name=channelObject.guild.name)
 	else:
-		text = "{unknownChannel} ({id})".format(
+		text = "[{unknownChannel}] ({id})".format(
 			unknownChannel = await getLanguageText(message.language, "UNKNOWN_CHANNEL")
 			,id = id
 		)

@@ -97,6 +97,7 @@ commands = Command(
 				Command(
 					name = "server"
 					,short_desc = "SETTINGS.SERVER.SHORTDESC"
+					,server_only = True
 					,default_permissions = [
 						"manage_guild"
 					]
@@ -195,6 +196,7 @@ commands = Command(
 				,Command(
 					name = "channel"
 					,short_desc = "SETTINGS.CHANNEL.SHORTDESC"
+					,server_only = True
 					,default_permissions = [
 						"manage_guild"
 					]
@@ -353,6 +355,7 @@ commands = Command(
 				Command(
 					name = "permissions"
 					,short_desc = "INFO.PERMISSIONS.SHORTDESC"
+					,server_only = True
 					,function = infoPermissions
 				)
 			]

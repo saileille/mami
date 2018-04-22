@@ -1,3 +1,7 @@
+from copy import deepcopy
+from discord import DMChannel
+
+from CommandCall import CommandCall
 from Prefix import Prefix
 
 from permissionFunctions import checkCommandPermission
@@ -18,6 +22,7 @@ class Command(object):
 		,sub_commands = {}
 		,hidden = False
 		,owner_only = False
+		,server_only = False
 		,all_prefixes = False
 		,argument_help = ""
 		,argument_types = []
@@ -32,6 +37,7 @@ class Command(object):
 		self.sub_commands = sub_commands
 		self.hidden = hidden
 		self.owner_only = owner_only
+		self.server_only = server_only
 		self.all_prefixes = all_prefixes
 		self.argument_help = argument_help
 		self.argument_types = argument_types
@@ -43,14 +49,24 @@ class Command(object):
 	async def call(self, message, callIndex, commandIndex):
 		commandCall = message.calls[callIndex]
 		
+		if (await self.permissionChecklist(message, commandCall, commandIndex) == True):
+			await self.checkSubCommands(message, callIndex, commandIndex)
+	
+	#ALL permission checks put to one function.
+	#sendFeedback enables/disables feedback messages.
+	async def permissionChecklist(self, message, commandCall, commandIndex, sendFeedback=True):
 		#Validating the prefix. Execution will not continue if invalid.
 		if (await commandCall.validatePrefix(message, self.all_prefixes) == False):
-			return
+			return False
 		
 		#TODO: function to inform the user of the inability to use this command.
-		if (await self.checkOwnerOnly(message) == False):
-			return
+		if (await self.checkOwnerOnly(message, sendFeedback) == False):
+			return False
 		
+		if (await self.checkServerOnly(message, sendFeedback) == False):
+			return False
+		
+		#Checks for the command permissions.
 		if (
 			commandIndex != -1
 			and await checkCommandPermission(
@@ -61,19 +77,59 @@ class Command(object):
 				,message.discord_py.channel
 			) == False
 		):
-			#Stops the loop if the user does not have permission for this command.
+			if (sendFeedback == True):
+				await self.sendUseDenied(message, commandCall, commandIndex)
 			
-			await self.useDenied(message, commandCall, commandIndex)
-			return
+			return False
 		
-		await self.checkSubCommands(message, callIndex, commandIndex)
-	
-	async def checkOwnerOnly(self, message):
-		if (self.owner_only == True):
-			ownerId = await getCsvVar("OWNER_ID", "basic", "staticData")
-			return message.discord_py.author.id == int(ownerId)
+		if (await self.checkNsfw(message, sendFeedback) == False):
+			return False
 		
 		return True
+	
+	async def checkOwnerOnly(self, message, sendFeedback):
+		if (self.owner_only == False):
+			return True
+		
+		ownerId = await getCsvVar("OWNER_ID", "basic", "staticData")
+		returnValue = message.discord_py.author.id == int(ownerId)
+		
+		if (returnValue == False and sendFeedback == True):
+			await send(
+				message.discord_py.channel
+				,await getLanguageText(message.language, "OWNER_ONLY_COMMAND")
+			)
+		
+		return returnValue
+	
+	async def checkServerOnly(self, message, sendFeedback):
+		if (self.server_only == False):
+			return True
+		
+		returnValue = isinstance(message.discord_py.channel, DMChannel) == False
+		
+		if (returnValue == False and sendFeedback == True):
+			await send(
+				message.discord_py.channel
+				,await getLanguageText(message.language, "SERVER_ONLY_COMMAND")
+			)
+		
+		return returnValue
+	
+	async def checkNsfw(self, message, sendFeedback):
+		returnValue = (
+			not isinstance(message.discord_py.channel, DMChannel)
+			and message.discord_py.channel.is_nsfw()
+			and self.function == None
+		) == False
+		
+		if (returnValue == False and sendFeedback == True):
+			await send(
+				message.discord_py.channel
+				,await getLanguageText(message.channel, "NSFW_NOT_ALLOWED")
+			)
+		
+		return returnValue
 	
 	async def checkSubCommands(self, message, callIndex, commandIndex):
 		commandCall = message.calls[callIndex]
@@ -126,27 +182,30 @@ class Command(object):
 	#Procedures involving command launching.
 	#Checks for NSFW functions, too.
 	async def launchCommand(self, message, arguments):
+		#If a private channel, the safe-for-work functionality takes priority.
+		#Exclusively NSFW commands are not blocked, though.
+		if (isinstance(message.discord_py.channel, DMChannel) == True):
+			if (self.function != None):
+				await self.function(message, arguments)
+			else:
+				await self.nsfw_function(message, arguments)
+			
+			return
+		
 		#If an ordinary channel, normal function is executed.
 		#If there is no normal function, the command is blocked.
 		if (message.discord_py.channel.is_nsfw() == False):
 			if (self.function != None):
 				await self.function(message, arguments)
-			else:
-				await send(
-					message.discord_py.channel
-					,await getLanguageText(
-						message.language
-						,"NSFW_COMMAND"
-					)
-				)
+			
+			return
 		
 		#If an NSFW channel, the NSFW function is executed.
 		#If NSFW function does not exist, normal function is executed.
+		if (self.nsfw_function != None):
+			await self.nsfw_function(message, arguments)
 		else:
-			if (self.nsfw_function == None):
-				await self.function(message, arguments)
-			else:
-				await self.nsfw_function(message, arguments)
+			await self.function(message, arguments)
 	
 	async def validateArgumentCount(self, argumentCount):
 		minArgumentCount = len(self.argument_types)
@@ -163,26 +222,41 @@ class Command(object):
 		#Used when an incomplete command gets typed.
 		prefix = await Prefix(message).getPrefix()
 		await commandCall.trimCommandStrings(commandIndex)
-		commandStr = await commandCall.getCommandString()
+		previousCommand = await commandCall.getCommandString()
 		
+		commandStr = previousCommand
 		if (commandStr != ""):
 			commandStr += "."
 		
 		commandStr = prefix + commandStr
-		subCommands = []
+		previousCommand = prefix + previousCommand
 		
+		subCommands = []
 		for key in self.sub_commands:
 			sub_command = self.sub_commands[key]
 			
-			subCmdName = await getCommandName(message.language, sub_command.name, commandCall.commands)
-			subCmdDesc = await getLanguageText(message.language, sub_command.short_desc)
+			permissionCall = deepcopy(commandCall)
+			permissionCall.commands += [key]
+			permissionIndex = commandIndex + 1
 			
-			subCmdStr = commandStr + subCmdName + " - " + subCmdDesc
-			subCommands.append(subCmdStr)
+			if (permissionCall.commands[0] == None):
+				permissionCall.commands = permissionCall.commands[1:]
+			
+			if (await sub_command.permissionChecklist(message, permissionCall, permissionIndex, sendFeedback=False) == True):
+			
+				subCmdName = await getCommandName(message.language, sub_command.name, commandCall.commands)
+				subCmdDesc = await getLanguageText(message.language, sub_command.short_desc)
+				
+				subCmdStr = commandStr + subCmdName + " - " + subCmdDesc
+				subCommands.append(subCmdStr)
 		
 		msg = ""
 		for subCommand in subCommands:
 			msg += "```" + subCommand + "```"
+		
+		if (msg == ""):
+			msg = await getLanguageText(message.language, "NO_AVAILABLE_COMMANDS")
+			msg = msg.format(command=previousCommand)
 		
 		await send(message.discord_py.channel, msg)
 	
@@ -201,8 +275,8 @@ class Command(object):
 		msg = "```" + commandStr + argumentStr + "```" + desc
 		return msg
 	
-	async def useDenied(self, message, commandCall, commandIndex):
-		#Called when a user is not allowed to use a command.
+	#Called when a user is not allowed to use a command.
+	async def sendUseDenied(self, message, commandCall, commandIndex):
 		commandStr = await commandCall.getTrimmedCommandString(message, commandIndex)
 		
 		msg = await getLanguageText(message.language, "USE_DENIED")

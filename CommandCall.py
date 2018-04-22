@@ -58,7 +58,7 @@ class CommandCall(object):
 		if (prefixCheck != None):
 			return prefixCheck
 		
-		#Channel and server prefix checks.
+		#Channel and guild prefix checks.
 		if (message.discord_py.guild != None):
 			prefixCheck = await message.channel_settings.checkPrefix(self.prefix)
 			if (prefixCheck != None):

@@ -5,10 +5,11 @@ ARGUMENT_CONV_ERROR;`{argument}` ei ole numero. Varmista, että syötteesi on oi
 CHANNEL_NOT_FOUND;Kanavaa ID:llä `{id}` ei löytynyt. Varmista, että ID on oikein, ja että {botName} näkee kanavan.
 NOT_TEXT_CHANNEL_ON_SERVER;Kanava ID:llä `{id}` on joko yksityinen tai äänikanava.
 USER_NOT_ON_SYNC_SERVER;Et ole jäsen sillä serverillä, missä kanava, jonka ID on `{id}` sijaitsee.
-UNKNOWN_CHANNEL;[Tuntematon Kanava]
+UNKNOWN_CHANNEL;Tuntematon Kanava
 INVALID_CHANNEL_ID_NUMBER;`{id}` ei ole kelvollinen kanavatägi tai ID-viittaus kanavalle. Pitikö sinun kirjoittaa `c{id}`?
 INVALID_CHANNEL_ID_NON_NUMBER;`{id}` ei ole kelvollinen kanavatägi tai ID-viittaus kanavalle.
 INVALID_COMMAND;`{command}` ei ole komennon nimi.
+NO_AVAILABLE_COMMANDS;Komennolta `{command}` ei löytynyt yhtään alakomentoa, joita voisit käyttää tällä kanavalla.
 
 #info
 INFO.SHORTDESC;Tietoa monenlaisista asioista, kuten tästä botista. Kannattaa kurkata!
@@ -186,6 +187,8 @@ LANGUAGE.ENGLISH;englanti
 LANGUAGE.FINNISH;suomi
 
 #Generic permission-related
+SERVER_ONLY_COMMAND;Tämä komento toimii vain servereillä.
+OWNER_ONLY_COMMAND;Vain botin omistajat voivat käyttää tätä komentoa. Jos olet ladannut botin lähdekoodin GitHubista, mene botin pääkansiossa tiedostoon `staticData\basic.csv` ja vaihda `OWNER_ID` -kohtaan käyttäjä-ID:si.
 PERMISSION.USERS_ALLOWED;Komento on sallittu seuraaville käyttäjille:
 PERMISSION.USERS_BLOCKED;Komento on kielletty seuraavilta käyttäjiltä:
 PERMISSION.ROLES_ALLOWED;Komento on sallittu seuraaville rooleille:

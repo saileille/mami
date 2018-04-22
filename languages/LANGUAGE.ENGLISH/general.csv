@@ -5,13 +5,14 @@ ARGUMENT_CONV_ERROR;Unable to convert `{argument}` to a number. Make sure your i
 CHANNEL_NOT_FOUND;Unable to find channel with ID `{id}`. Make sure the ID is correct, and that {botName} can see the channel.
 NOT_TEXT_CHANNEL_ON_SERVER;The channel with ID `{id}` is either private or a voice channel.
 USER_NOT_ON_SYNC_SERVER;You are not a member of the server where channel with ID `{id}` is located.
-UNKNOWN_CHANNEL;[Unknown Channel]
+UNKNOWN_CHANNEL;Unknown Channel
 INVALID_CHANNEL_ID_NUMBER;`{id}` is not a valid channel tag or ID reference for a channel. Did you mean to write `c{id}`?
 INVALID_CHANNEL_ID_NON_NUMBER;`{id}` is not a valid channel tag or ID reference for a channel.
 INVALID_COMMAND;`{command}` is not a valid command name.
+NO_AVAILABLE_COMMANDS;No sub-commands of `{command}` were found which you can use on this channel.
 
 #info
-INFO.SHORTDESC;Information about various things, including the bot. Worth checking out!
+INFO.SHORTDESC;Displays information about various things, like existing configurations.
 
 #info.permissions
 INFO.PERMISSIONS.SHORTDESC;Lists all given command permissions on this server, including channel-specific permissions.
@@ -186,6 +187,8 @@ LANGUAGE.ENGLISH;English
 LANGUAGE.FINNISH;Finnish
 
 #Generic permission-related
+SERVER_ONLY_COMMAND;This command can only be used on a server.
+OWNER_ONLY_COMMAND;Only the bot owner(s) can use this command. If you have downloaded the bot's source code from GitHub, go to `staticData\basic.csv` in the bot folder, and replace `OWNER_ID` with your Discord user ID.
 PERMISSION.USERS_ALLOWED;The command is authorised for following users:
 PERMISSION.USERS_BLOCKED;The command is unauthorised for following users:
 PERMISSION.ROLES_ALLOWED;The command is authorised for following roles:

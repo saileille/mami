@@ -87,3 +87,24 @@ def nsfwLewd():
 
 def maka():
 	return
+
+def newQuiz():
+	return
+
+def joinQuiz():
+	return
+
+def startQuiz():
+	return
+
+def answerQuiz():
+	return
+
+def endQuiz():
+	return
+
+def showQuizQuestion():
+	return
+
+def changeQuizPointsDistribution():
+	return

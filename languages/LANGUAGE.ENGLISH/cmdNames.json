@@ -190,6 +190,44 @@
 		"maka": {
 			"name": "maka",
 			"sub_commands": {}
+		},
+		"quiz": {
+			"name": "quiz",
+			"sub_commands": {
+				"new": {
+					"name": "new",
+					"sub_commands": {}
+				},
+				"join": {
+					"name": "join",
+					"sub_commands": {}
+				},
+				"start": {
+					"name": "start",
+					"sub_commands": {}
+				},
+				"a": {
+					"name": "a",
+					"sub_commands": {}
+				},
+				"end": {
+					"name": "end",
+					"sub_commands": {}
+				},
+				"q": {
+					"name": "q",
+					"sub_commands": {}
+				},
+				"settings": {
+					"name": "settings",
+					"sub_commands": {
+						"point_distribution": {
+							"name": "point_distribution",
+							"sub_commands": {}
+						}
+					}
+				}
+			}
 		}
 	}
 }

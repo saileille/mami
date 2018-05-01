@@ -17,14 +17,12 @@ class Command(object):
 	def __init__(
 		self
 		,name = ""
-		,short_desc = ""
-		,long_desc = ""
 		,sub_commands = {}
 		,hidden = False
 		,owner_only = False
 		,server_only = False
 		,all_prefixes = False
-		,argument_help = ""
+		,delete_message = False
 		,argument_types = []
 		,optional_arguments_type = None
 		,default_permissions = []
@@ -32,21 +30,25 @@ class Command(object):
 		,nsfw_function = None
 	):
 		self.name = name
-		self.short_desc = short_desc
-		self.long_desc = long_desc
 		self.sub_commands = sub_commands
 		self.hidden = hidden
 		self.owner_only = owner_only
 		self.server_only = server_only
 		self.all_prefixes = all_prefixes
-		self.argument_help = argument_help
+		self.delete_message = delete_message
 		self.argument_types = argument_types
 		self.optional_arguments_type = optional_arguments_type
 		self.default_permissions = default_permissions
 		self.function = function
 		self.nsfw_function = nsfw_function
+		self.command_code = None
+		self.short_desc = None
+		self.argument_help = None
 	
 	async def call(self, message, callIndex, commandIndex):
+		if (self.delete_message == True):
+			await message.discord_py.delete()
+		
 		commandCall = message.calls[callIndex]
 		
 		if (await self.permissionChecklist(message, commandCall, commandIndex) == True):
@@ -117,16 +119,18 @@ class Command(object):
 		return returnValue
 	
 	async def checkNsfw(self, message, sendFeedback):
+		#The sub-command length must be checked, otherwise the check fails at self.function.
 		returnValue = (
-			not isinstance(message.discord_py.channel, DMChannel)
-			and message.discord_py.channel.is_nsfw()
-			and self.function == None
-		) == False
+			isinstance(message.discord_py.channel, DMChannel)
+			or message.discord_py.channel.is_nsfw()
+			or len(self.sub_commands) > 0
+			or self.function != None
+		)
 		
 		if (returnValue == False and sendFeedback == True):
 			await send(
 				message.discord_py.channel
-				,await getLanguageText(message.channel, "NSFW_NOT_ALLOWED")
+				,await getLanguageText(message.language, "NSFW_NOT_ALLOWED")
 			)
 		
 		return returnValue
@@ -289,7 +293,7 @@ class Command(object):
 		languagesString = "\n".join(existingLanguages)
 		
 		try:
-			desc = await readTextFile(self.long_desc, "languages\\" + language + "\\descriptions")
+			desc = await readTextFile(self.command_code, "languages\\" + language + "\\descriptions")
 			desc = desc.format(languages=languagesString)
 		except FileNotFoundError:
 			desc = await getLanguageText(language, self.short_desc)

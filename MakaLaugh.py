@@ -2,7 +2,6 @@ import random
 
 from fileIO import getCsvVar
 from numberFunctions import forceRange
-from numberFunctions import sortAscending
 from sendFunctions import send
 
 #Because Maka deserves her own class.
@@ -26,11 +25,11 @@ class MakaLaugh(object):
 		self.min = await forceRange(self.min, 3, CHARACTER_LIMIT)
 		self.max = await forceRange(self.max, 3, CHARACTER_LIMIT)
 		
-		values = await sortAscending(self.min, self.max)
+		values = sorted([self.min, self.max])
 		self.length = random.randint(values[0], values[1])
 	
 	async def getLaugh(self):
-		letters = ["A", "H", "U"]
+		letters = ["A", "E", "H", "U"]
 		laughString = ""
 		prevLetter = None
 		

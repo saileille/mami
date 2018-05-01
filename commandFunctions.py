@@ -3,10 +3,12 @@ from MakaLaugh import MakaLaugh
 from Permission import Permission
 from PermissionChanger import PermissionChanger
 from Prefix import Prefix
+from QuizPlayer import QuizPlayer
 
 from fileIO import getLanguageText
 from fileIO import loadPickle
 from lewdPictures import getLewds
+from listFunctions import getVerbalList
 from sendFunctions import send
 from synchronisation import synchroniseChannel
 from synchronisation import unsynchroniseChannel
@@ -136,10 +138,74 @@ async def maka(message, arguments):
 	
 	await maka.sendLaugh(message)
 
-"""
-async def commandNotFound(message, command):
-	msg = await getLanguageText(message.language, "NOT_FOUND")
-	msg = msg.format(commandName=command)
+async def newQuiz(message, arguments):
+	await message.channel_settings.newQuiz(message, arguments[0])
+
+async def joinQuiz(message, arguments):
+	#Quiz must exist.
+	if (message.channel_settings.quiz == None):
+		await send(
+			message.discord_py.channel
+			,await getLanguageText(message.language, "NO_QUIZ")
+		)
+		return
 	
+	await message.channel_settings.quiz.joinPlayer(message)
+
+async def startQuiz(message, arguments):
+	#Quiz must exist.
+	if (message.channel_settings.quiz == None):
+		await send(
+			message.discord_py.channel
+			,await getLanguageText(message.language, "NO_QUIZ")
+		)
+		return
+	
+	await message.channel_settings.quiz.start(message)
+
+async def answerQuiz(message, arguments):
+	#Quiz must exist.
+	if (message.channel_settings.quiz == None):
+		await send(
+			message.discord_py.channel
+			,await getLanguageText(message.language, "NO_QUIZ")
+		)
+		return
+	
+	await message.channel_settings.quiz.answer(message, arguments[0])
+
+async def endQuiz(message, arguments):
+	#Quiz must exist.
+	if (message.channel_settings.quiz == None):
+		await send(
+			message.discord_py.channel
+			,await getLanguageText(message.language, "NO_QUIZ")
+		)
+		return
+	
+	msg = await message.channel_settings.endQuiz(message)
+	
+	await message.save()
 	await send(message.discord_py.channel, msg)
-"""
+
+async def showQuizQuestion(message, arguments):
+	#Quiz must exist.
+	if (message.channel_settings.quiz == None):
+		await send(
+			message.discord_py.channel
+			,await getLanguageText(message.language, "NO_QUIZ")
+		)
+		return
+	
+	await message.channel_settings.quiz.showQuestion(message)
+
+async def changeQuizPointsDistribution(message, arguments):
+	#Quiz must exist.
+	if (message.channel_settings.quiz == None):
+		await send(
+			message.discord_py.channel
+			,await getLanguageText(message.language, "NO_QUIZ")
+		)
+		return
+	
+	await message.channel_settings.quiz.changePointDistribution(message, arguments[0])

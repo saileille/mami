@@ -190,6 +190,44 @@
 		"maka": {
 			"name": "maka",
 			"sub_commands": {}
+		},
+		"quiz": {
+			"name": "visa",
+			"sub_commands": {
+				"new": {
+					"name": "uusi",
+					"sub_commands": {}
+				},
+				"join": {
+					"name": "liity",
+					"sub_commands": {}
+				},
+				"start": {
+					"name": "aloita",
+					"sub_commands": {}
+				},
+				"a": {
+					"name": "v",
+					"sub_commands": {}
+				},
+				"end": {
+					"name": "lopeta",
+					"sub_commands": {}
+				},
+				"q": {
+					"name": "k",
+					"sub_commands": {}
+				},
+				"settings": {
+					"name": "asetukset",
+					"sub_commands": {
+						"point_distribution": {
+							"name": "pistejakauma",
+							"sub_commands": {}
+						}
+					}
+				}
+			}
 		}
 	}
 }

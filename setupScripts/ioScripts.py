@@ -33,12 +33,19 @@ def saveCommandsPickle(commands):
 	saveCommandNameTemplate(jsonDict)
 	updateCommandNames(jsonDict)
 
-def convSubCommands(command):
+def convSubCommands(command, codeList=[]):
 	commandDict = {}
 	
 	for subCommand in command.sub_commands:
+		newCodeList = codeList + [subCommand.name]
+		subCommand.command_code = ".".join(newCodeList)
+		
+		codeInCaps = subCommand.command_code.upper()
+		subCommand.short_desc = codeInCaps + ".SHORTDESC"
+		subCommand.argument_help = codeInCaps + ".ARGUMENTS"
+		
 		if (len(subCommand.sub_commands) > 0):
-			convSubCommands(subCommand)
+			convSubCommands(subCommand, newCodeList)
 		
 		commandDict[subCommand.name] = subCommand
 	

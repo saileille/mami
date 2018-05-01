@@ -8,6 +8,3 @@ async def forceRange(number, min, max):
 		return max
 	
 	return number
-
-async def sortAscending(*args):
-	return sorted(args)

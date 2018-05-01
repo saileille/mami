@@ -1,4 +1,5 @@
 #Miscellaneous
+WORD_AND;and
 CHANNEL;Channel
 SERVER;Server
 ARGUMENT_CONV_ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
@@ -76,6 +77,50 @@ PREFIX.VIEW.CHANNEL_PREFIX.NONE;Channel prefix is not defined
 PREFIX.VIEW.USER_PREFIX;User prefix is `{prefix}`
 PREFIX.VIEW.USER_PREFIX.NONE;User prefix is not defined
 PREFIX.VIEW.CORRECT;Use the prefix `{prefix}`
+
+#quiz
+QUIZ.SHORTDESC;Test your knowledge against other server members!
+QUIZ.CORRECT_ANSWER;Correct answer:
+QUIZ.ALREADY_EXISTS;The quiz has already been made.
+QUIZ.ALREADY_ONGOING;The quiz is already ongoing.
+QUIZ.NOT_PARTAKING;You are not partaking in the quiz.
+QUIZ.NOT_STARTED;Quiz has not been started yet.
+QUIZ.POINTS_REWARD_ONE;{points:.2f} points awarded to {players}.
+QUIZ.POINTS_REWARD;Correctly answered players:{players}
+QUIZ.NO_POINTS_REWARD;No-one answered correctly.
+QUIZ.UNANSWERED_PLAYERS;Unanswered players
+QUIZ.STANDINGS;Standings
+
+#quiz.a
+QUIZ.A.SHORTDESC;Answer the quiz question.
+QUIZ.A.ARGUMENTS;[answer no.]
+QUIZ.A.ANSWERED_COMPLETE;**{player}** answered the question.
+QUIZ.A.ANSWERED_NOT_COMPLETE;**{player}** answered the question.\n\n{unanswered}
+QUIZ.A.ALREADY_ANSWERED;**{player}**, you have already answered the question.
+
+#quiz.end
+QUIZ.END.SHORTDESC;End the quiz.
+QUIZ.END.WINNER;Quiz has ended. Winner: {winners}
+QUIZ.END.WINNERS;Quiz has ended. Winners: {winners}
+QUIZ.END.NO_WINNER;Quiz has ended.
+
+#quiz.new
+QUIZ.NEW.SHORTDESC;Make a new quiz.
+QUIZ.NEW.ARGUMENTS;[no. of questions]
+QUIZ.NEW.COMPLETED;New quiz made.
+QUIZ.NEW.INVALID_QUESTION_COUNT;Quiz must have 1-50 questions.
+
+#quiz.join
+QUIZ.JOIN.SHORTDESC;Join quiz.
+QUIZ.JOIN.ALREADY_JOINED;You have already joined the quiz.
+QUIZ.JOIN.COMPLETED;You have joined the quiz. Participants:```{participants}```
+
+#quiz.q
+QUIZ.Q.SHORTDESC;Show the current question.
+
+#quiz.start
+QUIZ.START.SHORTDESC;Get the quiz started.
+QUIZ.START.NOT_ENOUGH_PLAYERS;You need at least {minPlayers} players to start the quiz.
 
 #settings
 SETTINGS.SHORTDESC;Contains configuration commands.

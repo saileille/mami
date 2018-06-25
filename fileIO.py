@@ -26,7 +26,7 @@ async def readTextFile(filename, folder=""):
 	
 	return text
 
-async def getCsvVar(variable, filename, folder="", invert=0):
+async def getCsvVar(variable, filename, folder="", invert=0, startsWith=""):
 	#Gets a specific variable from a CSV file.
 	#CSV is used for simple variables.
 	#If invert = 1, returns the variable name from text.
@@ -41,8 +41,12 @@ async def getCsvVar(variable, filename, folder="", invert=0):
 			if (
 				len(row) == 2
 				and row[0][0] != "#"
+			):
+				returnRow = row[1 - invert]
+				if (
+					row[0 + invert] == variable
+					and returnRow.startswith(startsWith)
 				):
-				if (row[0 + invert] == variable):
 					return row[1 - invert]
 
 def getCsvVarSync(variable, filename, folder="", invert=0):
@@ -60,7 +64,7 @@ def getCsvVarSync(variable, filename, folder="", invert=0):
 			if (
 				len(row) == 2
 				and row[0][0] != "#"
-				):
+			):
 				if (row[0 + invert] == variable):
 					return row[1 - invert]
 
@@ -69,45 +73,52 @@ async def getLanguageText(language, messageCode):
 	text = await getCsvVar(messageCode, "general", "languages\\" + language)
 	
 	if (text == None):
-		"""
-		text = await getCsvVar(messageCode, "general", "languages\\" + defaultLanguage)
-		
-		if (text == None):
-			return messageCode
-		"""
 		return messageCode
 	
 	text = text.replace("\\n", "\n")
 	return text
 
 #Finds the CSV code. No longer needed.
-async def getLanguageCode(language, messageText):
-	code = await getCsvVar(messageText, "general", "languages\\" + language, invert=1)
+async def getLanguageCode(language, messageText, startsWith=""):
+	code = await getCsvVar(
+		messageText
+		,"general"
+		,"languages\\" + language
+		,invert = 1
+		,startsWith = startsWith
+	)
 	
+	#If not found, tries to find the code from the default language.
 	if (code == None):
-		#If not found, tries to find the code from the default language.
 		defaultLanguage = await getDefaultLanguage()
-		code = await getCsvVar(messageText, "general", "languages\\" + defaultLanguage, invert=1)
+		code = await getCsvVar(
+			messageText
+			,"general"
+			,"languages\\" + defaultLanguage
+			,invert = 1
+			,startsWith = startsWith
+		)
 	
 	return code
 
-#Used to direct the search to the right path.
-async def getCommandCode(language, text, prevCodes=[]):
-	#prevCodes is a list of codes found previously.
-	
+#Gets the global command code as a list.
+async def getCommandCodeList(language, cmdNameList):
 	cmdDict = await loadJson("cmdNames", "languages\\" + language)
+	codeList = []
 	
-	for code in prevCodes:
-		#Goes to the current location.
-		cmdDict = cmdDict["sub_commands"][code]
+	for name in cmdNameList:
+		for key in cmdDict["sub_commands"]:
+			subCmd = cmdDict["sub_commands"][key]
+			if (subCmd["name"] == name):
+				cmdDict = cmdDict["sub_commands"][key]
+				codeList.append(key)
+				break
 	
-	for key in cmdDict["sub_commands"]:
-		if (text == cmdDict["sub_commands"][key]["name"]):
-			return key
+	return codeList
 
+#prevCodes is used to locate the proper command sub-directory.
+#code indicates the end of search and the name we want.
 async def getCommandName(language, code, prevCodes):
-	#prevCodes is used to locate the proper command sub-directory.
-	#code indicates the end of search and the name we want.
 	
 	cmdDict = await loadJson("cmdNames", "languages\\" + language)
 	
@@ -119,7 +130,7 @@ async def getCommandName(language, code, prevCodes):
 	
 	return cmdDict["sub_commands"][code]["name"]
 
-async def loadPickle(filename, folder="", default=None):
+async def loadPickle(filename, folder = "", default = None):
 	filename = "{filename}.db".format(filename=filename)
 	filepath = await getFilePath(filename, folder)
 	
@@ -190,6 +201,12 @@ async def getDefaultLanguage():
 	defaultLanguage = await getCsvVar("DEFAULT_LANGUAGE", "basic", "staticData")
 	return defaultLanguage
 
+async def getDefaultPrefix():
+	return await getCsvVar("DEFAULT_PREFIX", "basic", "staticData")
+
+async def getCharacterLimit():
+	return int(await getCsvVar("MAX_CHARACTERS", "basic", "staticData"))
+
 #Returns a list of folders in the languages folder, i.e. all available languages.
 async def getExistingLanguages(language):
 	languages = []
@@ -223,7 +240,9 @@ async def getLewdList():
 	
 	for dirpath, dirnames, filenames in os.walk(folder):
 		for file in filenames:
-			if (file.startswith("nonlewd")):
-				pictureNames.append(await getFilePath(file, folder))
+			pictureNames.append(await getFilePath(file, folder))
 	
 	return pictureNames
+
+async def loadSpecialCheckRules():
+	return await loadPickle("specialCheckRules", "staticData")

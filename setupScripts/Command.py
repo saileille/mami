@@ -11,6 +11,7 @@ class Command(object):
 		,argument_types = []
 		,optional_arguments_type = None
 		,default_permissions = []
+		,special_checks = []
 		,function = None
 		,nsfw_function = None
 	):
@@ -24,6 +25,7 @@ class Command(object):
 		self.argument_types = argument_types
 		self.optional_arguments_type = optional_arguments_type
 		self.default_permissions = default_permissions
+		self.special_checks = special_checks
 		self.function = function
 		self.nsfw_function = nsfw_function
 		self.command_code = None

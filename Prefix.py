@@ -1,10 +1,9 @@
 from fileIO import getCsvVarSync
-from fileIO import getLanguageText
+from fileIO import getDefaultPrefix, getLanguageText
+from sendFunctions import processMsg
 
 #Class for displaying the prefixes, and telling the user which one to use.
 class Prefix(object):
-	default = getCsvVarSync("DEFAULT_PREFIX", "basic", "staticData")
-	
 	def __init__(self, message):
 		self.user = message.user_settings.prefix
 		self.channel = message.channel_settings.prefix
@@ -18,33 +17,52 @@ class Prefix(object):
 		self.language = message.language
 	
 	async def getPrefixStrings(self):
-		msg = await getLanguageText(self.language, "PREFIX.VIEW.DEFAULT_PREFIX")
-		msg = msg.format(prefix=self.default)
+		msg = await processMsg(
+			"PREFIX.VIEW.DEFAULT_PREFIX"
+			,self.language
+			,{
+				"prefix": await getDefaultPrefix()
+			}
+		)
 		
-		string = ""
+		code = "PREFIX.VIEW.SERVER_PREFIX.NONE"
+		varDict = {}
 		if (self.server != None):
-			string = await getLanguageText(self.language, "PREFIX.VIEW.SERVER_PREFIX")
-			string = string.format(prefix=self.server)
-		else:
-			string = await getLanguageText(self.language, "PREFIX.VIEW.SERVER_PREFIX.NONE")
+			code = "PREFIX.VIEW.SERVER_PREFIX"
+			varDict["prefix"] = self.server
 		
-		msg += "\n" + string
+		msg2 = await processMsg(
+			code
+			,self.language
+			,varDict
+		)
+		msg += "\n" + msg2
 		
+		code = "PREFIX.VIEW.CHANNEL_PREFIX.NONE"
+		varDict = {}
 		if (self.channel != None):
-			string = await getLanguageText(self.language, "PREFIX.VIEW.CHANNEL_PREFIX")
-			string = string.format(prefix=self.channel)
-		else:
-			string = await getLanguageText(self.language, "PREFIX.VIEW.CHANNEL_PREFIX.NONE")
+			code = "PREFIX.VIEW.CHANNEL_PREFIX"
+			varDict["prefix"] = self.channel
 		
-		msg += "\n" + string
+		msg2 = await processMsg(
+			code
+			,self.language
+			,varDict
+		)
+		msg += "\n" + msg2
 		
+		code = "PREFIX.VIEW.USER_PREFIX.NONE"
+		varDict = {}
 		if (self.user != None):
-			string = await getLanguageText(self.language, "PREFIX.VIEW.USER_PREFIX")
-			string = string.format(prefix=self.user)
-		else:
-			string = await getLanguageText(self.language, "PREFIX.VIEW.USER_PREFIX.NONE")
+			code = "PREFIX.VIEW.USER_PREFIX"
+			varDict["prefix"] = self.user
 		
-		msg += "\n" + string + "\n\n"
+		msg2 = await processMsg(
+			code
+			,self.language
+			,varDict
+		)
+		msg += "\n" + msg2 + "\n\n"
 		msg += await self.getPrefixText()
 		
 		return msg
@@ -58,11 +76,15 @@ class Prefix(object):
 		elif (self.server != None):
 			prefix = self.server
 		else:
-			prefix = self.default
+			prefix = await getDefaultPrefix()
 		
-		text = await getLanguageText(self.language, "PREFIX.VIEW.CORRECT")
-		text = text.format(prefix=prefix)
-		return text
+		return await processMsg(
+			"PREFIX.VIEW.CORRECT"
+			,self.language
+			,{
+				"prefix": prefix
+			}
+		)
 	
 	async def getPrefix(self):
 		#Can be used for building help texts - handily returns the correct prefix to use.
@@ -73,4 +95,4 @@ class Prefix(object):
 		if (self.server != None):
 			return self.server
 		
-		return self.default
+		return await getDefaultPrefix()

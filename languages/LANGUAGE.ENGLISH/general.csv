@@ -3,7 +3,7 @@ WORD_AND;and
 CHANNEL;Channel
 SERVER;Server
 ARGUMENT_CONV_ERROR;Unable to convert `{argument}` to a number. Make sure your input is correct and try again.
-CHANNEL_NOT_FOUND;Unable to find channel with ID `{id}`. Make sure the ID is correct, and that {botName} can see the channel.
+CHANNEL_NOT_FOUND;Unable to find channel with ID `{id}`. Make sure the ID is correct, and that {bot_name} can see the channel.
 NOT_TEXT_CHANNEL_ON_SERVER;The channel with ID `{id}` is either private or a voice channel.
 USER_NOT_ON_SYNC_SERVER;You are not a member of the server where channel with ID `{id}` is located.
 UNKNOWN_CHANNEL;Unknown Channel
@@ -81,11 +81,11 @@ PREFIX.VIEW.CORRECT;Use the prefix `{prefix}`
 #quiz
 QUIZ.SHORTDESC;Test your knowledge against other server members!
 QUIZ.CORRECT_ANSWER;Correct answer:
+QUIZ.DOES_NOT_EXIST;A quiz does not exist on this channel.
 QUIZ.ALREADY_EXISTS;The quiz has already been made.
 QUIZ.ALREADY_ONGOING;The quiz is already ongoing.
 QUIZ.NOT_PARTAKING;You are not partaking in the quiz.
 QUIZ.NOT_STARTED;Quiz has not been started yet.
-QUIZ.POINTS_REWARD_ONE;{points:.2f} points awarded to {players}.
 QUIZ.POINTS_REWARD;Correctly answered players:{players}
 QUIZ.NO_POINTS_REWARD;No-one answered correctly.
 QUIZ.UNANSWERED_PLAYERS;Unanswered players
@@ -95,7 +95,6 @@ QUIZ.STANDINGS;Standings
 QUIZ.A.SHORTDESC;Answer the quiz question.
 QUIZ.A.ARGUMENTS;[answer no.]
 QUIZ.A.ANSWERED_COMPLETE;**{player}** answered the question.
-QUIZ.A.ANSWERED_NOT_COMPLETE;**{player}** answered the question.\n\n{unanswered}
 QUIZ.A.ALREADY_ANSWERED;**{player}**, you have already answered the question.
 
 #quiz.end
@@ -120,7 +119,41 @@ QUIZ.Q.SHORTDESC;Show the current question.
 
 #quiz.start
 QUIZ.START.SHORTDESC;Get the quiz started.
-QUIZ.START.NOT_ENOUGH_PLAYERS;You need at least {minPlayers} players to start the quiz.
+QUIZ.START.NOT_ENOUGH_PLAYERS;You need at least {min_players} players to start the quiz.
+
+#rpg
+RPG.SHORTDESC;RPG-related commands. (WIP)
+RPG.BATTLE_STARTED;You have engaged in combat with **{opponent}**!
+RPG.HP_TEXT;HP: {current}/{maximum}
+RPG.CHARACTER_ACTION;**{name}** used **{action}**
+RPG.POS_HP_CHANGE;**{name}** gained {hp} HP
+RPG.NEG_HP_CHANGE;**{name}** lost {hp} HP
+RPG.BATTLE_ROUND_ACTION;Choose your action.
+
+#rpg.action
+RPG.ACTION.SHORTDESC;Choose your action during the battle round.
+RPG.ACTION.INVALID;`{action}` is not a valid action.
+
+#rpg.character
+RPG.CHARACTER.NAME;Name: {char.name}
+RPG.CHARACTER.OFFENCE;Offence: {char.offence}
+RPG.CHARACTER.DEFENCE;Defence: {char.defence}
+RPG.CHARACTER.HARDINESS;Hardiness: {char.hardiness}
+RPG.CHARACTER.SPEED;Speed: {char.speed}
+RPG.CHARACTER.HP;HP: {char.hp}/{char.max_hp}
+
+#rpg.delall
+RPG.DELALL.SHORTDESC;Deletes all existing RPG characters.
+RPG.DELALL.DONE;Characters deleted.
+
+#rpg.duel
+RPG.DUEL.SHORTDESC;Test for combat mechanic functionality.
+RPG.DUEL.ARGUMENTS;[opponent name]
+
+#rpg.new
+RPG.NEW.SHORTDESC;Create a new Puella Magi character.
+RPG.NEW.GIVE_NAME;What is your character's name?
+RPG.NEW.CHARACTER_CREATED;Character created!
 
 #settings
 SETTINGS.SHORTDESC;Contains configuration commands.
@@ -166,7 +199,7 @@ SETTINGS.CHANNEL.SYNC.SHORTDESC;Manage channel's synchronisation settings.
 SETTINGS.CHANNEL.SYNC.ADD.SHORTDESC;Synchronise the channel with other channel(s).
 SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS;[channel tags]
 NO_PERMISSION_TO_SYNC_CHANNEL;You do not have the permissions required to synchronise channel `{name}`.
-CHANNELS_SYNCED;The following channels have been synchronised with this channel:{channelSyncList}
+CHANNELS_SYNCED;The following channels have been synchronised with this channel:{channel_synclist}
 
 #settings.channel.sync.del
 SETTINGS.CHANNEL.SYNC.DEL.SHORTDESC;Remove existing synchronisation.
@@ -174,7 +207,7 @@ CHANNEL_SYNCS_REMOVED;Synchronisations removed.
 
 #settings.channel.sync.view
 SETTINGS.CHANNEL.SYNC.VIEW.SHORTDESC;Displays the synchronisations this server's channels have.
-ALL_CHANNEL_SYNCS;Synchronised channels:{channelSyncList}
+ALL_CHANNEL_SYNCS;Synchronised channels:{channel_synclist}
 NO_CHANNEL_SYNCS;No channels have been synchronised.
 
 #settings.server

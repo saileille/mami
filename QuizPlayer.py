@@ -1,5 +1,7 @@
 #A user playing in a quiz.
 
+from TableCell import TableCell
+
 class QuizPlayer(object):
 	def __init__(self, guildMember):
 		self.id = guildMember.id
@@ -7,10 +9,19 @@ class QuizPlayer(object):
 		self.points = 0
 		self.active = True
 	
-	#Returns a string used in quiz standings.
-	async def getStandingsString(self, rank):
-		return "{rank}. {name} - {points:.2f}".format(
-			rank = rank
-			,name = self.name
-			,points = self.points
-		)
+	#Returns a list used in quiz standings.
+	async def getStandingsRow(self, rank):
+		return [
+			TableCell(
+				"{rank}.".format(rank = rank)
+				,"<"
+			)
+			,TableCell(
+				"{player.name}".format(player = self)
+				,"<"
+			)
+			,TableCell(
+				"{player.points:.2f}".format(player = self)
+				,">"
+			)
+		]

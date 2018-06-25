@@ -1,6 +1,4 @@
-import copy
 import json
-import os
 import pickle
 
 pickle.DEFAULT_PROTOCOL = 4
@@ -15,106 +13,42 @@ def getFilePath(filename, folder=""):
 	
 	return root + filename
 
-def saveCommandsPickle(commands):
-	fileDict = getFilePath("commands.db", "staticData")
+def readTextFile(filename, folder=""):
+	filepath = getFilePath(filename + ".txt", folder)
 	
-	commandDict = copy.deepcopy(commands)
-	convSubCommands(commandDict)
-	"""
-	with open(fileList, mode="wb") as file:
-		pickle.dump(commands, file)
-	"""
-	with open(fileDict, mode="wb") as file:
-		pickle.dump(commandDict, file)
+	with open(filepath, encoding="utf-8", mode="r") as file:
+		text = file.read()
 	
-	#Converts all objects to dictionaries in preparation for JSON'ing.
-	jsonDict = commands.getDict()
-	
-	saveCommandNameTemplate(jsonDict)
-	updateCommandNames(jsonDict)
+	return text
 
-def convSubCommands(command, codeList=[]):
-	commandDict = {}
+def saveJson(data, filename, folder=""):
+	filepath = getFilePath(filename + ".json", folder)
 	
-	for subCommand in command.sub_commands:
-		newCodeList = codeList + [subCommand.name]
-		subCommand.command_code = ".".join(newCodeList)
-		
-		codeInCaps = subCommand.command_code.upper()
-		subCommand.short_desc = codeInCaps + ".SHORTDESC"
-		subCommand.argument_help = codeInCaps + ".ARGUMENTS"
-		
-		if (len(subCommand.sub_commands) > 0):
-			convSubCommands(subCommand, newCodeList)
-		
-		commandDict[subCommand.name] = subCommand
+	jsonString = json.dumps(
+		data
+		,ensure_ascii = False
+		,indent = "\t"
+		,sort_keys = True
+	)
 	
-	command.sub_commands = commandDict
+	with open(filepath, "w", encoding="utf-8") as file:
+		file.write(jsonString)
 
-def saveCommandNameTemplate(commands):
-	template = getFilePath("cmdTemplate.json", "languages")
+def loadJson(filename, folder=""):
+	filepath = getFilePath(filename + ".json", folder)
 	
-	with open(template, mode="w", encoding="utf-8") as file:
-		json.dump(commands, file, ensure_ascii=False, indent="\t")
+	with open(filepath, mode="r", encoding="utf-8") as file:
+		jsonObject = json.load(file)
+	
+	return jsonObject
 
-def getCommandDict(commands):
-	commandDict = {}
-	
-	for key in commands:
-		commands[key].code = key
-		commandDict[key] = commands[key].__dict__
-		commandDict[key]["CLASSNAME"] = "Command"
-	
-	return commandDict
+def saveData(commands):
+	saveCommandsPickle(commands)
+	saveMakaLaugh()
 
-def getCommandList(commandDict):
-	commandList = []
-	for key in commandDict:
-		commandList.append(commandDict[key])
+def savePickle(data, filename, folder=""):
+	filename = "{filename}.db".format(filename=filename)
+	filepath = getFilePath(filename, folder)
 	
-	return commandList
-
-def convToDict(dict):
-	#Converts objects inside dict to dict.
-	newDict = {}
-	
-	for key in dict:
-		newDict[key] = dict[key].__dict__
-		newDict[key]["sub_commands"] = convToDict(newDict[key]["sub_commands"])
-	
-	return newDict
-
-def updateCommandNames(commands):
-	for language, dirnames, filenames in os.walk(root + "\\languages"):
-		for file in filenames:
-			if (file == "cmdNames.json"):
-				path = language + "\\" + file
-				with open(path, mode="r", encoding="utf-8") as file:
-					jsonObject = json.load(file)
-				
-				updateSubCommands(commands, jsonObject)
-				
-				with open(path, mode="w", encoding="utf-8") as file:
-					json.dump(jsonObject, file, ensure_ascii=False, indent="\t")
-
-def updateSubCommands(commands, localisation):
-	#Removing old ones.
-	removeKeys = []
-	for key in localisation["sub_commands"]:
-		if (key not in commands["sub_commands"]):
-			removeKeys.append(key)
-	
-	for key in removeKeys:
-		del localisation["sub_commands"][key]
-	
-	#Adding new ones.
-	for key in commands["sub_commands"]:
-		command = commands["sub_commands"][key]
-		
-		if (key not in localisation["sub_commands"]):
-			localisation["sub_commands"][key] = {
-				"name": "COMMANDNAME_HERE"
-				,"sub_commands": {}
-			}
-		
-		updateSubCommands(command, localisation["sub_commands"][key])
+	with open(filepath, mode="wb") as file:
+		pickle.dump(data, file)

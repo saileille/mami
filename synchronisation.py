@@ -21,15 +21,18 @@ async def viewChannelSyncs(message):
 	
 	channelSyncList = await getSyncChannelList(message, channelIds)
 	
+	varDict = {}
+	msg = "NO_CHANNEL_SYNCS"
 	if (channelSyncList != ""):
-		msg = await getLanguageText(message.language, "ALL_CHANNEL_SYNCS")
-		msg = msg.format(
-			channelSyncList = await getSyncChannelList(message, channelIds)
-		)
-	else:
-		msg = await getLanguageText(message.language, "NO_CHANNEL_SYNCS")
+		msg = "ALL_CHANNEL_SYNCS"
+		varDict["channel_synclist"] = channelSyncList
 	
-	await send(message.discord_py.channel, msg)
+	await send(
+		message.discord_py.channel
+		,msg
+		,message.language
+		,varDict
+	)
 
 #Checks if the channel exists, and is a text channel on a server.
 async def isValidChannel(message, channelId, channelObject):
@@ -37,18 +40,27 @@ async def isValidChannel(message, channelId, channelObject):
 	
 	#If non-existing channel.
 	if (channelObject == None):
-		msg = await getLanguageText(message.language, "CHANNEL_NOT_FOUND")
-		msg = msg.format(id=channelId, botName=botName)
-		
-		await send(message.discord_py.channel, msg)
+		await send(
+			message.discord_py.channel
+			,"CHANNEL_NOT_FOUND"
+			,message.language
+			,{
+				"id": channelId
+				,"bot_name": botName
+			}
+		)
 		return False
 	
 	#If not a text channel on server.
 	if (isinstance(channelObject, TextChannel) == False):
-		msg = await getLanguageText(message.language, "NOT_TEXT_CHANNEL_ON_SERVER")
-		msg = msg.format(id=channelId)
-		
-		await send(message.discord_py.channel, msg)
+		await send(
+			message.discord_py.channel
+			,"NOT_TEXT_CHANNEL_ON_SERVER"
+			,message.language
+			,{
+				"id": channelId
+			}
+		)
 		return False
 	
 	return True
@@ -78,7 +90,14 @@ async def checkChannelSyncTarget(message, channelId):
 		msg = await getLanguageText(message.language, "USER_NOT_ON_SYNC_SERVER")
 		msg = msg.format(id=channelId)
 		
-		await send(message.discord_py.channel, msg)
+		await send(
+			message.discord_py.channel
+			,"USER_NOT_ON_SYNC_SERVER"
+			,message.language
+			,{
+				"id": channelId
+			}
+		)
 		return False
 	
 	#The path of this command.
@@ -100,10 +119,14 @@ async def checkChannelSyncTarget(message, channelId):
 		)
 		
 		if (permissionGranted == False):
-			msg = await getLanguageText(message.language, "NO_PERMISSION_TO_SYNC_CHANNEL")
-			msg = msg.format(name=channelObject.name)
-			
-			await send(message.discord_py.channel, msg)
+			await send(
+				message.discord_py.channel
+				,"NO_PERMISSION_TO_SYNC_CHANNEL"
+				,message.language
+				,{
+					"name": channelObject.name
+				}
+			)
 			break
 	
 	return permissionGranted
@@ -170,26 +193,33 @@ async def synchroniseChannel(message, arguments):
 	
 	await addSync(channelIds, "channels")
 	
-	msg = await getLanguageText(message.language, "CHANNELS_SYNCED")
-	msg = msg.format(
-		channelSyncList = await getSyncChannelList(
-			message
-			,channelIds
-			,ignoreId = message.discord_py.channel.id
-		)
+	await send(
+		message.discord_py.channel
+		,"CHANNELS_SYNCED"
+		,message.language
+		,{
+			"channel_synclist": await getSyncChannelList(
+				message
+				,channelIds
+				,ignoreId = message.discord_py.channel.id
+			)
+		}
 	)
-	
-	await send(message.discord_py.channel, msg)
 
 async def invalidChannelIdFormat(message, id):
-	#If the ID is valid but lacking type identification, suggest putting the letter at the front.
+	#If the ID is valid but lacking type identification, Mami will suggest putting the letter at the front.
+	msg = "INVALID_CHANNEL_ID_NON_NUMBER"
 	if (isPossibleId(id) == True):
-		msg = await getLanguageText(message.language, "INVALID_CHANNEL_ID_NUMBER")
-	else:
-		msg = await getLanguageText(message.language, "INVALID_CHANNEL_ID_NON_NUMBER")
+		msg = "INVALID_CHANNEL_ID_NUMBER"
 	
-	msg = msg.format(id=id)
-	await send(message.discord_py.channel, msg)
+	await send(
+		message.discord_py.channel
+		,msg
+		,message.language
+		,{
+			"id": id
+		}
+	)
 
 async def addSync(idList, type):
 	#type is either "channels", "servers" or "users"
@@ -229,10 +259,8 @@ async def unsynchroniseChannel(message, arguments):
 	
 	await send(
 		message.discord_py.channel
-		,await getLanguageText(
-			message.language
-			,"CHANNEL_SYNCS_REMOVED"
-		)
+		,"CHANNEL_SYNCS_REMOVED"
+		,message.language
 	)
 
 async def removeSync(idList, type):

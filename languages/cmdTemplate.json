@@ -1,17 +1,26 @@
 {
 	"sub_commands": {
-		"test": {
+		"info": {
+			"name": "",
+			"sub_commands": {
+				"permissions": {
+					"name": "",
+					"sub_commands": {}
+				}
+			}
+		},
+		"lewd": {
+			"name": "",
+			"sub_commands": {}
+		},
+		"maka": {
 			"name": "",
 			"sub_commands": {}
 		},
 		"prefix": {
 			"name": "",
 			"sub_commands": {
-				"view": {
-					"name": "",
-					"sub_commands": {}
-				},
-				"server": {
+				"channel": {
 					"name": "",
 					"sub_commands": {
 						"change": {
@@ -24,7 +33,7 @@
 						}
 					}
 				},
-				"channel": {
+				"server": {
 					"name": "",
 					"sub_commands": {
 						"change": {
@@ -49,70 +58,115 @@
 							"sub_commands": {}
 						}
 					}
+				},
+				"view": {
+					"name": "",
+					"sub_commands": {}
+				}
+			}
+		},
+		"quiz": {
+			"name": "",
+			"sub_commands": {
+				"a": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"end": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"join": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"new": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"q": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"settings": {
+					"name": "",
+					"sub_commands": {
+						"point_distribution": {
+							"name": "",
+							"sub_commands": {}
+						},
+						"point_multiplier": {
+							"name": "",
+							"sub_commands": {}
+						}
+					}
+				},
+				"start": {
+					"name": "",
+					"sub_commands": {}
+				}
+			}
+		},
+		"rpg": {
+			"name": "",
+			"sub_commands": {
+				"action": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"character": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"cheats": {
+					"name": "",
+					"sub_commands": {
+						"defence": {
+							"name": "",
+							"sub_commands": {}
+						},
+						"hardiness": {
+							"name": "",
+							"sub_commands": {}
+						},
+						"hp": {
+							"name": "",
+							"sub_commands": {}
+						},
+						"offence": {
+							"name": "",
+							"sub_commands": {}
+						},
+						"speed": {
+							"name": "",
+							"sub_commands": {}
+						}
+					}
+				},
+				"delall": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"duel": {
+					"name": "",
+					"sub_commands": {}
+				},
+				"new": {
+					"name": "",
+					"sub_commands": {}
 				}
 			}
 		},
 		"settings": {
 			"name": "",
 			"sub_commands": {
-				"server": {
-					"name": "",
-					"sub_commands": {
-						"permissions": {
-							"name": "",
-							"sub_commands": {
-								"give": {
-									"name": "",
-									"sub_commands": {}
-								},
-								"deny": {
-									"name": "",
-									"sub_commands": {}
-								},
-								"undo": {
-									"name": "",
-									"sub_commands": {}
-								},
-								"clear": {
-									"name": "",
-									"sub_commands": {}
-								}
-							}
-						},
-						"language": {
-							"name": "",
-							"sub_commands": {
-								"change": {
-									"name": "",
-									"sub_commands": {}
-								},
-								"clear": {
-									"name": "",
-									"sub_commands": {}
-								}
-							}
-						},
-						"sync_with": {
-							"name": "",
-							"sub_commands": {}
-						}
-					}
-				},
 				"channel": {
 					"name": "",
 					"sub_commands": {
-						"permissions": {
+						"language": {
 							"name": "",
 							"sub_commands": {
-								"give": {
-									"name": "",
-									"sub_commands": {}
-								},
-								"deny": {
-									"name": "",
-									"sub_commands": {}
-								},
-								"undo": {
+								"change": {
 									"name": "",
 									"sub_commands": {}
 								},
@@ -122,14 +176,22 @@
 								}
 							}
 						},
-						"language": {
+						"permissions": {
 							"name": "",
 							"sub_commands": {
-								"change": {
+								"clear": {
 									"name": "",
 									"sub_commands": {}
 								},
-								"clear": {
+								"deny": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"give": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"undo": {
 									"name": "",
 									"sub_commands": {}
 								}
@@ -154,6 +216,49 @@
 						}
 					}
 				},
+				"server": {
+					"name": "",
+					"sub_commands": {
+						"language": {
+							"name": "",
+							"sub_commands": {
+								"change": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "",
+									"sub_commands": {}
+								}
+							}
+						},
+						"permissions": {
+							"name": "",
+							"sub_commands": {
+								"clear": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"deny": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"give": {
+									"name": "",
+									"sub_commands": {}
+								},
+								"undo": {
+									"name": "",
+									"sub_commands": {}
+								}
+							}
+						},
+						"sync_with": {
+							"name": "",
+							"sub_commands": {}
+						}
+					}
+				},
 				"user": {
 					"name": "",
 					"sub_commands": {
@@ -174,60 +279,9 @@
 				}
 			}
 		},
-		"info": {
-			"name": "",
-			"sub_commands": {
-				"permissions": {
-					"name": "",
-					"sub_commands": {}
-				}
-			}
-		},
-		"lewd": {
+		"test": {
 			"name": "",
 			"sub_commands": {}
-		},
-		"maka": {
-			"name": "",
-			"sub_commands": {}
-		},
-		"quiz": {
-			"name": "",
-			"sub_commands": {
-				"new": {
-					"name": "",
-					"sub_commands": {}
-				},
-				"join": {
-					"name": "",
-					"sub_commands": {}
-				},
-				"start": {
-					"name": "",
-					"sub_commands": {}
-				},
-				"a": {
-					"name": "",
-					"sub_commands": {}
-				},
-				"end": {
-					"name": "",
-					"sub_commands": {}
-				},
-				"q": {
-					"name": "",
-					"sub_commands": {}
-				},
-				"settings": {
-					"name": "",
-					"sub_commands": {
-						"point_distribution": {
-							"name": "",
-							"sub_commands": {}
-						}
-					}
-				}
-			}
 		}
 	}
 }

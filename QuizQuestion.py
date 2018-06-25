@@ -12,6 +12,8 @@ class QuizQuestion(object):
 		self.correct_answer = questionDict["correct_answer"]
 		self.answer_options = questionDict["incorrect_answers"] + [self.correct_answer]
 		self.answers = {}
+		self.order_number = 0
+		self.time = 0
 	
 	#Because the questions come in an encoded state.
 	async def decodeHtml(self):
@@ -32,30 +34,32 @@ class QuizQuestion(object):
 	async def getQuestionString(self):
 		#print("Correct Answer: " + self.correct_answer)
 		
-		text = "*{category}".format(category=self.category)
-		text += "\n{difficulty}*".format(difficulty=self.difficulty)
-		text += "\n\n**{question}**".format(question=self.question)
-		
-		text += "\n"
+		text = "*{category}\n{difficulty}*\n\n**{question}**\n".format(
+			category = self.category
+			,difficulty = self.difficulty
+			,question = self.question
+		)
 		
 		for i in range(len(self.answer_options)):
 			option = self.answer_options[i]
 			number = i + 1
-			
-			text += "\n**{number}**: {option}".format(number=number, option=option)
+			text += "\n**{number}**: {option}".format(
+				number = number
+				,option = option
+			)
 		
 		return text
 	
 	#Gets the actual answer based on the number given, and places it in the answer list.
 	#Returns whether the operation was successful or not.
-	async def convertAnswer(self, id, answer):
+	async def convertAnswer(self, message, id, answer):
 		if (answer > 0 and answer <= len(self.answer_options)):
 			self.answers[id] = QuizAnswer(
 				self.answer_options[answer - 1]
 				,len(self.answers) + 1
-				,None
 			)
 			
+			await self.answers[id].setTime(message, self.time)
 			return True
 		else:
 			return False
@@ -66,11 +70,5 @@ class QuizQuestion(object):
 			,answer = self.correct_answer
 		)
 	
-	async def getPoints(self, player, rewardMultiplier, quizMode):
-		if (quizMode.name == "STANDARD"):
-			return rewardMultiplier
-		elif (quizMode.name == "ORDER"):
-			return rewardMultiplier / player[rank]
-		else:
-			print("Quiz mode not recognised")
-			return 0
+	async def getTimestamp(self, msg):
+		self.time = msg.created_at.timestamp()

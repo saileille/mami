@@ -106,5 +106,41 @@ def endQuiz():
 def showQuizQuestion():
 	return
 
-def changeQuizPointsDistribution():
+def changeQuizPointDistribution():
+	return
+
+def changeQuizPointMultiplier():
+	return
+
+def newRpgCharacter():
+	return
+
+def rpgTestDuel():
+	return
+
+def delAllRpgCharacters():
+	return
+
+def rpgBattleSetStance():
+	return
+
+def rpgBattleChooseAction():
+	return
+
+def rpgChangeOffence():
+	return
+
+def rpgChangeDefence():
+	return
+
+def rpgChangeHardiness():
+	return
+
+def rpgChangeSpeed():
+	return
+
+def rpgChangeHp():
+	return
+
+def rpgShowCharacterInfo():
 	return

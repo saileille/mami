@@ -81,14 +81,21 @@ PREFIX.VIEW.CORRECT;Käytä prefiksiä `{prefix}`
 #quiz
 QUIZ.SHORTDESC;Testaa tietojasi muita serverin jäseniä vastaan!
 QUIZ.CORRECT_ANSWER;Oikea vastaus:
+QUIZ.DOES_NOT_EXIST;Tällä kanavalla ei ole visaa.
 QUIZ.ALREADY_EXISTS;Visa on jo luotu.
 QUIZ.ALREADY_ONGOING;Visa on jo käynnissä.
 QUIZ.NOT_PARTAKING;Et ole mukana visassa.
 QUIZ.NOT_STARTED;Visaa ei ole vielä aloitettu.
-QUIZ.POINTS_REWARD_ONE;{players} sai {points:.2f} pistettä.
-QUIZ.POINTS_REWARD_MULTIPLE;{players} saivat {points:.2f} pistettä.
+QUIZ.POINTS_REWARD;Oikein vastanneet pelaajat:{players}
 QUIZ.NO_POINTS_REWARD;Kukaan ei vastannut oikein.
 QUIZ.UNANSWERED_PLAYERS;Vastaamattomat pelaajat
+QUIZ.STANDINGS;Pistetilanne
+
+#quiz.a
+QUIZ.A.SHORTDESC;Vastaa visan kysymykseen.
+QUIZ.A.ARGUMENTS;[vastausnro]
+QUIZ.A.ANSWERED_COMPLETE;**{player}** vastasi kysymykseen.
+QUIZ.A.ALREADY_ANSWERED;**{player}**, olet jo vastannut kysymykseen.
 
 #quiz.end
 QUIZ.END.SHORTDESC;Lopeta visa.
@@ -107,15 +114,42 @@ QUIZ.JOIN.SHORTDESC;Liity visaan.
 QUIZ.JOIN.ALREADY_JOINED;Olet jo osallistumassa visaan.
 QUIZ.JOIN.COMPLETED;Olet liittynyt visaan. Osallistujat:```{participants}```
 
+#quiz.q
+QUIZ.Q.SHORTDESC;Näytä viimeisin kysymys.
+
 #quiz.start
 QUIZ.START.SHORTDESC;Aloita visa.
-QUIZ.START.NOT_ENOUGH_PLAYERS;Visan aloittamiseen tarvitaan ainakin {minPlayers} pelaajaa.
+QUIZ.START.NOT_ENOUGH_PLAYERS;Visan aloittamiseen tarvitaan ainakin {min_players} pelaajaa.
 
-#quiz.a
-QUIZ.A.SHORTDESC;Vastaa visan kysymykseen.
-QUIZ.A.ARGUMENTS;[vastausnro]
-QUIZ.A.ANSWERED_COMPLETE;**{player}** vastasi kysymykseen.
-QUIZ.A.ALREADY_ANSWERED;**{player}**, olet jo vastannut kysymykseen.
+#rpg
+RPG.SHORTDESC;RPG-related commands.
+RPG.BATTLE_STARTED;Jouduit taisteluun! Vastustaja: **{opponent}**.
+RPG.HP_TEXT;HP: {current}/{maximum}
+RPG.CHARACTER_ACTION;**{name}** käytti toimintoa **{action}**
+RPG.POS_HP_CHANGE;**{name}** sai {hp} HP:ta
+RPG.NEG_HP_CHANGE;**{name}** menetti {hp} HP:ta
+RPG.BATTLE_ROUND_ACTION;Valitse toimintosi.
+
+#rpg.action
+RPG.ACTION.SHORTDESC;Valitse toimintosi tämän kierroksen aikana.
+RPG.ACTION.INVALID;`{action}` ei ole käypä toiminto.
+
+#rpg.delall
+RPG.DELALL.SHORTDESC;Poistaa kaikki olemassa olevat RPG-hahmot.
+RPG.DELALL.DONE;Hahmot poistettu.
+
+#rpg.duel
+RPG.DUEL.SHORTDESC;Taistelumekaniikan testausta varten.
+RPG.DUEL.ARGUMENTS;[vastustajan nimi]
+
+#rpg.new
+RPG.NEW.SHORTDESC;Luo uusi Puella Magi -hahmo.
+RPG.NEW.GIVE_NAME;Mikä on hahmosi nimi?
+RPG.NEW.CHARACTER_CREATED;Hahmo on luotu!
+
+#rpg.set_stance
+RPG.SET_STANCE.SHORTDESC;Päätä lähestymisesi tähän kierrokseen.
+RPG.SET_STANCE.INVALID;`{stance}` ei ole kelvollinen lähestyminen.
 
 #settings
 SETTINGS.SHORTDESC;Pitää sisällään konfiguraatiokomentoja.
@@ -161,7 +195,7 @@ SETTINGS.CHANNEL.SYNC.SHORTDESC;Hallinnoi kanavan synkronisaatioasetuksia.
 SETTINGS.CHANNEL.SYNC.ADD.SHORTDESC;Synkronoi toisen kanavan tai kanavien kanssa.
 SETTINGS.CHANNEL.SYNC.ADD.ARGUMENTS;[kanavatägit]
 NO_PERMISSION_TO_SYNC_CHANNEL;Sinulla ei ole tarvittavia lupia synkronoimaan kanavaa `{name}`.
-CHANNELS_SYNCED;Seuraavat kanavat on synkronoitu tämän kanavan kanssa:{channelSyncList}
+CHANNELS_SYNCED;Seuraavat kanavat on synkronoitu tämän kanavan kanssa:{channel_synclist}
 
 #settings.channel.sync.del
 SETTINGS.CHANNEL.SYNC.DEL.SHORTDESC;Poista olemassaoleva synkronisaatio.
@@ -169,7 +203,7 @@ CHANNEL_SYNCS_REMOVED;Synkronisaatiot poistettu.
 
 #settings.channel.sync.view
 SETTINGS.CHANNEL.SYNC.VIEW.SHORTDESC;Näyttää serverin kanavilla olevat synkronoinnit.
-ALL_CHANNEL_SYNCS;Synkronoidut kanavat:{channelSyncList}
+ALL_CHANNEL_SYNCS;Synkronoidut kanavat:{channel_synclist}
 NO_CHANNEL_SYNCS;Mitään kanavia ei ole synkronoitu.
 
 #settings.server

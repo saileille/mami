@@ -63,10 +63,14 @@ class PermissionChanger(object):
 				
 				#If clearing, all arguments must be commands.
 				if (self.operation == "clear"):	
-					msg = await getLanguageText(message.language, "INVALID_COMMAND")
-					msg = msg.format(command=self.arguments[0])
-					
-					await send(message.discord_py.channel, msg)
+					await send(
+						message.discord_py.channel
+						,"INVALID_COMMAND"
+						,message.language
+						,{
+							"command": self.arguments[0]
+						}
+					)
 					self.valid_change = False
 					return
 				
@@ -77,7 +81,14 @@ class PermissionChanger(object):
 			msg = await getLanguageText(message.language, "INVALID_COMMAND")
 			msg = msg.format(command=self.arguments[0])
 			
-			await send(message.discord_py.channel, msg)
+			await send(
+				message.discord_py.channel
+				,"INVALID_COMMAND"
+				,message.language
+				,{
+					"command": self.arguments[0]
+				}
+			)
 			self.valid_change = False
 			return
 		
@@ -85,7 +96,8 @@ class PermissionChanger(object):
 		if (len(self.arguments) == 0 and self.operation != "clear"):
 			await send(
 				message.discord_py.channel
-				,await getLanguageText(message.language, "NO_ROLE_USER_PERMISSION_TAGS")
+				,"NO_ROLE_USER_PERMISSION_TAGS"
+				,message.language
 			)
 			
 			self.valid_change = False
@@ -110,15 +122,20 @@ class PermissionChanger(object):
 				self.permissions.append(argument)
 				continue
 			
+			msg = "INVALID_ROLE_USER_PERMISSION"
+			
 			#If the input was not recognised.
 			if (await isPossibleId(argument) == True):
-				msg = await getLanguageText(message.language, "INVALID_ROLE_USER_ID")
-			else:
-				msg = await getLanguageText(message.language, "INVALID_ROLE_USER_PERMISSION")
+				msg = "INVALID_ROLE_USER_ID"
 			
-			msg = msg.format(argument=argument)
-			
-			await send(message.discord_py.channel, msg)
+			await send(
+				message.discord_py.channel
+				,msg
+				,message.language
+				,{
+					"argument": argument
+				}
+			)
 			self.valid_change = False
 			break
 	
@@ -168,8 +185,10 @@ class PermissionChanger(object):
 			msgList.append("**" + self.command_strings[i] + "**")
 			msgList += await self.permission_objects[i].getPermissionString(message.discord_py, self.language)
 		
-		msg = "\n\n".join(msgList)
-		await send(message.discord_py.channel, msg)
+		await send(
+			message.discord_py.channel
+			,"\n\n".join(msgList)
+		)
 	
 	async def undoUserPermissions(self, i):
 		for id in self.user_ids:

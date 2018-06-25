@@ -6,33 +6,32 @@ from StringHandler import StringHandler
 
 #Returns a boolean based on whether the command is allowed or not.
 async def checkCommandPermission(
-	userObject
+	cmdCode
+	,userObject
 	,serverSettings
 	,channelSettings
-	,commandList
 	,channelObject = None
 ):
-	#Channel object is not given if we are syncing servers...
 	if (channelObject != None):
 		userPermissions = userObject.permissions_in(channelObject)
 	else:
+		#Channel object is not given if we are syncing servers...
 		userPermissions = userObject.server_permissions
 	"""
 	#Admins get past everything.
 	if (userPermissions.administrator == True):
 		return True
 	"""
-	permissionKey = ".".join(commandList)
 	
 	#Channel permission check. If none specified, moves to server permission check.
-	if (permissionKey in channelSettings.permissions):
-		permission = channelSettings.permissions[permissionKey]
+	if (cmdCode in channelSettings.permissions):
+		permission = channelSettings.permissions[cmdCode]
 		
 		return await permission.checkPermission(userObject, userPermissions)
 	
 	#If the channel does not belong to a server, we get the default thing.
 	if (serverSettings == None):
-		cmdObject = await StringHandler(permissionKey).getCommandFromString()
+		cmdObject = await StringHandler(cmdCode).getCommandFromString()
 		
 		permission = Permission()
 		await permission.forceDefault()
@@ -42,7 +41,7 @@ async def checkCommandPermission(
 	
 	#Server permission check.
 	#Adds a default Permission object if the command is lacking one for this server.
-	permission = await PermissionChanger().getPermissionObject(permissionKey, serverSettings.permissions)
+	permission = await PermissionChanger().getPermissionObject(cmdCode, serverSettings.permissions)
 	
 	#Checking server-wide permissions.
 	return await permission.checkPermission(userObject, userPermissions)

@@ -1,7 +1,6 @@
 import re
-from fileIO import getCommandCode
-from fileIO import getCommandName
-from fileIO import loadCommands
+
+from fileIO import getCommandCodeList, getCommandName, loadCommands
 
 #Has all sorts of string-conversion functions.
 class StringHandler(object):
@@ -19,19 +18,12 @@ class StringHandler(object):
 	):
 		self.text = text
 	
+	#Converts the command string to a list of command codes.
 	async def getCommandCodeList(self, language):
-		#Converts the command string to a list of command codes.
 		commandList = self.text.split(".")
+		commandCode = await getCommandCodeList(language, commandList)
 		
-		codeList = []
-		for text in commandList:
-			commandCode = await getCommandCode(language, text, codeList)
-			codeList.append(commandCode)
-			
-			if (commandCode == None):
-				break
-		
-		return codeList
+		return commandCode
 	
 	#Get the command object based on its call name.
 	#E.g. settings.server with English language would return the appropriate command object.
@@ -46,7 +38,6 @@ class StringHandler(object):
 			return None
 		
 		commandObject = await loadCommands()
-		
 		for code in codeList:
 			commandObject = commandObject.sub_commands[code]
 		

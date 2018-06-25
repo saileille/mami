@@ -1,16 +1,11 @@
-from fileIO import getCommandCode
-from fileIO import getCsvVarSync
-from fileIO import getLanguageText
 from Prefix import Prefix
 from StringHandler import StringHandler
 
+from fileIO import getCommandCodeList, getDefaultPrefix, getLanguageText
+from sendFunctions import processMsg
+
 class CommandCall(object):
-	defaultPrefix = getCsvVarSync("DEFAULT_PREFIX", "basic", "staticData")
-	
-	def __init__(
-		self
-		,raw_text = ""
-	):
+	def __init__(self, raw_text=""):
 		self.raw_text = raw_text
 		self.prefix = None
 		self.command_strings = None
@@ -18,8 +13,7 @@ class CommandCall(object):
 		self.arguments = []
 	
 	async def process(self, customPrefixes, language):
-		prefixes = [self.defaultPrefix]
-		
+		prefixes = [await getDefaultPrefix()]
 		for prefix in customPrefixes:
 			if (prefix != None):
 				prefixes.append(prefix)
@@ -47,10 +41,11 @@ class CommandCall(object):
 		self.arguments = parts[1:]
 		self.command_strings = parts[0].split(".")
 		
-		await self.convertCommands(language)
+		self.commands = await getCommandCodeList(language, self.command_strings)
 	
-	async def validatePrefix(self, message, allPrefixesAllowed):
-		if (allPrefixesAllowed == True):
+	#called: True if the command is to be called.
+	async def validatePrefix(self, message, allPrefixesAllowed, called):
+		if (allPrefixesAllowed == True and called == True):
 			return True
 		
 		#User prefix check.
@@ -69,56 +64,57 @@ class CommandCall(object):
 				return prefixCheck
 		
 		#Default prefix check.
-		if (self.defaultPrefix == self.prefix):
+		if (await getDefaultPrefix() == self.prefix):
 			return True
 		
 		return False
 	
+	#Converts the arguments of the call according to the specification in Command object.
 	async def convertArguments(self, command, language):
-		#Converts the arguments of the call according to the specification in Command object.
 		newArguments = []
 		for i in range(len(self.arguments)):
 			argument = self.arguments[i]
 			
 			try:
-				type = command.argument_types[i]
+				argumentRule = command.argument_types[i]
 			except IndexError:
 				#If there are more than the minimum amount of arguments.
-				type = command.optional_arguments_type
+				argumentRule = command.optional_arguments_type
 			
-			try:
-				if (type == "int"):
-					try:
-						argument = int(argument)
-					
-					#Cannot convert straight to int from string representation of float.
-					except ValueError:
-						argument = float(argument)
-						argument = int(argument)
-				
-				elif (type == "float"):
-					argument = float(argument)
-			
-			except ValueError:
-				msg = await getLanguageText(language, "ARGUMENT_CONV_ERROR")
-				msg = msg.format(argument=argument)
-				
+			#Regex check.
+			if (await argumentRule.checkArgument(argument) == False):
+				msg = await processMsg(
+					argumentRule.fail_description
+					,language
+				)
 				return msg
 			
-			newArguments.append(argument)
+			#Argument conversion.
+			convertedArgument = await argumentRule.convertArgument(argument)
+			
+			if (convertedArgument == None):
+				return await processMsg(
+					"ARGUMENT_CONV_ERROR"
+					,language
+					,{
+						"argument": argument
+					}
+				)
+			
+			#Range check.
+			if (await argumentRule.checkRange(convertedArgument) == False):
+				return await processMsg(
+					"ARGUMENT_NOT_IN_RANGE"
+					,language
+					,{
+						"range": argumentRule.num_range
+					}
+				)
+			
+			newArguments.append(convertedArgument)
 		
 		self.arguments = newArguments
 		return ""
-	
-	async def convertCommands(self, language):
-		#Converts the command string to a list of command codes.
-		commandText = await self.getCommandString()
-		self.commands = await StringHandler(commandText).getCommandCodeList(language)
-	
-	async def getCommandString(self):
-		commandString = ".".join(self.command_strings)
-		
-		return commandString
 	
 	async def trimCommandStrings(self, index):
 		#index is the index of last acceptable command.
@@ -127,11 +123,11 @@ class CommandCall(object):
 		else:
 			self.command_strings = []
 	
+	#Gives command string of a specified length (determined by commandIndex).
 	async def getTrimmedCommandString(self, message, commandIndex):
-		#Gives command string of a specified length (determined by commandIndex).
 		prefix = await Prefix(message).getPrefix()
 		await self.trimCommandStrings(commandIndex)
-		commandStr = await self.getCommandString()
+		commandStr = ".".join(self.command_strings)
 		commandStr = prefix + commandStr
 		
 		return commandStr

@@ -1,7 +1,7 @@
 import logging
 from bot import client
 from discord import Game
-from fileIO import getBotToken
+from fileIO import getBotToken, getDefaultPrefix
 from fileIO import getCsvVar
 from Message import Message
 
@@ -13,7 +13,7 @@ logger.addHandler(handler)
 
 @client.event
 async def on_ready():
-	defaultPrefix = await getCsvVar("DEFAULT_PREFIX", "basic", "staticData")
+	defaultPrefix = await getDefaultPrefix()
 	await client.change_presence(
 		activity = Game(
 			name = "{prefix}prefix.view to get started".format(prefix=defaultPrefix)

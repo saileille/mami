@@ -29,10 +29,7 @@ class Server(SettingObject):
 	async def isDefault(self):
 		await self.cleanPermissions()
 		
-		if (
-			self.language != await getDefaultLanguage()
-			and self.language != None
-		):
+		if (self.language != None):
 			return False
 		
 		if (self.prefix != None):

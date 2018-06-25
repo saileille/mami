@@ -1,33 +1,29 @@
 #Save and load functions for setting objects.
 
+import os
+
 from Channel import Channel
 from Server import Server
 from User import User
 
-from fileIO import deleteFile
-from fileIO import loadPickle
-from fileIO import savePickle
+from fileIO import deleteFile, loadPickle, savePickle
 
 #Saves Server, Channel or User object.
-async def saveSettingObject(saveObject, id, language=None, syncList=None):
-	#syncedServers is a list of servers yet to be synced, saveObject is what is to be saved.
-	#id is also the filename.
+#syncedServers is a list of servers yet to be synced, saveObject is what is to be saved.
+#id is also the filename.
+async def saveSettingObject(saveObject, id, syncList=None):
+	#Making sure the ID is an integer.
+	id = int(id)
 	
 	className = type(saveObject).__name__
 	folder = "savedData\\{type}s".format(type=className.lower())
 	
-	#This structure is necessary because Channel's default check needs language.
-	if (className != "Channel"):
-		isDefault = await saveObject.isDefault()
-	else:
-		isDefault = await saveObject.isDefault(language)
-	
 	if (await saveObject.isValid(id) == True):
-		if (isDefault == False):
+		if (await saveObject.isDefault() == False):
 			await savePickle(saveObject, id, folder)
 		else:
 			await deleteFile(
-				"{id}.db".format(id=id)
+				"{id}.db".format(id = id)
 				,folder
 			)
 	
@@ -38,7 +34,7 @@ async def saveSettingObject(saveObject, id, language=None, syncList=None):
 	if (len(syncList) > 1):
 		syncList.remove(id)
 		nextId = syncList[0]
-		await saveSettingObject(saveObject, nextId, language, syncList)
+		await saveSettingObject(saveObject, nextId, syncList)
 
 #Loads a Server object.
 async def loadServerSettings(id):
@@ -81,3 +77,19 @@ async def getSyncedSettings(id, folder):
 			return sync
 	
 	return []
+
+async def deleteRpgCharacters():
+	for dirpath, dirnames, filenames in os.walk("savedData\\users"):
+		for file in filenames:
+			id = file.replace(".db", "")
+			
+			userObject = await loadUserSettings(id)
+			userObject.rpg_character = None
+			await saveSettingObject(userObject, id)
+	
+	battleFolder = "savedData\\rpg\\battles"
+	for dirpath, dirnames, filenames in os.walk(battleFolder):
+		battleNames = filenames
+	
+	for battle in battleNames:
+		await deleteFile(battle, battleFolder)

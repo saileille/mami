@@ -7,7 +7,9 @@ from fileIO import getCsvVarSync
 
 class MessageList(object):
 	block = "```"
-	characterLimit = int(getCsvVarSync("MAX_CHARACTERS", "basic", "staticData"))
+	characterLimit = int(
+		getCsvVarSync("MAX_CHARACTERS", "basic", "staticData")
+	)
 	
 	def __init__(self, text, files):
 		self.text = text

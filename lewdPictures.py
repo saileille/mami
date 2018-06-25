@@ -14,7 +14,11 @@ async def getLewds(message, arguments, nsfw):
 	#5% chance for an actual lewd when in NSFW channel. ;)
 	if (nsfw == True and random.random() < 0.05):
 		url = await getApiLewd()
-		await send(message.discord_py.channel, url)
+		
+		await send(
+			message.discord_py.channel
+			,url
+		)
 	else:
 		async with message.discord_py.channel.typing():
 			await send(

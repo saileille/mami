@@ -5,13 +5,8 @@ from CommandCall import CommandCall
 from Prefix import Prefix
 
 from permissionFunctions import checkCommandPermission
-from fileIO import getCommandName
-from fileIO import getCsvVar
-from fileIO import getExistingLanguages
-from fileIO import getLanguageCode
-from fileIO import getLanguageText
-from fileIO import readTextFile
-from sendFunctions import send
+from fileIO import getCommandName, getCsvVar, getExistingLanguages, getLanguageCode, getLanguageText, loadSpecialCheckRules, readTextFile
+from sendFunctions import processMsg, send
 
 class Command(object):
 	def __init__(
@@ -26,6 +21,7 @@ class Command(object):
 		,argument_types = []
 		,optional_arguments_type = None
 		,default_permissions = []
+		,special_checks = []
 		,function = None
 		,nsfw_function = None
 	):
@@ -39,6 +35,7 @@ class Command(object):
 		self.argument_types = argument_types
 		self.optional_arguments_type = optional_arguments_type
 		self.default_permissions = default_permissions
+		self.special_checks = special_checks
 		self.function = function
 		self.nsfw_function = nsfw_function
 		self.command_code = None
@@ -58,26 +55,29 @@ class Command(object):
 	#sendFeedback enables/disables feedback messages.
 	async def permissionChecklist(self, message, commandCall, commandIndex, sendFeedback=True):
 		#Validating the prefix. Execution will not continue if invalid.
-		if (await commandCall.validatePrefix(message, self.all_prefixes) == False):
+		if (await commandCall.validatePrefix(message, self.all_prefixes, sendFeedback) == False):
 			return False
 		
-		#TODO: function to inform the user of the inability to use this command.
 		if (await self.checkOwnerOnly(message, sendFeedback) == False):
 			return False
 		
 		if (await self.checkServerOnly(message, sendFeedback) == False):
 			return False
 		
+		if (await self.specialPreCheck(message, sendFeedback) == False):
+			return False
+		
 		#Checks for the command permissions.
 		if (
 			commandIndex != -1
 			and await checkCommandPermission(
-				message.discord_py.author
+				self.command_code
+				,message.discord_py.author
 				,message.server_settings
 				,message.channel_settings
-				,commandCall.commands[:commandIndex + 1]
 				,message.discord_py.channel
 			) == False
+			and await self.specialPostCheck(message) == False
 		):
 			if (sendFeedback == True):
 				await self.sendUseDenied(message, commandCall, commandIndex)
@@ -99,7 +99,8 @@ class Command(object):
 		if (returnValue == False and sendFeedback == True):
 			await send(
 				message.discord_py.channel
-				,await getLanguageText(message.language, "OWNER_ONLY_COMMAND")
+				,"OWNER_ONLY_COMMAND"
+				,message.language
 			)
 		
 		return returnValue
@@ -113,7 +114,8 @@ class Command(object):
 		if (returnValue == False and sendFeedback == True):
 			await send(
 				message.discord_py.channel
-				,await getLanguageText(message.language, "SERVER_ONLY_COMMAND")
+				,"SERVER_ONLY_COMMAND"
+				,message.language
 			)
 		
 		return returnValue
@@ -130,10 +132,38 @@ class Command(object):
 		if (returnValue == False and sendFeedback == True):
 			await send(
 				message.discord_py.channel
-				,await getLanguageText(message.language, "NSFW_NOT_ALLOWED")
+				,"NSFW_NOT_ALLOWED"
+				,message.language
 			)
 		
 		return returnValue
+	
+	#Checking if the command is available at the moment.
+	async def specialPreCheck(self, message, sendFeedback):
+		rules = await loadSpecialCheckRules()
+		
+		for key in self.special_checks:
+			msg = await rules[key].preCheck(message)
+			if (msg != None):
+				if (sendFeedback):
+					await send(
+						message.discord_py.channel
+						,msg
+					)
+				
+				return False
+		
+		return True
+	
+	#Checking if the person has special permissions to access the command.
+	async def specialPostCheck(self, message):
+		rules = await loadSpecialCheckRules()
+		
+		for key in self.special_checks:
+			if (await rules[key].postCheck(message) == False):
+				return False
+		
+		return True
 	
 	async def checkSubCommands(self, message, callIndex, commandIndex):
 		commandCall = message.calls[callIndex]
@@ -152,11 +182,14 @@ class Command(object):
 		#If there are more commands in the call.
 		if (nextCommandIndex < len(commandCall.commands)):
 			if (nextCommandCode in self.sub_commands):
-				await self.sub_commands[nextCommandCode].call(message, callIndex, commandIndex + 1)
+				await self.sub_commands[nextCommandCode].call(message, callIndex, nextCommandIndex)
 			else:
 				if (len(self.sub_commands) == 0):
 					msg = await self.getSimpleHelp(message, commandCall, commandIndex)
-					await send(message.discord_py.channel, msg)
+					await send(
+						message.discord_py.channel
+						,msg
+					)
 				else:
 					#If the command was wrong.
 					await self.displaySubCommands(message, commandCall, commandIndex)
@@ -171,7 +204,10 @@ class Command(object):
 		#If right amount of arguments were not given.
 		if (await self.validateArgumentCount(len(commandCall.arguments)) == False):
 			msg = await self.getSimpleHelp(message, commandCall, commandIndex)
-			await send(message.discord_py.channel, msg)
+			await send(
+				message.discord_py.channel
+				,msg
+			)
 			return
 		
 		#Converting all the arguments to the proper data types. Returns True if successful.
@@ -180,8 +216,13 @@ class Command(object):
 		if (errorMsg == ""):
 			await self.launchCommand(message, commandCall.arguments)
 		else:
-			errorMsg += await self.getSimpleHelp(message, commandCall, commandIndex)
-			await send(message.discord_py.channel, errorMsg)
+			errorMsg += "\n{help}".format(
+				help = await self.getSimpleHelp(message, commandCall, commandIndex)
+			)
+			await send(
+				message.discord_py.channel
+				,errorMsg
+			)
 	
 	#Procedures involving command launching.
 	#Checks for NSFW functions, too.
@@ -214,19 +255,18 @@ class Command(object):
 	async def validateArgumentCount(self, argumentCount):
 		minArgumentCount = len(self.argument_types)
 		
-		if (argumentCount == minArgumentCount):
-			return True
-		
-		if (argumentCount > minArgumentCount and self.optional_arguments_type != None):
-			return True
-		
-		return False
+		return (
+			argumentCount == minArgumentCount or (
+				argumentCount > minArgumentCount
+				and self.optional_arguments_type != None
+			)
+		)
 	
 	async def displaySubCommands(self, message, commandCall, commandIndex):
 		#Used when an incomplete command gets typed.
 		prefix = await Prefix(message).getPrefix()
 		await commandCall.trimCommandStrings(commandIndex)
-		previousCommand = await commandCall.getCommandString()
+		previousCommand = ".".join(commandCall.command_strings)
 		
 		commandStr = previousCommand
 		if (commandStr != ""):
@@ -254,21 +294,34 @@ class Command(object):
 				subCmdStr = commandStr + subCmdName + " - " + subCmdDesc
 				subCommands.append(subCmdStr)
 		
+		#Check against triggering Mami with any other prefix than the allowed one.
+		if (prefix != commandCall.prefix):
+			return
+		
 		msg = ""
+		varDict = {}
 		for subCommand in subCommands:
 			msg += "```" + subCommand + "```"
 		
 		if (msg == ""):
-			msg = await getLanguageText(message.language, "NO_AVAILABLE_COMMANDS")
-			msg = msg.format(command=previousCommand)
+			msg = "NO_AVAILABLE_COMMANDS"
+			varDict["command"] = previousCommand
 		
-		await send(message.discord_py.channel, msg)
+		await send(
+			message.discord_py.channel
+			,msg
+			,message.language
+			,varDict
+		)
 	
 	#Shows a simple syntax of the command, and displays the long description.
 	#Informs the user about what is needed for the command.
 	async def getSimpleHelp(self, message, commandCall, commandIndex):
 		commandStr = await commandCall.getTrimmedCommandString(message, commandIndex)
-		argumentStr = await getLanguageText(message.language, self.argument_help)
+		argumentStr = await processMsg(
+			self.argument_help
+			,message.language
+		)
 		desc = await self.getLongDesc(message.language)
 		
 		if (argumentStr != ""):
@@ -281,12 +334,17 @@ class Command(object):
 	
 	#Called when a user is not allowed to use a command.
 	async def sendUseDenied(self, message, commandCall, commandIndex):
-		commandStr = await commandCall.getTrimmedCommandString(message, commandIndex)
-		
-		msg = await getLanguageText(message.language, "USE_DENIED")
-		msg = msg.format(command=commandStr)
-		
-		await send(message.discord_py.channel, msg)
+		await send(
+			message.discord_py.channel
+			,"USE_DENIED"
+			,message.language
+			,{
+				"command": await commandCall.getTrimmedCommandString(
+					message
+					,commandIndex
+				)
+			}
+		)
 	
 	async def getLongDesc(self, language):
 		existingLanguages = await getExistingLanguages(language)

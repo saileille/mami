@@ -2,6 +2,7 @@ from StringHandler import StringHandler
 
 from bot import client
 from fileIO import getLanguageText
+from sendFunctions import processMsg
 
 #Has all sorts of dictionary-conversion functions.
 class DictHandler(object):
@@ -24,14 +25,20 @@ class DictHandler(object):
 				permissionObject = self.dict[key]["server"]
 				
 				msgList.append(
-					await getLanguageText(language, "SERVER")
+					await processMsg(
+						"SERVER"
+						,language
+					)
 				)
 				
 				msgList += await permissionObject.getPermissionString(discordMessage, language)
 			
 			if ("channels" in self.dict[key]):
 				msgList.append(
-					await getLanguageText(language, "OVERRIDDEN_CHANNELS")
+					await processMsg(
+						"OVERRIDDEN_CHANNELS"
+						,language
+					)
 				)
 				
 				for channelKey in self.dict[key]["channels"]:
@@ -44,7 +51,10 @@ class DictHandler(object):
 		
 		if (len(msgList) == 0):
 			msgList.append(
-				await getLanguageText(language, "INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER")
+				await processMsg(
+					"INFO.PERMISSIONS.NO_PERMISSIONS_ON_SERVER"
+					,language
+				)
 			)
 		
 		return "\n\n".join(msgList)

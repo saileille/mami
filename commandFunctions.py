@@ -5,26 +5,30 @@ from PermissionChanger import PermissionChanger
 from Prefix import Prefix
 from QuizPlayer import QuizPlayer
 
-from fileIO import getLanguageText
-from fileIO import loadPickle
+from fileIO import getLanguageText, loadPickle
 from lewdPictures import getLewds
 from listFunctions import getVerbalList
 from sendFunctions import send
-from synchronisation import synchroniseChannel
-from synchronisation import unsynchroniseChannel
-from synchronisation import viewChannelSyncs
+from settingObjectIO import deleteRpgCharacters
+from synchronisation import synchroniseChannel, unsynchroniseChannel, viewChannelSyncs
 
 #Test command.
 async def test(message, arguments):
-	msg = await getLanguageText(message.language, "TEST.MESSAGE")
-	await send(message.discord_py.channel, msg)
+	await send(
+		message.discord_py.channel
+		,"TEST.MESSAGE"
+		,message.language
+	)
 
 #Shows the prefixes.
 async def prefixView(message, arguments):
 	prefix = Prefix(message)
 	msg = await prefix.getPrefixStrings()
 	
-	await send(message.discord_py.channel, msg)
+	await send(
+		message.discord_py.channel
+		,msg
+	)
 
 #Changes the server prefix.
 async def prefixServerChange(message, arguments):
@@ -90,7 +94,10 @@ async def infoPermissions(message, arguments):
 	dictHandler = DictHandler(permissionDict)
 	msgString = await dictHandler.getPermissionInfoText(message.discord_py, message.language)
 	
-	await send(message.discord_py.channel, msgString)
+	await send(
+		message.discord_py.channel
+		,msgString
+	)
 
 async def changeServerLanguage(message, arguments):
 	await message.server_settings.changeLanguage(message, arguments)
@@ -142,70 +149,63 @@ async def newQuiz(message, arguments):
 	await message.channel_settings.newQuiz(message, arguments[0])
 
 async def joinQuiz(message, arguments):
-	#Quiz must exist.
-	if (message.channel_settings.quiz == None):
-		await send(
-			message.discord_py.channel
-			,await getLanguageText(message.language, "NO_QUIZ")
-		)
-		return
-	
 	await message.channel_settings.quiz.joinPlayer(message)
 
 async def startQuiz(message, arguments):
-	#Quiz must exist.
-	if (message.channel_settings.quiz == None):
-		await send(
-			message.discord_py.channel
-			,await getLanguageText(message.language, "NO_QUIZ")
-		)
-		return
-	
 	await message.channel_settings.quiz.start(message)
 
 async def answerQuiz(message, arguments):
-	#Quiz must exist.
-	if (message.channel_settings.quiz == None):
-		await send(
-			message.discord_py.channel
-			,await getLanguageText(message.language, "NO_QUIZ")
-		)
-		return
-	
 	await message.channel_settings.quiz.answer(message, arguments[0])
 
 async def endQuiz(message, arguments):
-	#Quiz must exist.
-	if (message.channel_settings.quiz == None):
-		await send(
-			message.discord_py.channel
-			,await getLanguageText(message.language, "NO_QUIZ")
-		)
-		return
-	
 	msg = await message.channel_settings.endQuiz(message)
 	
 	await message.save()
-	await send(message.discord_py.channel, msg)
+	await send(
+		message.discord_py.channel
+		,msg
+	)
 
 async def showQuizQuestion(message, arguments):
-	#Quiz must exist.
-	if (message.channel_settings.quiz == None):
-		await send(
-			message.discord_py.channel
-			,await getLanguageText(message.language, "NO_QUIZ")
-		)
-		return
-	
 	await message.channel_settings.quiz.showQuestion(message)
 
-async def changeQuizPointsDistribution(message, arguments):
-	#Quiz must exist.
-	if (message.channel_settings.quiz == None):
-		await send(
-			message.discord_py.channel
-			,await getLanguageText(message.language, "NO_QUIZ")
-		)
-		return
-	
+async def changeQuizPointDistribution(message, arguments):
 	await message.channel_settings.quiz.changePointDistribution(message, arguments[0])
+
+async def changeQuizPointMultiplier(message, arguments):
+	await message.channel_settings.quiz.changePointMultiplier(message, arguments[0])
+
+async def newRpgCharacter(message, arguments):
+	await message.user_settings.newRpgCharacter(message)
+
+async def rpgTestDuel(message, arguments):
+	await message.user_settings.rpg_character.startTestDuel(message, " ".join(arguments))
+
+async def delAllRpgCharacters(message, arguments):
+	await deleteRpgCharacters()
+	await send(
+		message.discord_py.channel
+		,"RPG.DELALL.DONE"
+		,message.language
+	)
+
+async def rpgBattleChooseAction(message, arguments):
+	await message.user_settings.rpg_character.chooseAction(message, arguments[0])
+
+async def rpgChangeOffence(message, arguments):
+	await message.user_settings.rpg_character.changeAttr(message, "offence", arguments[0])
+
+async def rpgChangeDefence(message, arguments):
+	await message.user_settings.rpg_character.changeAttr(message, "defence", arguments[0])
+
+async def rpgChangeHardiness(message, arguments):
+	await message.user_settings.rpg_character.changeAttr(message, "hardiness", arguments[0])
+
+async def rpgChangeSpeed(message, arguments):
+	await message.user_settings.rpg_character.changeAttr(message, "speed", arguments[0])
+
+async def rpgChangeHp(message, arguments):
+	await message.user_settings.rpg_character.changeAttr(message, "hp", arguments[0])
+
+async def rpgShowCharacterInfo(message, arguments):
+	await message.user_settings.rpg_character.showInfo(message)

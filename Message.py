@@ -3,13 +3,8 @@ from CommandCall import CommandCall
 from Server import Server
 from User import User
 
-from fileIO import getDefaultLanguage
-from fileIO import loadCommands
-from fileIO import loadPickle
-from settingObjectIO import loadChannelSettings
-from settingObjectIO import loadServerSettings
-from settingObjectIO import loadUserSettings
-from settingObjectIO import saveSettingObject
+from fileIO import getDefaultLanguage, loadCommands, loadPickle
+from settingObjectIO import loadChannelSettings, loadServerSettings, loadUserSettings, saveSettingObject
 
 class Message(object):
 	def __init__(
@@ -27,19 +22,17 @@ class Message(object):
 		self.language = None
 	
 	async def separate(self):
+		prefixList = [self.user_settings.prefix]
+		if (self.discord_py.guild != None):
+			prefixList.append(self.server_settings.prefix)
+			prefixList.append(self.channel_settings.prefix)
+		
 		#Separates the message according to its lines.
 		lines = self.discord_py.content.split("\n")
 		
 		#Processes commands and organises them.
 		for line in lines:
 			call = CommandCall(line)
-			
-			prefixList = [self.user_settings.prefix]
-			
-			if (self.discord_py.guild != None):
-				prefixList.append(self.server_settings.prefix)
-				prefixList.append(self.channel_settings.prefix)
-			
 			await call.process(prefixList, self.language)
 			
 			if (call.arguments != None and call.commands != None):

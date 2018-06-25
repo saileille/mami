@@ -1,15 +1,50 @@
 {
 	"sub_commands": {
-		"test": {
-			"name": "testi",
+		"info": {
+			"name": "info",
+			"sub_commands": {
+				"permissions": {
+					"name": "luvat",
+					"sub_commands": {}
+				}
+			}
+		},
+		"lewd": {
+			"name": "säädytön",
+			"sub_commands": {}
+		},
+		"maka": {
+			"name": "maka",
 			"sub_commands": {}
 		},
 		"prefix": {
 			"name": "prefiksi",
 			"sub_commands": {
-				"view": {
-					"name": "näytä",
-					"sub_commands": {}
+				"channel": {
+					"name": "kanava",
+					"sub_commands": {
+						"change": {
+							"name": "muuta",
+							"sub_commands": {}
+						},
+						"clear": {
+							"name": "tyhjennä",
+							"sub_commands": {}
+						}
+					}
+				},
+				"server": {
+					"name": "serveri",
+					"sub_commands": {
+						"change": {
+							"name": "muuta",
+							"sub_commands": {}
+						},
+						"clear": {
+							"name": "tyhjennä",
+							"sub_commands": {}
+						}
+					}
 				},
 				"user": {
 					"name": "käyttäjä",
@@ -24,104 +59,110 @@
 						}
 					}
 				},
-				"server": {
-					"name": "serveri",
+				"view": {
+					"name": "näytä",
+					"sub_commands": {}
+				}
+			}
+		},
+		"quiz": {
+			"name": "visa",
+			"sub_commands": {
+				"a": {
+					"name": "v",
+					"sub_commands": {}
+				},
+				"end": {
+					"name": "lopeta",
+					"sub_commands": {}
+				},
+				"join": {
+					"name": "liity",
+					"sub_commands": {}
+				},
+				"new": {
+					"name": "uusi",
+					"sub_commands": {}
+				},
+				"q": {
+					"name": "k",
+					"sub_commands": {}
+				},
+				"settings": {
+					"name": "asetukset",
 					"sub_commands": {
-						"change": {
-							"name": "muuta",
+						"point_distribution": {
+							"name": "pistejakauma",
 							"sub_commands": {}
 						},
-						"clear": {
-							"name": "tyhjennä",
+						"point_multiplier": {
+							"name": "pistekerroin",
 							"sub_commands": {}
 						}
 					}
 				},
-				"channel": {
-					"name": "kanava",
+				"start": {
+					"name": "aloita",
+					"sub_commands": {}
+				}
+			}
+		},
+		"rpg": {
+			"name": "rpg",
+			"sub_commands": {
+				"action": {
+					"name": "toiminto",
+					"sub_commands": {}
+				},
+				"character": {
+					"name": "hahmo",
+					"sub_commands": {}
+				},
+				"cheats": {
+					"name": "koodit",
 					"sub_commands": {
-						"change": {
-							"name": "muuta",
+						"defence": {
+							"name": "puolustus",
 							"sub_commands": {}
 						},
-						"clear": {
-							"name": "tyhjennä",
+						"hardiness": {
+							"name": "kovuus",
+							"sub_commands": {}
+						},
+						"hp": {
+							"name": "hp",
+							"sub_commands": {}
+						},
+						"offence": {
+							"name": "hyökkäys",
+							"sub_commands": {}
+						},
+						"speed": {
+							"name": "nopeus",
 							"sub_commands": {}
 						}
 					}
+				},
+				"delall": {
+					"name": "poista_kaikki",
+					"sub_commands": {}
+				},
+				"duel": {
+					"name": "taistelu",
+					"sub_commands": {}
+				},
+				"new": {
+					"name": "uusi",
+					"sub_commands": {}
 				}
 			}
 		},
 		"settings": {
 			"name": "asetukset",
 			"sub_commands": {
-				"server": {
-					"name": "serveri",
-					"sub_commands": {
-						"permissions": {
-							"name": "luvat",
-							"sub_commands": {
-								"give": {
-									"name": "anna",
-									"sub_commands": {}
-								},
-								"deny": {
-									"name": "evää",
-									"sub_commands": {}
-								},
-								"undo": {
-									"name": "kumoa",
-									"sub_commands": {}
-								},
-								"clear": {
-									"name": "tyhjennä",
-									"sub_commands": {}
-								}
-							}
-						},
-						"language": {
-							"name": "kieli",
-							"sub_commands": {
-								"change": {
-									"name": "muuta",
-									"sub_commands": {}
-								},
-								"clear": {
-									"name": "tyhjennä",
-									"sub_commands": {}
-								}
-							}
-						},
-						"sync_with": {
-							"name": "synkronoi",
-							"sub_commands": {}
-						}
-					}
-				},
 				"channel": {
 					"name": "kanava",
 					"sub_commands": {
-						"permissions": {
-							"name": "luvat",
-							"sub_commands": {
-								"give": {
-									"name": "anna",
-									"sub_commands": {}
-								},
-								"deny": {
-									"name": "evää",
-									"sub_commands": {}
-								},
-								"undo": {
-									"name": "kumoa",
-									"sub_commands": {}
-								},
-								"clear": {
-									"name": "tyhjennä",
-									"sub_commands": {}
-								}
-							}
-						},
 						"language": {
 							"name": "kieli",
 							"sub_commands": {
@@ -131,6 +172,27 @@
 								},
 								"clear": {
 									"name": "tyhjennä",
+									"sub_commands": {}
+								}
+							}
+						},
+						"permissions": {
+							"name": "luvat",
+							"sub_commands": {
+								"clear": {
+									"name": "tyhjennä",
+									"sub_commands": {}
+								},
+								"deny": {
+									"name": "evää",
+									"sub_commands": {}
+								},
+								"give": {
+									"name": "anna",
+									"sub_commands": {}
+								},
+								"undo": {
+									"name": "kumoa",
 									"sub_commands": {}
 								}
 							}
@@ -154,6 +216,49 @@
 						}
 					}
 				},
+				"server": {
+					"name": "serveri",
+					"sub_commands": {
+						"language": {
+							"name": "kieli",
+							"sub_commands": {
+								"change": {
+									"name": "muuta",
+									"sub_commands": {}
+								},
+								"clear": {
+									"name": "tyhjennä",
+									"sub_commands": {}
+								}
+							}
+						},
+						"permissions": {
+							"name": "luvat",
+							"sub_commands": {
+								"clear": {
+									"name": "tyhjennä",
+									"sub_commands": {}
+								},
+								"deny": {
+									"name": "evää",
+									"sub_commands": {}
+								},
+								"give": {
+									"name": "anna",
+									"sub_commands": {}
+								},
+								"undo": {
+									"name": "kumoa",
+									"sub_commands": {}
+								}
+							}
+						},
+						"sync_with": {
+							"name": "synkronoi",
+							"sub_commands": {}
+						}
+					}
+				},
 				"user": {
 					"name": "käyttäjä",
 					"sub_commands": {
@@ -174,60 +279,9 @@
 				}
 			}
 		},
-		"info": {
-			"name": "info",
-			"sub_commands": {
-				"permissions": {
-					"name": "luvat",
-					"sub_commands": {}
-				}
-			}
-		},
-		"lewd": {
-			"name": "säädytön",
+		"test": {
+			"name": "testi",
 			"sub_commands": {}
-		},
-		"maka": {
-			"name": "maka",
-			"sub_commands": {}
-		},
-		"quiz": {
-			"name": "visa",
-			"sub_commands": {
-				"new": {
-					"name": "uusi",
-					"sub_commands": {}
-				},
-				"join": {
-					"name": "liity",
-					"sub_commands": {}
-				},
-				"start": {
-					"name": "aloita",
-					"sub_commands": {}
-				},
-				"a": {
-					"name": "v",
-					"sub_commands": {}
-				},
-				"end": {
-					"name": "lopeta",
-					"sub_commands": {}
-				},
-				"q": {
-					"name": "k",
-					"sub_commands": {}
-				},
-				"settings": {
-					"name": "asetukset",
-					"sub_commands": {
-						"point_distribution": {
-							"name": "pistejakauma",
-							"sub_commands": {}
-						}
-					}
-				}
-			}
 		}
 	}
 }

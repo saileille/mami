@@ -18,3 +18,23 @@ async def getVerbalList(language, stringList):
 		text += stringList[i]
 	
 	return text
+
+async def convToStringList(list):
+	newList = []
+	
+	for item in list:
+		newList.append(
+			str(item)
+		)
+	
+	return newList
+
+async def convToIntList(list):
+	newList = []
+	
+	for item in list:
+		newList.append(
+			int(item)
+		)
+	
+	return newList

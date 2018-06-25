@@ -1,4 +1,5 @@
 from fileIO import getLanguageText
+from sendFunctions import processMsg
 
 #Class to keep track of command permissions.
 
@@ -146,7 +147,12 @@ class Permission(object):
 		stringList += await self.getPermissionStringPermissions(language)
 		
 		if (len(stringList) == 0):
-			stringList.append(await getLanguageText(language, "NO_PERMISSIONS"))
+			stringList.append(
+				await processMsg(
+					"NO_PERMISSIONS"
+					,language
+				)
+			)
 		
 		return stringList
 	
@@ -175,7 +181,10 @@ class Permission(object):
 		
 		
 		if (len(allowed) > 0):
-			string = await getLanguageText(language, "PERMISSION.USERS_ALLOWED")
+			string = await processMsg(
+				"PERMISSION.USERS_ALLOWED"
+				,language
+			)
 			
 			for user in allowed:
 				string += "\n - {name} ({id})".format(name=user["name"], id=user["id"])
@@ -183,7 +192,10 @@ class Permission(object):
 			stringList.append(string)
 		
 		if (len(blocked) > 0):
-			string = await getLanguageText(language, "PERMISSION.USERS_BLOCKED")
+			string = await processMsg(
+				"PERMISSION.USERS_BLOCKED"
+				,language
+			)
 			
 			for user in blocked:
 				string += "\n - {name} ({id})".format(name=user["name"], id=user["id"])
@@ -213,7 +225,10 @@ class Permission(object):
 				blocked.append(roleDict)
 		
 		if (len(allowed) > 0):
-			string = await getLanguageText(language, "PERMISSION.ROLES_ALLOWED")
+			string = await processMsg(
+				"PERMISSION.ROLES_ALLOWED"
+				,language
+			)
 			
 			for role in allowed:
 				string += "\n - {name} ({id})".format(name=role["name"], id=role["id"])
@@ -221,7 +236,10 @@ class Permission(object):
 			stringList.append(string)
 		
 		if (len(blocked) > 0):
-			string = await getLanguageText(language, "PERMISSION.ROLES_BLOCKED")
+			string = await processMsg(
+				"PERMISSION.ROLES_BLOCKED"
+				,language
+			)
 			
 			for role in blocked:
 				string += "\n - {name} ({id})".format(name=role["name"], id=role["id"])
@@ -234,7 +252,10 @@ class Permission(object):
 		stringList = []
 		
 		if (len(self.permissions) > 0):
-			string = await getLanguageText(language, "PERMISSION.PERMISSIONS_ALLOWED")
+			string = await processMsg(
+				"PERMISSION.PERMISSIONS_ALLOWED"
+				,language
+			)
 			
 			for permission in self.permissions:
 				string += "\n" + permission

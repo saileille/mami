@@ -31,13 +31,10 @@ class Channel(Server):
 		self.quiz = quiz
 	
 	#Checks if the Channel object is the default one.
-	async def isDefault(self, serverLanguage):
+	async def isDefault(self):
 		await self.cleanPermissions()
 		
-		if (
-			self.language != None
-			and self.language != serverLanguage
-		):
+		if (self.language != None):
 			return False
 		
 		if (self.prefix != None):
@@ -87,19 +84,12 @@ class Channel(Server):
 			permissionDict[key]["channels"][channelID] = self.permissions[key]
 	
 	async def newQuiz(self, message, questionCount):
-		#Cannot add a new quiz if there already is one.
-		if (self.quiz != None):
-			await send(
-				message.discord_py.channel
-				,await getLanguageText(message.language, "QUIZ.ALREADY_EXISTS")
-			)
-			return
-		
 		#Question amount must be between 1 and 50.
 		if (questionCount < 1 or questionCount > 50):
 			await send(
 				message.discord_py.channel
-				,await getLanguageText(message.language, "QUIZ.NEW.INVALID_QUESTION_COUNT")
+				,"QUIZ.NEW.INVALID_QUESTION_COUNT"
+				,message.language
 			)
 			return
 		
@@ -111,7 +101,8 @@ class Channel(Server):
 		await message.save()
 		await send(
 			message.discord_py.channel
-			,await getLanguageText(message.language, "QUIZ.NEW.COMPLETED")
+			,"QUIZ.NEW.COMPLETED"
+			,message.language
 		)
 	
 	async def endQuiz(self, message):

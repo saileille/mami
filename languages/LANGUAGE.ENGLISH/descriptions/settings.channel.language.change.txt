@@ -1,2 +1,0 @@
-Changes the language of the channel. Available languages are:
-{languages}

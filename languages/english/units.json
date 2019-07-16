@@ -1,0 +1,122 @@
+{
+  "mile": {
+    "symbols": ["mi"],
+    "names": ["mile", "miles"]
+  },
+  "kilometre": {
+    "symbols": ["km"],
+    "names": ["kilometre", "kilometres", "kilometer", "kilometers"]
+  },
+  "metre": {
+    "symbols": ["m"],
+    "names": ["metre", "metres", "meter", "meters"]
+  },
+  "yard": {
+    "symbols": ["yd"],
+    "names": ["yard", "yards"]
+  },
+  "foot": {
+    "symbols": ["ft", "′"],
+    "names": ["foot", "feet"]
+  },
+  "inch": {
+    "symbols": ["in", "″"],
+    "names": ["inch", "inches"]
+  },
+  "centimetre": {
+    "symbols": ["cm"],
+    "names": ["centimetre", "centimetres", "centimeter", "centimeters"]
+  },
+  "pica": {
+    "symbols": ["P̸", "P"],
+    "names": ["pica", "picas"]
+  },
+  "millimetre": {
+    "symbols": ["mm"],
+    "names": ["millimetre", "millimetres", "millimeter", "millimeters"]
+  },
+  "point": {
+    "symbols": ["p"],
+    "names": ["point", "points"]
+  },
+  "acre": {
+    "symbols": ["ac"],
+    "names": ["acre", "acres"]
+  },
+  "square_metre": {
+    "symbols": ["m2", "m^2"],
+    "names": ["square metre", "square metres", "square meter", "square meters"]
+  },
+  "celsius": {
+    "symbols": ["°C", "C"],
+    "names": ["Celsius", "degree Celsius", "degrees Celsius"]
+  },
+  "fahrenheit": {
+    "symbols": ["°F", "F"],
+    "names": ["Fahrenheit", "degree Fahrenheit", "degrees Fahrenheit"]
+  },
+  "imperial_gallon": {
+    "symbols": ["imp gal"],
+    "names": ["imperial gallon", "imperial gallons"]
+  },
+  "us_gallon": {
+    "symbols": ["US gal", "gal"],
+    "names": ["gallon", "gallons", "US gallon", "US gallons"]
+  },
+  "litre": {
+    "symbols": ["l"],
+    "names": ["litre", "litres", "liter", "liters"]
+  },
+  "imperial_cup": {
+    "symbols": ["imp cups", "imp cup"],
+    "names": ["imperial cup", "imperial cups"]
+  },
+  "us_legal_cup": {
+    "symbols": [],
+    "names": ["US legal cups", "US legal cup", "legal cup", "legal cups", "US cup", "US cups", "cup", "cups"]
+  },
+  "desilitre": {
+    "symbols": ["dl"],
+    "names": ["desilitre", "desilitres", "desiliter", "desiliters"]
+  },
+  "us_fluid_ounce": {
+    "symbols": ["US fl oz", "US fl. oz.", "US oz fl", "US oz. fl.", "fl oz", "oz fl", "fl. oz.", "oz. fl."],
+    "names": ["US fluid ounce", "US fluid ounces", "fluid ounce", "fluid ounces"]
+  },
+  "imperial_fluid_ounce": {
+    "symbols": ["imp fl oz", "imp oz fl"],
+    "names": ["imperial fluid ounce", "imperial fluid ounces"]
+  },
+  "us_teaspoon": {
+    "symbols": ["US tsp", "tsp"],
+    "names": ["US teaspoon", "US teaspoons", "teaspoon", "teaspoons"]
+  },
+  "millilitre": {
+    "symbols": ["ml"],
+    "names": ["millilitre", "millilitres", "milliliter", "milliliters"]
+  },
+  "stone":{
+    "symbols": ["st."],
+    "names": ["stone", "stone weight", "stones", "stone weights"]
+  },
+  "kilogram": {
+    "symbols": ["kg"],
+    "names": ["kilogram", "kilograms"]
+  },
+  "pound": {
+    "symbols": ["lbs", "lb"],
+    "names": ["pound", "pounds"]
+  },
+  "ounce": {
+    "symbols": ["oz"],
+    "names": ["ounce", "ounces"]
+  },
+  "gram": {
+    "symbols": ["g"],
+    "names": ["gram", "grams"]
+  },
+  "milligram": {
+    "symbols": ["mg"],
+    "names": ["milligram", "milligrams"]
+  }
+}

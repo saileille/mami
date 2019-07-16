@@ -1,2 +1,0 @@
-Changes the language of the server. Available languages are:
-{languages}

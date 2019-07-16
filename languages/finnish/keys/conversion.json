@@ -1,0 +1,10 @@
+{
+  "auto_conversion_request": "Pyytäjänä {name}",
+  "auto_conversion_title": "Automaattinen mittayksikkökäännös",
+  "convert_currency_title": "{base} -> {target}",
+  "currencies_title": "Valuutat",
+  "unit_conversion": "{unit_and_amount} on {conversion_list}.",
+  "unit_representation": "{unit_amount} {unit_name}",
+  "view_all_currencies_desc": "Kaikki valittavissa olevat valuutat aakkosjärjestyksessä.",
+  "view_all_currencies_title": "Kaikki valuutat"
+}

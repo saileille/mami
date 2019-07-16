@@ -1,2 +1,0 @@
-Vaihtaa kanavan kielen. Valittavissa olevat kielet ovat:
-{languages}

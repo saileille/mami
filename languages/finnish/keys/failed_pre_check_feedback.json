@@ -1,0 +1,8 @@
+{
+  "failed_pre_check_custom_msg_title": "Lisätietoa",
+  "no_guild_shortcuts": "Tällä palvelimella ei ole pikakomentoja. Voit lisätä niitä komennolla `{shortcut_cmd}`.",
+  "no_set_category_language": "Tämä kategoria käyttää oletuskieltä, joten sitä ei voi palauttaa.",
+  "no_set_channel_language": "Tämä kanava käyttää oletuskieltä, joten sitä ei voi palauttaa.",
+  "no_set_guild_language": "Tämä palvelin käyttää oletuskieltä, joten sitä ei voi palauttaa.",
+  "no_set_user_language": "Käyttäjäasetuksesi kieli on oletus, joten sitä ei voi palauttaa."
+}

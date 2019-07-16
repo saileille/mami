@@ -1,0 +1,380 @@
+{
+  "currency": {
+    "description": "Valuuttoihin liittyvät komennot.",
+    "names": [
+      "valuutta"
+    ],
+    "sub_commands": {
+      "convert": {
+        "arguments": {
+          "amount": {
+            "description": "Kuinka paljon haluat vaihtaa?",
+            "name": "määrä"
+          },
+          "base": {
+            "description": "Mistä valuutasta haluat vaihtaa?",
+            "name": "pohja"
+          },
+          "target": {
+            "description": "Mihin valuuttaan haluat vaihtaa?",
+            "name": "kohde"
+          }
+        },
+        "description": "Vaihda valuuttaa.",
+        "names": [
+          "vaihda"
+        ]
+      },
+      "view_all": {
+        "description": "Näytä kaikki valuutat.",
+        "names": [
+          "näytä_kaikki"
+        ]
+      }
+    }
+  },
+  "dice": {
+    "arguments": {
+      "first_value": {
+        "description": "Syötä nopan minimi- tai maksimiarvo.",
+        "name": "ensimmäinen_arvo"
+      },
+      "no_of_dice": {
+        "description": "Kuinka monta noppaa haluat heittää?",
+        "name": "noppien_määrä"
+      },
+      "second_value": {
+        "description": "Syötä nopan maksimi- tai minimiarvo.",
+        "name": "toinen_arvo"
+      }
+    },
+    "description": "Heitä noppaa.",
+    "names": [
+      "noppa",
+      "nopat"
+    ]
+  },
+  "info": {
+    "description": "Tietoa sekalaisista asioista.",
+    "names": [
+      "info"
+    ],
+    "sub_commands": {
+      "member": {
+        "arguments": {
+          "member": {
+            "description": "Syötä palvelimen jäsenen ID, maininta tai nimi, jonka tietoja haluat nähdä.",
+            "name": "jäsen"
+          }
+        },
+        "description": "Tietoa palvelimen jäsenistä.",
+        "names": [
+          "jäsen"
+        ]
+      }
+    }
+  },
+  "runes": {
+    "description": "Muunna teksti Madokan riimuiksi.",
+    "names": [
+      "riimut"
+    ],
+    "sub_commands": {
+      "archaic": {
+        "arguments": {
+          "text": {
+            "description": "Minkä tekstin haluat muuntaa?",
+            "name": "teksti"
+          }
+        },
+        "description": "Muunna teksti arkaaisiksi riimuiksi.",
+        "names": [
+          "arkaainen"
+        ]
+      },
+      "modern": {
+        "arguments": {
+          "text": {
+            "description": "Minkä tekstin haluat muuntaa?",
+            "name": "teksti"
+          }
+        },
+        "description": "Muunna teksti moderneiksi riimuiksi.",
+        "names": [
+          "moderni"
+        ]
+      },
+      "musical": {
+        "arguments": {
+          "text": {
+            "description": "Minkä tekstin haluat muuntaa?",
+            "name": "teksti"
+          }
+        },
+        "description": "Muunna teksti musikaalisiksi riimuiksi.",
+        "names": [
+          "musikaali",
+          "musiikki",
+          "musikaalinen"
+        ]
+      }
+    }
+  },
+  "settings": {
+    "description": "Konfiguraatio ja asetukset.",
+    "names": [
+      "asetukset"
+    ],
+    "sub_commands": {
+      "category": {
+        "description": "Kategorian konfiguraatio ja asetukset.",
+        "names": [
+          "kategoria"
+        ],
+        "sub_commands": {
+          "language": {
+            "description": "Muokkaa kategorian kieltä.",
+            "names": [
+              "kieli"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Palauta kategorian kieli oletukseen.",
+                "names": ["palauta"]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Minkä kielen haluat asettaa kategorialle?",
+                    "name": "kieli"
+                  }
+                },
+                "description": "Vaihda kategorian kieli tiettyyn.",
+                "names": [
+                  "aseta"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "channel": {
+        "description": "Kanavan konfiguraatio ja asetukset.",
+        "names": [
+          "kanava"
+        ],
+        "sub_commands": {
+          "language": {
+            "description": "Muokkaa kanavan kieltä.",
+            "names": [
+              "kieli"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Palauta kanavan kieli oletukseen.",
+                "names": ["palauta"]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Minkä kielen haluat asettaa kanavalle?",
+                    "name": "kieli"
+                  }
+                },
+                "description": "Vaihda kanavan kieli tiettyyn.",
+                "names": [
+                  "aseta"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "guild": {
+        "description": "Palvelimen konfiguraatio ja asetukset.",
+        "names": [
+          "palvelin",
+          "kilta"
+        ],
+        "sub_commands": {
+          "checks": {
+            "description": "Hallinnoi kuka saa käyttää komentoja palvelimella.",
+            "names": [
+              "komentosäännöt"
+            ],
+            "sub_commands": {
+              "add": {
+                "description": "Lisää komentosääntöjä.",
+                "names": [
+                  "lisää"
+                ],
+                "sub_commands": {
+                  "allow": {
+                    "arguments": {
+                      "commands": {
+                        "description": "Mille komennolle haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "name": "komennot"
+                      },
+                      "rule": {
+                        "description": "Anna jäsen, rooli tai palvelinlupa jota haluat säännön koskevan.",
+                        "name": "sääntö"
+                      }
+                    },
+                    "description": "Lisää salliva sääntö.",
+                    "names": [
+                      "salli"
+                    ]
+                  },
+                  "deny": {
+                    "arguments": {
+                      "commands": {
+                        "description": "Mille komennolle haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "name": "komennot"
+                      },
+                      "rule": {
+                        "description": "Anna jäsen, rooli tai palvelinlupa jota haluat säännön koskevan.",
+                        "name": "sääntö"
+                      }
+                    },
+                    "description": "Lisää kieltävä sääntö.",
+                    "names": [
+                      "kiellä"
+                    ]
+                  }
+                }
+              },
+              "remove": {
+                "arguments": {
+                  "commands": {
+                    "description": "Mistä komennoista haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                    "name": "komennot"
+                  },
+                  "rule": {
+                    "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
+                    "name": "sääntö"
+                  }
+                },
+                "description": "Poista komentosääntöjä.",
+                "names": [
+                  "poista"
+                ]
+              }
+            }
+          },
+          "language": {
+            "description": "Muokkaa palvelimen kieltä.",
+            "names": [
+              "kieli"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Palauta käyttäjäasetusten kieli oletukseen.",
+                "names": ["palauta"]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Minkä kielen haluat asettaa palvelimelle?",
+                    "name": "kieli"
+                  }
+                },
+                "description": "Vaihda palvelimen kieli tiettyyn.",
+                "names": [
+                  "aseta"
+                ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Hallinnoi palvelinpikakomentoja.",
+            "names": [
+              "pikakomento",
+              "pk"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Syötä uuden pikakomennon sisältö.",
+                    "name": "sisältö"
+                  },
+                  "name": {
+                    "description": "Syötä uuden pikakomennon nimi.",
+                    "name": "nimi"
+                  }
+                },
+                "description": "Lisää palvelinpikakomento.",
+                "names": [
+                  "lisää"
+                ]
+              },
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
+                    "name": "nimi"
+                  }
+                },
+                "description": "Poista olemassaoleva palvelinpikakomento.",
+                "names": [
+                  "poista"
+                ]
+              },
+              "display": {
+                "description": "Näytä kaikki palvelinpikakomennot.",
+                "names": [
+                  "näytä"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "user": {
+        "description": "Käyttäjän konfiguraatio ja asetukset.",
+        "names": [
+          "käyttäjä"
+        ],
+        "sub_commands": {
+          "language": {
+            "description": "Muokkaa käyttäjäasetusten kieltä.",
+            "names": [
+              "kieli"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Palauta käyttäjäasetusten kieli oletukseen.",
+                "names": ["palauta"]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Minkä kielen haluat asettaa käyttäjäasetuksillesi?",
+                    "name": "kieli"
+                  }
+                },
+                "description": "Vaihda käyttäjäasetustesi kieli tiettyyn.",
+                "names": [
+                  "aseta"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "shortcut": {
+    "arguments": {
+      "name": {
+        "description": "Mitä pikakomentoa haluat käyttää?",
+        "name": "nimi"
+      }
+    },
+    "description": "Käytä olemassaolevia pikakomentoja.",
+    "names": [
+      "pikakomento",
+      "pk"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+"""Variables are stored here to avoid circular import."""
+CLIENT = None
+ROOT_DIR = None
+COMMANDS = None
+LANGUAGES = {}
+DEFAULT_LANGUAGE_KEY_LOCATIONS = {}
+GUILD_DEFAULT_CHECKS = None
+EMPTY_DEFAULT_CHECKS = None
+DATABASE_CONNECTION = None
+DATABASE_CURSOR = None

@@ -1,0 +1,8 @@
+{
+  "member_info_creation_time": "Liittyi Discordiin: {time}",
+  "member_info_desc": "Tässä on hiukan tietoa jäsenestä {member}.",
+  "member_info_discord_name": "Discord-nimi: {name}",
+  "member_info_join_time": "Liittyi palvelimelle {guild}: {time}",
+  "member_info_title": "Tietoa käyttäjästä {name}",
+  "member_info_top_role": "Korkein rooli: {role}"
+}

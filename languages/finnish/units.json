@@ -1,0 +1,300 @@
+{
+  "acre": {
+    "names": [
+      "eekkeriä",
+      "eekkeri"
+    ],
+    "symbols": [
+      "ac"
+    ]
+  },
+  "celsius": {
+    "names": [
+      "celsius",
+      "celsiusta",
+      "celsiusaste",
+      "celsiusastetta"
+    ],
+    "symbols": [
+      "°C",
+      "C"
+    ]
+  },
+  "centimetre": {
+    "names": [
+      "senttimetri",
+      "senttimetriä",
+      "sentti",
+      "senttiä"
+    ],
+    "symbols": [
+      "cm"
+    ]
+  },
+  "desilitre": {
+    "names": [
+      "desilitra",
+      "desilitraa",
+      "desi",
+      "desiä"
+    ],
+    "symbols": [
+      "dl"
+    ]
+  },
+  "fahrenheit": {
+    "names": [
+      "fahrenheit",
+      "fahrenheittia"
+    ],
+    "symbols": [
+      "°F",
+      "F"
+    ]
+  },
+  "foot": {
+    "names": [
+      "jalka",
+      "jalkaa"
+    ],
+    "symbols": [
+      "ft",
+      "′"
+    ]
+  },
+  "gram": {
+    "names": [
+      "gramma",
+      "grammaa"
+    ],
+    "symbols": [
+      "g"
+    ]
+  },
+  "imperial_cup": {
+    "names": [
+      "englantilainen kuppi",
+      "englantilaista kuppia"
+    ],
+    "symbols": [
+      "imp cups",
+      "imp cup"
+    ]
+  },
+  "imperial_fluid_ounce": {
+    "names": [
+      "englantilainen nesteunssi",
+      "englantilaista nesteunssia"
+    ],
+    "symbols": [
+      "imp fl oz",
+      "imp oz fl"
+    ]
+  },
+  "imperial_gallon": {
+    "names": [
+      "englantilainen gallona",
+      "englantilaista gallonaa"
+    ],
+    "symbols": [
+      "imp gal"
+    ]
+  },
+  "inch": {
+    "names": [
+      "tuuma",
+      "tuumaa"
+    ],
+    "symbols": [
+      "in",
+      "″"
+    ]
+  },
+  "kilogram": {
+    "names": [
+      "kilogramma",
+      "kilogrammaa",
+      "kilo",
+      "kiloa"
+    ],
+    "symbols": [
+      "kg"
+    ]
+  },
+  "kilometre": {
+    "names": [
+      "kilometri",
+      "kilometriä",
+      "kilsa",
+      "kilsaa"
+    ],
+    "symbols": [
+      "km"
+    ]
+  },
+  "litre": {
+    "names": [
+      "litra",
+      "litraa"
+    ],
+    "symbols": [
+      "l"
+    ]
+  },
+  "metre": {
+    "names": [
+      "metri",
+      "metriä"
+    ],
+    "symbols": [
+      "m"
+    ]
+  },
+  "mile": {
+    "names": [
+      "maili",
+      "mailia"
+    ],
+    "symbols": [
+      "mi"
+    ]
+  },
+  "milligram": {
+    "names": [
+      "milligramma",
+      "milligrammaa"
+    ],
+    "symbols": [
+      "mg"
+    ]
+  },
+  "millilitre": {
+    "names": [
+      "millilitra",
+      "millilitraa"
+    ],
+    "symbols": [
+      "ml"
+    ]
+  },
+  "millimetre": {
+    "names": [
+      "millimetri",
+      "millimetriä",
+      "milli",
+      "milliä"
+    ],
+    "symbols": [
+      "mm"
+    ]
+  },
+  "ounce": {
+    "names": [
+      "unssi",
+      "unssia"
+    ],
+    "symbols": [
+      "oz"
+    ]
+  },
+  "pica": {
+    "names": [
+      "pica",
+      "picaa"
+    ],
+    "symbols": [
+      "P̸",
+      "P"
+    ]
+  },
+  "point": {
+    "names": [
+      "piste",
+      "pistettä"
+    ],
+    "symbols": [
+      "p"
+    ]
+  },
+  "pound": {
+    "names": [
+      "pauna",
+      "paunaa"
+    ],
+    "symbols": [
+      "lbs",
+      "lb"
+    ]
+  },
+  "square_metre": {
+    "names": [
+      "neliömetri",
+      "neliömetriä"
+    ],
+    "symbols": [
+      "m2",
+      "m^2"
+    ]
+  },
+  "stone": {
+    "names": [
+      "stone",
+      "stonea"
+    ],
+    "symbols": [
+      "st."
+    ]
+  },
+  "us_fluid_ounce": {
+    "names": [
+      "amerikkalainen nesteunssi",
+      "amerikkalaista nesteunssia",
+      "nesteunssi",
+      "nesteunssia"
+    ],
+    "symbols": [
+      "US fl oz",
+      "US fl. oz.",
+      "US oz fl",
+      "US oz. fl.",
+      "fl oz",
+      "oz fl",
+      "fl. oz.",
+      "oz. fl."
+    ]
+  },
+  "us_gallon": {
+    "names": [
+      "nestegallona",
+      "nestegallonaa",
+      "gallona",
+      "gallonaa"
+    ],
+    "symbols": [
+      "US gal",
+      "gal"
+    ]
+  },
+  "us_legal_cup": {
+    "names": [
+      "amerikkalaista kuppia",
+      "amerikkalainen kuppi",
+      "kuppia",
+      "kuppi"
+    ],
+    "symbols": []
+  },
+  "us_teaspoon": {
+    "names": ["amerikkalainen teelusikka", "amerikkalaista teelusikkaa", "teelusikka", "teelusikkaa"],
+    "symbols": ["US tsp", "tsp"]
+  },
+  "yard": {
+    "names": [
+      "jaardi",
+      "jaardia"
+    ],
+    "symbols": [
+      "yd"
+    ]
+  }
+}

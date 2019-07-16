@@ -1,2 +1,0 @@
-Vaihtaa serverin kielen. Valittavissa olevat kielet ovat:
-{languages}

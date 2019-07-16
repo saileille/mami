@@ -1,2 +1,0 @@
-Vaihtaa käyttäjän kielen. Valittavissa olevat kielet ovat:
-{languages}

@@ -86,7 +86,7 @@ async def get_unit_matches(context, message):
     """Get all unit matches from a message."""
     # unit_regex = r"(?<!\w)((?:\d*\.\d+)|\d+)[ -]?([^\d\.-]+)(?!\w*\S)"
     unit_regex = r"(?<!\w)((?:\d*\.\d+)|\d+)[ -]?((?:(?:[^\d\s\.]+\S*) ?)+)"
-    us_height_regex = r"(?<!\w)(\d+)['′] ?(\d+)[\"″](?!\w*\S)"
+    us_height_regex = r"\b(\d+)['′] ?(\d+)[\"″](?!\w)"
 
     matches = re.findall(unit_regex, message)
     us_height_matches = re.findall(us_height_regex, message)

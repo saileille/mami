@@ -8,8 +8,7 @@ from datatypes import config_data
 class Context():
     """Contains configuration data and the message."""
 
-    def __init__(self,
-                 message):
+    def __init__(self, message):
         """Initialise object."""
         self.message = message
         self.user_data = None
@@ -18,10 +17,36 @@ class Context():
         self.guild_data = None
         self.ping = None
 
+        self._desktop_ui = None
         self._prefix = None
         self._language_id = None
         self._language = None
         self._max_dice = None
+
+    @property
+    def desktop_ui(self):
+        """Check what embed layout should be used."""
+        if self._desktop_ui is None:
+            if not self.message.author.status.offline:
+                if self.message.guild is not None:
+                    self._desktop_ui = (not self.message.author.desktop_status.offline or
+                                        not self.message.author.web_status.offline)
+                else:
+                    member = None
+                    for guild in definitions.CLIENT.guilds:
+                        member = guild.get_member(self.message.author.id)
+                        if member is not None:
+                            break
+                    else:
+                        self._desktop_ui = True
+                        return self._desktop_ui
+
+                    self._desktop_ui = (not member.desktop_status.offline or
+                                        not member.web_status.offline)
+            else:
+                self._desktop_ui = True
+
+        return self._desktop_ui
 
     @property
     def prefix(self):

@@ -1,5 +1,6 @@
 """Import stuff."""
 import json
+import os
 
 from framework import checks
 
@@ -74,6 +75,10 @@ def save(data, directory=None, compact=True):
         sort_keys=True)
 
     if directory is not None:
+        folder = "\\".join(directory.split("\\")[:-1])
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
         with open(directory, "w+", encoding="utf-8") as file:
             file.write(json_string)
 

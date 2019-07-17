@@ -16,7 +16,10 @@ def synchronise_commands():
     """Make command language data synchronised with existing commands."""
     for language in definitions.LANGUAGES.values():
         command_file_dir = os.path.join(language.directory, "commands.json")
+
         language_command_dict = custom_json.load(command_file_dir)
+        if language_command_dict is None:
+            language_command_dict = {}
 
         if synchronise_command_layer(language_command_dict, language.obj_id):
             custom_json.save(language_command_dict, command_file_dir, compact=False)

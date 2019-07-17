@@ -1,0 +1,23 @@
+{
+  "argument_number": "Argument [{arg}/{total_arg}]",
+  "cancel_to_abort": "Press :x: to cancel command.",
+  "command": "Command",
+  "command_aborted": "Command aborted.",
+  "confirm_to_stop": "Press :white_check_mark: to stop inserting arguments.",
+  "failed_pre_check_desc": "The command is unavailable at the moment.",
+  "failed_pre_check_title": "Command Unavailable",
+  "invalid_argument_desc": "`{arg}` is not a valid argument.",
+  "invalid_argument_title": "Invalid Argument",
+  "invalid_command_desc": "Command `{command}` does not exist, but command `{last_working}` has the following sub-commands:",
+  "invalid_command_no_subcommands_desc": "Command `{command}` does not exist. The last valid parent command is `{last_working}`.",
+  "invalid_command_title": "Invalid Command",
+  "no_action_desc": "The command `{command}` does not do anything by itself, but it has the following sub-commands:",
+  "no_action_title": "Possible Sub-Commands",
+  "no_usable_sub_commands_desc": "Command `{command}` does not have any executable sub-commands which you can use. The last such command in the command tree is `{last_working}`.",
+  "no_usable_sub_commands_title": "No Usable Sub-Commands",
+  "too_many_arguments_plural_desc": "This command only has {args} arguments. Argument `{arg}` goes over this limit.",
+  "too_many_arguments_singular_desc": "This command only has {args} argument. Argument `{arg}` goes over this limit.",
+  "too_many_arguments_title": "Too Many Arguments",
+  "unauthorised_command_desc": "You are not authorised to use `{command}`. The closest authorised command is `{last_working}`.",
+  "unauthorised_command_title": "Unauthorised Command"
+}

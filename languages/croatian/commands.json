@@ -54,6 +54,26 @@
       "dice"
     ]
   },
+  "info": {
+    "description": "Information about various things.",
+    "names": [
+      "info"
+    ],
+    "sub_commands": {
+      "member": {
+        "arguments": {
+          "member": {
+            "description": "Give the ID, mention or name of the server member whose information you want to see.",
+            "name": "member"
+          }
+        },
+        "description": "Information about server members.",
+        "names": [
+          "member"
+        ]
+      }
+    }
+  },
   "runes": {
     "description": "Convert text to Madoka runes.",
     "names": [
@@ -104,6 +124,74 @@
       "settings"
     ],
     "sub_commands": {
+      "category": {
+        "description": "Category configuration and settings.",
+        "names": [
+          "category"
+        ],
+        "sub_commands": {
+          "language": {
+            "description": "Edit the category language.",
+            "names": [
+              "language"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Reset the category language back to default.",
+                "names": [
+                  "reset"
+                ]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Which language do you want to set for the category?",
+                    "name": "language"
+                  }
+                },
+                "description": "Set the category language to a specific one.",
+                "names": [
+                  "set"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "channel": {
+        "description": "Channel configuration and settings.",
+        "names": [
+          "channel"
+        ],
+        "sub_commands": {
+          "language": {
+            "description": "Edit the channel language.",
+            "names": [
+              "language"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Reset the channel language back to default.",
+                "names": [
+                  "reset"
+                ]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Which language do you want to set for the channel?",
+                    "name": "language"
+                  }
+                },
+                "description": "Set the channel language to a specific one.",
+                "names": [
+                  "set"
+                ]
+              }
+            }
+          }
+        }
+      },
       "guild": {
         "description": "Server configuration and settings.",
         "names": [
@@ -130,7 +218,7 @@
                         "name": "commands"
                       },
                       "rule": {
-                        "description": "Give a member, role or guild permission to which you want the rule to apply.",
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
                         "name": "rule"
                       }
                     },
@@ -146,7 +234,7 @@
                         "name": "commands"
                       },
                       "rule": {
-                        "description": "Give a member, role or guild permission to which you want the rule to apply.",
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
                         "name": "rule"
                       }
                     },
@@ -164,11 +252,11 @@
                     "name": "commands"
                   },
                   "rule": {
-                    "description": "Give a member, role or guild permission to which you want the rule to no longer apply.",
+                    "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
                     "name": "rule"
                   }
                 },
-                "description": "Remove command rule(s)",
+                "description": "Remove command rule(s).",
                 "names": [
                   "remove"
                 ]
@@ -181,6 +269,12 @@
               "language"
             ],
             "sub_commands": {
+              "reset": {
+                "description": "Reset the server language back to default.",
+                "names": [
+                  "reset"
+                ]
+              },
               "set": {
                 "arguments": {
                   "language": {
@@ -235,6 +329,40 @@
                 "description": "Display all server shortcuts.",
                 "names": [
                   "display"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "user": {
+        "description": "User configuration and settings.",
+        "names": [
+          "user"
+        ],
+        "sub_commands": {
+          "language": {
+            "description": "Edit your user language.",
+            "names": [
+              "language"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Reset your user language back to default.",
+                "names": [
+                  "reset"
+                ]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Which language do you want to set for your user?",
+                    "name": "language"
+                  }
+                },
+                "description": "Set your user language to a specific one.",
+                "names": [
+                  "set"
                 ]
               }
             }

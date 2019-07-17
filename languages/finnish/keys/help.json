@@ -17,5 +17,7 @@
   "invalid_argument_desc": "`{arg}` ei ole kelvollinen argumentti.",
   "command_aborted": "Komento keskeytetty.",
   "failed_pre_check_desc": "Et voi käyttää komentoa tällä hetkellä.",
-  "failed_pre_check_title": "Komento ei käytettävissä"
+  "failed_pre_check_title": "Komento ei käytettävissä",
+  "no_usable_sub_commands_desc": "Komennolla `{command}` ei ole yhtään alikomentoa jota voit käyttää. Viimeisin tällainen komento komentopuussa on `{last_working}`.",
+  "no_usable_sub_commands_title": "Ei käytettäviä alikomentoja"
 }

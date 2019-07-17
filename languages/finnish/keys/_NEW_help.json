@@ -1,4 +1,0 @@
-{
-  "no_usable_sub_commands_desc": "Command `{command}` does not have any executable sub-commands which you can use. The last such command in the command tree is `{last_working}`.",
-  "no_usable_sub_commands_title": "No Usable Sub-Commands"
-}

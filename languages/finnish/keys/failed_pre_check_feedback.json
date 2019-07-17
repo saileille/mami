@@ -4,5 +4,7 @@
   "no_set_category_language": "Tämä kategoria käyttää oletuskieltä, joten sitä ei voi palauttaa.",
   "no_set_channel_language": "Tämä kanava käyttää oletuskieltä, joten sitä ei voi palauttaa.",
   "no_set_guild_language": "Tämä palvelin käyttää oletuskieltä, joten sitä ei voi palauttaa.",
-  "no_set_user_language": "Käyttäjäasetuksesi kieli on oletus, joten sitä ei voi palauttaa."
+  "no_set_user_language": "Käyttäjäasetuksesi kieli on oletus, joten sitä ei voi palauttaa.",
+  "command_used_in_dms": "Tätä komentoa voi käyttää ainoastaan palvelimella.",
+  "command_used_in_guild": "Tätä komentoa voi käyttää ainoastaan yksityisviesteissä."
 }

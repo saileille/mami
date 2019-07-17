@@ -1,0 +1,320 @@
+{
+  "acre": {
+    "names": [
+      "acre",
+      "acres"
+    ],
+    "symbols": [
+      "ac"
+    ]
+  },
+  "celsius": {
+    "names": [
+      "Celsius",
+      "degree Celsius",
+      "degrees Celsius"
+    ],
+    "symbols": [
+      "°C",
+      "C"
+    ]
+  },
+  "centimetre": {
+    "names": [
+      "centimetre",
+      "centimetres",
+      "centimeter",
+      "centimeters"
+    ],
+    "symbols": [
+      "cm"
+    ]
+  },
+  "desilitre": {
+    "names": [
+      "desilitre",
+      "desilitres",
+      "desiliter",
+      "desiliters"
+    ],
+    "symbols": [
+      "dl"
+    ]
+  },
+  "fahrenheit": {
+    "names": [
+      "Fahrenheit",
+      "degree Fahrenheit",
+      "degrees Fahrenheit"
+    ],
+    "symbols": [
+      "°F",
+      "F"
+    ]
+  },
+  "foot": {
+    "names": [
+      "foot",
+      "feet"
+    ],
+    "symbols": [
+      "ft",
+      "′"
+    ]
+  },
+  "gram": {
+    "names": [
+      "gram",
+      "grams"
+    ],
+    "symbols": [
+      "g"
+    ]
+  },
+  "imperial_cup": {
+    "names": [
+      "imperial cup",
+      "imperial cups"
+    ],
+    "symbols": [
+      "imp cups",
+      "imp cup"
+    ]
+  },
+  "imperial_fluid_ounce": {
+    "names": [
+      "imperial fluid ounce",
+      "imperial fluid ounces"
+    ],
+    "symbols": [
+      "imp fl oz",
+      "imp oz fl"
+    ]
+  },
+  "imperial_gallon": {
+    "names": [
+      "imperial gallon",
+      "imperial gallons"
+    ],
+    "symbols": [
+      "imp gal"
+    ]
+  },
+  "inch": {
+    "names": [
+      "inch",
+      "inches"
+    ],
+    "symbols": [
+      "in",
+      "″"
+    ]
+  },
+  "kilogram": {
+    "names": [
+      "kilogram",
+      "kilograms"
+    ],
+    "symbols": [
+      "kg"
+    ]
+  },
+  "kilometre": {
+    "names": [
+      "kilometre",
+      "kilometres",
+      "kilometer",
+      "kilometers"
+    ],
+    "symbols": [
+      "km"
+    ]
+  },
+  "litre": {
+    "names": [
+      "litre",
+      "litres",
+      "liter",
+      "liters"
+    ],
+    "symbols": [
+      "l"
+    ]
+  },
+  "metre": {
+    "names": [
+      "metre",
+      "metres",
+      "meter",
+      "meters"
+    ],
+    "symbols": [
+      "m"
+    ]
+  },
+  "mile": {
+    "names": [
+      "mile",
+      "miles"
+    ],
+    "symbols": [
+      "mi"
+    ]
+  },
+  "milligram": {
+    "names": [
+      "milligram",
+      "milligrams"
+    ],
+    "symbols": [
+      "mg"
+    ]
+  },
+  "millilitre": {
+    "names": [
+      "millilitre",
+      "millilitres",
+      "milliliter",
+      "milliliters"
+    ],
+    "symbols": [
+      "ml"
+    ]
+  },
+  "millimetre": {
+    "names": [
+      "millimetre",
+      "millimetres",
+      "millimeter",
+      "millimeters"
+    ],
+    "symbols": [
+      "mm"
+    ]
+  },
+  "ounce": {
+    "names": [
+      "ounce",
+      "ounces"
+    ],
+    "symbols": [
+      "oz"
+    ]
+  },
+  "pica": {
+    "names": [
+      "pica",
+      "picas"
+    ],
+    "symbols": [
+      "P̸",
+      "P"
+    ]
+  },
+  "point": {
+    "names": [
+      "point",
+      "points"
+    ],
+    "symbols": [
+      "p"
+    ]
+  },
+  "pound": {
+    "names": [
+      "pound",
+      "pounds"
+    ],
+    "symbols": [
+      "lbs",
+      "lb"
+    ]
+  },
+  "square_metre": {
+    "names": [
+      "square metre",
+      "square metres",
+      "square meter",
+      "square meters"
+    ],
+    "symbols": [
+      "m2",
+      "m^2"
+    ]
+  },
+  "stone": {
+    "names": [
+      "stone",
+      "stone weight",
+      "stones",
+      "stone weights"
+    ],
+    "symbols": [
+      "st."
+    ]
+  },
+  "us_fluid_ounce": {
+    "names": [
+      "US fluid ounce",
+      "US fluid ounces",
+      "fluid ounce",
+      "fluid ounces"
+    ],
+    "symbols": [
+      "US fl oz",
+      "US fl. oz.",
+      "US oz fl",
+      "US oz. fl.",
+      "fl oz",
+      "oz fl",
+      "fl. oz.",
+      "oz. fl."
+    ]
+  },
+  "us_gallon": {
+    "names": [
+      "gallon",
+      "gallons",
+      "US gallon",
+      "US gallons"
+    ],
+    "symbols": [
+      "US gal",
+      "gal"
+    ]
+  },
+  "us_legal_cup": {
+    "names": [
+      "US legal cups",
+      "US legal cup",
+      "legal cup",
+      "legal cups",
+      "US cup",
+      "US cups",
+      "cup",
+      "cups"
+    ],
+    "symbols": []
+  },
+  "us_teaspoon": {
+    "names": [
+      "US teaspoon",
+      "US teaspoons",
+      "teaspoon",
+      "teaspoons"
+    ],
+    "symbols": [
+      "US tsp",
+      "tsp"
+    ]
+  },
+  "yard": {
+    "names": [
+      "yard",
+      "yards"
+    ],
+    "symbols": [
+      "yd"
+    ]
+  }
+}

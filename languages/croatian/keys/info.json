@@ -1,0 +1,8 @@
+{
+  "member_info_creation_time": "Joined Discord",
+  "member_info_desc": "This is some basic information concerning {member}.",
+  "member_info_discord_name": "Discord Name",
+  "member_info_join_time": "Joined {guild}",
+  "member_info_title": "Information About {name}",
+  "member_info_top_role": "Highest Role"
+}

@@ -1,0 +1,10 @@
+{
+  "auto_conversion_request": "Requested by {name}",
+  "auto_conversion_title": "Automatic Conversion",
+  "convert_currency_title": "From {base} to {target}",
+  "currencies_title": "Currencies",
+  "unit_conversion": "{unit_and_amount} is {conversion_list}.",
+  "unit_representation": "{unit_amount} {unit_name}",
+  "view_all_currencies_desc": "Here are all currencies available in alphabetical order.",
+  "view_all_currencies_title": "All Currencies"
+}

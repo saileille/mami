@@ -1,12 +1,14 @@
 """Import stuff."""
 import asyncio
-import datetime
+import random
 import time
 
 import aiohttp
 import discord
 
 from bot.data import cache
+from bot.data import default_values
+from bot.data import definitions
 from bot.data import secrets
 from bot.mechanics import auto_convert
 from framework import custom_json
@@ -24,14 +26,11 @@ class Client(discord.Client):
         super().__init__(*args, **kwargs)
 
         # create the background task and run it in the background
-        self.bg_task = self.loop.create_task(self.currency_check())
+        self.currency_check_task = self.loop.create_task(self.currency_check())
+        self.playing_message_task = self.loop.create_task(self.change_playing_msg())
 
     async def on_ready(self):
         """Notify me when client is ready."""
-        await self.change_presence(
-            activity=discord.Game(
-                name="Under construction"))
-
         print("Connected.")
 
     async def on_message(self, message):
@@ -98,6 +97,7 @@ class Client(discord.Client):
     async def currency_check(self):
         """Update the currency API data on fixed intervals."""
         await self.wait_until_ready()
+        print("Starting the currency data update loop...")
 
         timer_data = custom_json.load("bot\\database\\currency_api\\timer.json")
 
@@ -113,13 +113,24 @@ class Client(discord.Client):
             timer_data["interval"] = timer_data["next_check"] - current_time
 
         while not self.is_closed():
-            print("Next currency check in {interval}".format(
-                interval=datetime.timedelta(seconds=int(timer_data["interval"]))))
-
             await asyncio.sleep(timer_data["interval"])
             timer_data["interval"] = timer_data["default_interval"]
 
             await Client.get_latest_currency_data(timer_data)
+
+    async def change_playing_msg(self):
+        """Update the playing message on fixed intervals."""
+        await self.wait_until_ready()
+        print("Starting the playing message loop...")
+
+        while not self.is_closed():
+            language_id = random.choice(list(definitions.LANGUAGES))
+            await self.change_presence(
+                activity=discord.Game(
+                    name=await definitions.LANGUAGES[language_id].get_text(
+                        "playing_message", {"prefix": default_values.PREFIX})))
+
+            await asyncio.sleep(30)
 
     @staticmethod
     async def get_latest_currency_data(timer_data):
@@ -153,4 +164,3 @@ class Client(discord.Client):
                     cache.CURRENCY_DATA["currencies"][key]["name"] = names["symbols"][key]
 
         custom_json.save(cache.CURRENCY_DATA, "bot\\database\\currency_api\\data.json")
-        print("Currency data updated")

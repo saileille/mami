@@ -49,7 +49,6 @@ a!5.km^2
 5.  km
 """
 import re
-import discord
 
 from aid import numbers
 from bot.data import default_values
@@ -131,6 +130,25 @@ async def validate_unit_name(match_unit_name, inspected_unit_name):
     """Validate the unit name."""
     not_letter = r"\W"
     for i, inspected_name_part in enumerate(inspected_unit_name):
+        """
+        Ignoring exception in on_message
+        Traceback (most recent call last):
+          File "C:\Program Files\Python37\lib\site-packages\discord\client.py", line 251, in _run_event
+            await coro(*args, **kwargs)
+          File "E:\Tiedostot\DiscordBot\Mami\framework\client.py", line 39, in on_message
+            await Client.handle_message(message)
+          File "E:\Tiedostot\DiscordBot\Mami\framework\client.py", line 71, in handle_message
+            await auto_convert.detect_unit_mention(context)
+          File "E:\Tiedostot\DiscordBot\Mami\bot\mechanics\auto_convert.py", line 66, in detect_unit_mention
+            unit_matches = await get_unit_matches(context, message)
+          File "E:\Tiedostot\DiscordBot\Mami\bot\mechanics\auto_convert.py", line 96, in get_unit_matches
+            await process_match(context, match, processed_matches)
+          File "E:\Tiedostot\DiscordBot\Mami\bot\mechanics\auto_convert.py", line 121, in process_match
+            if await validate_unit_name(match_unit_name, inspected_unit_name):
+          File "E:\Tiedostot\DiscordBot\Mami\bot\mechanics\auto_convert.py", line 134, in validate_unit_name
+            match_name_part = match_unit_name[i].strip()
+        IndexError: list index out of range
+        """
         match_name_part = match_unit_name[i].strip()
         inspected_name_part = inspected_name_part.strip()
 
@@ -171,19 +189,18 @@ async def send_conversion(context, user_id=None):
         elif isinstance(match[1], float):
             msg += await convert_from_us_height(context, match)
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("auto_conversion_title"))
 
     member = context.message.guild.get_member(user_id)
     thumbnail = "default"
     if member:
-        embed.title = await context.get_language_text(
+        message.embed.title = await context.language.get_text(
             "auto_conversion_request", {"name": member.display_name})
         thumbnail = member.avatar_url
 
-    embed.description = msg
-    await embeds.send(
-        context, await context.get_language_text("auto_conversion_title"), embed,
-        thumbnail)
+    message.embed.description = msg
+    await message.send(context, thumbnail)
 
 
 async def convert_normal(context, match):
@@ -254,7 +271,7 @@ async def convert_normal(context, match):
 
     base["unit"] = await context.language.get_default_unit_symbol(base["key"])
     base["formatted_amount"] = await context.language.format_number(base["amount"])
-    base_unit_and_amount = await context.get_language_text(
+    base_unit_and_amount = await context.language.get_text(
         "unit_representation",
         {"unit_amount": base["formatted_amount"], "unit_name": base["unit"]})
 
@@ -268,13 +285,13 @@ async def convert_normal(context, match):
         target["formatted_amount"] = await context.language.format_number(
             target["amount"], decimal_rules=".3f")
 
-        target_conv_list.append(await context.get_language_text(
+        target_conv_list.append(await context.language.get_text(
             "unit_representation",
             {"unit_amount": target["formatted_amount"], "unit_name": target["unit"]}))
 
     target_conversions = await context.language.get_string_list(target_conv_list)
 
-    return await context.get_language_text(
+    return await context.language.get_text(
         "unit_conversion",
         {"unit_and_amount": base_unit_and_amount, "conversion_list": target_conversions})
 
@@ -290,13 +307,13 @@ async def convert_from_us_height(context, match):
     centimetres = await numbers.convert(match[0], ft_rate, cm_rate)
     centimetres += await numbers.convert(match[1], in_rate, cm_rate)
 
-    cm_text = await context.get_language_text(
+    cm_text = await context.language.get_text(
         "unit_representation",
         {"unit_amount": await context.language.format_number(
             centimetres, decimal_rules=".2f"),
          "unit_name": await context.language.get_default_unit_symbol("centimetre")})
 
-    return await context.get_language_text(
+    return await context.language.get_text(
         "unit_conversion", {"unit_and_amount": height_text, "conversion_list": cm_text})
 
 
@@ -313,11 +330,11 @@ async def convert_to_us_height(context, match):
     feet, inches = divmod(inches, 12)
 
     feet_and_inches = "{feet:.0f}′ {inches:.0f}″".format(feet=feet, inches=inches)
-    centimetres = await context.get_language_text(
+    centimetres = await context.language.get_text(
         "unit_representation",
         {"unit_amount": await context.language.format_number(match[0]),
          "unit_name": await context.language.get_default_unit_symbol("centimetre")})
 
-    return await context.get_language_text(
+    return await context.language.get_text(
         "unit_conversion",
         {"unit_and_amount": feet_and_inches, "conversion_list": centimetres})

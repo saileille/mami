@@ -13,7 +13,7 @@ async def language_id(argument, context):
         if language.languages[key] == argument:
             return key
 
-    custom_msg = await context.get_language_text("invalid_language")
+    custom_msg = await context.language.get_text("invalid_language")
     await embed_messages.invalid_argument(context, argument, custom_msg)
 
     return None

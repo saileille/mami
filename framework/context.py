@@ -184,11 +184,3 @@ class Context():
         self._prefix = None
         self._language_id = None
         self._language = None
-
-    async def get_language_text(self, key, variables=None):
-        """Get text from the context language."""
-        if variables is None:
-            variables = {}
-
-        text = await self.language.get_text(key)
-        return text.format(context=self, **variables)

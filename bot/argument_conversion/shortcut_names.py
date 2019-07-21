@@ -22,7 +22,7 @@ async def not_guild_shortcut_name(argument, context):
     if await find_shortcut_name(argument, context, "guild", False):
         return argument
 
-    custom_msg = await context.get_language_text("existing_guild_shortcut_name")
+    custom_msg = await context.language.get_text("existing_guild_shortcut_name")
     await embed_messages.invalid_argument(context, argument, custom_msg)
 
     return None
@@ -38,7 +38,7 @@ async def guild_shortcut_name(argument, context, verbose=True):
         return argument
 
     if verbose:
-        custom_msg = await context.get_language_text("not_guild_shortcut_name")
+        custom_msg = await context.language.get_text("not_guild_shortcut_name")
         await embed_messages.invalid_argument(context, argument, custom_msg)
 
     return None
@@ -124,8 +124,8 @@ async def any_shortcut(argument, context):
         channel_shortcut_cmd = await channel_shortcut.get_command_string(context)
         user_shortcut_cmd = await user_shortcut.get_command_string(context)"""
 
-        custom_msg = await context.get_language_text("invalid_shortcut_name")
-        custom_msg += "\n\n:information_source: " + await context.get_language_text(
+        custom_msg = await context.language.get_text("invalid_shortcut_name")
+        custom_msg += "\n\n:information_source: " + await context.language.get_text(
             "invalid_shortcut_name_info", {"guild_shortcut": guild_shortcut_cmd})
 
         await embed_messages.invalid_argument(context, argument, custom_msg)

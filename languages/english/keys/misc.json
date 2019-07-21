@@ -1,6 +1,6 @@
 {
   "calculating": "Calculating...",
-  "ping": "{context.ping}ms",
+  "ping": "{ping}ms",
   "former_guild_member": "former server member",
   "thousands_separator": ",",
   "decimal_symbol": ".",
@@ -22,5 +22,6 @@
   "time_seconds_plural": "{seconds} seconds",
   "time_seconds_singular": "{seconds} second",
   "datetime_format": "%Y-%m-%d %H:%M:%S",
-  "datetime_and_time_passed": "{datetime} UTC\n{time_passed}"
+  "datetime_and_time_passed": "{datetime} UTC\n{time_passed}",
+  "playing_message": "Send {prefix} to get started"
 }

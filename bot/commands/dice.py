@@ -1,8 +1,6 @@
 """Dice-related commands."""
 import random
-import discord
 
-from aid import lists
 from aid import numbers
 from framework import embeds
 
@@ -27,36 +25,31 @@ async def throw(context, command_input):
     percentage = await numbers.get_percentage(
         dice_total - min_total, max_total - min_total)
 
-    formatted_percentage = await context.get_language_text(
+    formatted_percentage = await context.language.get_text(
         "percentage",
         {"number": await context.language.format_number(percentage, decimal_rules=".2f")})
 
-    column_strings = None
-    thumbnail = None
+    thumbnail = "default"
+    column_amount = 1
     if context.desktop_ui:
-        column_strings = await lists.divide_into_columns(dice_results, 3)
-    else:
-        column_strings = await lists.divide_into_columns(dice_results, 1)
-        thumbnail = "default"
+        column_amount = 3
+        thumbnail = None
 
-    embed = discord.Embed()
-    embed.description = await context.get_language_text("throw_dice_desc")
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("throw_dice_title"),
+        embeds.EmbedFieldCollection(
+            dice_results, await context.language.get_text("dice_results_title"),
+            column_amount),
+        embeds.EmbedFieldCollection(
+            await context.language.get_text(
+                "dice_results_analysis_content",
+                {"dice_total": await context.language.format_number(dice_total),
+                 "min_total": await context.language.format_number(min_total),
+                 "max_total": await context.language.format_number(max_total),
+                 "percentage": formatted_percentage}),
+            await context.language.get_text("dice_results_analysis_title")))
 
-    for column in column_strings:
-        embed.add_field(
-            name=await context.get_language_text("dice_results_title"),
-            value=column)
+    message.embed.description = await context.language.get_text(
+        "throw_dice_desc", {"user_mention": context.message.author.mention})
 
-    embed.add_field(
-        name=await context.get_language_text("dice_results_analysis_title"),
-        value=await context.get_language_text(
-            "dice_results_analysis_content",
-            {"dice_total": await context.language.format_number(dice_total),
-             "min_total": await context.language.format_number(min_total),
-             "max_total": await context.language.format_number(max_total),
-             "percentage": formatted_percentage}),
-        inline=False)
-
-    await embeds.send(
-        context, await context.get_language_text("throw_dice_title"), embed,
-        thumbnail=thumbnail)
+    await message.send(context, thumbnail=thumbnail)

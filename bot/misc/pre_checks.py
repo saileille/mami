@@ -14,7 +14,7 @@ async def in_dms(context, verbose):
     msg_in_dms = context.guild_data is None
 
     if not msg_in_dms and verbose:
-        custom_msg = await context.get_language_text("command_used_in_guild")
+        custom_msg = await context.language.get_text("command_used_in_guild")
         await embed_messages.failed_pre_check(context, custom_msg)
 
     return msg_in_dms
@@ -25,7 +25,7 @@ async def in_guild(context, verbose):
     msg_in_guild = context.guild_data is not None
 
     if not msg_in_guild and verbose:
-        custom_msg = await context.get_language_text("command_used_in_dms")
+        custom_msg = await context.language.get_text("command_used_in_dms")
         await embed_messages.failed_pre_check(context, custom_msg)
 
     return msg_in_guild
@@ -41,7 +41,7 @@ async def guild_has_shortcuts(context, verbose):
 
         shortcut_cmd_name = await shortcut_cmd.get_command_string(context)
 
-        custom_msg = await context.get_language_text(
+        custom_msg = await context.language.get_text(
             "no_guild_shortcuts", {"shortcut_cmd": shortcut_cmd_name})
 
         await embed_messages.failed_pre_check(context, custom_msg)
@@ -54,7 +54,7 @@ async def category_has_language(context, verbose):
     has_language = context.category_data.language_id is not None
 
     if not has_language and verbose:
-        custom_msg = await context.get_language_text("no_set_category_language")
+        custom_msg = await context.language.get_text("no_set_category_language")
         await embed_messages.failed_pre_check(context, custom_msg)
 
     return has_language
@@ -65,7 +65,7 @@ async def channel_has_language(context, verbose):
     has_language = context.channel_data.language_id is not None
 
     if not has_language and verbose:
-        custom_msg = await context.get_language_text("no_set_channel_language")
+        custom_msg = await context.language.get_text("no_set_channel_language")
         await embed_messages.failed_pre_check(context, custom_msg)
 
     return has_language
@@ -76,7 +76,7 @@ async def guild_has_language(context, verbose):
     has_language = context.guild_data.language_id is not None
 
     if not has_language and verbose:
-        custom_msg = await context.get_language_text("no_set_guild_language")
+        custom_msg = await context.language.get_text("no_set_guild_language")
         await embed_messages.failed_pre_check(context, custom_msg)
 
     return has_language
@@ -87,7 +87,7 @@ async def user_has_language(context, verbose):
     has_language = context.user_data.language_id is not None
 
     if not has_language and verbose:
-        custom_msg = await context.get_language_text("no_set_user_language")
+        custom_msg = await context.language.get_text("no_set_user_language")
         await embed_messages.failed_pre_check(context, custom_msg)
 
     return has_language

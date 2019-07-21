@@ -2,6 +2,6 @@
   "dice_results_analysis_content": "Noppien summa {dice_total} yhteenlasketusta arvojoukosta {min_total} ja {max_total} välillä ({percentage})",
   "dice_results_analysis_title": "Lisätietoa",
   "dice_results_title": "Tulokset",
-  "throw_dice_desc": "{context.message.author.mention}, tässä nopanheittosi tulokset.",
+  "throw_dice_desc": "{user_mention}, tässä nopanheittosi tulokset.",
   "throw_dice_title": "Alea iacta est!"
 }

@@ -46,10 +46,10 @@ async def get_time_difference_string(context, past):
     time_list = []
     for unit in ["years", "months", "weeks", "days", "hours", "minutes", "seconds"]:
         if time[unit] == 1:
-            time_list.append(await context.get_language_text(
+            time_list.append(await context.language.get_text(
                 "time_" + unit + "_singular", {unit: time[unit]}))
         elif time[unit] != 0:
-            time_list.append(await context.get_language_text(
+            time_list.append(await context.language.get_text(
                 "time_" + unit + "_plural", {unit: time[unit]}))
 
     return await context.language.get_string_list(time_list)

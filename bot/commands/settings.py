@@ -11,21 +11,20 @@ async def set_category_language(context, command_input):
     await database_functions.update_category_language(context)
     await context.clear_cache()
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("category_language_updated_title"))
 
     confirmation_text = context.category_data.language.flag_emojis
     if not confirmation_text:
         confirmation_text = ":white_check_mark:"
 
-    embed.description = confirmation_text + " " + (
-        await context.get_language_text(
+    message.embed.description = confirmation_text + " " + (
+        await context.language.get_text(
             "category_language_updated_desc",
             {"language": await context.language.get_language(
                 context.category_data.language.obj_id)}))
 
-    await embeds.send(
-        context, await context.get_language_text("category_language_updated_title"),
-        embed)
+    await message.send(context)
 
 
 async def set_channel_language(context, command_input):
@@ -34,20 +33,20 @@ async def set_channel_language(context, command_input):
     await database_functions.update_channel_language(context)
     await context.clear_cache()
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("channel_language_updated_title"))
 
     confirmation_text = context.channel_data.language.flag_emojis
     if not confirmation_text:
         confirmation_text = ":white_check_mark:"
 
-    embed.description = confirmation_text + " " + (
-        await context.get_language_text(
+    message.embed.description = confirmation_text + " " + (
+        await context.language.get_text(
             "channel_language_updated_desc",
             {"language": await context.language.get_language(
                 context.channel_data.language.obj_id)}))
 
-    await embeds.send(
-        context, await context.get_language_text("channel_language_updated_title"), embed)
+    await message.send(context)
 
 
 async def set_guild_language(context, command_input):
@@ -56,20 +55,20 @@ async def set_guild_language(context, command_input):
     await database_functions.update_guild_language(context)
     await context.clear_cache()
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("guild_language_updated_title"))
 
     confirmation_text = context.guild_data.language.flag_emojis
     if not confirmation_text:
         confirmation_text = ":white_check_mark:"
 
-    embed.description = confirmation_text + " " + (
-        await context.get_language_text(
+    message.embed.description = confirmation_text + " " + (
+        await context.language.get_text(
             "guild_language_updated_desc",
             {"language": await context.language.get_language(
                 context.guild_data.language.obj_id)}))
 
-    await embeds.send(
-        context, await context.get_language_text("guild_language_updated_title"), embed)
+    await message.send(context)
 
 
 async def set_user_language(context, command_input):
@@ -78,16 +77,16 @@ async def set_user_language(context, command_input):
     await database_functions.update_user_language(context)
     await context.clear_cache()
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("user_language_updated_title"))
 
-    embed.description = context.user_data.language.flag_emojis + " " + (
-        await context.get_language_text(
+    message.embed.description = context.user_data.language.flag_emojis + " " + (
+        await context.language.get_text(
             "user_language_updated_desc",
             {"language": await context.language.get_language(
                 context.user_data.language.obj_id)}))
 
-    await embeds.send(
-        context, await context.get_language_text("user_language_updated_title"), embed)
+    await message.send(context)
 
 
 async def reset_category_language(context, command_input):
@@ -96,13 +95,13 @@ async def reset_category_language(context, command_input):
     await database_functions.update_category_language(context)
     await context.clear_cache()
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("category_language_reset_title"))
 
-    embed.description = ":white_check_mark: " + (
-        await context.get_language_text("category_language_reset_desc"))
+    message.embed.description = ":white_check_mark: " + (
+        await context.language.get_text("category_language_reset_desc"))
 
-    await embeds.send(
-        context, await context.get_language_text("category_language_reset_title"), embed)
+    await message.send(context)
 
 
 async def reset_channel_language(context, command_input):
@@ -111,13 +110,13 @@ async def reset_channel_language(context, command_input):
     await database_functions.update_channel_language(context)
     await context.clear_cache()
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("channel_language_reset_title"))
 
-    embed.description = ":white_check_mark: " + (
-        await context.get_language_text("channel_language_reset_desc"))
+    message.embed.description = ":white_check_mark: " + (
+        await context.language.get_text("channel_language_reset_desc"))
 
-    await embeds.send(
-        context, await context.get_language_text("channel_language_reset_title"), embed)
+    await message.send(context)
 
 
 async def reset_guild_language(context, command_input):
@@ -126,13 +125,13 @@ async def reset_guild_language(context, command_input):
     await database_functions.update_guild_language(context)
     await context.clear_cache()
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("guild_language_reset_title"))
 
-    embed.description = ":white_check_mark: " + (
-        await context.get_language_text("guild_language_reset_desc"))
+    message.embed.description = ":white_check_mark: " + (
+        await context.language.get_text("guild_language_reset_desc"))
 
-    await embeds.send(
-        context, await context.get_language_text("guild_language_reset_title"), embed)
+    await message.send(context)
 
 
 async def reset_user_language(context, command_input):
@@ -141,13 +140,13 @@ async def reset_user_language(context, command_input):
     await database_functions.update_user_language(context)
     await context.clear_cache()
 
-    embed = discord.Embed()
+    message = embeds.PaginatedEmbed(
+        await context.language.get_text("user_language_reset_title"))
 
-    embed.description = ":white_check_mark: " + (
-        await context.get_language_text("user_language_reset_desc"))
+    message.embed.description = ":white_check_mark: " + (
+        await context.language.get_text("user_language_reset_desc"))
 
-    await embeds.send(
-        context, await context.get_language_text("user_language_reset_title"), embed)
+    await message.send(context)
 
 
 async def add_allow_guild_check(context, command_input):

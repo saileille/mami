@@ -1,6 +1,6 @@
 {
   "calculating": "Lasketaan...",
-  "ping": "{context.ping} ms",
+  "ping": "{ping} ms",
   "decimal_symbol": ",",
   "former_guild_member": "entinen palvelimen jäsen",
   "last_list_separator": " ja ",
@@ -22,5 +22,6 @@
   "time_weeks_plural": "{weeks} viikkoa",
   "time_weeks_singular": "{weeks} viikko",
   "time_years_plural": "{years} vuotta",
-  "time_years_singular": "{years} vuosi"
+  "time_years_singular": "{years} vuosi",
+  "playing_message": "Lähetä {prefix} aloittaaksesi"
 }

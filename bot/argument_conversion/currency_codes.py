@@ -11,7 +11,7 @@ async def valid_currency(argument, context):
     """
     currency = None
     if argument not in cache.CURRENCY_DATA["currencies"]:
-        custom_msg = await context.get_language_text("invalid_currency")
+        custom_msg = await context.language.get_text("invalid_currency")
         await embed_messages.invalid_argument(context, argument, custom_msg)
     else:
         currency = cache.CURRENCY_DATA["currencies"][argument]

@@ -103,7 +103,7 @@ async def member_role_permission(argument, context):
         if conversion is not None:
             return conversion
 
-    custom_msg = await context.get_language_text("not_member_role_or_permission")
+    custom_msg = await context.language.get_text("not_member_role_or_permission")
     await embed_messages.invalid_argument(context, argument, custom_msg)
     return conversion
 
@@ -122,6 +122,6 @@ async def valid_member(argument, context):
         if conversion is not None:
             return conversion
 
-    custom_msg = await context.get_language_text("not_member")
+    custom_msg = await context.language.get_text("not_member")
     await embed_messages.invalid_argument(context, argument, custom_msg)
     return conversion

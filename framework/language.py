@@ -209,14 +209,17 @@ class Language():
                     new_lang_dict, os.path.join(self.directory, "_NEW_" + special_file),
                     compact=False)
 
-    async def get_text(self, key):
+    async def get_text(self, key, variables=None):
         """
         Get localised text from the language.
 
         If text is not found, return the key.
         """
+        if variables is None:
+            variables = {}
+
         if key in self.keys:
-            return self.keys[key]
+            return self.keys[key].format(**variables)
 
         return key
 

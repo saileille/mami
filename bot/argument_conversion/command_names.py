@@ -29,7 +29,7 @@ async def commands_to_guild_command_rules(argument, context):
         id_path = await data_functions.get_id_path_from_command_name(command_name,
                                                                      context)
         if id_path is None:
-            custom_msg = await context.get_language_text(
+            custom_msg = await context.language.get_text(
                 "invalid_command_name", {"cmd_name": command_name})
 
             await embed_messages.invalid_argument(
@@ -58,7 +58,7 @@ async def commands_to_guild_allow_command_rules(argument, context):
     for i, command_rule in enumerate(command_rules):
         if not command_rule.deny.is_empty:
             command_names = argument.split(" ")
-            custom_msg = await context.get_language_text(
+            custom_msg = await context.language.get_text(
                 "command_has_deny_rules", {"cmd_name": context.prefix + command_names[i]})
 
             await embed_messages.invalid_argument(context, argument, custom_msg)

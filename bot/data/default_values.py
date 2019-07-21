@@ -2,6 +2,7 @@
 PREFIX = "!m."
 LANGUAGE_ID = "english"
 MAX_DICE = 100
+EMBED_FIELD_MAX_SIZE = 1024
 
 RUNES = {
     "archaic": {

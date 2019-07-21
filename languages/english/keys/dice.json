@@ -1,6 +1,6 @@
 {
   "throw_dice_title": "Alea Iacta Est!",
-  "throw_dice_desc": "{context.message.author.mention}, here are the results of your dice throw.",
+  "throw_dice_desc": "{user_mention}, here are the results of your dice throw.",
   "dice_results_title": "Results",
   "dice_results_analysis_title": "Additional Information",
   "dice_results_analysis_content": "Dice total {dice_total} out of total range between {min_total} and {max_total} ({percentage})"

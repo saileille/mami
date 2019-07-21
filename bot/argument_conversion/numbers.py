@@ -12,7 +12,7 @@ async def valid_no_of_dice(argument, context):
     number = await integer_in_range(argument, context, int_range, verbose=False)
 
     if number is None:
-        custom_msg = await context.get_language_text(
+        custom_msg = await context.language.get_text(
             "not_integer_in_range", {"min_value": 1, "max_value": context.max_dice})
         await embed_messages.invalid_argument(context, argument, custom_msg)
 
@@ -26,7 +26,7 @@ async def integer(argument, context, verbose=True):
         number = int(argument)
     except ValueError:
         if verbose:
-            custom_msg = await context.get_language_text("not_integer")
+            custom_msg = await context.language.get_text("not_integer")
             await embed_messages.invalid_argument(context, argument, custom_msg)
 
     return number
@@ -39,7 +39,7 @@ async def to_float(argument, context, verbose=True):
         number = float(argument)
     except ValueError:
         if verbose:
-            custom_msg = await context.get_language_text("not_float")
+            custom_msg = await context.language.get_text("not_float")
             await embed_messages.invalid_argument(context, argument, custom_msg)
 
     return number
@@ -71,13 +71,13 @@ async def integer_in_range(argument, context, int_range, verbose=True):
         custom_msg = None
 
         if int_range[1] is None:
-            custom_msg = await context.get_language_text(
+            custom_msg = await context.language.get_text(
                 "integer_below_min_value", {"value": int_range[0]})
         elif int_range[0] is None:
-            custom_msg = await context.get_language_text(
+            custom_msg = await context.language.get_text(
                 "integer_above_max_value", {"value": int_range[1]})
         else:
-            custom_msg = await context.get_language_text(
+            custom_msg = await context.language.get_text(
                 "not_integer_in_range",
                 {"min_value": int_range[0], "max_value": int_range[1]})
 
@@ -107,13 +107,13 @@ async def float_in_range(argument, context, float_range, verbose=True):
         custom_msg = None
 
         if float_range[1] is None:
-            custom_msg = await context.get_language_text(
+            custom_msg = await context.language.get_text(
                 "float_below_min_value", {"value": float_range[0]})
         elif float_range[0] is None:
-            custom_msg = await context.get_language_text(
+            custom_msg = await context.language.get_text(
                 "float_above_max_value", {"value": float_range[1]})
         else:
-            custom_msg = await context.get_language_text(
+            custom_msg = await context.language.get_text(
                 "not_float_in_range",
                 {"min_value": float_range[0], "max_value": float_range[1]})
 

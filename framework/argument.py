@@ -13,9 +13,7 @@ class Argument():
     Default values and such are defined in argument rules.
     """
 
-    def __init__(self,
-                 obj_id=None,
-                 modification=None):
+    def __init__(self, obj_id=None, modification=None):
         """Initialise object."""
         self.obj_id = obj_id
         self.modification = modification
@@ -38,11 +36,8 @@ class Argument():
 
         return converted_argument
 
-    async def dialogue(self,
-                       context,
-                       optional_argument,
-                       argument_number,
-                       total_arguments):
+    async def dialogue(
+            self, context, optional_argument, argument_number, total_arguments):
         """
         Handle dialogue for argument input.
 
@@ -57,19 +52,21 @@ class Argument():
         else:
             emoji = "❌"
 
-        embed = discord.Embed()
-        embed.title = self.localisation[context.language_id]["description"]
-
+        desc = None
         if optional_argument:
-            embed.description = await context.get_language_text("confirm_to_stop")
+            desc = await context.language.get_text("confirm_to_stop")
         else:
-            embed.description = await context.get_language_text("cancel_to_abort")
+            desc = await context.language.get_text("cancel_to_abort")
 
-        author_text = await context.get_language_text(
-            "argument_number", {"arg": argument_number, "total_arg": total_arguments})
+        message = embeds.PaginatedEmbed(
+            await context.language.get_text(
+                "argument_number",
+                {"arg": argument_number, "total_arg": total_arguments}))
 
-        dialogue_msg = await embeds.send(context, author_text, embed)
+        message.embed.title = self.localisation[context.language_id]["description"]
+        message.embed.description = desc
 
+        dialogue_msg = await message.send(context)
         await dialogue_msg.add_reaction(emoji)
 
         def msg_check(message):
@@ -83,11 +80,9 @@ class Argument():
                     reaction.emoji == emoji and
                     user == context.message.author)
 
-        done, pending = await asyncio.wait([
-            definitions.CLIENT.wait_for(
-                "message", check=msg_check),
-            definitions.CLIENT.wait_for(
-                "reaction_add", check=reaction_check)],
+        done, pending = await asyncio.wait(
+            [definitions.CLIENT.wait_for("message", check=msg_check),
+             definitions.CLIENT.wait_for("reaction_add", check=reaction_check)],
             return_when=asyncio.FIRST_COMPLETED)
 
         response = done.pop().result()

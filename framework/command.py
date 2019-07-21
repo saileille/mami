@@ -404,7 +404,7 @@ class Command():
 
                 # If not optional argument.
                 await context.message.channel.send(
-                    await context.get_language_text("command_aborted"))
+                    await context.language.get_text("command_aborted"))
 
                 return False
 

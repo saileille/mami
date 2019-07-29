@@ -2,7 +2,7 @@
   "calculating": "Lasketaan...",
   "ping": "{ping} ms",
   "decimal_symbol": ",",
-  "former_guild_member": "entinen palvelimen jäsen",
+  "former_guild_member": "entinen jäsen",
   "last_list_separator": " ja ",
   "normal_list_separator": ", ",
   "percentage": "{number} %",
@@ -23,5 +23,6 @@
   "time_weeks_singular": "{weeks} viikko",
   "time_years_plural": "{years} vuotta",
   "time_years_singular": "{years} vuosi",
-  "playing_message": "Lähetä {prefix} aloittaaksesi"
+  "playing_message": "Kirjoita {prefix} saadaksesi komennot",
+  "former_guild_role": "poistettu rooli"
 }

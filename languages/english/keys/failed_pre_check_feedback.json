@@ -1,6 +1,9 @@
 {
   "failed_pre_check_custom_msg_title": "More Information",
+  "no_category_shortcuts": "This category has no category shortcuts. You can add them with the command `{shortcut_cmd}`.",
+  "no_channel_shortcuts": "This channel has no channel shortcuts. You can add them with the command `{shortcut_cmd}`.",
   "no_guild_shortcuts": "This server has no server shortcuts. You can add them with the command `{shortcut_cmd}`.",
+  "no_user_shortcuts": "You do not have any user shortcuts. You can add them with the command `{shortcut_cmd}`.",
   "no_set_category_language": "This category is using the default language, so it cannot be reset.",
   "no_set_channel_language": "This channel is using the default language, so it cannot be reset.",
   "no_set_guild_language": "This server is using the default language, so it cannot be reset.",

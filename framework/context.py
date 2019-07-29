@@ -27,69 +27,58 @@ class Context():
     def desktop_ui(self):
         """Check what embed layout should be used."""
         if self._desktop_ui is None:
-            if not self.message.author.status.offline:
-                if self.message.guild is not None:
-                    self._desktop_ui = (not self.message.author.desktop_status.offline or
-                                        not self.message.author.web_status.offline)
-                else:
-                    member = None
-                    for guild in definitions.CLIENT.guilds:
-                        member = guild.get_member(self.message.author.id)
-                        if member is not None:
-                            break
-                    else:
-                        self._desktop_ui = True
-                        return self._desktop_ui
-
-                    self._desktop_ui = (not member.desktop_status.offline or
-                                        not member.web_status.offline)
+            status = None
+            desktop_status = None
+            web_status = None
+            if self.message.guild is not None:
+                status = self.message.author.status
+                desktop_status = self.message.author.desktop_status
+                web_status = self.message.author.web_status
             else:
-                self._desktop_ui = True
+                for guild in definitions.CLIENT.guilds:
+                    member = guild.get_member(self.message.author.id)
+                    if member is not None:
+                        status = member.status
+                        desktop_status = member.desktop_status
+                        web_status = member.web_status
+                        break
+                else:
+                    self._desktop_ui = True
+                    return self._desktop_ui
+
+            self._desktop_ui = (
+                status.offline or not desktop_status.offline or not web_status.offline)
 
         return self._desktop_ui
+
+    def check_cached_value(self, attribute_name, default_value):
+        """Determine which prefix, language, etc. is used."""
+        if getattr(self, "_" + attribute_name) is None:
+            check_order = ["user", "channel", "category", "guild"]
+            for name in check_order:
+                attribute = None
+                try:
+                    attribute = getattr(getattr(self, name + "_data"), attribute_name)
+                except AttributeError:
+                    continue
+
+                if attribute is not None:
+                    setattr(self, "_" + attribute_name, attribute)
+                    return attribute
+
+            setattr(self, "_" + attribute_name, default_value)
+
+        return getattr(self, "_" + attribute_name)
 
     @property
     def prefix(self):
         """Get the command prefix."""
-        if self._prefix is None:
-            if self.user_data.prefix is not None:
-                self._prefix = self.user_data.prefix
-
-            elif self.message.guild is not None:
-                if self.channel_data.prefix is not None:
-                    self._prefix = self.channel_data.prefix
-                elif self.category_data.prefix is not None:
-                    self._prefix = self.category_data.prefix
-                elif self.guild_data.prefix is not None:
-                    self._prefix = self.guild_data.prefix
-                else:
-                    self._prefix = default_values.PREFIX
-            else:
-                self._prefix = default_values.PREFIX
-
-        return self._prefix
+        return self.check_cached_value("prefix", default_values.PREFIX)
 
     @property
     def language_id(self):
         """Get the language ID."""
-        if self._language_id is None:
-            if self.user_data.language_id is not None:
-                self._language_id = self.user_data.language_id
-
-            elif self.message.guild is not None:
-                if self.channel_data.language_id is not None:
-                    self._language_id = self.channel_data.language_id
-                elif self.category_data.language_id is not None:
-                    self._language_id = self.category_data.language_id
-                elif self.guild_data.language is not None:
-                    self._language_id = self.guild_data.language_id
-                else:
-                    self._language_id = default_values.LANGUAGE_ID
-
-            else:
-                self._language_id = default_values.LANGUAGE_ID
-
-        return self._language_id
+        return self.check_cached_value("language_id", default_values.LANGUAGE_ID)
 
     @property
     def language(self):
@@ -102,17 +91,7 @@ class Context():
     @property
     def max_dice(self):
         """Get the maximum amount of dice one can use."""
-        if self._max_dice is None:
-            if self.channel_data.max_dice is not None:
-                self._max_dice = self.channel_data.max_dice
-            elif self.category_data.max_dice is not None:
-                self._max_dice = self.category_data.max_dice
-            elif self.guild_data.max_dice is not None:
-                self._max_dice = self.guild_data.max_dice
-            else:
-                self._max_dice = default_values.MAX_DICE
-
-        return self._max_dice
+        return self.check_cached_value("max_dice", default_values.MAX_DICE)
 
     async def check_command_rules(self, command_id_list):
         """
@@ -121,49 +100,98 @@ class Context():
         Returns whether the command is allowed or not, and a
         list of the IDs leading to the last allowed command.
         """
-        allow = await self.channel_data.check_command_rules(
-            self.message, command_id_list)
-        if allow is None:
-            allow = await self.category_data.check_command_rules(
-                self.message, command_id_list)
-        if allow is None:
-            allow = await self.guild_data.check_command_rules(
-                self.message, command_id_list)
-        return allow
+        check_functions = [
+            self.channel_data.check_command_rules, self.guild_data.check_command_rules]
 
-    async def get_user_data(self):
-        """Get the user data from the database, or create new entry."""
-        self.user_data = await database_functions.select_user(self.message.author.id)
+        if self.category_data is not None:
+            check_functions.insert(1, self.category_data.check_command_rules)
 
-        if self.user_data is None:
-            await database_functions.insert_user(self.message.author.id)
-            self.user_data = config_data.UserData()
+        allow_use = None
+        for function in check_functions:
+            allow_use = await function(self.message, command_id_list)
+            if allow_use is not None:
+                break
 
-    async def get_channel_data(self):
-        """Get the channel data from the database, or create new entry."""
-        self.channel_data = await database_functions.select_channel(
-            self.message.channel.id)
-
-        if self.channel_data is None:
-            await database_functions.insert_channel(self.message.channel.id)
-            self.channel_data = config_data.ChannelData()
+        return allow_use
 
     async def get_category_data(self):
-        """Get the category data from the database, or create new entry."""
-        self.category_data = await database_functions.select_category(
-            self.message.channel.category_id)
+        """
+        Get the category data.
 
-        if self.category_data is None:
-            await database_functions.insert_category(self.message.channel.category_id)
-            self.category_data = config_data.CategoryData()
+        The function goes through cache, then database, and finally creates a new entry if
+        one does not exist. Also adds an entry to the cache.
+        """
+        cache = definitions.DATA_CACHE["categories"]
+        if self.message.channel.category_id in cache:
+            self.category_data = cache[self.message.channel.category_id]
+        else:
+            self.category_data = await database_functions.select_category(
+                self.message.channel.category_id)
+
+            if self.category_data is None:
+                await database_functions.insert_category(self.message.channel.category_id)
+                self.category_data = config_data.CategoryData()
+
+            cache[self.message.channel.category_id] = self.category_data
+
+    async def get_channel_data(self):
+        """
+        Get the channel data.
+
+        The function goes through cache, then database, and finally creates a new entry if
+        one does not exist. Also adds an entry to the cache.
+        """
+        cache = definitions.DATA_CACHE["channels"]
+        if self.message.channel.id in cache:
+            self.channel_data = cache[self.message.channel.id]
+        else:
+            self.channel_data = await database_functions.select_channel(
+                self.message.channel.id)
+
+            if self.channel_data is None:
+                await database_functions.insert_channel(self.message.channel.id)
+                self.channel_data = config_data.ChannelData()
+
+            cache[self.message.channel.id] = self.channel_data
 
     async def get_guild_data(self):
-        """Get the guild data from the database, or create new entry."""
-        self.guild_data = await database_functions.select_guild(self.message.guild.id)
+        """
+        Get the guild data.
 
-        if self.guild_data is None:
-            await database_functions.insert_guild(self.message.guild.id)
-            self.guild_data = config_data.GuildData()
+        The function goes through cache, then database, and finally creates a new entry if
+        one does not exist. Also adds an entry to the cache.
+        """
+        cache = definitions.DATA_CACHE["guilds"]
+        if self.message.guild.id in cache:
+            self.guild_data = cache[self.message.guild.id]
+        else:
+            self.guild_data = await database_functions.select_guild(
+                self.message.guild.id)
+
+            if self.guild_data is None:
+                await database_functions.insert_guild(self.message.guild.id)
+                self.guild_data = config_data.GuildData()
+
+            cache[self.message.guild.id] = self.guild_data
+
+    async def get_user_data(self):
+        """
+        Get the user data.
+
+        The function goes through cache, then database, and finally creates a new entry if
+        one does not exist. Also adds an entry to the cache.
+        """
+        cache = definitions.DATA_CACHE["users"]
+        if self.message.author.id in cache:
+            self.user_data = cache[self.message.author.id]
+        else:
+            self.user_data = await database_functions.select_user(self.message.author.id)
+
+            if self.user_data is None:
+                await database_functions.insert_user(self.message.author.id)
+                self.user_data = config_data.UserData()
+
+            cache[self.message.author.id] = self.user_data
 
     async def get_data(self):
         """Combine three data-gathering functions into one."""
@@ -171,8 +199,10 @@ class Context():
 
         if self.message.guild is not None:
             await self.get_channel_data()
-            await self.get_category_data()
             await self.get_guild_data()
+
+            if self.message.channel.category_id is not None:
+                await self.get_category_data()
 
     async def clear_cache(self):
         """Clear cache."""

@@ -5,7 +5,7 @@ from bot.misc import embed_messages
 from bot.data import default_values
 from bot.data import definitions
 from framework import exceptions
-from framework.checks import Checks
+from framework.command_rules import CommandRules
 
 
 class Command():
@@ -125,22 +125,22 @@ class Command():
         Initialise command stuffs.
 
         Add parent command list for the command
-        Construct the default checks JSON.
+        Construct the default CommandRules JSON.
         """
-        guild_default_checks = Checks()
-        channel_default_checks = Checks()
+        guild_default_command_rules = CommandRules()
+        empty_command_rules = CommandRules()
         if parent_commands is None:
             parent_commands = []
 
         self.initialise_parent_commands(parent_commands)
 
         for permission in self.default_permissions:
-            guild_default_checks.allow.permissions.append(permission)
+            guild_default_command_rules.inclusionary.permissions.append(permission)
 
         for sub_command in self.sub_commands.values():
-            guild_default_checks.sub_commands[sub_command.obj_id], channel_default_checks.sub_commands[sub_command.obj_id] = sub_command.initialise_commands(parent_commands[:])
+            guild_default_command_rules.sub_commands[sub_command.obj_id], empty_command_rules.sub_commands[sub_command.obj_id] = sub_command.initialise_commands(parent_commands[:])
 
-        return guild_default_checks, channel_default_checks
+        return guild_default_command_rules, empty_command_rules
 
     def initialise_parent_commands(self, parent_commands):
         """Record the parent commands of the command."""
@@ -190,12 +190,13 @@ class Command():
             await self.no_action(context, command_input)
         else:
             # Argument handling
-            valid_arguments = await self.validate_arguments(context, command_input)
+            valid_arguments = await self.validate_arguments(
+                context, command_input.arguments)
 
             if not valid_arguments:
                 return
 
-            await self.action(context, command_input)
+            await self.action(context, command_input.arguments)
 
     async def get_command_string(self, context):
         """Get the command string with the context language."""
@@ -350,9 +351,9 @@ class Command():
         await embed_messages.no_usable_sub_commands(
             context, command_string, last_working_command_string)
 
-    async def validate_given_arguments(self, context, command_input):
+    async def validate_given_arguments(self, context, arguments):
         """Validate and convert the arguments that have been given by the user."""
-        for i, argument in enumerate(command_input.arguments):
+        for i, argument in enumerate(arguments):
             converted_argument = None
             arg_index = None
 
@@ -373,16 +374,16 @@ class Command():
             if converted_argument is None:
                 return False
 
-            command_input.arguments[i] = converted_argument
+            arguments[i] = converted_argument
 
         return True
 
-    async def validate_missing_arguments(self, context, command_input):
+    async def validate_missing_arguments(self, context, arguments):
         """Ask for missing arguments, validate and convert them."""
         argument_amount = len(self.arguments)
 
-        while len(command_input.arguments) < argument_amount or self.unlimited_arguments:
-            arguments_given = len(command_input.arguments)
+        while len(arguments) < argument_amount or self.unlimited_arguments:
+            arguments_given = len(arguments)
 
             i = None
             optional_argument = None
@@ -412,11 +413,11 @@ class Command():
             if converted_argument is None:
                 return False
 
-            command_input.arguments.append(converted_argument)
+            arguments.append(converted_argument)
 
         return True
 
-    async def validate_arguments(self, context, command_input):
+    async def validate_arguments(self, context, arguments):
         """
         Validate and convert arguments.
 
@@ -424,9 +425,9 @@ class Command():
         2.1) If there are arguments missing, ask for them from the user.
         2.2) Validate and convert.
         """
-        valid = await self.validate_given_arguments(context, command_input)
+        valid = await self.validate_given_arguments(context, arguments)
         if not valid:
             return False
 
-        valid = await self.validate_missing_arguments(context, command_input)
+        valid = await self.validate_missing_arguments(context, arguments)
         return valid

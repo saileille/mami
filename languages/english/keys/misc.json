@@ -1,7 +1,8 @@
 {
   "calculating": "Calculating...",
   "ping": "{ping}ms",
-  "former_guild_member": "former server member",
+  "former_guild_member": "former member",
+  "former_guild_role": "deleted role",
   "thousands_separator": ",",
   "decimal_symbol": ".",
   "percentage": "{number}%",
@@ -23,5 +24,5 @@
   "time_seconds_singular": "{seconds} second",
   "datetime_format": "%Y-%m-%d %H:%M:%S",
   "datetime_and_time_passed": "{datetime} UTC\n{time_passed}",
-  "playing_message": "Send {prefix} to get started"
+  "playing_message": "Type {prefix} for commands"
 }

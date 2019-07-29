@@ -90,7 +90,7 @@ class PaginatedEmbed():
     def __init__(self, author_text, *fields):
         """Initialise object."""
         self._author_text = author_text
-        self.fields = fields
+        self.fields = list(fields)
 
         self.embed = discord.Embed()
         self.message = None

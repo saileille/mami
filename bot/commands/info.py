@@ -3,9 +3,9 @@ from aid import dates
 from framework import embeds
 
 
-async def guild_member_info(context, command_input):
+async def guild_member_info(context, arguments):
     """Show basic information of a member."""
-    member = command_input.arguments[0]
+    member = arguments[0]
 
     join_time = member.joined_at.strftime(
         await context.language.get_text("datetime_format"))

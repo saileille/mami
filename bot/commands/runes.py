@@ -2,31 +2,31 @@
 from bot.data import default_values
 
 
-async def translate_archaic(context, command_input):
+async def translate_archaic(context, arguments):
     """Translate text to archaic runes."""
-    runes = await translate(context, command_input, "archaic")
+    runes = await translate(context, arguments, "archaic")
     await context.message.channel.send(runes)
 
 
-async def translate_modern(context, command_input):
+async def translate_modern(context, arguments):
     """Translate text to modern runes."""
-    runes = await translate(context, command_input, "modern")
+    runes = await translate(context, arguments, "modern")
     await context.message.channel.send(runes)
 
 
-async def translate_musical(context, command_input):
+async def translate_musical(context, arguments):
     """Translate text to musical runes."""
-    runes = await translate(context, command_input, "musical")
+    runes = await translate(context, arguments, "musical")
     await context.message.channel.send(runes)
 
 
-async def translate(context, command_input, style):
+async def translate(context, arguments, style):
     """Translate text to any set of runes."""
     large_font_spaces = 5
     small_font_spaces = int(27 / 40 * large_font_spaces)
     large_font = True
 
-    text = command_input.arguments[0]
+    text = arguments[0]
     runes = ""
 
     rune_count = 0

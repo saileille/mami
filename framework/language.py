@@ -2,6 +2,7 @@
 import json
 import os
 
+from aid import strings
 from bot.data import default_values
 from bot.data import definitions
 from framework import custom_json
@@ -24,17 +25,58 @@ class Language():
         self.permission_names = {}
         self.unit_data = {}
 
+    def __eq__(self, compare):
+        """
+        See if the two languages are identical.
+
+        Does not take commands or ID into account.
+        """
+        equal = (
+            isinstance(compare, Language) and
+            len(self.flag_codes) == len(compare.flag_codes) and
+            len(self.translators) == len(compare.translators) and
+            len(self.keys.keys()) == len(compare.keys.keys()) and
+            len(self.languages.keys()) == len(compare.languages.keys()) and
+            len(self.permission_names.keys()) == len(compare.permission_names.keys()) and
+            len(self.unit_data.keys()) == len(compare.unit_data.keys()))
+
+        if not equal:
+            return equal
+
+        for i, flag_code in enumerate(self.flag_codes):
+            if compare.flag_codes[i] != flag_code:
+                return False
+
+        for i, translator in enumerate(self.translators):
+            if compare.translators[i] != translator:
+                return False
+
+        for key, value in self.keys.items():
+            if key not in compare.keys or compare.keys[key] != value:
+                return False
+
+        for key, value in self.languages.items():
+            if key not in compare.languages or compare.languages[key] != value:
+                return False
+
+        for key, value in self.permission_names.items():
+            if (key not in compare.permission_names or
+                compare.permission_names[key] != value):
+                return False
+
+        for key, value in self.unit_data.items():
+            if key not in compare.unit_data or compare.unit_data[key] != value:
+                return False
+
+        return equal
+
     @property
-    def flag_emojis(self):
-        """Get the flag emojis of the language."""
-        string = ""
-        for code in self.flag_codes:
-            if string != "":
-                string += "/"
-
-            string += code
-
-        return string
+    def flag_emoji(self):
+        """Get a flag emoji string of the language."""
+        if self.flag_codes:
+            return self.flag_codes[0]
+        else:
+            return None
 
     @property
     def directory(self):
@@ -84,7 +126,7 @@ class Language():
 
         if "flag_codes" in data:
             for code in data["flag_codes"]:
-                self.flag_codes.append(":flag_{code}:".format(code=code))
+                self.flag_codes.append(code)
 
         if "translators" in data:
             for name in data["translators"]:
@@ -112,68 +154,86 @@ class Language():
 
         self.unit_data = data
 
-    def synchronise_keys(self):
+    def synchronise_keys(self, changed_keys):
         """Make the language only have those keys which are in the default language."""
-        default_language = definitions.LANGUAGES[default_values.LANGUAGE_ID]
+        self.delete_obsolete_keys()
+        self.add_new_keys()
+        self.reveal_changed_keys(changed_keys)
 
-        self.delete_obsolete_keys(default_language)
-        self.add_new_keys(default_language)
-
-    def delete_obsolete_keys(self, default_language):
+    def delete_obsolete_keys(self):
         """Remove keys that no longer exist in the default language."""
-        obsolete_keys = []
-        for key in self.keys:
-            if key not in default_language.keys:
-                obsolete_keys.append(key)
+        default_language = definitions.LANGUAGES[default_values.LANGUAGE_ID]
 
         for root, dirs, files in os.walk(self.directory):
             for name in files:
                 full_dir = os.path.join(root, name)
                 relative_dir = full_dir.replace(self.directory, "")
+
                 if relative_dir[0] == "\\":
                     relative_dir = relative_dir[1:]
 
+                file_dict, changed_dict, changed_dir, new_dict, new_dir = get_files(
+                    full_dir)
+
+                found_obsolete_key = False
+                found_changed_obsolete_key = False
+                found_new_obsolete_key = False
+
                 if relative_dir not in Language.special_files:
-                    key_dict = custom_json.load(full_dir)
-
-                    found_obsolete_key = False
-                    for key in obsolete_keys:
-                        if key in key_dict:
+                    for key in list(file_dict.keys()):
+                        if key not in default_language.keys:
                             found_obsolete_key = True
-                            del key_dict[key]
+                            del file_dict[key]
 
-                    if found_obsolete_key:
-                        custom_json.save(key_dict, full_dir, compact=False)
+                            if key in changed_dict:
+                                found_changed_obsolete_key = True
+                                del changed_dict[key]
+
+                    for key in list(new_dict.keys()):
+                        if key not in default_language.keys:
+                            found_new_obsolete_key = True
+                            del new_dict[key]
 
                 elif relative_dir != "commands.json":
-                    obsolete_special_keys = []
-                    lang_dict = custom_json.load(full_dir)
                     default_dict = custom_json.load(
                         os.path.join(default_language.directory, name))
 
-                    for key in lang_dict:
+                    for key in list(file_dict.keys()):
                         if key not in default_dict:
-                            obsolete_special_keys.append(key)
+                            del file_dict[key]
+                            found_obsolete_key = True
 
-                    for key in obsolete_special_keys:
-                        del lang_dict[key]
+                            if key in changed_dict:
+                                del changed_dict[key]
+                                found_changed_obsolete_key = True
 
-                    if obsolete_special_keys:
-                        custom_json.save(lang_dict, full_dir, compact=False)
+                    for key in list(new_dict.keys()):
+                        if key not in default_dict:
+                            del new_dict[key]
+                            found_new_obsolete_key = True
 
-    def add_new_keys(self, default_language):
+                if found_obsolete_key:
+                    custom_json.save(file_dict, full_dir, compact=False)
+
+                if found_changed_obsolete_key:
+                    custom_json.save(changed_dict, changed_dir, compact=False)
+
+                if found_new_obsolete_key:
+                    custom_json.save(new_dict, new_dir, compact=False)
+
+    def add_new_keys(self):
         """Add new language keys from the default language."""
+        default_language = definitions.LANGUAGES[default_values.LANGUAGE_ID]
+
         new_keys = []
         for key in default_language.keys:
             if key not in self.keys:
                 new_keys.append(key)
 
         for key in new_keys:
-            directory_list = definitions.DEFAULT_LANGUAGE_KEY_LOCATIONS[key].split("\\")
-            id_index = directory_list.index(default_values.LANGUAGE_ID)
-            directory_list[id_index] = self.obj_id
-            directory_list[-1] = "_NEW_" + directory_list[-1]
-            directory = "\\".join(directory_list)
+            directory = strings.modify_filepath(
+                definitions.DEFAULT_LANGUAGE_KEY_LOCATIONS[key], "_NEW_",
+                {"original": default_values.LANGUAGE_ID, "new": self.obj_id})
 
             key_dict = custom_json.load(directory)
             if key_dict is None:
@@ -208,6 +268,69 @@ class Language():
                 custom_json.save(
                     new_lang_dict, os.path.join(self.directory, "_NEW_" + special_file),
                     compact=False)
+
+    def reveal_changed_keys(self, changed_keys):
+        """Let translators know of keys that have been changed."""
+        for root, dirs, files in os.walk(self.directory):
+            for name in files:
+                if name.startswith("_NEW_") or name.startswith("_CHANGED_"):
+                    continue
+
+                full_dir = os.path.join(root, name)
+                relative_dir = full_dir.replace(self.directory, "")
+
+                if relative_dir[0] == "\\":
+                    relative_dir = relative_dir[1:]
+
+                file_dict, changed_dict, changed_dir, new_dict, new_dir = get_files(
+                    full_dir)
+
+                has_changed_keys = False
+                has_new_changed_keys = False
+
+                if relative_dir not in Language.special_files:
+                    for key, value in changed_keys["default"].items():
+                        if key in file_dict:
+                            changed_dict[key] = value
+                            has_changed_keys = True
+                        elif key in new_dict:
+                            new_dict[key] = value
+                            has_new_changed_keys = True
+
+                elif relative_dir == "languages.json" and changed_keys["languages"]:
+                    for key, value in changed_keys["languages"].items():
+                        if key in file_dict:
+                            changed_dict[key] = value
+                            has_changed_keys = True
+                        elif key in new_dict:
+                            new_dict[key] = value
+                            has_new_changed_keys = True
+
+                elif relative_dir == "permissions.json" and changed_keys["permissions"]:
+                    for key, value in changed_keys["permissions"].items():
+                        if key in file_dict:
+                            changed_dict[key] = value
+                            has_changed_keys = True
+                        elif key in new_dict:
+                            new_dict[key] = value
+                            has_new_changed_keys = True
+
+                elif relative_dir == "units.json" and changed_keys["units"]:
+                    for key, value in changed_keys["units"].items():
+                        if key in file_dict:
+                            changed_dict[key] = value
+                            has_changed_keys = True
+                        elif key in new_dict:
+                            new_dict[key] = value
+                            has_new_changed_keys = True
+
+                if has_changed_keys:
+                    custom_json.save(changed_dict, changed_dir, compact=False)
+                    has_changes = True
+
+                if has_new_changed_keys:
+                    custom_json.save(new_dict, new_dir, compact=False)
+                    has_changes = True
 
     async def get_text(self, key, variables=None):
         """
@@ -274,3 +397,22 @@ class Language():
             default_symbol = symbols_and_names["names"][0]
 
         return default_symbol
+
+
+def get_files(full_dir):
+    """Get dictionaries from files."""
+    file_dict = custom_json.load(full_dir)
+    if file_dict is None:
+        file_dict = {}
+
+    changed_dir = strings.modify_filepath(full_dir, "_CHANGED_")
+    changed_dict = custom_json.load(changed_dir)
+    if changed_dict is None:
+        changed_dict = {}
+
+    new_dir = strings.modify_filepath(full_dir, "_NEW_")
+    new_dict = custom_json.load(new_dir)
+    if new_dict is None:
+        new_dict = {}
+
+    return file_dict, changed_dict, changed_dir, new_dict, new_dir

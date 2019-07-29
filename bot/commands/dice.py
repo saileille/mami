@@ -5,10 +5,10 @@ from aid import numbers
 from framework import embeds
 
 
-async def throw(context, command_input):
+async def throw(context, arguments):
     """Throw the dice."""
-    no_of_dice = command_input.arguments[0]
-    dice_range = command_input.arguments[1:]
+    no_of_dice = arguments[0]
+    dice_range = arguments[1:]
     dice_range.sort()
 
     dice_throws = []

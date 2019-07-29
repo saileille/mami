@@ -1,0 +1,21 @@
+{
+  "existing_guild_shortcut_name": "The argument is already a server shortcut name.",
+  "float_above_max_value": "The argument must be a number and more than {value}.",
+  "float_below_min_value": "The argument must be a number and less than {value}.",
+  "integer_above_max_value": "The argument must be a whole number and more than {value}.",
+  "integer_below_min_value": "The argument must be a whole number and less than {value}.",
+  "invalid_argument_custom_msg_title": "More Information",
+  "invalid_command_name": "`{cmd_name}` is not a valid command name.",
+  "invalid_currency": "The argument is not a valid currency code.",
+  "invalid_language": "The argument is not a valid language name.",
+  "invalid_shortcut_name": "There is no existing shortcut with that name.",
+  "invalid_shortcut_name_info": "You can add a new server shortcut with command `{guild_shortcut}`, a new category shortcut with command `category_shortcut`, a new channel shortcut with command `channel_shortcut` and a new user shortcut with command `user_shortcut`.",
+  "not_float": "The argument must be a number.",
+  "not_float_in_range": "The argument must be a number between {min_value} and {max_value}.",
+  "not_guild_shortcut_name": "There is no existing server shortcut with that name.",
+  "not_integer": "The argument must be a whole number.",
+  "not_integer_in_range": "The argument must be a whole number between {min_value} and {max_value}.",
+  "not_member": "The argument is not a valid member ID or name.",
+  "not_member_or_role": "The argument is not a valid member ID, member name, role ID or role name.",
+  "not_member_role_or_permission": "The argument is not a valid member ID, member name, role ID, role name, or permission name."
+}

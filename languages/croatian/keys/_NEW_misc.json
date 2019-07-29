@@ -1,3 +1,4 @@
 {
-  "playing_message": "Type {prefix} to get started"
+  "former_guild_role": "deleted role",
+  "playing_message": "Type {prefix} for commands"
 }

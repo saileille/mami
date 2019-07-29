@@ -2,7 +2,7 @@
 import json
 import os
 
-from framework import checks
+from framework import command_rules
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -23,10 +23,12 @@ def decode(json_dict):
     Used as object_hook parameter in json.loads() function.
     """
     if "users" in json_dict and "roles" in json_dict:
-        return checks.CheckSet.object_from_json_dict(json_dict)
+        return command_rules.CommandRuleSet.object_from_json_dict(json_dict)
 
-    if "allow" in json_dict and "deny" in json_dict and "sub_commands" in json_dict:
-        return checks.Checks.object_from_json_dict(json_dict)
+    if ("inclusionary" in json_dict and
+        "exclusionary" in json_dict and
+        "sub_commands" in json_dict):
+        return command_rules.CommandRules.object_from_json_dict(json_dict)
 
     return json_dict
 
@@ -61,7 +63,7 @@ def save(data, directory=None, compact=True):
     If directory is not None, a JSON string gets saved in the location.
     In either case, the stringified JSON data is returned.
 
-    Formatting can be either "compact" or "readable." Readable format means that 2 indent
+    Formatting can be either compact or readable. Readable format means that 2 indent
     spaces are being used.
     """
     indent = None

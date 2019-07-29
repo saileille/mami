@@ -3,6 +3,9 @@ bot/data/secrets.py
 bot/database/currency_api/data.json
 bot/database/database.db
 
+#Folders
+languages/cache/
+
 
 ## Python-specific gitignore from https://github.com/github/gitignore/blob/master/Python.gitignore
 

@@ -1,4 +1,5 @@
 """Bot database stuff."""
+import json
 import os
 import sqlite3
 
@@ -102,7 +103,7 @@ async def insert_channel(obj_id):
         VALUES(?, NULL, NULL, ?, NULL)
     """
 
-    variables = (obj_id, definitions.EMPTY_DEFAULT_CHECKS)
+    variables = (obj_id, definitions.EMPTY_COMMAND_RULES)
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
 
@@ -114,7 +115,7 @@ async def insert_category(obj_id):
         VALUES(?, NULL, NULL, ?, NULL)
     """
 
-    variables = (obj_id, definitions.EMPTY_DEFAULT_CHECKS)
+    variables = (obj_id, definitions.EMPTY_COMMAND_RULES)
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
 
@@ -126,7 +127,7 @@ async def insert_guild(obj_id):
         VALUES(?, NULL, NULL, ?, NULL)
     """
 
-    variables = (obj_id, definitions.GUILD_DEFAULT_CHECKS)
+    variables = (obj_id, definitions.GUILD_DEFAULT_COMMAND_RULES)
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
 
@@ -385,8 +386,8 @@ async def update_channel(context):
 
     variables = (
         context.channel_data.prefix, context.channel_data.language_id,
-        custom_json.save(context.channel_data.checks), context.channel_data.max_dice,
-        context.message.channel.id)
+        custom_json.save(context.channel_data.command_rules),
+        context.channel_data.max_dice, context.message.channel.id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -405,8 +406,8 @@ async def update_category(context):
 
     variables = (
         context.category_data.prefix, context.category_data.language_id,
-        custom_json.save(context.category_data.checks), context.category_data.max_dice,
-        context.message.channel.category_id)
+        custom_json.save(context.category_data.command_rules),
+        context.category_data.max_dice, context.message.channel.category_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -425,7 +426,7 @@ async def update_guild(context):
 
     variables = (
         context.guild_data.prefix, context.guild_data.language_id,
-        custom_json.save(context.guild_data.checks), context.guild_data.max_dice,
+        custom_json.save(context.guild_data.command_rules), context.guild_data.max_dice,
         context.message.guild.id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
@@ -484,35 +485,47 @@ async def update_user_language(context):
     definitions.DATABASE_CONNECTION.commit()
 
 
-async def update_guild_checks(context):
-    """Update the guild checks to the database."""
+async def update_category_command_rules(context):
+    """Update the category command rules to the database."""
+    statement = """
+        UPDATE categories SET
+            checks = ?
+        WHERE id = ?
+    """
+
+    variables = (
+        custom_json.save(context.category_data.command_rules),
+        context.message.category.id)
+
+    definitions.DATABASE_CURSOR.execute(statement, variables)
+    definitions.DATABASE_CONNECTION.commit()
+
+
+async def update_channel_command_rules(context):
+    """Update the channel command rules to the database."""
+    statement = """
+        UPDATE channels SET
+            checks = ?
+        WHERE id = ?
+    """
+
+    variables = (
+        custom_json.save(context.channel_data.command_rules), context.message.channel.id)
+
+    definitions.DATABASE_CURSOR.execute(statement, variables)
+    definitions.DATABASE_CONNECTION.commit()
+
+
+async def update_guild_command_rules(context):
+    """Update the guild command rules to the database."""
     statement = """
         UPDATE guilds SET
             checks = ?
         WHERE id = ?
     """
 
-    variables = (custom_json.save(context.guild_data.checks), context.message.guild.id)
-
-    definitions.DATABASE_CURSOR.execute(statement, variables)
-    definitions.DATABASE_CONNECTION.commit()
-
-
-def synchronise_channel_update(channel_id, channel):
-    """
-    Update the channel when synchronising data.
-
-    Update the relevant channel data at startup when making sure there are no
-    compatibility issues with the data stored and the current Mami version.
-    """
-    statement = """
-        UPDATE channels SET
-            language = ?,
-            checks = ?
-        WHERE id = ?
-    """
-
-    variables = (channel.language_id, custom_json.save(channel.checks), channel_id)
+    variables = (
+        custom_json.save(context.guild_data.command_rules), context.message.guild.id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -532,7 +545,28 @@ def synchronise_category_update(category_id, category):
         WHERE id = ?
     """
 
-    variables = (category.language_id, custom_json.save(category.checks), category_id)
+    variables = (
+        category.language_id, custom_json.save(category.command_rules), category_id)
+
+    definitions.DATABASE_CURSOR.execute(statement, variables)
+    definitions.DATABASE_CONNECTION.commit()
+
+
+def synchronise_channel_update(channel_id, channel):
+    """
+    Update the channel when synchronising data.
+
+    Update the relevant channel data at startup when making sure there are no
+    compatibility issues with the data stored and the current Mami version.
+    """
+    statement = """
+        UPDATE channels SET
+            language = ?,
+            checks = ?
+        WHERE id = ?
+    """
+
+    variables = (channel.language_id, custom_json.save(channel.command_rules), channel_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -552,10 +586,7 @@ def synchronise_guild_update(guild_id, guild):
         WHERE id = ?
     """
 
-    variables = (
-        guild.language_id,
-        custom_json.save(guild.checks),
-        guild_id)
+    variables = (guild.language_id, custom_json.save(guild.command_rules), guild_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()

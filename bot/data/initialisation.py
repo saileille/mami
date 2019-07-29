@@ -48,8 +48,17 @@ def initialise_commands():
                             )
                         ]
                     ),
-                    "view_all": Command(
-                        obj_id="view_all",
+                    "search": Command(
+                        obj_id="search",
+                        action=currency.search,
+                        arguments=[
+                            Argument(
+                                obj_id="search_term"
+                            )
+                        ]
+                    ),
+                    "display": Command(
+                        obj_id="display",
                         action=currency.view_all
                     )
                 }
@@ -127,6 +136,74 @@ def initialise_commands():
                         obj_id="category",
                         pre_check=pre_checks.in_guild,
                         sub_commands={
+                            "command_rules": Command(
+                                obj_id="command_rules",
+                                default_permissions=[
+                                    "administrator"
+                                ],
+                                sub_commands={
+                                    "add": Command(
+                                        obj_id="add",
+                                        sub_commands={
+                                            "inclusionary": Command(
+                                                obj_id="inclusionary",
+                                                action=settings.add_inclusionary_category_command_rule,
+                                                arguments=[
+                                                    Argument(
+                                                        obj_id="commands",
+                                                        modification=command_names.commands_to_category_inclusionary_command_rules
+                                                    ),
+                                                    Argument(
+                                                        obj_id="rule",
+                                                        modification=users_and_roles.member_role_permission
+                                                    )
+                                                ],
+                                                unlimited_arguments=True
+                                            ),
+                                            "exclusionary": Command(
+                                                obj_id="exclusionary",
+                                                action=settings.add_exclusionary_category_command_rule,
+                                                arguments=[
+                                                    Argument(
+                                                        obj_id="commands",
+                                                        modification=command_names.commands_to_category_exclusionary_command_rules
+                                                    ),
+                                                    Argument(
+                                                        obj_id="rule",
+                                                        modification=users_and_roles.member_role
+                                                    )
+                                                ],
+                                                unlimited_arguments=True
+                                            )
+                                        }
+                                    ),
+                                    "remove": Command(
+                                        obj_id="remove",
+                                        action=settings.remove_category_command_rule,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="commands",
+                                                modification=command_names.commands_to_category_command_rules
+                                            ),
+                                            Argument(
+                                                obj_id="rule",
+                                                modification=users_and_roles.member_role_permission
+                                            )
+                                        ],
+                                        unlimited_arguments=True
+                                    ),
+                                    "display": Command(
+                                        obj_id="display",
+                                        action=settings.display_category_command_rules,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="command",
+                                                modification=command_names.command_to_category_command_rules
+                                            )
+                                        ]
+                                    )
+                                }
+                            ),
                             "language": Command(
                                 obj_id="language",
                                 sub_commands={
@@ -152,6 +229,40 @@ def initialise_commands():
                                         ]
                                     )
                                 }
+                            ),
+                            "shortcut": Command(
+                                obj_id="shortcut",
+                                sub_commands={
+                                    "add": Command(
+                                        obj_id="add",
+                                        action=shortcuts.add_category_shortcut,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="name",
+                                                modification=shortcut_names.is_not_category_shortcut_name,
+                                            ),
+                                            Argument(
+                                                obj_id="content"
+                                            )
+                                        ]
+                                    ),
+                                    "delete": Command(
+                                        obj_id="delete",
+                                        action=shortcuts.delete_category_shortcut,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="name",
+                                                modification=shortcut_names.is_category_shortcut_name
+                                            )
+                                        ],
+                                        default_permissions=["manage_messages"]
+                                    ),
+                                    "display": Command(
+                                        obj_id="display",
+                                        pre_check=pre_checks.category_has_shortcuts,
+                                        action=shortcuts.display_category_shortcuts
+                                    )
+                                }
                             )
                         }
                     ),
@@ -159,6 +270,74 @@ def initialise_commands():
                         obj_id="channel",
                         pre_check=pre_checks.in_guild,
                         sub_commands={
+                            "command_rules": Command(
+                                obj_id="command_rules",
+                                default_permissions=[
+                                    "administrator"
+                                ],
+                                sub_commands={
+                                    "add": Command(
+                                        obj_id="add",
+                                        sub_commands={
+                                            "inclusionary": Command(
+                                                obj_id="inclusionary",
+                                                action=settings.add_inclusionary_channel_command_rule,
+                                                arguments=[
+                                                    Argument(
+                                                        obj_id="commands",
+                                                        modification=command_names.commands_to_channel_inclusionary_command_rules
+                                                    ),
+                                                    Argument(
+                                                        obj_id="rule",
+                                                        modification=users_and_roles.member_role_permission
+                                                    )
+                                                ],
+                                                unlimited_arguments=True
+                                            ),
+                                            "exclusionary": Command(
+                                                obj_id="exclusionary",
+                                                action=settings.add_exclusionary_channel_command_rule,
+                                                arguments=[
+                                                    Argument(
+                                                        obj_id="commands",
+                                                        modification=command_names.commands_to_channel_exclusionary_command_rules
+                                                    ),
+                                                    Argument(
+                                                        obj_id="rule",
+                                                        modification=users_and_roles.member_role
+                                                    )
+                                                ],
+                                                unlimited_arguments=True
+                                            )
+                                        }
+                                    ),
+                                    "remove": Command(
+                                        obj_id="remove",
+                                        action=settings.remove_channel_command_rule,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="commands",
+                                                modification=command_names.commands_to_channel_command_rules
+                                            ),
+                                            Argument(
+                                                obj_id="rule",
+                                                modification=users_and_roles.member_role_permission
+                                            )
+                                        ],
+                                        unlimited_arguments=True
+                                    ),
+                                    "display": Command(
+                                        obj_id="display",
+                                        action=settings.display_channel_command_rules,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="command",
+                                                modification=command_names.command_to_channel_command_rules
+                                            )
+                                        ]
+                                    )
+                                }
+                            ),
                             "language": Command(
                                 obj_id="language",
                                 sub_commands={
@@ -184,6 +363,40 @@ def initialise_commands():
                                         ]
                                     )
                                 }
+                            ),
+                            "shortcut": Command(
+                                obj_id="shortcut",
+                                sub_commands={
+                                    "add": Command(
+                                        obj_id="add",
+                                        action=shortcuts.add_channel_shortcut,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="name",
+                                                modification=shortcut_names.is_not_channel_shortcut_name,
+                                            ),
+                                            Argument(
+                                                obj_id="content"
+                                            )
+                                        ]
+                                    ),
+                                    "delete": Command(
+                                        obj_id="delete",
+                                        action=shortcuts.delete_channel_shortcut,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="name",
+                                                modification=shortcut_names.is_channel_shortcut_name
+                                            )
+                                        ],
+                                        default_permissions=["manage_messages"]
+                                    ),
+                                    "display": Command(
+                                        obj_id="display",
+                                        pre_check=pre_checks.channel_has_shortcuts,
+                                        action=shortcuts.display_channel_shortcuts
+                                    )
+                                }
                             )
                         }
                     ),
@@ -191,8 +404,8 @@ def initialise_commands():
                         obj_id="guild",
                         pre_check=pre_checks.in_guild,
                         sub_commands={
-                            "checks": Command(
-                                obj_id="checks",
+                            "command_rules": Command(
+                                obj_id="command_rules",
                                 default_permissions=[
                                     "administrator"
                                 ],
@@ -200,13 +413,13 @@ def initialise_commands():
                                     "add": Command(
                                         obj_id="add",
                                         sub_commands={
-                                            "allow": Command(
-                                                obj_id="allow",
-                                                action=settings.add_allow_guild_check,
+                                            "inclusionary": Command(
+                                                obj_id="inclusionary",
+                                                action=settings.add_inclusionary_guild_command_rule,
                                                 arguments=[
                                                     Argument(
                                                         obj_id="commands",
-                                                        modification=command_names.commands_to_guild_allow_command_rules
+                                                        modification=command_names.commands_to_guild_inclusionary_command_rules
                                                     ),
                                                     Argument(
                                                         obj_id="rule",
@@ -215,17 +428,17 @@ def initialise_commands():
                                                 ],
                                                 unlimited_arguments=True
                                             ),
-                                            "deny": Command(
-                                                obj_id="deny",
-                                                action=None,
+                                            "exclusionary": Command(
+                                                obj_id="exclusionary",
+                                                action=settings.add_exclusionary_guild_command_rule,
                                                 arguments=[
                                                     Argument(
                                                         obj_id="commands",
-                                                        modification=command_names.commands_to_guild_command_rules
+                                                        modification=command_names.commands_to_guild_exclusionary_command_rules
                                                     ),
                                                     Argument(
                                                         obj_id="rule",
-                                                        modification=users_and_roles.member_role_permission
+                                                        modification=users_and_roles.member_role
                                                     )
                                                 ],
                                                 unlimited_arguments=True
@@ -234,7 +447,7 @@ def initialise_commands():
                                     ),
                                     "remove": Command(
                                         obj_id="remove",
-                                        action=None,
+                                        action=settings.remove_guild_command_rule,
                                         arguments=[
                                             Argument(
                                                 obj_id="commands",
@@ -246,6 +459,16 @@ def initialise_commands():
                                             )
                                         ],
                                         unlimited_arguments=True
+                                    ),
+                                    "display": Command(
+                                        obj_id="display",
+                                        action=settings.display_guild_command_rules,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="command",
+                                                modification=command_names.command_to_guild_command_rules
+                                            )
+                                        ]
                                     )
                                 }
                             ),
@@ -284,7 +507,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="name",
-                                                modification=shortcut_names.not_guild_shortcut_name,
+                                                modification=shortcut_names.is_not_guild_shortcut_name,
                                             ),
                                             Argument(
                                                 obj_id="content"
@@ -297,7 +520,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="name",
-                                                modification=shortcut_names.guild_shortcut_name
+                                                modification=shortcut_names.is_guild_shortcut_name
                                             )
                                         ],
                                         default_permissions=["manage_messages"]
@@ -339,6 +562,39 @@ def initialise_commands():
                                         ]
                                     )
                                 }
+                            ),
+                            "shortcut": Command(
+                                obj_id="shortcut",
+                                sub_commands={
+                                    "add": Command(
+                                        obj_id="add",
+                                        action=shortcuts.add_user_shortcut,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="name",
+                                                modification=shortcut_names.is_not_user_shortcut_name,
+                                            ),
+                                            Argument(
+                                                obj_id="content"
+                                            )
+                                        ]
+                                    ),
+                                    "delete": Command(
+                                        obj_id="delete",
+                                        action=shortcuts.delete_user_shortcut,
+                                        arguments=[
+                                            Argument(
+                                                obj_id="name",
+                                                modification=shortcut_names.is_user_shortcut_name
+                                            )
+                                        ]
+                                    ),
+                                    "display": Command(
+                                        obj_id="display",
+                                        pre_check=pre_checks.user_has_shortcuts,
+                                        action=shortcuts.display_user_shortcuts
+                                    )
+                                }
                             )
                         }
                     )
@@ -357,10 +613,10 @@ def initialise_commands():
         }
     )
 
-    guild_default_checks, channel_default_checks = definitions.COMMANDS.initialise_commands()
+    guild_default_command_rules, empty_command_rules = definitions.COMMANDS.initialise_commands()
 
-    definitions.GUILD_DEFAULT_CHECKS = custom_json.save(guild_default_checks)
-    definitions.EMPTY_DEFAULT_CHECKS = custom_json.save(channel_default_checks)
+    definitions.GUILD_DEFAULT_COMMAND_RULES = custom_json.save(guild_default_command_rules)
+    definitions.EMPTY_COMMAND_RULES = custom_json.save(empty_command_rules)
 
 
 def initialise_languages():
@@ -370,12 +626,21 @@ def initialise_languages():
 
     for root, dirs, files in os.walk(language_folder_path):
         for name in files:
+            if name.startswith("_NEW_") or name.startswith("_CHANGED_"):
+                # Files that are auto-generated will not be added.
+                continue
+
             full_dir = os.path.join(root, name)
             relative_dir = full_dir.replace(language_folder_path + "\\", "")
 
             match = re.match(is_language_folder, relative_dir)
             language_id = match.group(0)
-            language = definitions.LANGUAGES[language_id]
+
+            language = None
+            if language_id != "cache":
+                language = definitions.LANGUAGES[language_id]
+            else:
+                language = definitions.CACHE_LANGUAGE
 
             if relative_dir == "{id}\\commands.json".format(id=language_id):
                 # Take the commands.
@@ -406,7 +671,10 @@ def initialise_languages():
 
             match = re.fullmatch(is_language_folder, relative_dir)
             if match is not None:
-                definitions.LANGUAGES[name] = Language(name)
+                if name != "cache":
+                    definitions.LANGUAGES[name] = Language(name)
+                else:
+                    definitions.CACHE_LANGUAGE = Language(name)
 
 
 def update_config_data():
@@ -419,11 +687,13 @@ def update_config_data():
     channels = database_functions.select_all_channels()
     for channel_id in channels:
         channel = channels[channel_id]
-        channel_checks = channel.checks.sub_commands
-        channel_default_checks = custom_json.load(
-            definitions.EMPTY_DEFAULT_CHECKS).sub_commands
+        channel_command_rules = channel.command_rules.sub_commands
+        channel_default_command_rules = custom_json.load(
+            definitions.EMPTY_COMMAND_RULES).sub_commands
 
-        synchronise_checks_objects(channel_default_checks, channel_checks)
+        synchronise_command_rule_objects(
+            channel_default_command_rules, channel_command_rules)
+
         if (channel.language_id is not None and
             channel.language_id not in definitions.LANGUAGES):
             channel.language_id = None
@@ -433,11 +703,13 @@ def update_config_data():
     categories = database_functions.select_all_categories()
     for category_id in categories:
         category = categories[category_id]
-        category_checks = category.checks.sub_commands
-        category_default_checks = custom_json.load(
-            definitions.EMPTY_DEFAULT_CHECKS,).sub_commands
+        category_command_rules = category.command_rules.sub_commands
+        category_default_command_rules = custom_json.load(
+            definitions.EMPTY_COMMAND_RULES,).sub_commands
 
-        synchronise_checks_objects(category_default_checks, category_checks)
+        synchronise_command_rule_objects(
+            category_default_command_rules, category_command_rules)
+
         if (category.language_id is not None and
             category.language_id not in definitions.LANGUAGES):
             category.language_id = None
@@ -447,11 +719,11 @@ def update_config_data():
     guilds = database_functions.select_all_guilds()
     for guild_id in guilds:
         guild = guilds[guild_id]
-        guild_checks = guild.checks.sub_commands
-        guild_default_checks = custom_json.load(
-            definitions.GUILD_DEFAULT_CHECKS).sub_commands
+        guild_command_rules = guild.command_rules.sub_commands
+        guild_default_command_rules = custom_json.load(
+            definitions.GUILD_DEFAULT_COMMAND_RULES).sub_commands
 
-        synchronise_checks_objects(guild_default_checks, guild_checks)
+        synchronise_command_rule_objects(guild_default_command_rules, guild_command_rules)
         if (guild.language_id is not None and
             guild.language_id not in definitions.LANGUAGES):
             guild.language_id = None
@@ -468,7 +740,7 @@ def update_config_data():
         database_functions.synchronise_user_update(user_id, user)
 
 
-def synchronise_checks_objects(default, control):
+def synchronise_command_rule_objects(default, control):
     """
     Make a command rule dictionary have the same entries as the default one.
 
@@ -482,7 +754,7 @@ def synchronise_checks_objects(default, control):
         if cmd_id not in control:
             control[cmd_id] = default[cmd_id]
 
-        synchronise_checks_objects(
+        synchronise_command_rule_objects(
             default[cmd_id].sub_commands, control[cmd_id].sub_commands)
 
 

@@ -25,10 +25,22 @@
           "vaihda"
         ]
       },
-      "view_all": {
+      "display": {
         "description": "Näytä kaikki valuutat.",
         "names": [
-          "näytä_kaikki"
+          "näytä"
+        ]
+      },
+      "search": {
+        "arguments": {
+          "search_term": {
+            "description": "Kirjoita hakutermi, jolla haluat etsiä valuuttoja.",
+            "name": "hakutermi"
+          }
+        },
+        "description": "Hae valuutta.",
+        "names": [
+          "hae"
         ]
       }
     }
@@ -132,6 +144,82 @@
           "kategoria"
         ],
         "sub_commands": {
+          "command_rules": {
+            "description": "Hallinnoi kuka saa käyttää komentoja kategoriassa.",
+            "names": [
+              "komentosäännöt"
+            ],
+            "sub_commands": {
+              "add": {
+                "description": "Lisää komentosääntöjä.",
+                "names": [
+                  "lisää"
+                ],
+                "sub_commands": {
+                  "exclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "name": "komennot"
+                      },
+                      "rule": {
+                        "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
+                        "name": "sääntö"
+                      }
+                    },
+                    "description": "Lisää poissulkeva sääntö.",
+                    "names": [
+                      "poissulkeva"
+                    ]
+                  },
+                  "inclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "name": "komennot"
+                      },
+                      "rule": {
+                        "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
+                        "name": "sääntö"
+                      }
+                    },
+                    "description": "Lisää mukaanlukeva sääntö.",
+                    "names": [
+                      "mukaanlukeva"
+                    ]
+                  }
+                }
+              },
+              "display": {
+                "arguments": {
+                  "command": {
+                    "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
+                    "name": "komento"
+                  }
+                },
+                "description": "Näytä annetun komennon komentosäännöt.",
+                "names": [
+                  "näytä"
+                ]
+              },
+              "remove": {
+                "arguments": {
+                  "commands": {
+                    "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                    "name": "komennot"
+                  },
+                  "rule": {
+                    "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
+                    "name": "sääntö"
+                  }
+                },
+                "description": "Poista komentosääntöjä.",
+                "names": [
+                  "poista"
+                ]
+              }
+            }
+          },
           "language": {
             "description": "Muokkaa kategorian kieltä.",
             "names": [
@@ -140,18 +228,63 @@
             "sub_commands": {
               "reset": {
                 "description": "Palauta kategorian kieli oletukseen.",
-                "names": ["palauta"]
+                "names": [
+                  "palauta"
+                ]
               },
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Minkä kielen haluat asettaa kategorialle?",
+                    "description": "Minkä kielen haluat asettaa kategorialle? Voit käyttää kielen nimeä tai lippuemojia.",
                     "name": "kieli"
                   }
                 },
                 "description": "Vaihda kategorian kieli tiettyyn.",
                 "names": [
                   "aseta"
+                ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Hallinnoi kategorian pikakomentoja.",
+            "names": [
+              "pikakomento",
+              "pk"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Syötä uuden pikakomennon sisältö.",
+                    "name": "sisältö"
+                  },
+                  "name": {
+                    "description": "Syötä uuden pikakomennon nimi.",
+                    "name": "nimi"
+                  }
+                },
+                "description": "Lisää kategorian pikakomento.",
+                "names": [
+                  "lisää"
+                ]
+              },
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
+                    "name": "nimi"
+                  }
+                },
+                "description": "Poista olemassaoleva kategorian pikakomento.",
+                "names": [
+                  "poista"
+                ]
+              },
+              "display": {
+                "description": "Näytä kaikki kategorian pikakomennot.",
+                "names": [
+                  "näytä"
                 ]
               }
             }
@@ -164,6 +297,82 @@
           "kanava"
         ],
         "sub_commands": {
+          "command_rules": {
+            "description": "Hallinnoi kuka saa käyttää komentoja kanavalla.",
+            "names": [
+              "komentosäännöt"
+            ],
+            "sub_commands": {
+              "add": {
+                "description": "Lisää komentosääntöjä.",
+                "names": [
+                  "lisää"
+                ],
+                "sub_commands": {
+                  "exclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "name": "komennot"
+                      },
+                      "rule": {
+                        "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
+                        "name": "sääntö"
+                      }
+                    },
+                    "description": "Lisää poissulkeva sääntö.",
+                    "names": [
+                      "poissulkeva"
+                    ]
+                  },
+                  "inclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "name": "komennot"
+                      },
+                      "rule": {
+                        "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
+                        "name": "sääntö"
+                      }
+                    },
+                    "description": "Lisää mukaanlukeva sääntö.",
+                    "names": [
+                      "mukaanlukeva"
+                    ]
+                  }
+                }
+              },
+              "display": {
+                "arguments": {
+                  "command": {
+                    "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
+                    "name": "komento"
+                  }
+                },
+                "description": "Näytä annetun komennon komentosäännöt.",
+                "names": [
+                  "näytä"
+                ]
+              },
+              "remove": {
+                "arguments": {
+                  "commands": {
+                    "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                    "name": "komennot"
+                  },
+                  "rule": {
+                    "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
+                    "name": "sääntö"
+                  }
+                },
+                "description": "Poista komentosääntöjä.",
+                "names": [
+                  "poista"
+                ]
+              }
+            }
+          },
           "language": {
             "description": "Muokkaa kanavan kieltä.",
             "names": [
@@ -172,18 +381,63 @@
             "sub_commands": {
               "reset": {
                 "description": "Palauta kanavan kieli oletukseen.",
-                "names": ["palauta"]
+                "names": [
+                  "palauta"
+                ]
               },
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Minkä kielen haluat asettaa kanavalle?",
+                    "description": "Minkä kielen haluat asettaa kanavalle? Voit käyttää kielen nimeä tai lippuemojia.",
                     "name": "kieli"
                   }
                 },
                 "description": "Vaihda kanavan kieli tiettyyn.",
                 "names": [
                   "aseta"
+                ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Hallinnoi kanavan pikakomentoja.",
+            "names": [
+              "pikakomento",
+              "pk"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Syötä uuden pikakomennon sisältö.",
+                    "name": "sisältö"
+                  },
+                  "name": {
+                    "description": "Syötä uuden pikakomennon nimi.",
+                    "name": "nimi"
+                  }
+                },
+                "description": "Lisää kanavalle pikakomento.",
+                "names": [
+                  "lisää"
+                ]
+              },
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
+                    "name": "nimi"
+                  }
+                },
+                "description": "Poista olemassaoleva kanavan pikakomento.",
+                "names": [
+                  "poista"
+                ]
+              },
+              "display": {
+                "description": "Näytä kaikki kanavan pikakomennot.",
+                "names": [
+                  "näytä"
                 ]
               }
             }
@@ -197,7 +451,7 @@
           "kilta"
         ],
         "sub_commands": {
-          "checks": {
+          "command_rules": {
             "description": "Hallinnoi kuka saa käyttää komentoja palvelimella.",
             "names": [
               "komentosäännöt"
@@ -209,44 +463,56 @@
                   "lisää"
                 ],
                 "sub_commands": {
-                  "allow": {
+                  "exclusionary": {
                     "arguments": {
                       "commands": {
-                        "description": "Mille komennolle haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
                         "name": "komennot"
                       },
                       "rule": {
-                        "description": "Anna jäsen, rooli tai palvelinlupa jota haluat säännön koskevan.",
+                        "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
                         "name": "sääntö"
                       }
                     },
-                    "description": "Lisää salliva sääntö.",
+                    "description": "Lisää poissulkeva sääntö.",
                     "names": [
-                      "salli"
+                      "poissulkeva"
                     ]
                   },
-                  "deny": {
+                  "inclusionary": {
                     "arguments": {
                       "commands": {
-                        "description": "Mille komennolle haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
                         "name": "komennot"
                       },
                       "rule": {
-                        "description": "Anna jäsen, rooli tai palvelinlupa jota haluat säännön koskevan.",
+                        "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
                         "name": "sääntö"
                       }
                     },
-                    "description": "Lisää kieltävä sääntö.",
+                    "description": "Lisää mukaanlukeva sääntö.",
                     "names": [
-                      "kiellä"
+                      "mukaanlukeva"
                     ]
                   }
                 }
               },
+              "display": {
+                "arguments": {
+                  "command": {
+                    "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
+                    "name": "komento"
+                  }
+                },
+                "description": "Näytä annetun komennon komentosäännöt.",
+                "names": [
+                  "näytä"
+                ]
+              },
               "remove": {
                 "arguments": {
                   "commands": {
-                    "description": "Mistä komennoista haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                    "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
                     "name": "komennot"
                   },
                   "rule": {
@@ -269,12 +535,14 @@
             "sub_commands": {
               "reset": {
                 "description": "Palauta käyttäjäasetusten kieli oletukseen.",
-                "names": ["palauta"]
+                "names": [
+                  "palauta"
+                ]
               },
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Minkä kielen haluat asettaa palvelimelle?",
+                    "description": "Minkä kielen haluat asettaa palvelimelle? Voit käyttää kielen nimeä tai lippuemojia.",
                     "name": "kieli"
                   }
                 },
@@ -286,7 +554,7 @@
             }
           },
           "shortcut": {
-            "description": "Hallinnoi palvelinpikakomentoja.",
+            "description": "Hallinnoi palvelimen pikakomentoja.",
             "names": [
               "pikakomento",
               "pk"
@@ -303,7 +571,7 @@
                     "name": "nimi"
                   }
                 },
-                "description": "Lisää palvelinpikakomento.",
+                "description": "Lisää palvelimen pikakomento.",
                 "names": [
                   "lisää"
                 ]
@@ -315,13 +583,13 @@
                     "name": "nimi"
                   }
                 },
-                "description": "Poista olemassaoleva palvelinpikakomento.",
+                "description": "Poista olemassaoleva palvelimen pikakomento.",
                 "names": [
                   "poista"
                 ]
               },
               "display": {
-                "description": "Näytä kaikki palvelinpikakomennot.",
+                "description": "Näytä kaikki palvelimen pikakomennot.",
                 "names": [
                   "näytä"
                 ]
@@ -344,18 +612,63 @@
             "sub_commands": {
               "reset": {
                 "description": "Palauta käyttäjäasetusten kieli oletukseen.",
-                "names": ["palauta"]
+                "names": [
+                  "palauta"
+                ]
               },
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Minkä kielen haluat asettaa käyttäjäasetuksillesi?",
+                    "description": "Minkä kielen haluat asettaa käyttäjäasetuksillesi? Voit käyttää kielen nimeä tai lippuemojia.",
                     "name": "kieli"
                   }
                 },
                 "description": "Vaihda käyttäjäasetustesi kieli tiettyyn.",
                 "names": [
                   "aseta"
+                ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Hallinnoi käyttäjän pikakomentoja.",
+            "names": [
+              "pikakomento",
+              "pk"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Syötä uuden pikakomennon sisältö.",
+                    "name": "sisältö"
+                  },
+                  "name": {
+                    "description": "Syötä uuden pikakomennon nimi.",
+                    "name": "nimi"
+                  }
+                },
+                "description": "Lisää käyttäjän pikakomento.",
+                "names": [
+                  "lisää"
+                ]
+              },
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
+                    "name": "nimi"
+                  }
+                },
+                "description": "Poista olemassaoleva käyttäjän pikakomento.",
+                "names": [
+                  "poista"
+                ]
+              },
+              "display": {
+                "description": "Näytä kaikki käyttäjän pikakomennot.",
+                "names": [
+                  "näytä"
                 ]
               }
             }

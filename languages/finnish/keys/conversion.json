@@ -6,5 +6,7 @@
   "unit_conversion": "{unit_and_amount} on {conversion_list}.",
   "unit_representation": "{unit_amount} {unit_name}",
   "view_all_currencies_desc": "Kaikki valittavissa olevat valuutat aakkosjärjestyksessä.",
-  "view_all_currencies_title": "Kaikki valuutat"
+  "view_all_currencies_title": "Kaikki valuutat",
+  "search_currencies_desc": "Tässä ovat valuutat, jotka löytyivät hakutermillä `{search_term}`.",
+  "search_currencies_title": "Löytyneet valuutat"
 }

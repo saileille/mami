@@ -1,5 +1,4 @@
 {
-  "command_has_deny_rules": "`{cmd_name}` has denying command rules, which you need to delete before adding allowing rules.",
   "existing_guild_shortcut_name": "The argument is already a server shortcut name.",
   "float_above_max_value": "The argument must be a number and more than {value}.",
   "float_below_min_value": "The argument must be a number and less than {value}.",

@@ -26,10 +26,22 @@
           "conv"
         ]
       },
-      "view_all": {
+      "display": {
         "description": "Show all currencies.",
         "names": [
-          "view_all"
+          "display"
+        ]
+      },
+      "search": {
+        "arguments": {
+          "search_term": {
+            "description": "Type a search term for the currencies you want to find.",
+            "name": "search_term"
+          }
+        },
+        "description": "Search for a currency.",
+        "names": [
+          "search"
         ]
       }
     }
@@ -130,6 +142,82 @@
           "category"
         ],
         "sub_commands": {
+          "command_rules": {
+            "description": "Manage who is allowed to use commands in the category.",
+            "names": [
+              "command_rules"
+            ],
+            "sub_commands": {
+              "add": {
+                "description": "Add command rule(s).",
+                "names": [
+                  "add"
+                ],
+                "sub_commands": {
+                  "exclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
+                        "name": "commands"
+                      },
+                      "rule": {
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
+                        "name": "rule"
+                      }
+                    },
+                    "description": "Add an exclusionary rule.",
+                    "names": [
+                      "exclusionary"
+                    ]
+                  },
+                  "inclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
+                        "name": "commands"
+                      },
+                      "rule": {
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
+                        "name": "rule"
+                      }
+                    },
+                    "description": "Add an inclusionary rule.",
+                    "names": [
+                      "inclusionary"
+                    ]
+                  }
+                }
+              },
+              "display": {
+                "arguments": {
+                  "command": {
+                    "description": "Insert the command whose command rules you want to see.",
+                    "name": "command"
+                  }
+                },
+                "description": "Display given command's command rules.",
+                "names": [
+                  "display"
+                ]
+              },
+              "remove": {
+                "arguments": {
+                  "commands": {
+                    "description": "From which commands do you want to remove the rule? (Separate the commands with a space, do not use the prefix.)",
+                    "name": "commands"
+                  },
+                  "rule": {
+                    "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
+                    "name": "rule"
+                  }
+                },
+                "description": "Remove command rule(s).",
+                "names": [
+                  "remove"
+                ]
+              }
+            }
+          },
           "language": {
             "description": "Edit the category language.",
             "names": [
@@ -138,18 +226,64 @@
             "sub_commands": {
               "reset": {
                 "description": "Reset the category language back to default.",
-                "names": ["reset"]
+                "names": [
+                  "reset"
+                ]
               },
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Which language do you want to set for the category?",
+                    "description": "Which language do you want to set for the category? You can use either language name or flag emoji.",
                     "name": "language"
                   }
                 },
                 "description": "Set the category language to a specific one.",
                 "names": [
                   "set"
+                ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Manage category shortcuts.",
+            "names": [
+              "shortcut",
+              "sc"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Enter the content for the new shortcut.",
+                    "name": "content"
+                  },
+                  "name": {
+                    "description": "Enter the name for the new shortcut.",
+                    "name": "name"
+                  }
+                },
+                "description": "Add a category shortcut.",
+                "names": [
+                  "add"
+                ]
+              },
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Enter the name of the shortcut you wish to delete.",
+                    "name": "name"
+                  }
+                },
+                "description": "Delete an existing category shortcut.",
+                "names": [
+                  "delete",
+                  "del"
+                ]
+              },
+              "display": {
+                "description": "Display all category shortcuts.",
+                "names": [
+                  "display"
                 ]
               }
             }
@@ -162,6 +296,82 @@
           "channel"
         ],
         "sub_commands": {
+          "command_rules": {
+            "description": "Manage who is allowed to use commands in the channel.",
+            "names": [
+              "command_rules"
+            ],
+            "sub_commands": {
+              "add": {
+                "description": "Add command rule(s).",
+                "names": [
+                  "add"
+                ],
+                "sub_commands": {
+                  "exclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
+                        "name": "commands"
+                      },
+                      "rule": {
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
+                        "name": "rule"
+                      }
+                    },
+                    "description": "Add an exclusionary rule.",
+                    "names": [
+                      "exclusionary"
+                    ]
+                  },
+                  "inclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
+                        "name": "commands"
+                      },
+                      "rule": {
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
+                        "name": "rule"
+                      }
+                    },
+                    "description": "Add an inclusionary rule.",
+                    "names": [
+                      "inclusionary"
+                    ]
+                  }
+                }
+              },
+              "display": {
+                "arguments": {
+                  "command": {
+                    "description": "Insert the command whose command rules you want to see.",
+                    "name": "command"
+                  }
+                },
+                "description": "Display given command's command rules.",
+                "names": [
+                  "display"
+                ]
+              },
+              "remove": {
+                "arguments": {
+                  "commands": {
+                    "description": "From which commands do you want to remove the rule? (Separate the commands with a space, do not use the prefix.)",
+                    "name": "commands"
+                  },
+                  "rule": {
+                    "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
+                    "name": "rule"
+                  }
+                },
+                "description": "Remove command rule(s).",
+                "names": [
+                  "remove"
+                ]
+              }
+            }
+          },
           "language": {
             "description": "Edit the channel language.",
             "names": [
@@ -170,18 +380,64 @@
             "sub_commands": {
               "reset": {
                 "description": "Reset the channel language back to default.",
-                "names": ["reset"]
+                "names": [
+                  "reset"
+                ]
               },
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Which language do you want to set for the channel?",
+                    "description": "Which language do you want to set for the channel? You can use either language name or flag emoji.",
                     "name": "language"
                   }
                 },
                 "description": "Set the channel language to a specific one.",
                 "names": [
                   "set"
+                ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Manage channel shortcuts.",
+            "names": [
+              "shortcut",
+              "sc"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Enter the content for the new shortcut.",
+                    "name": "content"
+                  },
+                  "name": {
+                    "description": "Enter the name for the new shortcut.",
+                    "name": "name"
+                  }
+                },
+                "description": "Add a channel shortcut.",
+                "names": [
+                  "add"
+                ]
+              },
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Enter the name of the shortcut you wish to delete.",
+                    "name": "name"
+                  }
+                },
+                "description": "Delete an existing channel shortcut.",
+                "names": [
+                  "delete",
+                  "del"
+                ]
+              },
+              "display": {
+                "description": "Display all channel shortcuts.",
+                "names": [
+                  "display"
                 ]
               }
             }
@@ -195,7 +451,7 @@
           "guild"
         ],
         "sub_commands": {
-          "checks": {
+          "command_rules": {
             "description": "Manage who is allowed to use commands in the server.",
             "names": [
               "command_rules"
@@ -207,7 +463,7 @@
                   "add"
                 ],
                 "sub_commands": {
-                  "allow": {
+                  "exclusionary": {
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
@@ -218,12 +474,12 @@
                         "name": "rule"
                       }
                     },
-                    "description": "Add an allowing rule.",
+                    "description": "Add an exclusionary rule.",
                     "names": [
-                      "allow"
+                      "exclusionary"
                     ]
                   },
-                  "deny": {
+                  "inclusionary": {
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
@@ -234,12 +490,24 @@
                         "name": "rule"
                       }
                     },
-                    "description": "Add a denying rule.",
+                    "description": "Add an inclusionary rule.",
                     "names": [
-                      "deny"
+                      "inclusionary"
                     ]
                   }
                 }
+              },
+              "display": {
+                "arguments": {
+                  "command": {
+                    "description": "Insert the command whose command rules you want to see.",
+                    "name": "command"
+                  }
+                },
+                "description": "Display given command's command rules.",
+                "names": [
+                  "display"
+                ]
               },
               "remove": {
                 "arguments": {
@@ -267,12 +535,14 @@
             "sub_commands": {
               "reset": {
                 "description": "Reset the server language back to default.",
-                "names": ["reset"]
+                "names": [
+                  "reset"
+                ]
               },
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Which language do you want to set for the server?",
+                    "description": "Which language do you want to set for the server? You can use either language name or flag emoji.",
                     "name": "language"
                   }
                 },
@@ -341,10 +611,16 @@
               "language"
             ],
             "sub_commands": {
+              "reset": {
+                "description": "Reset your user language back to default.",
+                "names": [
+                  "reset"
+                ]
+              },
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Which language do you want to set for your user?",
+                    "description": "Which language do you want to set for yourself? You can use either language name or flag emoji.",
                     "name": "language"
                   }
                 },
@@ -352,10 +628,50 @@
                 "names": [
                   "set"
                 ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Manage user shortcuts.",
+            "names": [
+              "shortcut",
+              "sc"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Enter the content for the new shortcut.",
+                    "name": "content"
+                  },
+                  "name": {
+                    "description": "Enter the name for the new shortcut.",
+                    "name": "name"
+                  }
+                },
+                "description": "Add a user shortcut.",
+                "names": [
+                  "add"
+                ]
               },
-              "reset": {
-                "description": "Reset your user language back to default.",
-                "names": ["reset"]
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Enter the name of the shortcut you wish to delete.",
+                    "name": "name"
+                  }
+                },
+                "description": "Delete an existing user shortcut.",
+                "names": [
+                  "delete",
+                  "del"
+                ]
+              },
+              "display": {
+                "description": "Display all user shortcuts.",
+                "names": [
+                  "display"
+                ]
               }
             }
           }

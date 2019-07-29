@@ -1,0 +1,4 @@
+{
+  "command_has_exclusionary_rules": "`{cmd_name}` has exclusionary command rules, which you need to delete before adding inclusionary rules.",
+  "command_has_inclusionary_rules": "`{cmd_name}` has inclusionary command rules, which you need to delete before adding exclusionary rules."
+}

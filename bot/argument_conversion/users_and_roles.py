@@ -21,8 +21,7 @@ async def id_to_member(argument, context):
     else:
         user_id = int(match.group(1))
 
-    member = context.message.guild.get_member(user_id)
-    return member
+    return context.message.guild.get_member(user_id)
 
 
 async def id_to_role(argument, context):
@@ -80,9 +79,8 @@ async def name_to_permission(argument, context):
 
     If valid, return the permission code.
     """
-    for key in context.language.permission_names:
-        permission = context.language.permission_names[key]
-        if argument == permission:
+    for key, value in context.language.permission_names.items():
+        if argument == value:
             return key
 
     return None
@@ -97,7 +95,6 @@ async def member_role_permission(argument, context):
     convert_functions = [
         name_to_permission, id_to_role, id_to_member, name_to_role, name_to_member]
 
-    conversion = None
     for function in convert_functions:
         conversion = await function(argument, context)
         if conversion is not None:
@@ -105,7 +102,25 @@ async def member_role_permission(argument, context):
 
     custom_msg = await context.language.get_text("not_member_role_or_permission")
     await embed_messages.invalid_argument(context, argument, custom_msg)
-    return conversion
+    return None
+
+
+async def member_role(argument, context):
+    """
+    Check if the argument is a valid member or role.
+
+    If valid, return the Member or Role object.
+    """
+    convert_functions = [id_to_role, id_to_member, name_to_role, name_to_member]
+
+    for function in convert_functions:
+        conversion = await function(argument, context)
+        if conversion is not None:
+            return conversion
+
+    custom_msg = await context.language.get_text("not_member_or_role")
+    await embed_messages.invalid_argument(context, argument, custom_msg)
+    return None
 
 
 async def valid_member(argument, context):
@@ -116,12 +131,11 @@ async def valid_member(argument, context):
     """
     convert_functions = [id_to_member, name_to_member]
 
-    conversion = None
     for function in convert_functions:
-        conversion = await function(argument, context)
-        if conversion is not None:
-            return conversion
+        member = await function(argument, context)
+        if member is not None:
+            return member
 
     custom_msg = await context.language.get_text("not_member")
     await embed_messages.invalid_argument(context, argument, custom_msg)
-    return conversion
+    return None

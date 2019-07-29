@@ -12,9 +12,7 @@ from bot.data import definitions
 from bot.data import secrets
 from bot.mechanics import auto_convert
 from framework import custom_json
-from framework import exceptions
-from framework.command_handler import CommandHandler
-from framework.command_input import CommandInput
+from framework import command_handler
 from framework.context import Context
 
 
@@ -64,35 +62,14 @@ class Client(discord.Client):
         context = Context(message)
         await context.get_data()
 
-        command_string = await CommandHandler.check_prefix(context)
+        command_string = await command_handler.check_prefix(context)
+
+        if command_string is not None:
+            await command_handler.process_command_call(context, command_string)
 
         if command_string is None:
             await auto_convert.detect_unit_mention(context)
             return
-
-        command_input = CommandInput(command_string)
-        await command_input.parse_raw_text()
-
-        command, last_working_command = await CommandHandler.get_command(
-            command_input, context)
-
-        if command == exceptions.InvalidCommandException:
-            await last_working_command.invalid_command(context, command_input)
-            return
-
-        if command == exceptions.CommandCheckException:
-            await last_working_command.not_authorised(context, command_input)
-            return
-
-        if command == exceptions.PreCheckException:
-            # The feedback message has already been handled.
-            return
-
-        if command == exceptions.NoExecutableSubCommands:
-            await last_working_command.no_usable_sub_commands(context, command_input)
-            return
-
-        await command.execute(context, command_input)
 
     async def currency_check(self):
         """Update the currency API data on fixed intervals."""

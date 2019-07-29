@@ -1,5 +1,4 @@
 {
-  "command_has_deny_rules": "Komennolla `{cmd_name}` on kieltäviä komentosääntöjä, jotka täytyy poistaa ennen sallivien komentosääntöjen lisäämistä.",
   "existing_guild_shortcut_name": "Argumentti on jo palvelimen pikakomennon nimi.",
   "float_above_max_value": "Argumentin tulee olla numero, joka on suurempi kuin {value}.",
   "float_below_min_value": "Argumentin tulee olla numero, joka on pienempi kuin {value}.",
@@ -8,7 +7,7 @@
   "invalid_argument_custom_msg_title": "Lisätietoa",
   "invalid_command_name": "`{cmd_name}` ei ole kelpaava komennon nimi.",
   "invalid_currency": "Argumentti ei ole kelpaava valuuttakoodi.",
-  "invalid_language": "Argumentti ei ole kelpaava kielen nimi.",
+  "invalid_language": "Argumentti ei ole kelpaava kielen nimi tai lippuemoji.",
   "invalid_shortcut_name": "Tämän nimistä pikakomentoa ei ole olemassa.",
   "invalid_shortcut_name_info": "Voit lisätä uuden palvelinpikakomennon komennolla `{guild_shortcut}`, uuden kategoriapikakomennon komennolla `category_shortcut`, uuden kanavapikakomennon komennolla `channel_shortcut` ja uuden käyttäjäpikakomennon komennolla `user_shortcut`.",
   "not_float": "Argumentin tulee olla numero.",
@@ -16,6 +15,9 @@
   "not_guild_shortcut_name": "Tämän nimistä palvelinpikakomentoa ei ole olemassa.",
   "not_integer": "Argumentin tulee olla kokonaisluku.",
   "not_integer_in_range": "Argumentin tulee olla kokonaisluku {min_value} ja {max_value} välillä.",
+  "not_member": "Argumentti ei ole kelpaava jäsen-ID/nimi.",
   "not_member_role_or_permission": "Argumentti ei ole kelpaava jäsen-ID/nimi, rooli-ID/nimi, eikä luvan nimi.",
-  "not_member": "Argumentti ei ole kelpaava jäsen-ID/nimi."
+  "command_has_exclusionary_rules": "`Komennolla {cmd_name}` on poissulkevia komentosääntöjä, jotka tulee poistaa ennen mukaanlukevien komentosääntöjen lisäämistä.",
+  "command_has_inclusionary_rules": "`Komennolla {cmd_name}` on mukaanlukevia komentosääntöjä, jotka tulee poistaa ennen poissulkevien komentosääntöjen lisäämistä.",
+  "not_member_or_role": "Argumentti ei ole kelpo jäsenen ID, jäsenen nimi, roolin ID tai roolin nimi."
 }

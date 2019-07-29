@@ -45,16 +45,20 @@ class Shortcut():
         return Shortcut(name=row[0], creator=row[1], content=row[2])
 
 
-async def add_guild_shortcut(context, command_input):
-    """Add a guild shortcut in the database."""
-    shortcut = Shortcut(
-        command_input.arguments[0], context.message.author.id, command_input.arguments[1])
+async def add_shortcut(context, arguments, platform_type):
+    """
+    Add a shortcut in the database.
 
-    context.guild_data.shortcuts[shortcut.name] = shortcut
-    await database_functions.insert_shortcut(context, shortcut, "guild")
+    Parametre "platform_type" is "category", "channel", "guild" or "user".
+    """
+    shortcut = Shortcut(arguments[0], context.message.author.id, arguments[1])
+    data_object = getattr(context, platform_type + "_data")
+
+    data_object.shortcuts[shortcut.name] = shortcut
+    await database_functions.insert_shortcut(context, shortcut, platform_type)
 
     message = embeds.PaginatedEmbed(
-        await context.language.get_text("guild_shortcut_added_title"))
+        await context.language.get_text(platform_type + "_shortcut_added_title"))
 
     shortcut_cmd = definitions.COMMANDS.sub_commands["shortcut"]
     shortcut_call = await shortcut_cmd.get_command_string(context)
@@ -65,33 +69,75 @@ async def add_guild_shortcut(context, command_input):
 
     shortcut_call += " " + shortcut_name
 
-    message.embed.description = ":white_check_mark: " + await context.language.get_text(
-        "guild_shortcut_added_desc",
+    message.embed.description = "✅ " + await context.language.get_text(
+        platform_type + "_shortcut_added_desc",
         {"shortcut": shortcut.name, "shortcut_call": shortcut_call})
 
     await message.send(context)
 
 
-async def delete_guild_shortcut(context, command_input):
-    """Delete any guild shortcut from the database."""
-    shortcut_name = command_input.arguments[0]
+async def add_category_shortcut(context, arguments):
+    """Add a category shortcut in the database."""
+    await add_shortcut(context, arguments, "category")
 
-    await database_functions.delete_shortcut(context, shortcut_name, "guild")
-    del context.guild_data.shortcuts[shortcut_name]
+
+async def add_channel_shortcut(context, arguments):
+    """Add a channel shortcut in the database."""
+    await add_shortcut(context, arguments, "channel")
+
+
+async def add_guild_shortcut(context, arguments):
+    """Add a guild shortcut in the database."""
+    await add_shortcut(context, arguments, "guild")
+
+
+async def add_user_shortcut(context, arguments):
+    """Add a user shortcut in the database."""
+    await add_shortcut(context, arguments, "user")
+
+
+async def delete_shortcut(context, arguments, platform_type):
+    """Delete a shortcut from the database."""
+    shortcut_name = arguments[0]
+    data_object = getattr(context, platform_type + "_data")
+
+    await database_functions.delete_shortcut(context, shortcut_name, platform_type)
+    del data_object.shortcuts[shortcut_name]
 
     message = embeds.PaginatedEmbed(
-        await context.language.get_text("guild_shortcut_deleted_title"))
+        await context.language.get_text(platform_type + "_shortcut_deleted_title"))
 
-    message.embed.description = ":white_check_mark: " + await context.language.get_text(
-        "guild_shortcut_deleted_desc", {"shortcut": shortcut_name})
+    message.embed.description = "✅ " + await context.language.get_text(
+        platform_type + "_shortcut_deleted_desc", {"shortcut": shortcut_name})
 
     await message.send(context)
 
 
-async def display_guild_shortcuts(context, command_input):
-    """Display all guild shortcuts."""
+async def delete_category_shortcut(context, arguments):
+    """Delete a category shortcut from the database."""
+    await delete_shortcut(context, arguments, "category")
+
+
+async def delete_channel_shortcut(context, arguments):
+    """Delete a channel shortcut from the database."""
+    await delete_shortcut(context, arguments, "channel")
+
+
+async def delete_guild_shortcut(context, arguments):
+    """Delete a guild shortcut from the database."""
+    await delete_shortcut(context, arguments, "guild")
+
+
+async def delete_user_shortcut(context, arguments):
+    """Delete a user shortcut from the database."""
+    await delete_shortcut(context, arguments, "user")
+
+
+async def display_shortcuts(context, platform_type):
+    """Display all platform shortcuts."""
     shortcuts = []
-    for shortcut in context.guild_data.shortcuts.values():
+    data_object = getattr(context, platform_type + "_data")
+    for shortcut in data_object.shortcuts.values():
         shortcuts.append(shortcut.name)
 
     shortcuts.sort()
@@ -109,17 +155,37 @@ async def display_guild_shortcuts(context, command_input):
     shortcut_example = shortcut_cmd_name + " " + random_shortcut
 
     message = embeds.PaginatedEmbed(
-        await context.language.get_text("display_guild_shortcuts_title"),
+        await context.language.get_text("display_" + platform_type + "_shortcuts_title"),
         embeds.EmbedFieldCollection(
             shortcuts, await context.language.get_text("display_shortcuts_subtitle"), 2))
 
     message.embed.description = await context.language.get_text(
-        "display_guild_shortcuts_desc",
+        "display_" + platform_type + "_shortcuts_desc",
         {"instruction": shortcut_instruction, "example": shortcut_example})
 
     await message.send(context)
 
 
-async def use_shortcut(context, command_input):
+async def display_category_shortcuts(context, arguments):
+    """Display all category shortcuts."""
+    await display_shortcuts(context, "category")
+
+
+async def display_channel_shortcuts(context, arguments):
+    """Display all channel shortcuts."""
+    await display_shortcuts(context, "channel")
+
+
+async def display_guild_shortcuts(context, arguments):
+    """Display all guild shortcuts."""
+    await display_shortcuts(context, "guild")
+
+
+async def display_user_shortcuts(context, arguments):
+    """Display all user shortcuts."""
+    await display_shortcuts(context, "user")
+
+
+async def use_shortcut(context, arguments):
     """Use a shortcut."""
-    await context.message.channel.send(command_input.arguments[0].content)
+    await context.message.channel.send(arguments[0].content)

@@ -8,14 +8,16 @@ from datatypes import config_data
 class Context():
     """Contains configuration data and the message."""
 
-    def __init__(self, message):
+    def __init__(
+            self, message=None, user_data=None, channel_data=None, category_data=None,
+            guild_data=None, timestamp=None):
         """Initialise object."""
         self.message = message
-        self.user_data = None
-        self.channel_data = None
-        self.category_data = None
-        self.guild_data = None
-        self.ping = None
+        self.user_data = user_data
+        self.channel_data = channel_data
+        self.category_data = category_data
+        self.guild_data = guild_data
+        self.timestamp = timestamp
 
         self._desktop_ui = None
         self._prefix = None
@@ -114,7 +116,7 @@ class Context():
 
         return allow_use
 
-    async def get_category_data(self):
+    async def get_category_data(self, category_id):
         """
         Get the category data.
 
@@ -122,19 +124,18 @@ class Context():
         one does not exist. Also adds an entry to the cache.
         """
         cache = definitions.DATA_CACHE["categories"]
-        if self.message.channel.category_id in cache:
-            self.category_data = cache[self.message.channel.category_id]
+        if category_id in cache:
+            self.category_data = cache[category_id]
         else:
-            self.category_data = await database_functions.select_category(
-                self.message.channel.category_id)
+            self.category_data = await database_functions.select_category(category_id)
 
             if self.category_data is None:
-                await database_functions.insert_category(self.message.channel.category_id)
+                await database_functions.insert_category(category_id)
                 self.category_data = config_data.CategoryData()
 
-            cache[self.message.channel.category_id] = self.category_data
+            cache[category_id] = self.category_data
 
-    async def get_channel_data(self):
+    async def get_channel_data(self, channel_id):
         """
         Get the channel data.
 
@@ -142,19 +143,18 @@ class Context():
         one does not exist. Also adds an entry to the cache.
         """
         cache = definitions.DATA_CACHE["channels"]
-        if self.message.channel.id in cache:
-            self.channel_data = cache[self.message.channel.id]
+        if channel_id in cache:
+            self.channel_data = cache[channel_id]
         else:
-            self.channel_data = await database_functions.select_channel(
-                self.message.channel.id)
+            self.channel_data = await database_functions.select_channel(channel_id)
 
             if self.channel_data is None:
-                await database_functions.insert_channel(self.message.channel.id)
+                await database_functions.insert_channel(channel_id)
                 self.channel_data = config_data.ChannelData()
 
-            cache[self.message.channel.id] = self.channel_data
+            cache[channel_id] = self.channel_data
 
-    async def get_guild_data(self):
+    async def get_guild_data(self, guild_id):
         """
         Get the guild data.
 
@@ -162,19 +162,18 @@ class Context():
         one does not exist. Also adds an entry to the cache.
         """
         cache = definitions.DATA_CACHE["guilds"]
-        if self.message.guild.id in cache:
-            self.guild_data = cache[self.message.guild.id]
+        if guild_id in cache:
+            self.guild_data = cache[guild_id]
         else:
-            self.guild_data = await database_functions.select_guild(
-                self.message.guild.id)
+            self.guild_data = await database_functions.select_guild(guild_id)
 
             if self.guild_data is None:
-                await database_functions.insert_guild(self.message.guild.id)
+                await database_functions.insert_guild(guild_id)
                 self.guild_data = config_data.GuildData()
 
-            cache[self.message.guild.id] = self.guild_data
+            cache[guild_id] = self.guild_data
 
-    async def get_user_data(self):
+    async def get_user_data(self, user_id):
         """
         Get the user data.
 
@@ -182,27 +181,27 @@ class Context():
         one does not exist. Also adds an entry to the cache.
         """
         cache = definitions.DATA_CACHE["users"]
-        if self.message.author.id in cache:
-            self.user_data = cache[self.message.author.id]
+        if user_id in cache:
+            self.user_data = cache[user_id]
         else:
-            self.user_data = await database_functions.select_user(self.message.author.id)
+            self.user_data = await database_functions.select_user(user_id)
 
             if self.user_data is None:
-                await database_functions.insert_user(self.message.author.id)
+                await database_functions.insert_user(user_id)
                 self.user_data = config_data.UserData()
 
-            cache[self.message.author.id] = self.user_data
+            cache[user_id] = self.user_data
 
     async def get_data(self):
         """Combine three data-gathering functions into one."""
-        await self.get_user_data()
+        await self.get_user_data(self.message.author.id)
 
         if self.message.guild is not None:
-            await self.get_channel_data()
-            await self.get_guild_data()
+            await self.get_channel_data(self.message.channel.id)
+            await self.get_guild_data(self.message.guild.id)
 
             if self.message.channel.category_id is not None:
-                await self.get_category_data()
+                await self.get_category_data(self.message.channel.category_id)
 
     async def clear_cache(self):
         """Clear cache."""
@@ -214,3 +213,16 @@ class Context():
         self._prefix = None
         self._language_id = None
         self._language = None
+
+
+async def get_context_from_channel(channel):
+    """Get context data from channel alone."""
+    context = Context()
+
+    await context.get_channel_data(channel.id)
+    await context.get_guild_data(channel.guild.id)
+
+    if channel.category_id is not None:
+        await context.get_category_data(channel.category_id)
+
+    return context

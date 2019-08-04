@@ -1,5 +1,4 @@
 {
-  "calculating": "Računanje...",
   "datetime_and_time_passed": "{datetime} UTC\n{time_passed}",
   "datetime_format": "%Y-%m-%d %H:%M:%S",
   "decimal_symbol": ".",

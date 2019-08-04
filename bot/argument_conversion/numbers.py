@@ -59,13 +59,15 @@ async def integer_in_range(argument, context, int_range, verbose=True):
     """
     number = await integer(argument, context, verbose=False)
 
-    if None not in int_range:
-        int_range.sort()
+    if number is not None:
+        if None not in int_range:
+            int_range.sort()
 
-    below_min_range = int_range[0] is not None and number < int_range[0]
-    above_max_range = int_range[1] is not None and number > int_range[1]
-    if number is not None and (below_min_range or above_max_range):
-        number = None
+        below_min_range = int_range[0] is not None and number < int_range[0]
+        above_max_range = int_range[1] is not None and number > int_range[1]
+
+        if below_min_range or above_max_range:
+            number = None
 
     if number is None and verbose:
         custom_msg = None

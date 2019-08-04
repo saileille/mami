@@ -142,7 +142,7 @@ async def display_shortcuts(context, platform_type):
 
     shortcuts.sort()
 
-    shortcut_command = await definitions.COMMANDS.get_sub_command_from_path(["shortcut"])
+    shortcut_command = await definitions.COMMANDS.get_sub_command_from_path("shortcut")
     shortcut_cmd_name = await shortcut_command.get_command_string(context)
 
     shortcut_instruction = shortcut_cmd_name + " [" + (

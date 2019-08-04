@@ -10,7 +10,7 @@ async def invalid_argument(context, argument, custom_msg=None):
             custom_msg,
             await context.language.get_text("invalid_argument_custom_msg_title")))
 
-    message.embed.description = ":x: " + await context.language.get_text(
+    message.embed.description = "❌ " + await context.language.get_text(
         "invalid_argument_desc", {"arg": argument})
 
     await message.send(context)
@@ -29,7 +29,7 @@ async def too_many_arguments(context, argument_count, argument):
         desc = await context.language.get_text(
             "too_many_arguments_plural_desc", {"arg": argument, "args": argument_count})
 
-    message.embed.description = ":x: " + desc
+    message.embed.description = "❌ " + desc
     await message.send(context)
 
 
@@ -39,7 +39,7 @@ async def no_action(context, commands, command_string):
         await context.language.get_text("no_action_title"), embeds.EmbedFieldCollection(
             commands, await context.language.get_text("command")))
 
-    message.embed.description = ":information_source: " + await context.language.get_text(
+    message.embed.description = "ℹ " + await context.language.get_text(
         "no_action_desc", {"command": command_string})
 
     await message.send(context)
@@ -58,7 +58,7 @@ async def invalid_command_subcommands(
         embeds.EmbedFieldCollection(
             commands, await context.language.get_text("command")))
 
-    message.embed.description = ":x: " + await context.language.get_text(
+    message.embed.description = "❌ " + await context.language.get_text(
         "invalid_command_desc",
         {"command": command_string, "last_working": last_working_command_string})
 
@@ -76,7 +76,7 @@ async def invalid_command_no_subcommands(
     message = embeds.PaginatedEmbed(
         await context.language.get_text("invalid_command_title"))
 
-    message.embed.description = ":x: " + await context.language.get_text(
+    message.embed.description = "❌ " + await context.language.get_text(
         "invalid_command_no_subcommands_desc",
         {"command": command_string, "last_working": last_working_command_string})
 
@@ -93,7 +93,7 @@ async def not_authorised(context, command_string, last_working_command_string):
     message = embeds.PaginatedEmbed(
         await context.language.get_text("unauthorised_command_title"))
 
-    message.embed.description = ":no_entry_sign: " + await context.language.get_text(
+    message.embed.description = "🚫 " + await context.language.get_text(
         "unauthorised_command_desc",
         {"command": command_string, "last_working": last_working_command_string})
 

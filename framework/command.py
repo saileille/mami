@@ -238,7 +238,7 @@ class Command():
         commands.sort()
         return commands
 
-    async def get_sub_command_from_path(self, id_list):
+    async def get_sub_command_from_path(self, *id_list):
         """
         Get a sub-command with the given ID path.
 
@@ -394,24 +394,24 @@ class Command():
                 i = -1
                 optional_argument = True
 
-            argument = await self.arguments[i].dialogue(
-                context, optional_argument, arguments_given + 1, argument_amount)
+            converted_argument = None
+            while converted_argument is None:
+                argument = await self.arguments[i].dialogue(
+                    context, optional_argument, arguments_given + 1, argument_amount)
 
-            # If cancel button is pressed.
-            if argument is None:
-                # If optional argument.
-                if optional_argument:
-                    return True
+                # If cancel button is pressed.
+                if argument is None:
+                    # If optional argument.
+                    if optional_argument:
+                        return True
 
-                # If not optional argument.
-                await context.message.channel.send(
-                    await context.language.get_text("command_aborted"))
+                    # If not optional argument.
+                    await context.message.channel.send(
+                        await context.language.get_text("command_aborted"))
 
-                return False
+                    return False
 
-            converted_argument = await self.arguments[i].convert(argument, context)
-            if converted_argument is None:
-                return False
+                converted_argument = await self.arguments[i].convert(argument, context)
 
             arguments.append(converted_argument)
 
@@ -430,4 +430,5 @@ class Command():
             return False
 
         valid = await self.validate_missing_arguments(context, arguments)
+
         return valid

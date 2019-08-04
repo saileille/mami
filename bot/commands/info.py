@@ -1,6 +1,7 @@
 """Information-related commands."""
 from aid import dates
 from framework import embeds
+from discord import Embed
 
 
 async def guild_member_info(context, arguments):
@@ -37,4 +38,8 @@ async def guild_member_info(context, arguments):
     message.embed.description = await context.language.get_text(
         "member_info_desc", {"member": member.display_name})
 
-    await message.send(context, thumbnail=member.avatar_url, colour=member.colour)
+    colour = member.colour
+    if str(colour) == "#000000":
+        colour = Embed.Empty
+
+    await message.send(context, thumbnail=member.avatar_url, colour=colour)

@@ -90,6 +90,7 @@ class Argument():
         argument = None
         if isinstance(response, discord.Message):
             argument = response.content
+            context.timestamp = response.created_at
 
         for future in pending:
             future.cancel()  # We do not need these anymore.

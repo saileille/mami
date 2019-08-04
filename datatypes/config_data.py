@@ -66,13 +66,13 @@ class ChannelData(ConfigData):
 
     def __init__(
             self, prefix=None, language_id=None, shortcuts=None, command_rules=None,
-            max_dice=None, guild_call=GuildCall()):
+            max_dice=None):
         """Object initialisation."""
         super().__init__(prefix, language_id, shortcuts)
 
         self.command_rules = command_rules
         self.max_dice = max_dice
-        self.guild_call = guild_call
+        self.guild_call = GuildCall(None, False)
 
         if self.command_rules is None:
             self.command_rules = custom_json.load(definitions.EMPTY_COMMAND_RULES)

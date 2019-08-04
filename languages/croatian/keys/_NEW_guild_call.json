@@ -1,0 +1,10 @@
+{
+  "guild_call_connected_desc": "Call connected! You can now talk with members of another server!",
+  "guild_call_connected_title": "Call Connected",
+  "guild_call_connecting_desc": "Connecting the call to another server. Please stand by...\n\nℹ You can disconnect the call with the command `{disconnect_cmd}`.",
+  "guild_call_connecting_title": "Connecting...",
+  "guild_call_disconnected_desc": "You have disconnected the call.",
+  "guild_call_disconnected_title": "Call Disconnected",
+  "other_party_disconnected_guild_call_desc": "The other server hung up the call.",
+  "other_party_disconnected_guild_call_title": "Call Hung Up"
+}

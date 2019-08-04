@@ -1,0 +1,10 @@
+{
+  "guild_call_connected_desc": "Yhdistetty! Voitte nyt puhua toisen palvelimen jäsenten kanssa!",
+  "guild_call_connected_title": "Yhdistetty",
+  "guild_call_connecting_desc": "Yhdistetään toiselle palvelimelle. Odottakaa...\n\nℹ Voit sulkea puhelun komennolla `{disconnect_cmd}`.",
+  "guild_call_connecting_title": "Yhdistetään...",
+  "guild_call_disconnected_desc": "Olet lopettanut puhelun.",
+  "guild_call_disconnected_title": "Puhelu lopetettu",
+  "other_party_disconnected_guild_call_desc": "Toinen palvelin lopetti puhelun.",
+  "other_party_disconnected_guild_call_title": "Puhelu lopetettu"
+}

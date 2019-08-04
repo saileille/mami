@@ -66,6 +66,20 @@
       "dice"
     ]
   },
+  "guild_call": {
+    "description": "Make calls to other servers!",
+    "names": ["server_call", "guild_call"],
+    "sub_commands": {
+      "connect": {
+        "description": "Connect a call.",
+        "names": ["connect"]
+      },
+      "disconnect": {
+        "description": "Disconnect a call.",
+        "names": ["disconnect"]
+      }
+    }
+  },
   "info": {
     "description": "Information about various things.",
     "names": [

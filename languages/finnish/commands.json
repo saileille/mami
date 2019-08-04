@@ -66,6 +66,27 @@
       "nopat"
     ]
   },
+  "guild_call": {
+    "description": "Soita toisille palvelimille!",
+    "names": [
+      "palvelinpuhelu",
+      "kiltapuhelu"
+    ],
+    "sub_commands": {
+      "connect": {
+        "description": "Yhdistä puhelu.",
+        "names": [
+          "yhdistä"
+        ]
+      },
+      "disconnect": {
+        "description": "Sulje puhelu.",
+        "names": [
+          "sulje"
+        ]
+      }
+    }
+  },
   "info": {
     "description": "Tietoa sekalaisista asioista.",
     "names": [

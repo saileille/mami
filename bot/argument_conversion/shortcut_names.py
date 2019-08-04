@@ -94,16 +94,16 @@ async def any_shortcut(argument, context):
 
     else:
         guild_shortcut = await definitions.COMMANDS.get_sub_command_from_path(
-            ["settings", "guild", "shortcut", "add"])
+            "settings", "guild", "shortcut", "add")
 
         """category_shortcut = await definitions.COMMANDS.get_sub_command_from_path(
-            ["settings", "category", "shortcut", "add"])
+            "settings", "category", "shortcut", "add")
 
         channel_shortcut = await definitions.COMMANDS.get_sub_command_from_path(
-            ["settings", "channel", "shortcut", "add"])
+            "settings", "channel", "shortcut", "add")
 
         user_shortcut = await definitions.COMMANDS.get_sub_command_from_path(
-            ["settings", "user", "shortcut", "add"])"""
+            "settings", "user", "shortcut", "add")"""
 
         guild_shortcut_cmd = await guild_shortcut.get_command_string(context)
         """category_shortcut_cmd = await category_shortcut.get_command_string(context)
@@ -111,7 +111,7 @@ async def any_shortcut(argument, context):
         user_shortcut_cmd = await user_shortcut.get_command_string(context)"""
 
         custom_msg = await context.language.get_text("invalid_shortcut_name")
-        custom_msg += "\n\n:information_source: " + await context.language.get_text(
+        custom_msg += "\n\nℹ " + await context.language.get_text(
             "invalid_shortcut_name_info", {"guild_shortcut": guild_shortcut_cmd})
 
         await embed_messages.invalid_argument(context, argument, custom_msg)

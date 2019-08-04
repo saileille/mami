@@ -10,6 +10,7 @@ from bot.argument_conversion import shortcut_names
 from bot.argument_conversion import users_and_roles
 from bot.commands import currency
 from bot.commands import dice
+from bot.commands import guild_call
 from bot.commands import info
 from bot.commands import runes
 from bot.commands import settings
@@ -81,6 +82,21 @@ def initialise_commands():
                     )
                 ]
             ),
+            "guild_call": Command(
+                obj_id="guild_call",
+                sub_commands={
+                    "connect": Command(
+                        obj_id="connect",
+                        pre_check=pre_checks.is_not_connecting_guild_call,
+                        action=guild_call.connect_guild_call
+                    ),
+                    "disconnect": Command(
+                        obj_id="disconnect",
+                        pre_check=pre_checks.is_connecting_or_connected_guild_call,
+                        action=guild_call.disconnect_guild_call
+                    )
+                }
+            ),
             "info": Command(
                 obj_id="info",
                 sub_commands={
@@ -134,7 +150,7 @@ def initialise_commands():
                 sub_commands={
                     "category": Command(
                         obj_id="category",
-                        pre_check=pre_checks.in_guild,
+                        pre_check=pre_checks.in_category,
                         sub_commands={
                             "command_rules": Command(
                                 obj_id="command_rules",
@@ -198,7 +214,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="command",
-                                                modification=command_names.command_to_category_command_rules
+                                                modification=command_names.command_to_non_empty_category_command_rules
                                             )
                                         ]
                                     )
@@ -332,7 +348,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="command",
-                                                modification=command_names.command_to_channel_command_rules
+                                                modification=command_names.command_to_non_empty_channel_command_rules
                                             )
                                         ]
                                     )
@@ -466,7 +482,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="command",
-                                                modification=command_names.command_to_guild_command_rules
+                                                modification=command_names.command_to_non_empty_guild_command_rules
                                             )
                                         ]
                                     )

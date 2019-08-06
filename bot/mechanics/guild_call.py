@@ -13,9 +13,8 @@ class GuildCall():
 
     def __str__(self):
         """Get string representation of the object."""
-        string = "Connected Channel: " + str(self.connected_channel)
-        string += "\nConnecting: " + str(self.connecting)
-        return string
+        return ("Connected Channel: {self.connected_channel}\n"
+                "Connecting: {self.connecting}").format(self=self)
 
     async def relay_message(self, message):
         """Send the message to the connected channel."""

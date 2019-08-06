@@ -48,7 +48,7 @@ async def platform_has_shortcuts(context, platform_type, verbose):
     has_shortcuts = bool(data_object.shortcuts)
 
     if not has_shortcuts and verbose:
-        shortcut_cmd = await definitions.COMMANDS.get_sub_command_from_path(
+        shortcut_cmd = definitions.COMMANDS.get_sub_command_from_path(
             "settings", platform_type, "shortcut", "add")
 
         shortcut_cmd_name = await shortcut_cmd.get_command_string(context)

@@ -4,5 +4,12 @@
   "member_info_creation_time": "Joined Discord",
   "member_info_join_time": "Joined {guild}",
   "member_info_discord_name": "Discord Name",
-  "member_info_top_role": "Highest Role"
+  "member_info_top_role": "Highest Role",
+  "command_info_title": "Information About {command}",
+  "basic_command_info_title": "Basic Information",
+  "related_commands_title": "Related Commands",
+  "command_aliases_title": "Aliases",
+  "no_aliases": "None",
+  "command_has_sub_commands_title": "Has Sub-Commands",
+  "argument_name_and_number": "Argument {number}: {name}"
 }

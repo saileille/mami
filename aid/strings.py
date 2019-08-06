@@ -15,3 +15,11 @@ def modify_filepath(path, file_prefix, *replacements):
 
     directory_list[-1] = file_prefix + directory_list[-1]
     return "\\".join(directory_list)
+
+
+async def get_yes_no_emojis(boolean):
+    """Get ✅ if True, ❎ if False."""
+    if boolean:
+        return "✅"
+
+    return "❎"

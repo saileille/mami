@@ -6,7 +6,7 @@ from framework import embeds
 
 async def connect_guild_call(context_obj, arguments):
     """Try to connect to a guild call."""
-    disconnect_cmd = await definitions.COMMANDS.get_sub_command_from_path(
+    disconnect_cmd = definitions.COMMANDS.get_sub_command_from_path(
         "guild_call", "disconnect")
 
     context_obj.channel_data.guild_call.connecting = True

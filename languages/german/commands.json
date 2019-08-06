@@ -93,6 +93,18 @@
       "info"
     ],
     "sub_commands": {
+      "command": {
+        "arguments": {
+          "command": {
+            "description": "Which command's information do you want to see? (Do not use prefix.)",
+            "name": "Command"
+          }
+        },
+        "description": "See information about each of the commands.",
+        "names": [
+          "command"
+        ]
+      },
       "member": {
         "arguments": {
           "member": {

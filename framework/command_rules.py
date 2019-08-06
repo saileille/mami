@@ -37,9 +37,9 @@ class CommandRules():
 
     def __str__(self):
         """Get a string representation of the object."""
-        string = "Inclusionary:\n{self.inclusionary}\n\n"
-        string += "Exclusionary:\n{self.exclusionary}\n\n"
-        string += "Sub-Commands:"
+        string = ("Inclusionary:\n{self.inclusionary}\n\n"
+                  "Exclusionary:\n{self.exclusionary}\n\n"
+                  "Sub-Commands:")
 
         for key in self.sub_commands:
             sub_command = self.sub_commands[key]
@@ -182,11 +182,9 @@ class CommandRuleSet():
 
     def __str__(self):
         """Get a string representation of the object."""
-        string = "Users: {self.users}\n"
-        string += "Roles: {self.roles}\n"
-        string += "Permissions: {self.permissions}"
-
-        return string.format(self=self)
+        return ("Users: {self.users}\n"
+                "Roles: {self.roles}\n"
+                "Permissions: {self.permissions}").format(self=self)
 
     async def check_inclusionary(self, message):
         """Check the object as inclusionary."""

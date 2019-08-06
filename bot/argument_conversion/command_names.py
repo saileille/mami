@@ -1,6 +1,23 @@
 """Anything related to converting command names."""
 from bot.data import data_functions
 from bot.misc import embed_messages
+from framework import command_handler
+from framework import exceptions
+
+
+async def command_to_command_object(argument, context, verbose=True):
+    """Get the command object from a command name without prefix."""
+    command, last_working = await command_handler.get_command(
+        argument.split("."), context, check_allowance=False)
+
+    if command == exceptions.InvalidCommandException:
+        command = None
+        if verbose:
+            await embed_messages.invalid_argument(
+                context, argument, await context.language.get_text(
+                    "invalid_command_name", {"cmd_name": argument}))
+
+    return command
 
 
 async def command_to_command_rules(argument, context, data_object, verbose):

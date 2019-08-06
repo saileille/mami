@@ -61,13 +61,13 @@ async def add_shortcut(context, arguments, platform_type):
         await context.language.get_text(platform_type + "_shortcut_added_title"))
 
     shortcut_cmd = definitions.COMMANDS.sub_commands["shortcut"]
-    shortcut_call = await shortcut_cmd.get_command_string(context)
-
     shortcut_name = shortcut.name
     if " " in shortcut_name:
         shortcut_name = '"' + shortcut_name + '"'
 
-    shortcut_call += " " + shortcut_name
+    shortcut_call = "{shortcut_cmd} {shortcut_name}".format(
+        shortcut_cmd=await shortcut_cmd.get_command_string(context),
+        shortcut_name=shortcut_name)
 
     message.embed.description = "✅ " + await context.language.get_text(
         platform_type + "_shortcut_added_desc",
@@ -142,7 +142,7 @@ async def display_shortcuts(context, platform_type):
 
     shortcuts.sort()
 
-    shortcut_command = await definitions.COMMANDS.get_sub_command_from_path("shortcut")
+    shortcut_command = definitions.COMMANDS.get_sub_command_from_path("shortcut")
     shortcut_cmd_name = await shortcut_command.get_command_string(context)
 
     shortcut_instruction = shortcut_cmd_name + " [" + (

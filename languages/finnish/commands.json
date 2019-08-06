@@ -9,15 +9,15 @@
         "arguments": {
           "amount": {
             "description": "Kuinka paljon haluat vaihtaa?",
-            "name": "määrä"
+            "name": "Määrä"
           },
           "base": {
             "description": "Mistä valuutasta haluat vaihtaa?",
-            "name": "pohja"
+            "name": "Pohjavaluutta"
           },
           "target": {
             "description": "Mihin valuuttaan haluat vaihtaa?",
-            "name": "kohde"
+            "name": "Kohdevaluutta"
           }
         },
         "description": "Vaihda valuuttaa.",
@@ -35,7 +35,7 @@
         "arguments": {
           "search_term": {
             "description": "Kirjoita hakutermi, jolla haluat etsiä valuuttoja.",
-            "name": "hakutermi"
+            "name": "Hakutermi"
           }
         },
         "description": "Hae valuutta.",
@@ -49,15 +49,15 @@
     "arguments": {
       "first_value": {
         "description": "Syötä nopan minimi- tai maksimiarvo.",
-        "name": "ensimmäinen_arvo"
+        "name": "Ensimmäinen ääriarvo"
       },
       "no_of_dice": {
         "description": "Kuinka monta noppaa haluat heittää?",
-        "name": "noppien_määrä"
+        "name": "Noppien määrä"
       },
       "second_value": {
         "description": "Syötä nopan maksimi- tai minimiarvo.",
-        "name": "toinen_arvo"
+        "name": "Toinen ääriarvo"
       }
     },
     "description": "Heitä noppaa.",
@@ -66,17 +66,51 @@
       "nopat"
     ]
   },
+  "guild_call": {
+    "description": "Soita toisille palvelimille!",
+    "names": [
+      "palvelinpuhelu",
+      "kiltapuhelu"
+    ],
+    "sub_commands": {
+      "connect": {
+        "description": "Yhdistä puhelu.",
+        "names": [
+          "yhdistä"
+        ]
+      },
+      "disconnect": {
+        "description": "Sulje puhelu.",
+        "names": [
+          "sulje"
+        ]
+      }
+    }
+  },
   "info": {
     "description": "Tietoa sekalaisista asioista.",
     "names": [
       "info"
     ],
     "sub_commands": {
+      "command": {
+        "arguments": {
+          "command": {
+            "description": "Minkä komennon tiedot haluat nähdä? (Älä käytä prefiksiä.)",
+            "description": "Which command's information do you want to see? (Do not use prefix.)",
+            "name": "Komento"
+          }
+        },
+        "description": "Näe tietoa komennoista.",
+        "names": [
+          "komento"
+        ]
+      },
       "member": {
         "arguments": {
           "member": {
             "description": "Syötä palvelimen jäsenen ID, maininta tai nimi, jonka tietoja haluat nähdä.",
-            "name": "jäsen"
+            "name": "Jäsen"
           }
         },
         "description": "Tietoa palvelimen jäsenistä.",
@@ -96,7 +130,7 @@
         "arguments": {
           "text": {
             "description": "Minkä tekstin haluat muuntaa?",
-            "name": "teksti"
+            "name": "Teksti"
           }
         },
         "description": "Muunna teksti arkaaisiksi riimuiksi.",
@@ -108,7 +142,7 @@
         "arguments": {
           "text": {
             "description": "Minkä tekstin haluat muuntaa?",
-            "name": "teksti"
+            "name": "Teksti"
           }
         },
         "description": "Muunna teksti moderneiksi riimuiksi.",
@@ -120,7 +154,7 @@
         "arguments": {
           "text": {
             "description": "Minkä tekstin haluat muuntaa?",
-            "name": "teksti"
+            "name": "Teksti"
           }
         },
         "description": "Muunna teksti musikaalisiksi riimuiksi.",
@@ -160,11 +194,11 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                        "name": "komennot"
+                        "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "sääntö"
+                        "name": "Sääntö"
                       }
                     },
                     "description": "Lisää poissulkeva sääntö.",
@@ -176,11 +210,11 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                        "name": "komennot"
+                        "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "sääntö"
+                        "name": "Sääntö"
                       }
                     },
                     "description": "Lisää mukaanlukeva sääntö.",
@@ -194,7 +228,7 @@
                 "arguments": {
                   "command": {
                     "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
-                    "name": "komento"
+                    "name": "Komento"
                   }
                 },
                 "description": "Näytä annetun komennon komentosäännöt.",
@@ -206,11 +240,11 @@
                 "arguments": {
                   "commands": {
                     "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                    "name": "komennot"
+                    "name": "Komennot"
                   },
                   "rule": {
                     "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
-                    "name": "sääntö"
+                    "name": "Sääntö"
                   }
                 },
                 "description": "Poista komentosääntöjä.",
@@ -236,7 +270,7 @@
                 "arguments": {
                   "language": {
                     "description": "Minkä kielen haluat asettaa kategorialle? Voit käyttää kielen nimeä tai lippuemojia.",
-                    "name": "kieli"
+                    "name": "Kieli"
                   }
                 },
                 "description": "Vaihda kategorian kieli tiettyyn.",
@@ -257,11 +291,11 @@
                 "arguments": {
                   "content": {
                     "description": "Syötä uuden pikakomennon sisältö.",
-                    "name": "sisältö"
+                    "name": "Sisältö"
                   },
                   "name": {
                     "description": "Syötä uuden pikakomennon nimi.",
-                    "name": "nimi"
+                    "name": "Nimi"
                   }
                 },
                 "description": "Lisää kategorian pikakomento.",
@@ -273,7 +307,7 @@
                 "arguments": {
                   "name": {
                     "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
-                    "name": "nimi"
+                    "name": "Nimi"
                   }
                 },
                 "description": "Poista olemassaoleva kategorian pikakomento.",
@@ -313,11 +347,11 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                        "name": "komennot"
+                        "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "sääntö"
+                        "name": "Sääntö"
                       }
                     },
                     "description": "Lisää poissulkeva sääntö.",
@@ -329,11 +363,11 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                        "name": "komennot"
+                        "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "sääntö"
+                        "name": "Sääntö"
                       }
                     },
                     "description": "Lisää mukaanlukeva sääntö.",
@@ -347,7 +381,7 @@
                 "arguments": {
                   "command": {
                     "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
-                    "name": "komento"
+                    "name": "Komento"
                   }
                 },
                 "description": "Näytä annetun komennon komentosäännöt.",
@@ -359,11 +393,11 @@
                 "arguments": {
                   "commands": {
                     "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                    "name": "komennot"
+                    "name": "Komennot"
                   },
                   "rule": {
                     "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
-                    "name": "sääntö"
+                    "name": "Sääntö"
                   }
                 },
                 "description": "Poista komentosääntöjä.",
@@ -389,7 +423,7 @@
                 "arguments": {
                   "language": {
                     "description": "Minkä kielen haluat asettaa kanavalle? Voit käyttää kielen nimeä tai lippuemojia.",
-                    "name": "kieli"
+                    "name": "Kieli"
                   }
                 },
                 "description": "Vaihda kanavan kieli tiettyyn.",
@@ -410,11 +444,11 @@
                 "arguments": {
                   "content": {
                     "description": "Syötä uuden pikakomennon sisältö.",
-                    "name": "sisältö"
+                    "name": "Sisältö"
                   },
                   "name": {
                     "description": "Syötä uuden pikakomennon nimi.",
-                    "name": "nimi"
+                    "name": "Nimi"
                   }
                 },
                 "description": "Lisää kanavalle pikakomento.",
@@ -426,7 +460,7 @@
                 "arguments": {
                   "name": {
                     "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
-                    "name": "nimi"
+                    "name": "Nimi"
                   }
                 },
                 "description": "Poista olemassaoleva kanavan pikakomento.",
@@ -467,11 +501,11 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                        "name": "komennot"
+                        "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "sääntö"
+                        "name": "Sääntö"
                       }
                     },
                     "description": "Lisää poissulkeva sääntö.",
@@ -483,11 +517,11 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                        "name": "komennot"
+                        "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "sääntö"
+                        "name": "Sääntö"
                       }
                     },
                     "description": "Lisää mukaanlukeva sääntö.",
@@ -501,7 +535,7 @@
                 "arguments": {
                   "command": {
                     "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
-                    "name": "komento"
+                    "name": "Komento"
                   }
                 },
                 "description": "Näytä annetun komennon komentosäännöt.",
@@ -513,11 +547,11 @@
                 "arguments": {
                   "commands": {
                     "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
-                    "name": "komennot"
+                    "name": "Komennot"
                   },
                   "rule": {
                     "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
-                    "name": "sääntö"
+                    "name": "Sääntö"
                   }
                 },
                 "description": "Poista komentosääntöjä.",
@@ -543,7 +577,7 @@
                 "arguments": {
                   "language": {
                     "description": "Minkä kielen haluat asettaa palvelimelle? Voit käyttää kielen nimeä tai lippuemojia.",
-                    "name": "kieli"
+                    "name": "Kieli"
                   }
                 },
                 "description": "Vaihda palvelimen kieli tiettyyn.",
@@ -564,11 +598,11 @@
                 "arguments": {
                   "content": {
                     "description": "Syötä uuden pikakomennon sisältö.",
-                    "name": "sisältö"
+                    "name": "Sisältö"
                   },
                   "name": {
                     "description": "Syötä uuden pikakomennon nimi.",
-                    "name": "nimi"
+                    "name": "Nimi"
                   }
                 },
                 "description": "Lisää palvelimen pikakomento.",
@@ -580,7 +614,7 @@
                 "arguments": {
                   "name": {
                     "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
-                    "name": "nimi"
+                    "name": "Nimi"
                   }
                 },
                 "description": "Poista olemassaoleva palvelimen pikakomento.",
@@ -620,7 +654,7 @@
                 "arguments": {
                   "language": {
                     "description": "Minkä kielen haluat asettaa käyttäjäasetuksillesi? Voit käyttää kielen nimeä tai lippuemojia.",
-                    "name": "kieli"
+                    "name": "Kieli"
                   }
                 },
                 "description": "Vaihda käyttäjäasetustesi kieli tiettyyn.",
@@ -641,11 +675,11 @@
                 "arguments": {
                   "content": {
                     "description": "Syötä uuden pikakomennon sisältö.",
-                    "name": "sisältö"
+                    "name": "Sisältö"
                   },
                   "name": {
                     "description": "Syötä uuden pikakomennon nimi.",
-                    "name": "nimi"
+                    "name": "Nimi"
                   }
                 },
                 "description": "Lisää käyttäjän pikakomento.",
@@ -657,7 +691,7 @@
                 "arguments": {
                   "name": {
                     "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
-                    "name": "nimi"
+                    "name": "Nimi"
                   }
                 },
                 "description": "Poista olemassaoleva käyttäjän pikakomento.",
@@ -681,7 +715,7 @@
     "arguments": {
       "name": {
         "description": "Mitä pikakomentoa haluat käyttää?",
-        "name": "nimi"
+        "name": "Nimi"
       }
     },
     "description": "Käytä olemassaolevia pikakomentoja.",

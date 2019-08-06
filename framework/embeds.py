@@ -72,6 +72,9 @@ class EmbedFieldCollection():
 
     async def set_page(self, page, embed):
         """Add the column info of a certain page."""
+        if self.pages == 1:
+            page = 0
+
         first_index = self.column_amount * page
         last_index = self.column_amount * (page + 1)
 
@@ -118,66 +121,70 @@ class PaginatedEmbed():
 
         return self._author_text
 
-    async def send(self, context, thumbnail="default", colour=None):
+    async def send(
+            self, context, channel="default", thumbnail="default", author_icon="default",
+            colour=None):
         """Send an embed message with as much automation as possible."""
+        if channel == "default":
+            channel = context.message.channel
         if thumbnail == "default":
             thumbnail = context.message.author.avatar_url
 
-        await self.pre_message(context, thumbnail, colour)
-        self.message = await context.message.channel.send("", embed=self.embed)
+        await self.pre_message(context, thumbnail, author_icon, colour)
+        self.message = await channel.send("", embed=self.embed)
         await self.post_message(context)
 
         return self.message
 
-    async def pre_message(self, context, thumbnail, colour):
+    async def pre_message(self, context, thumbnail, author_icon, colour):
         """Initialise the embed."""
         if colour is None:
             colour = await get_random_colour()
 
-        icon_url = context.message.author.avatar_url
-        if context.message.guild is not None:
-            icon_url = context.message.guild.icon_url
+        if author_icon == "default":
+            if context.message.guild is not None:
+                author_icon = context.message.guild.icon_url
+            else:
+                author_icon = context.message.author.avatar_url
 
         self.embed.colour = colour
         self.embed.set_footer(
-            text=await context.language.get_text("calculating"),
+            text=await context.language.get_text("footer_text"),
             icon_url=definitions.CLIENT.user.avatar_url)
 
         if thumbnail:
             self.embed.set_thumbnail(url=thumbnail)
 
-        await self.update_page(icon_url)
+        await self.update_page(author_icon)
 
     async def post_message(self, context):
         """Post-message handling."""
-        msg_time = None
-        if context.message.edited_at is not None:
-            msg_time = context.message.edited_at
-        else:
-            msg_time = context.message.created_at
+        if context.timestamp is not None:
+            ping = int(
+                (self.message.created_at - context.timestamp).total_seconds() * 1000)
 
-        context.ping = int((self.message.created_at - msg_time).total_seconds() * 1000)
+            icon = self.embed.footer.icon_url
+            footer_text = "{ping} | {footer_text}".format(
+                footer_text=await context.language.get_text("footer_text"),
+                ping=await context.language.get_text("ping", {"ping": ping}))
 
-        icon = self.embed.footer.icon_url
-        self.embed.set_footer(
-            text=await context.language.get_text("ping", {"ping": context.ping}),
-            icon_url=icon)
+            self.embed.set_footer(text=footer_text, icon_url=icon)
 
-        await self.message.edit(embed=self.embed)
+            await self.message.edit(embed=self.embed)
 
         if self.pages > 1:
             await self.paginator(context.message)
 
-    async def update_page(self, icon_url=None):
+    async def update_page(self, author_icon=None):
         """Update the fields to the current page."""
-        if icon_url is None:
-            icon_url = self.embed.author.icon_url
+        if author_icon is None:
+            author_icon = self.embed.author.icon_url
 
         self.embed.clear_fields()
         for field in self.fields:
             await field.set_page(self.current_page, self.embed)
 
-        self.embed.set_author(name=self.author_text, icon_url=icon_url)
+        self.embed.set_author(name=self.author_text, icon_url=author_icon)
         if self.message is not None:
             await self.message.edit(embed=self.embed)
 

@@ -21,7 +21,7 @@ async def check_prefix(context):
     return command
 
 
-async def get_command(command_input, context):
+async def get_command(command_list, context, check_allowance=True):
     """
     Check if command exists and if the user is allowed to use it.
 
@@ -31,10 +31,12 @@ async def get_command(command_input, context):
     command = definitions.COMMANDS
     last_working_command = command
 
-    for command_call in command_input.commands:
+    for command_call in command_list:
         for sub_command in command.sub_commands.values():
             if command_call in sub_command.localisation[context.language_id]["names"]:
-                exception = await sub_command.check_if_allowed(context)
+                exception = None
+                if check_allowance:
+                    exception = await sub_command.check_if_allowed(context)
                 if exception is None:
                     command = sub_command
                     last_working_command = command
@@ -60,7 +62,7 @@ async def process_command_call(context, command_string):
     command_input = CommandInput(command_string)
     await command_input.parse_raw_text()
 
-    command, last_working_command = await get_command(command_input, context)
+    command, last_working_command = await get_command(command_input.commands, context)
 
     if command == exceptions.InvalidCommandException:
         await last_working_command.invalid_command(context, command_input)

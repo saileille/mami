@@ -22,11 +22,13 @@ class Command():
     sub_commands - dictionary of Command
     """
 
-    def __init__(self, obj_id=None, pre_check=None, action=None, nsfw_action=None,
-                 arguments=None, unlimited_arguments=False, default_permissions=None,
-                 sub_commands=None):
+    def __init__(
+            self, obj_id=None, related_commands=None, pre_check=None, action=None,
+            nsfw_action=None, arguments=None, unlimited_arguments=False,
+            default_permissions=None, sub_commands=None):
         """Object initialisation."""
         self.obj_id = obj_id
+        self._related_commands = related_commands
         self.pre_check = pre_check
         self.action = action
         self.nsfw_action = nsfw_action
@@ -37,6 +39,9 @@ class Command():
 
         self.localisation = {}
         self.parent_commands = []
+
+        if self._related_commands is None:
+            self._related_commands = []
 
         if self.arguments is None:
             self.arguments = []
@@ -55,6 +60,16 @@ class Command():
             id_path += [self.obj_id]
 
         return id_path
+
+    @property
+    def related_commands(self):
+        """Get related commands."""
+        if self._related_commands and isinstance(self._related_commands[0], list):
+            root_cmd = definitions.COMMANDS
+            for i, id_list in self._related_commands:
+                self._related_commands[i] = root_cmd.get_sub_command_from_path(id_list)
+
+        return self._related_commands
 
     def add_localisation(self, language_id, localisation_pack):
         """
@@ -184,6 +199,21 @@ class Command():
 
         return language_data
 
+    def get_sub_command_from_path(self, *id_list):
+        """
+        Get a sub-command with the given ID path.
+
+        The function presumes that the ID path is valid.
+        """
+        if isinstance(id_list[0], list):
+            id_list = id_list[0]
+
+        command = self
+        for cmd_id in id_list:
+            command = command.sub_commands[cmd_id]
+
+        return command
+
     async def execute(self, context, command_input):
         """Execute the command."""
         if self.action is None:
@@ -198,7 +228,7 @@ class Command():
 
             await self.action(context, command_input.arguments)
 
-    async def get_command_string(self, context):
+    async def get_command_string(self, context, include_prefix=True):
         """Get the command string with the context language."""
         commands = definitions.COMMANDS.sub_commands
         command_names = []
@@ -212,7 +242,11 @@ class Command():
         if self.obj_id is not None:
             command_names.append(self.localisation[context.language_id]["names"][0])
 
-        return context.prefix + ".".join(command_names)
+        command_string = ".".join(command_names)
+        if include_prefix:
+            command_string = context.prefix + command_string
+
+        return command_string
 
     async def get_sub_commands(self, context, command_input=None):
         """
@@ -237,18 +271,6 @@ class Command():
 
         commands.sort()
         return commands
-
-    async def get_sub_command_from_path(self, id_list):
-        """
-        Get a sub-command with the given ID path.
-
-        The function presumes that the ID path is valid.
-        """
-        command = self
-        for cmd_id in id_list:
-            command = command.sub_commands[cmd_id]
-
-        return command
 
     async def check_if_allowed(self, context, verbose=True):
         """
@@ -394,24 +416,24 @@ class Command():
                 i = -1
                 optional_argument = True
 
-            argument = await self.arguments[i].dialogue(
-                context, optional_argument, arguments_given + 1, argument_amount)
+            converted_argument = None
+            while converted_argument is None:
+                argument = await self.arguments[i].dialogue(
+                    context, optional_argument, arguments_given + 1, argument_amount)
 
-            # If cancel button is pressed.
-            if argument is None:
-                # If optional argument.
-                if optional_argument:
-                    return True
+                # If cancel button is pressed.
+                if argument is None:
+                    # If optional argument.
+                    if optional_argument:
+                        return True
 
-                # If not optional argument.
-                await context.message.channel.send(
-                    await context.language.get_text("command_aborted"))
+                    # If not optional argument.
+                    await context.message.channel.send(
+                        await context.language.get_text("command_aborted"))
 
-                return False
+                    return False
 
-            converted_argument = await self.arguments[i].convert(argument, context)
-            if converted_argument is None:
-                return False
+                converted_argument = await self.arguments[i].convert(argument, context)
 
             arguments.append(converted_argument)
 
@@ -430,4 +452,5 @@ class Command():
             return False
 
         valid = await self.validate_missing_arguments(context, arguments)
+
         return valid

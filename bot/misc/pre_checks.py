@@ -14,8 +14,8 @@ async def in_dms(context, verbose=True):
     msg_in_dms = context.guild_data is None
 
     if not msg_in_dms and verbose:
-        custom_msg = await context.language.get_text("command_used_in_guild")
-        await embed_messages.failed_pre_check(context, custom_msg)
+        await embed_messages.failed_pre_check(
+            context, await context.language.get_text("command_used_in_guild"))
 
     return msg_in_dms
 
@@ -25,10 +25,21 @@ async def in_guild(context, verbose=True):
     msg_in_guild = context.guild_data is not None
 
     if not msg_in_guild and verbose:
-        custom_msg = await context.language.get_text("command_used_in_dms")
-        await embed_messages.failed_pre_check(context, custom_msg)
+        await embed_messages.failed_pre_check(
+            context, await context.language.get_text("command_used_in_dms"))
 
     return msg_in_guild
+
+
+async def in_category(context, verbose=True):
+    """Make sure the command is used on a channel that has category."""
+    pre_check = context.category_data is not None
+
+    if not pre_check and verbose:
+        await embed_messages.failed_pre_check(
+            context, await context.language.get_text("command_used_in_category"))
+
+    return pre_check
 
 
 async def platform_has_shortcuts(context, platform_type, verbose):
@@ -37,8 +48,8 @@ async def platform_has_shortcuts(context, platform_type, verbose):
     has_shortcuts = bool(data_object.shortcuts)
 
     if not has_shortcuts and verbose:
-        shortcut_cmd = await definitions.COMMANDS.get_sub_command_from_path(
-            ["settings", platform_type, "shortcut", "add"])
+        shortcut_cmd = definitions.COMMANDS.get_sub_command_from_path(
+            "settings", platform_type, "shortcut", "add")
 
         shortcut_cmd_name = await shortcut_cmd.get_command_string(context)
 
@@ -102,3 +113,30 @@ async def guild_has_language(context, verbose=True):
 async def user_has_language(context, verbose=True):
     """Check if the user has a language set."""
     return await platform_has_language(context, "user", verbose)
+
+
+async def is_not_connecting_guild_call(context, verbose=True):
+    """Check that the channel is not connecting for a call."""
+    pre_check = (await in_guild(context, verbose=False) and
+                 not context.channel_data.guild_call.connecting and
+                 context.channel_data.guild_call.connected_channel is None)
+
+    if not pre_check and verbose:
+        await embed_messages.failed_pre_check(
+            context, await context.language.get_text("is_connecting_guild_call"))
+
+    return pre_check
+
+
+async def is_connecting_or_connected_guild_call(context, verbose=True):
+    """Check that the channel is connecting or connected for a call."""
+    pre_check = (await in_guild(context, verbose=False) and
+                 context.channel_data.guild_call.connecting or
+                 context.channel_data.guild_call.connected_channel is not None)
+
+    if not pre_check and verbose:
+        await embed_messages.failed_pre_check(
+            context, await context.language.get_text(
+                "is_not_connecting_connected_guild_call"))
+
+    return pre_check

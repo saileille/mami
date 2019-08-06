@@ -9,15 +9,15 @@
         "arguments": {
           "amount": {
             "description": "How much do you want to convert?",
-            "name": "amount"
+            "name": "Amount"
           },
           "base": {
             "description": "Which currency do you want to use as the base?",
-            "name": "base"
+            "name": "Base Currency"
           },
           "target": {
             "description": "Which currency do you want to use as the target?",
-            "name": "target"
+            "name": "Target Currency"
           }
         },
         "description": "Convert from one currency to another.",
@@ -36,7 +36,7 @@
         "arguments": {
           "search_term": {
             "description": "Type a search term for the currencies you want to find.",
-            "name": "search_term"
+            "name": "Search Term"
           }
         },
         "description": "Search for a currency.",
@@ -50,15 +50,15 @@
     "arguments": {
       "first_value": {
         "description": "Enter the minimum (or maximum) value the dice should have.",
-        "name": "first_value"
+        "name": "First Extremum"
       },
       "no_of_dice": {
         "description": "How many dice do you want to throw?",
-        "name": "no_of_dice"
+        "name": "No. of Dice"
       },
       "second_value": {
         "description": "Enter the maximum (or minimum) value the dice should have.",
-        "name": "second_value"
+        "name": "Second Extremum"
       }
     },
     "description": "Throw a die or dice.",
@@ -66,17 +66,48 @@
       "dice"
     ]
   },
+  "guild_call": {
+    "description": "Make calls to other servers!",
+    "names": [
+      "server_call",
+      "guild_call"
+    ],
+    "sub_commands": {
+      "connect": {
+        "description": "Connect a call.",
+        "names": [
+          "connect"
+        ]
+      },
+      "disconnect": {
+        "description": "Disconnect a call.",
+        "names": [
+          "disconnect"
+        ]
+      }
+    }
+  },
   "info": {
     "description": "Information about various things.",
     "names": [
       "info"
     ],
     "sub_commands": {
+      "command": {
+        "arguments": {
+          "command": {
+            "description": "Which command's information do you want to see? (Do not use prefix.)",
+            "name": "Command"
+          }
+        },
+        "description": "See information about each of the commands.",
+        "names": ["command"]
+      },
       "member": {
         "arguments": {
           "member": {
             "description": "Give the ID, mention or name of the server member whose information you want to see.",
-            "name": "member"
+            "name": "Member"
           }
         },
         "description": "Information about server members.",
@@ -96,7 +127,7 @@
         "arguments": {
           "text": {
             "description": "What text do you want to convert?",
-            "name": "text"
+            "name": "Text"
           }
         },
         "description": "Convert text into archaic runes.",
@@ -108,7 +139,7 @@
         "arguments": {
           "text": {
             "description": "What text do you want to convert?",
-            "name": "text"
+            "name": "Text"
           }
         },
         "description": "Convert text into modern runes.",
@@ -120,7 +151,7 @@
         "arguments": {
           "text": {
             "description": "What text do you want to convert?",
-            "name": "text"
+            "name": "Text"
           }
         },
         "description": "Convert text into musical runes.",
@@ -158,11 +189,11 @@
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
-                        "name": "commands"
+                        "name": "Commands"
                       },
                       "rule": {
                         "description": "Give a member, role or server permission to which you want the rule to apply.",
-                        "name": "rule"
+                        "name": "Rule"
                       }
                     },
                     "description": "Add an exclusionary rule.",
@@ -174,11 +205,11 @@
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
-                        "name": "commands"
+                        "name": "Commands"
                       },
                       "rule": {
                         "description": "Give a member, role or server permission to which you want the rule to apply.",
-                        "name": "rule"
+                        "name": "Rule"
                       }
                     },
                     "description": "Add an inclusionary rule.",
@@ -192,7 +223,7 @@
                 "arguments": {
                   "command": {
                     "description": "Insert the command whose command rules you want to see.",
-                    "name": "command"
+                    "name": "Command"
                   }
                 },
                 "description": "Display given command's command rules.",
@@ -204,11 +235,11 @@
                 "arguments": {
                   "commands": {
                     "description": "From which commands do you want to remove the rule? (Separate the commands with a space, do not use the prefix.)",
-                    "name": "commands"
+                    "name": "Commands"
                   },
                   "rule": {
                     "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
-                    "name": "rule"
+                    "name": "Rule"
                   }
                 },
                 "description": "Remove command rule(s).",
@@ -234,7 +265,7 @@
                 "arguments": {
                   "language": {
                     "description": "Which language do you want to set for the category? You can use either language name or flag emoji.",
-                    "name": "language"
+                    "name": "Language"
                   }
                 },
                 "description": "Set the category language to a specific one.",
@@ -255,11 +286,11 @@
                 "arguments": {
                   "content": {
                     "description": "Enter the content for the new shortcut.",
-                    "name": "content"
+                    "name": "Content"
                   },
                   "name": {
                     "description": "Enter the name for the new shortcut.",
-                    "name": "name"
+                    "name": "Name"
                   }
                 },
                 "description": "Add a category shortcut.",
@@ -271,7 +302,7 @@
                 "arguments": {
                   "name": {
                     "description": "Enter the name of the shortcut you wish to delete.",
-                    "name": "name"
+                    "name": "Name"
                   }
                 },
                 "description": "Delete an existing category shortcut.",
@@ -312,11 +343,11 @@
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
-                        "name": "commands"
+                        "name": "Commands"
                       },
                       "rule": {
                         "description": "Give a member, role or server permission to which you want the rule to apply.",
-                        "name": "rule"
+                        "name": "Rule"
                       }
                     },
                     "description": "Add an exclusionary rule.",
@@ -328,11 +359,11 @@
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
-                        "name": "commands"
+                        "name": "Commands"
                       },
                       "rule": {
                         "description": "Give a member, role or server permission to which you want the rule to apply.",
-                        "name": "rule"
+                        "name": "Rule"
                       }
                     },
                     "description": "Add an inclusionary rule.",
@@ -346,7 +377,7 @@
                 "arguments": {
                   "command": {
                     "description": "Insert the command whose command rules you want to see.",
-                    "name": "command"
+                    "name": "Command"
                   }
                 },
                 "description": "Display given command's command rules.",
@@ -358,11 +389,11 @@
                 "arguments": {
                   "commands": {
                     "description": "From which commands do you want to remove the rule? (Separate the commands with a space, do not use the prefix.)",
-                    "name": "commands"
+                    "name": "Commands"
                   },
                   "rule": {
                     "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
-                    "name": "rule"
+                    "name": "Rule"
                   }
                 },
                 "description": "Remove command rule(s).",
@@ -388,7 +419,7 @@
                 "arguments": {
                   "language": {
                     "description": "Which language do you want to set for the channel? You can use either language name or flag emoji.",
-                    "name": "language"
+                    "name": "Language"
                   }
                 },
                 "description": "Set the channel language to a specific one.",
@@ -409,11 +440,11 @@
                 "arguments": {
                   "content": {
                     "description": "Enter the content for the new shortcut.",
-                    "name": "content"
+                    "name": "Content"
                   },
                   "name": {
                     "description": "Enter the name for the new shortcut.",
-                    "name": "name"
+                    "name": "Name"
                   }
                 },
                 "description": "Add a channel shortcut.",
@@ -425,7 +456,7 @@
                 "arguments": {
                   "name": {
                     "description": "Enter the name of the shortcut you wish to delete.",
-                    "name": "name"
+                    "name": "Name"
                   }
                 },
                 "description": "Delete an existing channel shortcut.",
@@ -467,11 +498,11 @@
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
-                        "name": "commands"
+                        "name": "Commands"
                       },
                       "rule": {
                         "description": "Give a member, role or server permission to which you want the rule to apply.",
-                        "name": "rule"
+                        "name": "Rule"
                       }
                     },
                     "description": "Add an exclusionary rule.",
@@ -483,11 +514,11 @@
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
-                        "name": "commands"
+                        "name": "Commands"
                       },
                       "rule": {
                         "description": "Give a member, role or server permission to which you want the rule to apply.",
-                        "name": "rule"
+                        "name": "Rule"
                       }
                     },
                     "description": "Add an inclusionary rule.",
@@ -501,7 +532,7 @@
                 "arguments": {
                   "command": {
                     "description": "Insert the command whose command rules you want to see.",
-                    "name": "command"
+                    "name": "Command"
                   }
                 },
                 "description": "Display given command's command rules.",
@@ -513,11 +544,11 @@
                 "arguments": {
                   "commands": {
                     "description": "From which commands do you want to remove the rule? (Separate the commands with a space, do not use the prefix.)",
-                    "name": "commands"
+                    "name": "Commands"
                   },
                   "rule": {
                     "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
-                    "name": "rule"
+                    "name": "Rule"
                   }
                 },
                 "description": "Remove command rule(s).",
@@ -543,7 +574,7 @@
                 "arguments": {
                   "language": {
                     "description": "Which language do you want to set for the server? You can use either language name or flag emoji.",
-                    "name": "language"
+                    "name": "Language"
                   }
                 },
                 "description": "Set the server language to a specific one.",
@@ -564,11 +595,11 @@
                 "arguments": {
                   "content": {
                     "description": "Enter the content for the new shortcut.",
-                    "name": "content"
+                    "name": "Content"
                   },
                   "name": {
                     "description": "Enter the name for the new shortcut.",
-                    "name": "name"
+                    "name": "Name"
                   }
                 },
                 "description": "Add a server shortcut.",
@@ -580,7 +611,7 @@
                 "arguments": {
                   "name": {
                     "description": "Enter the name of the shortcut you wish to delete.",
-                    "name": "name"
+                    "name": "Name"
                   }
                 },
                 "description": "Delete an existing server shortcut.",
@@ -621,7 +652,7 @@
                 "arguments": {
                   "language": {
                     "description": "Which language do you want to set for yourself? You can use either language name or flag emoji.",
-                    "name": "language"
+                    "name": "Language"
                   }
                 },
                 "description": "Set your user language to a specific one.",
@@ -642,11 +673,11 @@
                 "arguments": {
                   "content": {
                     "description": "Enter the content for the new shortcut.",
-                    "name": "content"
+                    "name": "Content"
                   },
                   "name": {
                     "description": "Enter the name for the new shortcut.",
-                    "name": "name"
+                    "name": "Name"
                   }
                 },
                 "description": "Add a user shortcut.",
@@ -658,7 +689,7 @@
                 "arguments": {
                   "name": {
                     "description": "Enter the name of the shortcut you wish to delete.",
-                    "name": "name"
+                    "name": "Name"
                   }
                 },
                 "description": "Delete an existing user shortcut.",
@@ -683,7 +714,7 @@
     "arguments": {
       "name": {
         "description": "Which shortcut do you want to use?",
-        "name": "name"
+        "name": "Name"
       }
     },
     "description": "Use existing shortcuts.",

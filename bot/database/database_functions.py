@@ -1,5 +1,4 @@
 """Bot database stuff."""
-import json
 import os
 import sqlite3
 
@@ -7,6 +6,9 @@ from bot.commands import shortcuts
 from bot.data import definitions
 from datatypes import config_data
 from framework import custom_json
+
+
+PLURAL = {"category": "categories", "channel": "channels", "guild": "guilds"}
 
 
 def connect():
@@ -139,16 +141,7 @@ async def insert_shortcut(context, shortcut, platform_type):
         VALUES(?, ?, ?, ?, ?)
     """
 
-    platform_id = None
-    if platform_type == "user":
-        platform_id = context.message.author.id
-    elif platform_type == "channel":
-        platform_id = context.message.channel.id
-    elif platform_type == "category":
-        platform_id = context.message.channel.category_id
-    elif platform_type == "guild":
-        platform_id = context.message.guild.id
-
+    platform_id = await get_id_from_platform(context.message, platform_type)
     variables = (shortcut.name, platform_id, platform_type, shortcut.creator,
                  shortcut.content)
 
@@ -163,16 +156,7 @@ async def delete_shortcut(context, name, platform_type):
         WHERE name = ? AND platform_id = ? AND platform_type = ?
     """
 
-    platform_id = None
-    if platform_type == "user":
-        platform_id = context.message.author.id
-    elif platform_type == "channel":
-        platform_id = context.message.channel.id
-    elif platform_type == "category":
-        platform_id = context.message.channel.category_id
-    elif platform_type == "guild":
-        platform_id = context.message.guild.id
-
+    platform_id = await get_id_from_platform(context.message, platform_type)
     variables = (name, platform_id, platform_type)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
@@ -365,9 +349,9 @@ async def update_user(context):
         WHERE id = ?
     """
 
-    variables = (context.user_data.prefix,
-                 context.user_data.language_id,
-                 context.message.author.id)
+    variables = (
+        context.user_data.prefix, context.user_data.language_id,
+        context.message.author.id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -433,99 +417,34 @@ async def update_guild(context):
     definitions.DATABASE_CONNECTION.commit()
 
 
-async def update_category_language(context):
-    """Update the category language to the database."""
+async def update_language(context, platform):
+    """Update language to the database."""
     statement = """
-        UPDATE categories SET
+        UPDATE {table} SET
             language = ?
         WHERE id = ?
-    """
+    """.format(table=PLURAL[platform])
 
-    variables = (context.category_data.language_id, context.message.channel.category_id)
+    platform_data = getattr(context, platform + "_data")
+    platform_id = await get_id_from_platform(context.message, platform)
+
+    variables = (platform_data.language_id, platform_id)
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
 
 
-async def update_channel_language(context):
-    """Update the channel language to the database."""
+async def update_command_rules(context, platform):
+    """Update command rules for selected platform."""
     statement = """
-        UPDATE channels SET
-            language = ?
-        WHERE id = ?
-    """
-
-    variables = (context.channel_data.language_id, context.message.channel.category_id)
-    definitions.DATABASE_CURSOR.execute(statement, variables)
-    definitions.DATABASE_CONNECTION.commit()
-
-
-async def update_guild_language(context):
-    """Update the guild language to the database."""
-    statement = """
-        UPDATE guilds SET
-            language = ?
-        WHERE id = ?
-    """
-
-    variables = (context.guild_data.language_id, context.message.guild.id)
-    definitions.DATABASE_CURSOR.execute(statement, variables)
-    definitions.DATABASE_CONNECTION.commit()
-
-
-async def update_user_language(context):
-    """Update the user language to the database."""
-    statement = """
-        UPDATE users SET
-            language = ?
-        WHERE id = ?
-    """
-
-    variables = (context.user_data.language_id, context.message.guild.id)
-    definitions.DATABASE_CURSOR.execute(statement, variables)
-    definitions.DATABASE_CONNECTION.commit()
-
-
-async def update_category_command_rules(context):
-    """Update the category command rules to the database."""
-    statement = """
-        UPDATE categories SET
+        UPDATE {table} SET
             checks = ?
         WHERE id = ?
-    """
+    """.format(table=PLURAL[platform])
 
-    variables = (
-        custom_json.save(context.category_data.command_rules),
-        context.message.category.id)
+    platform_data = getattr(context, platform + "_data")
+    platform_id = await get_id_from_platform(context.message, platform)
 
-    definitions.DATABASE_CURSOR.execute(statement, variables)
-    definitions.DATABASE_CONNECTION.commit()
-
-
-async def update_channel_command_rules(context):
-    """Update the channel command rules to the database."""
-    statement = """
-        UPDATE channels SET
-            checks = ?
-        WHERE id = ?
-    """
-
-    variables = (
-        custom_json.save(context.channel_data.command_rules), context.message.channel.id)
-
-    definitions.DATABASE_CURSOR.execute(statement, variables)
-    definitions.DATABASE_CONNECTION.commit()
-
-
-async def update_guild_command_rules(context):
-    """Update the guild command rules to the database."""
-    statement = """
-        UPDATE guilds SET
-            checks = ?
-        WHERE id = ?
-    """
-
-    variables = (
-        custom_json.save(context.guild_data.command_rules), context.message.guild.id)
+    variables = (custom_json.save(platform_data.command_rules), platform_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -609,3 +528,18 @@ def synchronise_user_update(user_id, user):
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
+
+
+async def get_id_from_platform(message, platform):
+    """Get the appropriate ID of the platform."""
+    platform_id = None
+    if platform == "user":
+        platform_id = message.author.id
+    elif platform == "channel":
+        platform_id = message.channel.id
+    elif platform == "category":
+        platform_id = message.channel.category_id
+    elif platform == "guild":
+        platform_id = message.guild.id
+
+    return platform_id

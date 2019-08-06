@@ -1,0 +1,9 @@
+{
+  "argument_name_and_number": "Argument {number}: {name}",
+  "basic_command_info_title": "Basic Information",
+  "command_aliases_title": "Aliases",
+  "command_has_sub_commands_title": "Has Sub-Commands",
+  "command_info_title": "Information About {command}",
+  "no_aliases": "None",
+  "related_commands_title": "Related Commands"
+}

@@ -1,4 +1,7 @@
 {
+  "command_used_in_category": "This command can only be used on a channel that belongs to a category.",
+  "is_connecting_guild_call": "This channel is already connected or connecting to another server.",
+  "is_not_connecting_connected_guild_call": "This channel is not connecting or connected to another server.",
   "no_category_shortcuts": "This category has no category shortcuts. You can add them with the command `{shortcut_cmd}`.",
   "no_channel_shortcuts": "This channel has no channel shortcuts. You can add them with the command `{shortcut_cmd}`.",
   "no_user_shortcuts": "You do not have any user shortcuts. You can add them with the command `{shortcut_cmd}`."

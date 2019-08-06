@@ -9,5 +9,8 @@
   "command_used_in_guild": "Tätä komentoa voi käyttää ainoastaan yksityisviesteissä.",
   "no_category_shortcuts": "Tällä kategorialla ei ole pikakomentoja. Voit lisätä niitä komennolla `{shortcut_cmd}`.",
   "no_channel_shortcuts": "Tällä kanavalla ei ole pikakomentoja. Voit lisätä niitä komennolla `{shortcut_cmd}`.",
-  "no_user_shortcuts": "Sinulla ei ole käyttäjäpikakomentoja. Voit lisätä niitä komennolla `{shortcut_cmd}`."
+  "no_user_shortcuts": "Sinulla ei ole käyttäjäpikakomentoja. Voit lisätä niitä komennolla `{shortcut_cmd}`.",
+  "command_used_in_category": "Tätä komentoa voi käyttää vain kanavalla, joka kuuluu kategoriaan.",
+  "is_connecting_guild_call": "Tämä kanava on jo yhdistynyt tai yhdistää toiselle palvelimelle.",
+  "is_not_connecting_connected_guild_call": "Tämä kanava ei yhdistä tai ole yhdistynyt toiselle palvelimelle."
 }

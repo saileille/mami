@@ -1,6 +1,6 @@
 {
   "argument_number": "Argument [{arg}/{total_arg}]",
-  "cancel_to_abort": "Press :x: to cancel command.",
+  "cancel_to_abort": "Press ❌ to cancel command.",
   "command": "Command",
   "command_aborted": "Command aborted.",
   "confirm_to_stop": "Press :white_check_mark: to stop inserting arguments.",

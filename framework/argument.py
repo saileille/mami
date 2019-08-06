@@ -28,6 +28,16 @@ class Argument():
         localisation["name"] = argument_localisation["name"]
         localisation["description"] = argument_localisation["description"]
 
+    async def get_info_embed_field(self, context, argument_no):
+        """Get the embed field of the argument for command info."""
+        localisation = self.localisation[context.language_id]
+
+        return embeds.EmbedFieldCollection(
+            localisation["description"],
+            await context.language.get_text(
+                "argument_name_and_number",
+                {"name": localisation["name"], "number": argument_no}))
+
     async def convert(self, argument, context):
         """Convert the argument from raw string to what it is supposed to be."""
         converted_argument = argument
@@ -90,6 +100,7 @@ class Argument():
         argument = None
         if isinstance(response, discord.Message):
             argument = response.content
+            context.timestamp = response.created_at
 
         for future in pending:
             future.cancel()  # We do not need these anymore.

@@ -11,9 +11,9 @@ from bot.data import default_values
 from bot.data import definitions
 from bot.data import secrets
 from bot.mechanics import auto_convert
+from framework import context
 from framework import custom_json
 from framework import command_handler
-from framework.context import Context
 
 
 class Client(discord.Client):
@@ -40,7 +40,24 @@ class Client(discord.Client):
         if old.content == new.content:
             return
 
-        await Client.handle_message(new)
+        await Client.handle_message(new, edit=True)
+
+    async def on_message_delete(self, message):
+        """Handle deleted messages."""
+        context_obj = context.Context(message)
+        await context_obj.get_data()
+
+        if context_obj.channel_data.guild_call.connected_channel is not None:
+            await context_obj.channel_data.guild_call.delete_message(message)
+
+    async def on_typing(self, channel, user, when):
+        """Handle typing."""
+        if user.bot:
+            return
+
+        context_obj = await context.get_context_from_channel(channel)
+        if context_obj.channel_data.guild_call.connected_channel is not None:
+            await context_obj.channel_data.guild_call.typing()
 
     async def on_reaction_add(self, reaction, user):
         """Handle reaction-adds in certain cases."""
@@ -48,28 +65,37 @@ class Client(discord.Client):
             return
 
         if reaction.emoji == "ℹ":
-            context = Context(reaction.message)
-            await context.get_data()
-            await auto_convert.send_conversion(context, user.id)
+            context_obj = context.Context(reaction.message)
+            await context_obj.get_data()
+            await auto_convert.send_conversion(context_obj, user.id)
 
     @staticmethod
-    async def handle_message(message):
+    async def handle_message(message, edit=False):
         """Handle incoming messages."""
         # Mami does not deal with bots.
         if message.author.bot:
             return
 
-        context = Context(message)
-        await context.get_data()
+        context_obj = context.Context(message)
+        await context_obj.get_data()
+        if edit:
+            context_obj.timestamp = message.edited_at
+        else:
+            context_obj.timestamp = message.created_at
 
-        command_string = await command_handler.check_prefix(context)
+        command_string = await command_handler.check_prefix(context_obj)
 
         if command_string is not None:
-            await command_handler.process_command_call(context, command_string)
-
-        if command_string is None:
-            await auto_convert.detect_unit_mention(context)
+            await command_handler.process_command_call(context_obj, command_string)
             return
+
+        await auto_convert.detect_unit_mention(context_obj)
+
+        if context_obj.channel_data.guild_call.connected_channel is not None:
+            if edit:
+                await context_obj.channel_data.guild_call.edit_message(message)
+            else:
+                await context_obj.channel_data.guild_call.relay_message(message)
 
     async def currency_check(self):
         """Update the currency API data on fixed intervals."""

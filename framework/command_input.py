@@ -19,12 +19,10 @@ class CommandInput():
 
     def __str__(self):
         """To string method."""
-        string = "raw text: {self.raw_text}\n"
-        string += "command string: {self.command_string}\n"
-        string += "arguments: {self.arguments}\n"
-        string += "commands: {self.commands}\n"
-
-        return string.format(self=self)
+        return ("Raw Text: {self.raw_text}\n"
+                "Command String: {self.command_string}\n"
+                "Arguments: {self.arguments}\n"
+                "Commands: {self.commands}\n").format(self=self)
 
     @property
     def commands(self):

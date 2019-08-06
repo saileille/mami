@@ -10,6 +10,7 @@ from bot.argument_conversion import shortcut_names
 from bot.argument_conversion import users_and_roles
 from bot.commands import currency
 from bot.commands import dice
+from bot.commands import guild_call
 from bot.commands import info
 from bot.commands import runes
 from bot.commands import settings
@@ -81,9 +82,34 @@ def initialise_commands():
                     )
                 ]
             ),
+            "guild_call": Command(
+                obj_id="guild_call",
+                sub_commands={
+                    "connect": Command(
+                        obj_id="connect",
+                        pre_check=pre_checks.is_not_connecting_guild_call,
+                        action=guild_call.connect_guild_call
+                    ),
+                    "disconnect": Command(
+                        obj_id="disconnect",
+                        pre_check=pre_checks.is_connecting_or_connected_guild_call,
+                        action=guild_call.disconnect_guild_call
+                    )
+                }
+            ),
             "info": Command(
                 obj_id="info",
                 sub_commands={
+                    "command": Command(
+                        obj_id="command",
+                        action=info.get_command_info,
+                        arguments=[
+                            Argument(
+                                obj_id="command",
+                                modification=command_names.command_to_command_object
+                            )
+                        ]
+                    ),
                     "member": Command(
                         obj_id="member",
                         pre_check=pre_checks.in_guild,
@@ -134,7 +160,7 @@ def initialise_commands():
                 sub_commands={
                     "category": Command(
                         obj_id="category",
-                        pre_check=pre_checks.in_guild,
+                        pre_check=pre_checks.in_category,
                         sub_commands={
                             "command_rules": Command(
                                 obj_id="command_rules",
@@ -198,7 +224,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="command",
-                                                modification=command_names.command_to_category_command_rules
+                                                modification=command_names.command_to_non_empty_category_command_rules
                                             )
                                         ]
                                     )
@@ -232,9 +258,11 @@ def initialise_commands():
                             ),
                             "shortcut": Command(
                                 obj_id="shortcut",
+                                related_commands=[["shortcut"]],
                                 sub_commands={
                                     "add": Command(
                                         obj_id="add",
+                                        related_commands=[["shortcut"]],
                                         action=shortcuts.add_category_shortcut,
                                         arguments=[
                                             Argument(
@@ -248,6 +276,7 @@ def initialise_commands():
                                     ),
                                     "delete": Command(
                                         obj_id="delete",
+                                        related_commands=[["shortcut"]],
                                         action=shortcuts.delete_category_shortcut,
                                         arguments=[
                                             Argument(
@@ -259,6 +288,7 @@ def initialise_commands():
                                     ),
                                     "display": Command(
                                         obj_id="display",
+                                        related_commands=[["shortcut"]],
                                         pre_check=pre_checks.category_has_shortcuts,
                                         action=shortcuts.display_category_shortcuts
                                     )
@@ -332,7 +362,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="command",
-                                                modification=command_names.command_to_channel_command_rules
+                                                modification=command_names.command_to_non_empty_channel_command_rules
                                             )
                                         ]
                                     )
@@ -366,9 +396,11 @@ def initialise_commands():
                             ),
                             "shortcut": Command(
                                 obj_id="shortcut",
+                                related_commands=[["shortcut"]],
                                 sub_commands={
                                     "add": Command(
                                         obj_id="add",
+                                        related_commands=[["shortcut"]],
                                         action=shortcuts.add_channel_shortcut,
                                         arguments=[
                                             Argument(
@@ -382,6 +414,7 @@ def initialise_commands():
                                     ),
                                     "delete": Command(
                                         obj_id="delete",
+                                        related_commands=[["shortcut"]],
                                         action=shortcuts.delete_channel_shortcut,
                                         arguments=[
                                             Argument(
@@ -393,6 +426,7 @@ def initialise_commands():
                                     ),
                                     "display": Command(
                                         obj_id="display",
+                                        related_commands=[["shortcut"]],
                                         pre_check=pre_checks.channel_has_shortcuts,
                                         action=shortcuts.display_channel_shortcuts
                                     )
@@ -466,7 +500,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="command",
-                                                modification=command_names.command_to_guild_command_rules
+                                                modification=command_names.command_to_non_empty_guild_command_rules
                                             )
                                         ]
                                     )
@@ -500,9 +534,11 @@ def initialise_commands():
                             ),
                             "shortcut": Command(
                                 obj_id="shortcut",
+                                related_commands=[["shortcut"]],
                                 sub_commands={
                                     "add": Command(
                                         obj_id="add",
+                                        related_commands=[["shortcut"]],
                                         action=shortcuts.add_guild_shortcut,
                                         arguments=[
                                             Argument(
@@ -516,6 +552,7 @@ def initialise_commands():
                                     ),
                                     "delete": Command(
                                         obj_id="delete",
+                                        related_commands=[["shortcut"]],
                                         action=shortcuts.delete_guild_shortcut,
                                         arguments=[
                                             Argument(
@@ -527,6 +564,7 @@ def initialise_commands():
                                     ),
                                     "display": Command(
                                         obj_id="display",
+                                        related_commands=[["shortcut"]],
                                         pre_check=pre_checks.guild_has_shortcuts,
                                         action=shortcuts.display_guild_shortcuts
                                     )
@@ -565,9 +603,11 @@ def initialise_commands():
                             ),
                             "shortcut": Command(
                                 obj_id="shortcut",
+                                related_commands=[["shortcut"]],
                                 sub_commands={
                                     "add": Command(
                                         obj_id="add",
+                                        related_commands=[["shortcut"]],
                                         action=shortcuts.add_user_shortcut,
                                         arguments=[
                                             Argument(
@@ -581,6 +621,7 @@ def initialise_commands():
                                     ),
                                     "delete": Command(
                                         obj_id="delete",
+                                        related_commands=[["shortcut"]],
                                         action=shortcuts.delete_user_shortcut,
                                         arguments=[
                                             Argument(
@@ -591,6 +632,7 @@ def initialise_commands():
                                     ),
                                     "display": Command(
                                         obj_id="display",
+                                        related_commands=[["shortcut"]],
                                         pre_check=pre_checks.user_has_shortcuts,
                                         action=shortcuts.display_user_shortcuts
                                     )
@@ -602,6 +644,11 @@ def initialise_commands():
             ),
             "shortcut": Command(
                 obj_id="shortcut",
+                related_commands=[
+                    ["settings", "category", "shortcut"],
+                    ["settings", "channel", "shortcut"],
+                    ["settings", "guild", "shortcut"],
+                    ["settings", "user", "shortcut"]],
                 action=shortcuts.use_shortcut,
                 arguments=[
                     Argument(

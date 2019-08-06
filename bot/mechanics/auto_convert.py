@@ -54,6 +54,36 @@ from aid import numbers
 from bot.data import default_values
 from framework import embeds
 
+conversion_dict = {
+    "mile": ["kilometre"],
+    "kilometre": ["mile"],
+    "metre": ["foot"],
+    "yard": ["metre"],
+    "foot": ["metre"],
+    "inch": ["centimetre"],
+    "centimetre": ["inch"],
+    "pica": ["centimetre"],
+    "millimetre": ["inch"],
+    "acre": ["square_metre"],
+    "square_metre": ["acre"],
+    "celsius": ["fahrenheit"],
+    "fahrenheit": ["celsius"],
+    "imperial_gallon": ["litre", "us_gallon"],
+    "us_gallon": ["litre", "imperial_gallon"],
+    "litre": ["us_gallon", "imperial_gallon"],
+    "imperial_cup": ["desilitre"],
+    "us_legal_cup": ["desilitre"],
+    "desilitre": ["us_legal_cup"],
+    "us_fluid_ounce": ["millilitre", "imperial_fluid_ounce"],
+    "imperial_fluid_ounce": ["millilitre", "us_fluid_ounce"],
+    "millilitre": ["us_fluid_ounce"],
+    "stone": ["kilogram", "pound"],
+    "kilogram": ["pound", "stone"],
+    "pound": ["kilogram", "stone"],
+    "ounce": ["gram"],
+    "gram": ["ounce"],
+    "milligram": ["ounce"]}
+
 
 async def detect_unit_mention(context):
     """
@@ -83,7 +113,6 @@ async def remove_hyperlinks(message):
 
 async def get_unit_matches(context, message):
     """Get all unit matches from a message."""
-    # unit_regex = r"(?<!\w)((?:\d*\.\d+)|\d+)[ -]?([^\d\.-]+)(?!\w*\S)"
     unit_regex = r"(?<!\w)((?:\d*\.\d+)|\d+)[ -]?((?:(?:[^\d\s\.]+\S*) ?)+)"
     us_height_regex = r"\b(\d+)['′] ?(\d+)[\"″](?!\w)"
 
@@ -92,6 +121,7 @@ async def get_unit_matches(context, message):
 
     processed_matches = []
     for match in matches:
+        # Cannot disable 0-conversions here because temperatures are a thing.
         await process_match(context, match, processed_matches)
 
     for match in us_height_matches:
@@ -102,23 +132,24 @@ async def get_unit_matches(context, message):
 
 async def process_match(context, match, processed_matches):
     """Evaluate a normal match."""
-    for unit_key, unit_data in context.language.unit_data.items():
+    for key in conversion_dict:
+        unit = context.language.unit_data[key]
         found_match = False
-        for symbol in unit_data["symbols"]:
+        for symbol in unit["symbols"]:
             match_unit_name = match[1].split(" ")
             inspected_unit_name = symbol.split(" ")
 
-            if await validate_unit_name(match_unit_name, inspected_unit_name):
-                processed_matches.append([float(match[0]), unit_key])
+            if await validate_unit_name(match_unit_name, inspected_unit_name, context.message):
+                processed_matches.append([float(match[0]), key])
                 found_match = True
                 break
 
-        for name in unit_data["names"]:
+        for name in unit["names"]:
             match_unit_name = match[1].lower().split(" ")
             inspected_unit_name = name.lower().split(" ")
 
-            if await validate_unit_name(match_unit_name, inspected_unit_name):
-                processed_matches.append([float(match[0]), unit_key])
+            if await validate_unit_name(match_unit_name, inspected_unit_name, context.message):
+                processed_matches.append([float(match[0]), key])
                 found_match = True
                 break
 
@@ -126,30 +157,16 @@ async def process_match(context, match, processed_matches):
             break
 
 
-async def validate_unit_name(match_unit_name, inspected_unit_name):
+async def validate_unit_name(match_unit_name, inspected_unit_name, message):
     """Validate the unit name."""
     not_letter = r"\W"
     for i, inspected_name_part in enumerate(inspected_unit_name):
-        """
-        Ignoring exception in on_message
-        Traceback (most recent call last):
-          File "C:\Program Files\Python37\lib\site-packages\discord\client.py", line 251, in _run_event
-            await coro(*args, **kwargs)
-          File "E:\Tiedostot\DiscordBot\Mami\framework\client.py", line 39, in on_message
-            await Client.handle_message(message)
-          File "E:\Tiedostot\DiscordBot\Mami\framework\client.py", line 71, in handle_message
-            await auto_convert.detect_unit_mention(context)
-          File "E:\Tiedostot\DiscordBot\Mami\bot\mechanics\auto_convert.py", line 66, in detect_unit_mention
-            unit_matches = await get_unit_matches(context, message)
-          File "E:\Tiedostot\DiscordBot\Mami\bot\mechanics\auto_convert.py", line 96, in get_unit_matches
-            await process_match(context, match, processed_matches)
-          File "E:\Tiedostot\DiscordBot\Mami\bot\mechanics\auto_convert.py", line 121, in process_match
-            if await validate_unit_name(match_unit_name, inspected_unit_name):
-          File "E:\Tiedostot\DiscordBot\Mami\bot\mechanics\auto_convert.py", line 134, in validate_unit_name
+        try:
             match_name_part = match_unit_name[i].strip()
-        IndexError: list index out of range
-        """
-        match_name_part = match_unit_name[i].strip()
+        except IndexError:
+            print(message.content)
+            raise IndexError
+
         inspected_name_part = inspected_name_part.strip()
 
         if match_name_part != inspected_name_part:
@@ -200,42 +217,11 @@ async def send_conversion(context, user_id=None):
         thumbnail = member.avatar_url
 
     message.embed.description = msg
-    await message.send(context, thumbnail)
+    await message.send(context, thumbnail=thumbnail)
 
 
 async def convert_normal(context, match):
     """Calculate normal conversions."""
-    conversion_dict = {
-        "mile": ["kilometre"],
-        "kilometre": ["mile"],
-        "metre": ["foot"],
-        "yard": ["metre"],
-        "foot": ["metre"],
-        "inch": ["centimetre"],
-        "centimetre": ["inch"],
-        "pica": ["centimetre"],
-        "millimetre": ["inch"],
-        "point": ["millimetre"],
-        "acre": ["square_metre"],
-        "square_metre": ["acre"],
-        "celsius": ["fahrenheit"],
-        "fahrenheit": ["celsius"],
-        "imperial_gallon": ["litre", "us_gallon"],
-        "us_gallon": ["litre", "imperial_gallon"],
-        "litre": ["us_gallon", "imperial_gallon"],
-        "imperial_cup": ["desilitre"],
-        "us_legal_cup": ["desilitre"],
-        "desilitre": ["us_legal_cup"],
-        "us_fluid_ounce": ["millilitre", "imperial_fluid_ounce"],
-        "imperial_fluid_ounce": ["millilitre", "us_fluid_ounce"],
-        "millilitre": ["us_fluid_ounce"],
-        "stone": ["kilogram", "pound"],
-        "kilogram": ["pound", "stone"],
-        "pound": ["kilogram", "stone"],
-        "ounce": ["gram"],
-        "gram": ["ounce"],
-        "milligram": ["ounce"]}
-
     base = {
         "amount": match[0],
         "key": match[1],

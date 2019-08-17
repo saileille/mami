@@ -1,6 +1,7 @@
 {
   "currency": {
     "description": "Valuuttoihin liittyvät komennot.",
+    "help_text": "Sisältää valuuttoihin liittyviä komentoja. Voit **vaihtaa** rahaa valuutasta toiseen, **näyttää** kaikki vaihdettavissa olevat valuutat, ja **hakea** valuuttakoodeja hakusanoilla.",
     "names": [
       "valuutta"
     ],
@@ -9,24 +10,29 @@
         "arguments": {
           "amount": {
             "description": "Kuinka paljon haluat vaihtaa?",
+            "help_text": "Vaihdettavan valuutan määrä.",
             "name": "Määrä"
           },
           "base": {
             "description": "Mistä valuutasta haluat vaihtaa?",
+            "help_text": "Pohja- eli aloitusvaluutan kolmikirjaiminen valuuttakoodi.",
             "name": "Pohjavaluutta"
           },
           "target": {
             "description": "Mihin valuuttaan haluat vaihtaa?",
+            "help_text": "Kohde- eli loppuvaluutan kolmikirjaiminen valuuttakoodi.",
             "name": "Kohdevaluutta"
           }
         },
         "description": "Vaihda valuuttaa.",
+        "help_text": "Tämä komento vaihtaa rahaa valuutasta toiseen. Valuuttakurssit päivittyvät noin 45:n minuutin välein.",
         "names": [
           "vaihda"
         ]
       },
       "display": {
         "description": "Näytä kaikki valuutat.",
+        "help_text": "Tämä komento näyttää kaikki valuutat ja näiden valuuttakoodit. Valuuttakoodeja käytetään rahan vaihtokomennossa.",
         "names": [
           "näytä"
         ]
@@ -34,11 +40,13 @@
       "search": {
         "arguments": {
           "search_term": {
-            "description": "Kirjoita hakutermi, jolla haluat etsiä valuuttoja.",
-            "name": "Hakutermi"
+            "description": "Kirjoita hakusana, jolla haluat etsiä valuuttoja.",
+            "help_text": "Valuutat, joiden nimi sisältää tämän tekstin tulevat hakutuloksiin. Isoilla ja pienillä kirjaimilla ei ole väliä, ja haku ei tue säännöllisiä lausekkeita.",
+            "name": "Hakusana"
           }
         },
-        "description": "Hae valuutta.",
+        "description": "Hae valuuttaa.",
+        "help_text": "Tämä komento näyttää niiden valuuttojen koodit ja nimet, jotka täsmäävät annettua hakutermiä.",
         "names": [
           "hae"
         ]
@@ -49,18 +57,22 @@
     "arguments": {
       "first_value": {
         "description": "Syötä nopan minimi- tai maksimiarvo.",
+        "help_text": "Ensimmäinen nopan arvojoukon ääriarvo, mikä tarkoittaa sitä että nopan tulos ei voi olla suurempi tai pienempi kuin tämä luku. Jos tämä luku on pienempi kuin toinen annettu ääriarvo, tästä arvosta tulee minimiluku. Jos tämä on suurempi kuin toinen annettu ääriarvo, tästä arvosta tulee maksimiluku.",
         "name": "Ensimmäinen ääriarvo"
       },
       "no_of_dice": {
         "description": "Kuinka monta noppaa haluat heittää?",
+        "help_text": "Heitettävien noppien lukumäärä. Noppien määrällä on yläraja, ja tämän voi muuttaa asetuksista.",
         "name": "Noppien määrä"
       },
       "second_value": {
         "description": "Syötä nopan maksimi- tai minimiarvo.",
+        "help_text": "Toinen nopan arvojoukon ääriarvo, mikä tarkoittaa sitä että nopan tulos ei voi olla suurempi tai pienempi kuin tämä luku. Jos tämä luku on pienempi kuin ensimmäinen annettu ääriarvo, tästä arvosta tulee minimiluku. Jos tämä on suurempi kuin ensimmäinen annettu ääriarvo, tästä arvosta tulee maksimiluku.",
         "name": "Toinen ääriarvo"
       }
     },
     "description": "Heitä noppaa.",
+    "help_text": "Tämä komento heittää annetun määrän noppia, joilla on komennon käyttäjän valitsemat ääriarvot.",
     "names": [
       "noppa",
       "nopat"
@@ -68,19 +80,22 @@
   },
   "guild_call": {
     "description": "Soita toisille palvelimille!",
+    "help_text": "Sisältää komentoja, jotka mahdollistavat kommunikaation eri palvelimien välillä. Voit **yhdistää** ja **sulkea** puhelun tätä kautta. Komentoa voi käyttää ainoastaan palvelimilla.",
     "names": [
       "palvelinpuhelu",
       "kiltapuhelu"
     ],
     "sub_commands": {
       "connect": {
-        "description": "Yhdistä puhelu.",
+        "description": "Aloita puhelu.",
+        "help_text": "Tämä komento aloittaa puhelun yhdistämisen toiseen palvelimeen. Kun toinen puhelua yhdistävä palvelin löytyy, yhteys muodostetaan ja jokainen kanavalle lähetetty viesti välitetään yhdistetylle palvelimelle. Viestien muokkaus ja poistaminen on myös tuettua.",
         "names": [
           "yhdistä"
         ]
       },
       "disconnect": {
         "description": "Sulje puhelu.",
+        "help_text": "Jos palvelinpuhelua ei ole yhdistetty, tämä komento lopettaa yritykset yhdistää puhelu toiselle palvelimelle. Jos palvelinpuhelu on yhdistetty, tämä komento lopettaa puhelun välittömästi.",
         "names": [
           "sulje"
         ]
@@ -89,6 +104,7 @@
   },
   "info": {
     "description": "Tietoa sekalaisista asioista.",
+    "help_text": "Sisältää komentoja, jotka näyttävät tietoa **komennosta** tai **jäsenestä**.",
     "names": [
       "info"
     ],
@@ -97,11 +113,12 @@
         "arguments": {
           "command": {
             "description": "Minkä komennon tiedot haluat nähdä? (Älä käytä prefiksiä.)",
-            "description": "Which command's information do you want to see? (Do not use prefix.)",
+            "help_text": "Komento, jonka tiedot halutaan näytettävän. Vain komentonimeä tulee käyttää, eli prefiksi on jätettävä pois.",
             "name": "Komento"
           }
         },
         "description": "Näe tietoa komennoista.",
+        "help_text": "Tämä on komento, jota juuri käytit! Tätä komentoa voi käyttää näyttämään tietoa mistä tahansa botin komennosta, ja toimii perustason dokumentaationa. Käytä tätä komentoa, jos joku botin komennoista joskus askarruttaa sinua.",
         "names": [
           "komento"
         ]
@@ -110,10 +127,12 @@
         "arguments": {
           "member": {
             "description": "Syötä palvelimen jäsenen ID, maininta tai nimi, jonka tietoja haluat nähdä.",
+            "help_text": "Jäsen, jonka tiedot tulisi näyttää. Argumentti hyväksyy ID:t, maininnat, Discord-nimet, palvelinnimimerkit ja \"Discord-nimi + erottaja\" -yhdistelmät. Tätä komentoa voi käyttää ainoastaan palvelimilla.",
             "name": "Jäsen"
           }
         },
         "description": "Tietoa palvelimen jäsenistä.",
+        "help_text": "Tämä komento näyttää perustason tietoa annetusta palvelimen jäsenestä, kuten profiilikuva täysikokoisena ja palvelimelle liittymispäivä.",
         "names": [
           "jäsen"
         ]
@@ -122,6 +141,7 @@
   },
   "runes": {
     "description": "Muunna teksti Madokan riimuiksi.",
+    "help_text": "Nämä komennot kääntävät käyttäjän antamaa tekstiä Puella Magi Madoka Magicassa käytetyiksi riimuiksi. Animella on kolme riimutyyppiä - **arkaainen**, **moderni** ja **musikaali** - ja nämä komennot mahdollistavat tekstin kääntämisen mille tahansa niistä. Jos tekstin sisältämää merkkiä ei voi kääntää valitulle tyypille, se yritetään ensin kääntää arkaaiseksi riimuksi. Jos tämäkään ei onnistu, merkki jätetään entiselleen.",
     "names": [
       "riimut"
     ],
@@ -130,10 +150,12 @@
         "arguments": {
           "text": {
             "description": "Minkä tekstin haluat muuntaa?",
+            "help_text": "Teksti, jonka haluat kääntää arkaaisiksi riimuiksi. Jos merkkiä ei voi kääntää, se sisällytetään käännöksessä muuttumattomana.",
             "name": "Teksti"
           }
         },
-        "description": "Muunna teksti arkaaisiksi riimuiksi.",
+        "description": "Käännä teksti arkaaisiksi riimuiksi.",
+        "help_text": "Tämä komento kääntää tekstiä Puella Magi Madoka Magican arkaaisiksi riimuiksi.",
         "names": [
           "arkaainen"
         ]
@@ -142,10 +164,12 @@
         "arguments": {
           "text": {
             "description": "Minkä tekstin haluat muuntaa?",
+            "help_text": "Teksti, jonka haluat kääntää moderneiksi riimuiksi. Jos merkkiä ei voi kääntää, se yritetään ensin kääntää arkaaiseksi riimuksi. Jos tämäkään ei onnistu, merkki jätetään entiselleen.",
             "name": "Teksti"
           }
         },
-        "description": "Muunna teksti moderneiksi riimuiksi.",
+        "description": "Käännä teksti moderneiksi riimuiksi.",
+        "help_text": "Tämä komento kääntää tekstiä Puella Magi Madoka Magican moderneiksi riimuiksi.",
         "names": [
           "moderni"
         ]
@@ -154,10 +178,12 @@
         "arguments": {
           "text": {
             "description": "Minkä tekstin haluat muuntaa?",
+            "help_text": "Teksti, jonka haluat kääntää musikaalisiksi riimuiksi. Jos merkkiä ei voi kääntää, se yritetään ensin kääntää arkaaiseksi riimuksi. Jos tämäkään ei onnistu, merkki jätetään entiselleen.",
             "name": "Teksti"
           }
         },
-        "description": "Muunna teksti musikaalisiksi riimuiksi.",
+        "description": "Käännä teksti musikaalisiksi riimuiksi.",
+        "help_text": "Tämä komento kääntää tekstiä Puella Magi Madoka Magican musikaalisiksi riimuiksi.",
         "names": [
           "musikaali",
           "musiikki",
@@ -168,24 +194,28 @@
   },
   "settings": {
     "description": "Konfiguraatio ja asetukset.",
+    "help_text": "Sisältää botin asetuksiin ja räätälöintiin liittyviä komentoja. Koska kaikki paitsi **käyttäjä**konfiguraatiokomennot vaikuttavat koko palvelimeen, useimmat alikomennot vaativat oletuksena ylläpitäjäluvan.",
     "names": [
       "asetukset"
     ],
     "sub_commands": {
       "category": {
         "description": "Kategorian konfiguraatio ja asetukset.",
+        "help_text": "Sisältää komentoja, jotka mahdollistavat kategoria-asetusten räätälöinnin. Kategoriat ovat palvelimen kanavaryhmiä, ja tätä komentoa voi käyttää vain kanavalla, joka kuuluu kategoriaan.",
         "names": [
           "kategoria"
         ],
         "sub_commands": {
           "command_rules": {
             "description": "Hallinnoi kuka saa käyttää komentoja kategoriassa.",
+            "help_text": "Sisältää komentoja, jotka mahdollistavat kategorian komentosääntöjen muuttamisen. Voit **lisätä** uusia komentosääntöjä komennoille, **poistaa** olemassaolevia komentosääntöjä komennoista, tai **näyttää** tietyn komennon komentosäännöt tälle kategorialle.\n\nKomentosäännöt määrittävät kuka saa käyttää mitäkin komentoa, ja voidaan jakaa mukaanlukeviin ja poissulkeviin komentosääntöihin, mitkä taas voidaan jakaa jäseniin, rooleihin ja lupiin.\n\nMukaanlukeva komentosääntö tarkoittaa, että jokainen, joka on sisällytettynä komentosäännön jäsenlistaan, *tai* jolla on rooli, joka on sisällytettynä komentosäännön roolilistaan, *tai* jolla on lupa, joka on sisällytettynä komentosäännön lupalistaan, *saa* käyttää komentoa, kun taas kukaan muu *ei saa* käyttää komentoa.\n\nPoissulkeva komentosääntö tarkoittaa, että jokainen, joka on sisällytettynä komentosäännön jäsenlistaan, *tai* jolla on rooli, joka on sisällytettynä komentosäännön roolilistaan, *ei saa* käyttää komentoa, kun taas kaikki muut *saavat* käyttää komentoa.",
             "names": [
               "komentosäännöt"
             ],
             "sub_commands": {
               "add": {
                 "description": "Lisää komentosääntöjä.",
+                "help_text": "Sisältää komentoja, joiden avulla voi lisätä **mukaanlukevia** ja **poissulkevia** komentosääntöjä.",
                 "names": [
                   "lisää"
                 ],
@@ -194,14 +224,17 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "help_text": "Komennot, joihin halutaan lisätä komentosäännöt. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                         "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "Sääntö"
+                        "help_text": "Ketä uudet komentosäännöt koskevat. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                        "name": "Sääntökohde"
                       }
                     },
                     "description": "Lisää poissulkeva sääntö.",
+                    "help_text": "Tämä komento lisää poissulkevia kategorian komentosääntöjä.",
                     "names": [
                       "poissulkeva"
                     ]
@@ -210,14 +243,17 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "help_text": "Komennot, joihin halutaan lisätä komentosäännöt. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                         "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "Sääntö"
+                        "help_text": "Ketä uudet komentosäännöt koskevat. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                        "name": "Sääntökohde"
                       }
                     },
                     "description": "Lisää mukaanlukeva sääntö.",
+                    "help_text": "Tämä komento lisää mukaanlukevia kategorian komentosääntöjä.",
                     "names": [
                       "mukaanlukeva"
                     ]
@@ -228,10 +264,12 @@
                 "arguments": {
                   "command": {
                     "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
+                    "help_text": "Komento, jonka kategorian komentosäännöt halutaan nähdä. Vain komennon nimeä pitää käyttää, eli prefiksi pitää jättää pois.",
                     "name": "Komento"
                   }
                 },
                 "description": "Näytä annetun komennon komentosäännöt.",
+                "help_text": "Tämä komento näyttää annetun komennon kategorian komentosäännöt. Huomioi, että jos komennolla on kanavan komentosääntöjä, ne ohittavat kategorian komentosäännöt, ja tällöin tämän komennon näyttämät komentosäännöt eivät ole voimassa tällä kanavalla.",
                 "names": [
                   "näytä"
                 ]
@@ -240,14 +278,17 @@
                 "arguments": {
                   "commands": {
                     "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                    "help_text": "Komennot, joista annetut komentosäännöt tulisi poistaa. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                     "name": "Komennot"
                   },
                   "rule": {
                     "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
-                    "name": "Sääntö"
+                    "help_text": "Kehen komentosäännöt eivät enää päde. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                    "name": "Sääntökohde"
                   }
                 },
                 "description": "Poista komentosääntöjä.",
+                "help_text": "Tällä komennolla voi poistaa jäseniä, rooleja ja lupia kategorian komentosäännöistä.",
                 "names": [
                   "poista"
                 ]
@@ -256,12 +297,14 @@
           },
           "language": {
             "description": "Muokkaa kategorian kieltä.",
+            "help_text": "Sisältää komentoja, joilla voi määrittää kielen, jota botti käyttää tässä kategoriassa. Voit **asettaa** kategorian kielen joksikin tietyksi, tai **palauttaa** sen oletukseksi, jolloin palvelimen kieliasetukset astuvat voimaan.",
             "names": [
               "kieli"
             ],
             "sub_commands": {
               "reset": {
                 "description": "Palauta kategorian kieli oletukseen.",
+                "help_text": "Komento palauttaa kategorian kielen takaisin oletukseen, jolloin botin kieli määräytyy palvelinasetusten mukaan.",
                 "names": [
                   "palauta"
                 ]
@@ -270,10 +313,12 @@
                 "arguments": {
                   "language": {
                     "description": "Minkä kielen haluat asettaa kategorialle? Voit käyttää kielen nimeä tai lippuemojia.",
+                    "help_text": "Kieli, jota botti tulee käyttämään kategoriassa tästä lähin. Argumentti hyväksyy kielen nimet ja sopivat lippuemojit, edellyttäen että kielellä on ainakin yksi. (Esimerkiksi: 🇬🇧 englannille.)",
                     "name": "Kieli"
                   }
                 },
-                "description": "Vaihda kategorian kieli tiettyyn.",
+                "description": "Vaihda kategorian kieli.",
+                "help_text": "Komento asettaa tai vaihtaa kielen, jota botti käyttää kategoriassa, annettuun kieleen.",
                 "names": [
                   "aseta"
                 ]
@@ -282,6 +327,7 @@
           },
           "shortcut": {
             "description": "Hallinnoi kategorian pikakomentoja.",
+            "help_text": "Sisältää komentoja, joilla voi **lisätä**, **poistaa** tai **näyttää** kategorian pikakomentoja. Pikakomento on teksti, joka voidaan kutsua komentoa käyttämällä.",
             "names": [
               "pikakomento",
               "pk"
@@ -291,14 +337,17 @@
                 "arguments": {
                   "content": {
                     "description": "Syötä uuden pikakomennon sisältö.",
+                    "help_text": "Tämä on teksti, joka näytetään kun pikakomento kutsutaan.",
                     "name": "Sisältö"
                   },
                   "name": {
                     "description": "Syötä uuden pikakomennon nimi.",
+                    "help_text": "Tämä on pikakomennon nimi. Tämä sisällytetään pikakomennon kutsuun, jotta tiedetään mitä pikakomentoa halutaan kutsua.",
                     "name": "Nimi"
                   }
                 },
                 "description": "Lisää kategorian pikakomento.",
+                "help_text": "Tämä komento lisää kategorian pikakomentoja.",
                 "names": [
                   "lisää"
                 ]
@@ -307,16 +356,19 @@
                 "arguments": {
                   "name": {
                     "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
+                    "help_text": "Tämä argumentti on poistettavan pikakomennon nimi.",
                     "name": "Nimi"
                   }
                 },
                 "description": "Poista olemassaoleva kategorian pikakomento.",
+                "help_text": "Tämä komento poistaa annetun kategorian pikakomennon.",
                 "names": [
                   "poista"
                 ]
               },
               "display": {
                 "description": "Näytä kaikki kategorian pikakomennot.",
+                "help_text": "Tämä komento näyttää kaikki tämän kategorian pikakomennot.",
                 "names": [
                   "näytä"
                 ]
@@ -327,18 +379,21 @@
       },
       "channel": {
         "description": "Kanavan konfiguraatio ja asetukset.",
+        "help_text": "Sisältää komentoja, jotka mahdollistavat kanava-asetusten räätälöinnin. Tätä komentoa voi käyttää vain palvelimella.",
         "names": [
           "kanava"
         ],
         "sub_commands": {
           "command_rules": {
             "description": "Hallinnoi kuka saa käyttää komentoja kanavalla.",
+            "help_text": "Sisältää komentoja, jotka mahdollistavat kanavan komentosääntöjen muuttamisen. Voit **lisätä** uusia komentosääntöjä komennoille, **poistaa** olemassaolevia komentosääntöjä komennoista, tai **näyttää** tietyn komennon komentosäännöt tälle kategorialle.\n\nKomentosäännöt määrittävät kuka saa käyttää mitäkin komentoa, ja voidaan jakaa mukaanlukeviin ja poissulkeviin komentosääntöihin, mitkä taas voidaan jakaa jäseniin, rooleihin ja lupiin.\n\nMukaanlukeva komentosääntö tarkoittaa, että jokainen, joka on sisällytettynä komentosäännön jäsenlistaan, *tai* jolla on rooli, joka on sisällytettynä komentosäännön roolilistaan, *tai* jolla on lupa, joka on sisällytettynä komentosäännön lupalistaan, *saa* käyttää komentoa, kun taas kukaan muu *ei saa* käyttää komentoa.\n\nPoissulkeva komentosääntö tarkoittaa, että jokainen, joka on sisällytettynä komentosäännön jäsenlistaan, *tai* jolla on rooli, joka on sisällytettynä komentosäännön roolilistaan, *ei saa* käyttää komentoa, kun taas kaikki muut *saavat* käyttää komentoa.",
             "names": [
               "komentosäännöt"
             ],
             "sub_commands": {
               "add": {
                 "description": "Lisää komentosääntöjä.",
+                "help_text": "Sisältää komentoja, joiden avulla voi lisätä **mukaanlukevia** ja **poissulkevia** komentosääntöjä.",
                 "names": [
                   "lisää"
                 ],
@@ -347,14 +402,17 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "help_text": "Komennot, joihin halutaan lisätä komentosäännöt. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                         "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "Sääntö"
+                        "help_text": "Ketä uudet komentosäännöt koskevat. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                        "name": "Sääntökohde"
                       }
                     },
                     "description": "Lisää poissulkeva sääntö.",
+                    "help_text": "Tämä komento lisää poissulkevia kanavan komentosääntöjä.",
                     "names": [
                       "poissulkeva"
                     ]
@@ -363,14 +421,17 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "help_text": "Komennot, joihin halutaan lisätä komentosäännöt. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                         "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "Sääntö"
+                        "help_text": "Ketä uudet komentosäännöt koskevat. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                        "name": "Sääntökohde"
                       }
                     },
                     "description": "Lisää mukaanlukeva sääntö.",
+                    "help_text": "Tämä komento lisää mukaanlukevia kategorian komentosääntöjä.",
                     "names": [
                       "mukaanlukeva"
                     ]
@@ -381,10 +442,12 @@
                 "arguments": {
                   "command": {
                     "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
+                    "help_text": "Komento, jonka kanavan komentosäännöt halutaan nähdä. Vain komennon nimeä pitää käyttää, eli prefiksi pitää jättää pois.",
                     "name": "Komento"
                   }
                 },
                 "description": "Näytä annetun komennon komentosäännöt.",
+                "help_text": "Tämä komento näyttää annetun komennon kanavan komentosäännöt.",
                 "names": [
                   "näytä"
                 ]
@@ -393,14 +456,17 @@
                 "arguments": {
                   "commands": {
                     "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                    "help_text": "Komennot, joista annetut komentosäännöt tulisi poistaa. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                     "name": "Komennot"
                   },
                   "rule": {
                     "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
-                    "name": "Sääntö"
+                    "help_text": "Kehen komentosäännöt eivät enää päde. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                    "name": "Sääntökohde"
                   }
                 },
                 "description": "Poista komentosääntöjä.",
+                "help_text": "Tällä komennolla voi poistaa jäseniä, rooleja ja lupia kanavan komentosäännöistä.",
                 "names": [
                   "poista"
                 ]
@@ -409,12 +475,14 @@
           },
           "language": {
             "description": "Muokkaa kanavan kieltä.",
+            "help_text": "Sisältää komentoja, joilla voi määrittää kielen, jota botti käyttää tällä kanavalla. Voit **asettaa** kanavan kielen joksikin tietyksi, tai **palauttaa** sen oletukseksi, jolloin kategorian tai palvelimen kieliasetukset astuvat voimaan.",
             "names": [
               "kieli"
             ],
             "sub_commands": {
               "reset": {
                 "description": "Palauta kanavan kieli oletukseen.",
+                "help_text": "Komento palauttaa kanavan kielen takaisin oletukseen, jolloin botin kieli määräytyy kategoria- tai palvelinasetusten mukaan.",
                 "names": [
                   "palauta"
                 ]
@@ -423,10 +491,12 @@
                 "arguments": {
                   "language": {
                     "description": "Minkä kielen haluat asettaa kanavalle? Voit käyttää kielen nimeä tai lippuemojia.",
+                    "help_text": "Kieli, jota botti tulee käyttämään kanavalla tästä lähin. Argumentti hyväksyy kielen nimet ja sopivat lippuemojit, edellyttäen että kielellä on ainakin yksi. (Esimerkiksi: 🇬🇧 englannille.)",
                     "name": "Kieli"
                   }
                 },
-                "description": "Vaihda kanavan kieli tiettyyn.",
+                "description": "Vaihda kanavan kieli.",
+                "help_text": "Komento asettaa tai vaihtaa kielen, jota botti käyttää kanavalla, annettuun kieleen.",
                 "names": [
                   "aseta"
                 ]
@@ -435,6 +505,7 @@
           },
           "shortcut": {
             "description": "Hallinnoi kanavan pikakomentoja.",
+            "help_text": "Sisältää komentoja, joilla voi **lisätä**, **poistaa** tai **näyttää** kanavan pikakomentoja. Pikakomento on teksti, joka voidaan kutsua komentoa käyttämällä.",
             "names": [
               "pikakomento",
               "pk"
@@ -444,14 +515,17 @@
                 "arguments": {
                   "content": {
                     "description": "Syötä uuden pikakomennon sisältö.",
+                    "help_text": "Tämä on teksti, joka näytetään kun pikakomento kutsutaan.",
                     "name": "Sisältö"
                   },
                   "name": {
                     "description": "Syötä uuden pikakomennon nimi.",
+                    "help_text": "Tämä on pikakomennon nimi. Tämä sisällytetään pikakomennon kutsuun, jotta tiedetään mitä pikakomentoa halutaan kutsua.",
                     "name": "Nimi"
                   }
                 },
                 "description": "Lisää kanavalle pikakomento.",
+                "help_text": "Tämä komento lisää kanavan pikakomentoja.",
                 "names": [
                   "lisää"
                 ]
@@ -460,16 +534,19 @@
                 "arguments": {
                   "name": {
                     "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
+                    "help_text": "Tämä argumentti on poistettavan pikakomennon nimi.",
                     "name": "Nimi"
                   }
                 },
                 "description": "Poista olemassaoleva kanavan pikakomento.",
+                "help_text": "Tämä komento poistaa annetun kanavan pikakomennon.",
                 "names": [
                   "poista"
                 ]
               },
               "display": {
                 "description": "Näytä kaikki kanavan pikakomennot.",
+                "help_text": "Tämä komento näyttää kaikki tämän kanavan pikakomennot.",
                 "names": [
                   "näytä"
                 ]
@@ -480,6 +557,7 @@
       },
       "guild": {
         "description": "Palvelimen konfiguraatio ja asetukset.",
+        "help_text": "Sisältää komentoja, jotka mahdollistavat palvelinasetusten räätälöinnin. Tätä komentoa voi käyttää vain palvelimella.",
         "names": [
           "palvelin",
           "kilta"
@@ -487,12 +565,14 @@
         "sub_commands": {
           "command_rules": {
             "description": "Hallinnoi kuka saa käyttää komentoja palvelimella.",
+            "help_text": "Sisältää komentoja, jotka mahdollistavat palvelimen komentosääntöjen muuttamisen. Voit **lisätä** uusia komentosääntöjä komennoille, **poistaa** olemassaolevia komentosääntöjä komennoista, tai **näyttää** tietyn komennon komentosäännöt tälle kategorialle.\n\nKomentosäännöt määrittävät kuka saa käyttää mitäkin komentoa, ja voidaan jakaa mukaanlukeviin ja poissulkeviin komentosääntöihin, mitkä taas voidaan jakaa jäseniin, rooleihin ja lupiin.\n\nMukaanlukeva komentosääntö tarkoittaa, että jokainen, joka on sisällytettynä komentosäännön jäsenlistaan, *tai* jolla on rooli, joka on sisällytettynä komentosäännön roolilistaan, *tai* jolla on lupa, joka on sisällytettynä komentosäännön lupalistaan, *saa* käyttää komentoa, kun taas kukaan muu *ei saa* käyttää komentoa.\n\nPoissulkeva komentosääntö tarkoittaa, että jokainen, joka on sisällytettynä komentosäännön jäsenlistaan, *tai* jolla on rooli, joka on sisällytettynä komentosäännön roolilistaan, *ei saa* käyttää komentoa, kun taas kaikki muut *saavat* käyttää komentoa.",
             "names": [
               "komentosäännöt"
             ],
             "sub_commands": {
               "add": {
                 "description": "Lisää komentosääntöjä.",
+                "help_text": "Sisältää komentoja, joiden avulla voi lisätä **mukaanlukevia** ja **poissulkevia** komentosääntöjä.",
                 "names": [
                   "lisää"
                 ],
@@ -501,14 +581,17 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "help_text": "Komennot, joihin halutaan lisätä komentosäännöt. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                         "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "Sääntö"
+                        "help_text": "Ketä uudet komentosäännöt koskevat. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                        "name": "Sääntökohde"
                       }
                     },
                     "description": "Lisää poissulkeva sääntö.",
+                    "help_text": "Tämä komento lisää poissulkevia palvelimen komentosääntöjä.",
                     "names": [
                       "poissulkeva"
                     ]
@@ -517,14 +600,17 @@
                     "arguments": {
                       "commands": {
                         "description": "Mihin komentoihin haluat lisätä säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                        "help_text": "Komennot, joihin halutaan lisätä komentosäännöt. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                         "name": "Komennot"
                       },
                       "rule": {
                         "description": "Anna jäsen, rooli tai palvelinlupa, jota haluat säännön koskevan.",
-                        "name": "Sääntö"
+                        "help_text": "Ketä uudet komentosäännöt koskevat. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                        "name": "Sääntökohde"
                       }
                     },
                     "description": "Lisää mukaanlukeva sääntö.",
+                    "help_text": "Tämä komento lisää mukaanlukevia palvelimen komentosääntöjä.",
                     "names": [
                       "mukaanlukeva"
                     ]
@@ -535,10 +621,12 @@
                 "arguments": {
                   "command": {
                     "description": "Syötä komento, jonka komentosäännöt haluat nähdä.",
+                    "help_text": "Komento, jonka palvelimen komentosäännöt halutaan nähdä. Vain komennon nimeä pitää käyttää, eli prefiksi pitää jättää pois.",
                     "name": "Komento"
                   }
                 },
                 "description": "Näytä annetun komennon komentosäännöt.",
+                "help_text": "Tämä komento näyttää annetun komennon palvelimen komentosäännöt.",
                 "names": [
                   "näytä"
                 ]
@@ -547,14 +635,17 @@
                 "arguments": {
                   "commands": {
                     "description": "Miltä komennoilta haluat poistaa säännön? (Erota komennot välilyönnillä, älä käytä prefiksiä.)",
+                    "help_text": "Komennot, joista annetut komentosäännöt tulisi poistaa. Jos halutaan käyttää useampaa komentoa, tulee niiden nimet erottaa välilyönneillä. Vain komentonimet tulee kirjoittaa, eli prefiksi pitää jättää pois.",
                     "name": "Komennot"
                   },
                   "rule": {
                     "description": "Anna jäsen, rooli tai palvelinlupa, jota et halua säännön enää koskevan.",
-                    "name": "Sääntö"
+                    "help_text": "Kehen komentosäännöt eivät enää päde. Argumentti hyväksyy jäsenten ID:t, jäsenmaininnat, jäsenten palvelinnimimerkit, jäsenten Discord-nimet, roolien ID:t, roolimaininnat, roolinimet ja lupien nimet.",
+                    "name": "Sääntökohde"
                   }
                 },
                 "description": "Poista komentosääntöjä.",
+                "help_text": "Tällä komennolla voi poistaa jäseniä, rooleja ja lupia palvelimen komentosäännöistä.",
                 "names": [
                   "poista"
                 ]
@@ -563,12 +654,14 @@
           },
           "language": {
             "description": "Muokkaa palvelimen kieltä.",
+            "help_text": "Sisältää komentoja, joilla voi määrittää kielen, jota botti käyttää tällä palvelimella. Voit **asettaa** kanavan kielen joksikin tietyksi, tai **palauttaa** sen oletukseksi.",
             "names": [
               "kieli"
             ],
             "sub_commands": {
               "reset": {
-                "description": "Palauta käyttäjäasetusten kieli oletukseen.",
+                "description": "Palauta palvelimen kieli oletukseen.",
+                "help_text": "Komento palauttaa palvelimen kielen takaisin oletukseen.",
                 "names": [
                   "palauta"
                 ]
@@ -577,10 +670,12 @@
                 "arguments": {
                   "language": {
                     "description": "Minkä kielen haluat asettaa palvelimelle? Voit käyttää kielen nimeä tai lippuemojia.",
+                    "help_text": "Kieli, jota botti tulee käyttämään palvelimella tästä lähin. Argumentti hyväksyy kielen nimet ja sopivat lippuemojit, edellyttäen että kielellä on ainakin yksi. (Esimerkiksi: 🇬🇧 englannille.)",
                     "name": "Kieli"
                   }
                 },
-                "description": "Vaihda palvelimen kieli tiettyyn.",
+                "description": "Vaihda palvelimen kieli.",
+                "help_text": "Komento asettaa tai vaihtaa kielen, jota botti käyttää palvelimella, annettuun kieleen.",
                 "names": [
                   "aseta"
                 ]
@@ -589,6 +684,7 @@
           },
           "shortcut": {
             "description": "Hallinnoi palvelimen pikakomentoja.",
+            "help_text": "Sisältää komentoja, joilla voi **lisätä**, **poistaa** tai **näyttää** palvelimen pikakomentoja. Pikakomento on teksti, joka voidaan kutsua komentoa käyttämällä.",
             "names": [
               "pikakomento",
               "pk"
@@ -598,14 +694,17 @@
                 "arguments": {
                   "content": {
                     "description": "Syötä uuden pikakomennon sisältö.",
+                    "help_text": "Tämä on teksti, joka näytetään kun pikakomento kutsutaan.",
                     "name": "Sisältö"
                   },
                   "name": {
                     "description": "Syötä uuden pikakomennon nimi.",
+                    "help_text": "Tämä on pikakomennon nimi. Tämä sisällytetään pikakomennon kutsuun, jotta tiedetään mitä pikakomentoa halutaan kutsua.",
                     "name": "Nimi"
                   }
                 },
                 "description": "Lisää palvelimen pikakomento.",
+                "help_text": "Tämä komento lisää palvelimen pikakomentoja.",
                 "names": [
                   "lisää"
                 ]
@@ -614,16 +713,19 @@
                 "arguments": {
                   "name": {
                     "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
+                    "help_text": "Tämä argumentti on poistettavan pikakomennon nimi.",
                     "name": "Nimi"
                   }
                 },
                 "description": "Poista olemassaoleva palvelimen pikakomento.",
+                "help_text": "Tämä komento poistaa annetun palvelimen pikakomennon.",
                 "names": [
                   "poista"
                 ]
               },
               "display": {
                 "description": "Näytä kaikki palvelimen pikakomennot.",
+                "help_text": "Tämä komento näyttää kaikki tämän palvelimen pikakomennot.",
                 "names": [
                   "näytä"
                 ]
@@ -634,18 +736,21 @@
       },
       "user": {
         "description": "Käyttäjän konfiguraatio ja asetukset.",
+        "help_text": "Sisältää komentoja, jotka mahdollistavat käyttäjäasetusten räätälöinnin.",
         "names": [
           "käyttäjä"
         ],
         "sub_commands": {
           "language": {
             "description": "Muokkaa käyttäjäasetusten kieltä.",
+            "help_text": "Sisältää komentoja, joilla voi määrittää kielen, jota botti käyttää yksityisviesteissä ja palvelimilla joilla käyttäjien kielet on sallittu. Voit **asettaa** kielen joksikin tietyksi, tai **palauttaa** sen oletukseksi.",
             "names": [
               "kieli"
             ],
             "sub_commands": {
               "reset": {
                 "description": "Palauta käyttäjäasetusten kieli oletukseen.",
+                "help_text": "Komento palauttaa palvelimen kielen takaisin oletukseen.",
                 "names": [
                   "palauta"
                 ]
@@ -654,10 +759,12 @@
                 "arguments": {
                   "language": {
                     "description": "Minkä kielen haluat asettaa käyttäjäasetuksillesi? Voit käyttää kielen nimeä tai lippuemojia.",
+                    "help_text": "Kieli, jota botti tulee käyttämään yksityisviesteissäsi tästä lähin. Argumentti hyväksyy kielen nimet ja sopivat lippuemojit, edellyttäen että kielellä on ainakin yksi. (Esimerkiksi: 🇬🇧 englannille.)",
                     "name": "Kieli"
                   }
                 },
-                "description": "Vaihda käyttäjäasetustesi kieli tiettyyn.",
+                "description": "Vaihda käyttäjäasetustesi kieli.",
+                "help_text": "Komento asettaa tai vaihtaa kielen, jota botti käyttää yksityisviesteissäsi, annettuun kieleen.",
                 "names": [
                   "aseta"
                 ]
@@ -666,6 +773,7 @@
           },
           "shortcut": {
             "description": "Hallinnoi käyttäjän pikakomentoja.",
+            "help_text": "Sisältää komentoja, joilla voi **lisätä**, **poistaa** tai **näyttää** käyttäjäpikakomentoja. Pikakomento on teksti, joka voidaan kutsua komentoa käyttämällä.",
             "names": [
               "pikakomento",
               "pk"
@@ -675,14 +783,17 @@
                 "arguments": {
                   "content": {
                     "description": "Syötä uuden pikakomennon sisältö.",
+                    "help_text": "Tämä on teksti, joka näytetään kun pikakomento kutsutaan.",
                     "name": "Sisältö"
                   },
                   "name": {
                     "description": "Syötä uuden pikakomennon nimi.",
+                    "help_text": "Tämä on pikakomennon nimi. Tämä sisällytetään pikakomennon kutsuun, jotta tiedetään mitä pikakomentoa halutaan kutsua.",
                     "name": "Nimi"
                   }
                 },
                 "description": "Lisää käyttäjän pikakomento.",
+                "help_text": "Tämä komento lisää käyttäjän pikakomentoja.",
                 "names": [
                   "lisää"
                 ]
@@ -691,16 +802,19 @@
                 "arguments": {
                   "name": {
                     "description": "Syötä pikakomennon nimi, jonka haluat poistaa.",
+                    "help_text": "Tämä argumentti on poistettavan pikakomennon nimi.",
                     "name": "Nimi"
                   }
                 },
                 "description": "Poista olemassaoleva käyttäjän pikakomento.",
+                "help_text": "Tämä komento poistaa annetun käyttäjän pikakomennon.",
                 "names": [
                   "poista"
                 ]
               },
               "display": {
                 "description": "Näytä kaikki käyttäjän pikakomennot.",
+                "help_text": "Tämä komento näyttää kaikki tämän käyttäjän pikakomennot.",
                 "names": [
                   "näytä"
                 ]
@@ -715,10 +829,12 @@
     "arguments": {
       "name": {
         "description": "Mitä pikakomentoa haluat käyttää?",
+        "help_text": "Tämä on kutsuttavan pikakomennon nimi.",
         "name": "Nimi"
       }
     },
     "description": "Käytä olemassaolevia pikakomentoja.",
+    "help_text": "Tämä komento kutsuu pikakomentoja.",
     "names": [
       "pikakomento",
       "pk"

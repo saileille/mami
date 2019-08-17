@@ -1,8 +1,8 @@
 {
   "acre": {
     "names": [
-      "acre",
-      "acres"
+      "aker",
+      "akri"
     ],
     "symbols": [
       "ac"
@@ -10,9 +10,9 @@
   },
   "celsius": {
     "names": [
-      "Celsius",
-      "degree Celsius",
-      "degrees Celsius"
+      "Celzij",
+      "stupanj Celzijev",
+      "stupnja Celzijeva"
     ],
     "symbols": [
       "°C",
@@ -21,10 +21,9 @@
   },
   "centimetre": {
     "names": [
-      "centimetre",
-      "centimetres",
-      "centimeter",
-      "centimeters"
+      "centimetar",
+      "centimetra",
+      "centimetara"
     ],
     "symbols": [
       "cm"
@@ -32,10 +31,9 @@
   },
   "desilitre": {
     "names": [
-      "desilitre",
-      "desilitres",
-      "desiliter",
-      "desiliters"
+      "decilitar",
+      "decilitra",
+      "decilitara"
     ],
     "symbols": [
       "dl"
@@ -43,9 +41,10 @@
   },
   "fahrenheit": {
     "names": [
-      "Fahrenheit",
-      "degree Fahrenheit",
-      "degrees Fahrenheit"
+      "Farenhajt",
+      "stupanj Farenhajtov",
+      "stupnja Farenhajtova",
+      "stupnjeva Farenhajtova"
     ],
     "symbols": [
       "°F",
@@ -54,8 +53,8 @@
   },
   "foot": {
     "names": [
-      "foot",
-      "feet"
+      "stopa",
+      "stope"
     ],
     "symbols": [
       "ft",
@@ -65,7 +64,7 @@
   "gram": {
     "names": [
       "gram",
-      "grams"
+      "grama"
     ],
     "symbols": [
       "g"
@@ -73,8 +72,9 @@
   },
   "imperial_cup": {
     "names": [
-      "imperial cup",
-      "imperial cups"
+      "imperijalna čaša",
+      "imperialne čaše",
+      "imperijalnih čaša"
     ],
     "symbols": [
       "imp cups",
@@ -83,8 +83,9 @@
   },
   "imperial_fluid_ounce": {
     "names": [
-      "imperial fluid ounce",
-      "imperial fluid ounces"
+      "imperijalna unca tekućine",
+      "imperijalne unce tekućine",
+      "imperijalnih unci tekućine"
     ],
     "symbols": [
       "imp fl oz",
@@ -93,8 +94,8 @@
   },
   "imperial_gallon": {
     "names": [
-      "imperial gallon",
-      "imperial gallons"
+      "galon",
+      "galona"
     ],
     "symbols": [
       "imp gal"
@@ -102,8 +103,8 @@
   },
   "inch": {
     "names": [
-      "inch",
-      "inches"
+      "inč",
+      "inča"
     ],
     "symbols": [
       "in",
@@ -113,7 +114,7 @@
   "kilogram": {
     "names": [
       "kilogram",
-      "kilograms"
+      "kilograma"
     ],
     "symbols": [
       "kg"
@@ -121,10 +122,9 @@
   },
   "kilometre": {
     "names": [
-      "kilometre",
-      "kilometres",
-      "kilometer",
-      "kilometers"
+      "kilometar",
+      "kilometra",
+      "kilometara"
     ],
     "symbols": [
       "km"
@@ -132,10 +132,9 @@
   },
   "litre": {
     "names": [
+      "litra",
       "litre",
-      "litres",
-      "liter",
-      "liters"
+      "litara"
     ],
     "symbols": [
       "l"
@@ -143,10 +142,9 @@
   },
   "metre": {
     "names": [
-      "metre",
-      "metres",
-      "meter",
-      "meters"
+      "metar",
+      "metra",
+      "metara"
     ],
     "symbols": [
       "m"
@@ -154,8 +152,8 @@
   },
   "mile": {
     "names": [
-      "mile",
-      "miles"
+      "milja",
+      "milje"
     ],
     "symbols": [
       "mi"
@@ -163,8 +161,8 @@
   },
   "milligram": {
     "names": [
-      "milligram",
-      "milligrams"
+      "miligram",
+      "miligrama"
     ],
     "symbols": [
       "mg"
@@ -172,10 +170,8 @@
   },
   "millilitre": {
     "names": [
-      "millilitre",
-      "millilitres",
-      "milliliter",
-      "milliliters"
+      "mililitra",
+      "mililitara"
     ],
     "symbols": [
       "ml"
@@ -183,10 +179,9 @@
   },
   "millimetre": {
     "names": [
-      "millimetre",
-      "millimetres",
-      "millimeter",
-      "millimeters"
+      "milimetar",
+      "milimetra",
+      "milimetara"
     ],
     "symbols": [
       "mm"
@@ -194,8 +189,9 @@
   },
   "ounce": {
     "names": [
-      "ounce",
-      "ounces"
+      "unca",
+      "unce",
+      "unci"
     ],
     "symbols": [
       "oz"
@@ -203,8 +199,8 @@
   },
   "pica": {
     "names": [
-      "pica",
-      "picas"
+      "cicero",
+      "cicera"
     ],
     "symbols": [
       "P̸",
@@ -213,8 +209,9 @@
   },
   "point": {
     "names": [
-      "point",
-      "points"
+      "točka",
+      "točke",
+      "točaka"
     ],
     "symbols": [
       "p"
@@ -222,20 +219,19 @@
   },
   "pound": {
     "names": [
-      "pound",
-      "pounds"
+      "funta",
+      "funte",
+      "funti"
     ],
     "symbols": [
-      "lbs",
       "lb"
     ]
   },
   "square_metre": {
     "names": [
-      "square metre",
-      "square metres",
-      "square meter",
-      "square meters"
+      "kvadratni metar",
+      "kvadratna metra",
+      "kvadratnih metara"
     ],
     "symbols": [
       "m2",
@@ -244,10 +240,8 @@
   },
   "stone": {
     "names": [
-      "stone",
-      "stone weight",
-      "stones",
-      "stone weights"
+      "stijena",
+      "stijene"
     ],
     "symbols": [
       "st."
@@ -255,10 +249,9 @@
   },
   "us_fluid_ounce": {
     "names": [
-      "US fluid ounce",
-      "US fluid ounces",
-      "fluid ounce",
-      "fluid ounces"
+      "Američka unca tekućine",
+      "Američke unce tekućine",
+      "Američkih unci tekućine"
     ],
     "symbols": [
       "US fl oz",
@@ -273,10 +266,11 @@
   },
   "us_gallon": {
     "names": [
-      "gallon",
-      "gallons",
-      "US gallon",
-      "US gallons"
+      "galon",
+      "galona",
+      "Američki galon",
+      "Američka galona",
+      "Američkih galona"
     ],
     "symbols": [
       "US gal",
@@ -285,23 +279,17 @@
   },
   "us_legal_cup": {
     "names": [
-      "US legal cups",
-      "US legal cup",
-      "legal cup",
-      "legal cups",
-      "US cup",
-      "US cups",
-      "cup",
-      "cups"
+      "Američka čaša",
+      "Američke čaše",
+      "Američkih čaša"
     ],
     "symbols": []
   },
   "us_teaspoon": {
     "names": [
-      "US teaspoon",
-      "US teaspoons",
-      "teaspoon",
-      "teaspoons"
+      "čajna žlica",
+      "čajne žlice",
+      "čajnih žlica"
     ],
     "symbols": [
       "US tsp",
@@ -311,7 +299,7 @@
   "yard": {
     "names": [
       "yard",
-      "yards"
+      "yarda"
     ],
     "symbols": [
       "yd"

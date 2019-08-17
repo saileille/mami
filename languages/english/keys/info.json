@@ -8,8 +8,8 @@
   "command_info_title": "Information About {command}",
   "basic_command_info_title": "Basic Information",
   "related_commands_title": "Related Commands",
+  "sub_commands_title": "Sub-Commands",
   "command_aliases_title": "Aliases",
   "no_aliases": "None",
-  "command_has_sub_commands_title": "Has Sub-Commands",
   "argument_name_and_number": "Argument {number}: {name}"
 }

@@ -1,6 +1,7 @@
 {
   "currency": {
     "description": "Currency-related commands.",
+    "help_text": "Includes commands that are related to currencies. You can **convert** between different currencies, **display** all currencies that are available for conversion, and **search** for the currency codes with search terms.",
     "names": [
       "currency"
     ],
@@ -9,25 +10,30 @@
         "arguments": {
           "amount": {
             "description": "How much do you want to convert?",
-            "name": "amount"
+            "help_text": "The amount of currency to be converted.",
+            "name": "Amount"
           },
           "base": {
             "description": "Which currency do you want to use as the base?",
-            "name": "base"
+            "help_text": "The three-letter currency code of the base currency, i.e. the currency from which the conversion starts.",
+            "name": "Base Currency"
           },
           "target": {
             "description": "Which currency do you want to use as the target?",
-            "name": "target"
+            "help_text": "The three-letter currency code of the target currency, i.e. the currency to which the conversion ends.",
+            "name": "Target Currency"
           }
         },
         "description": "Convert from one currency to another.",
+        "help_text": "This command converts money from one currency to another. The exchange rates are updated roughly every 45 minutes.",
         "names": [
           "convert",
           "conv"
         ]
       },
       "display": {
-        "description": "Show all currencies.",
+        "description": "Display all currencies.",
+        "help_text": "This command displays all currencies and their currency codes. The currency codes can be used to convert money from one currency to another.",
         "names": [
           "display"
         ]
@@ -36,10 +42,12 @@
         "arguments": {
           "search_term": {
             "description": "Type a search term for the currencies you want to find.",
-            "name": "search_term"
+            "help_text": "The currencies whose name includes this text are included in the search result. Letter capitalisation does not matter, and the search term does not support regular expressions.",
+            "name": "Search Term"
           }
         },
         "description": "Search for a currency.",
+        "help_text": "This command allows you to see the code and name of available currencies which match the given search term.",
         "names": [
           "search"
         ]
@@ -49,25 +57,30 @@
   "dice": {
     "arguments": {
       "first_value": {
-        "description": "Enter the minimum (or maximum) value the dice should have.",
-        "name": "first_value"
+        "description": "Enter the minimum (or maximum) value the die should have.",
+        "help_text": "The first extremum of the die range, meaning the die result cannot be more or less than this. If this is smaller than the second given extremum, this value becomes the minimum value. If this is larger than the second given extremum, this value becomes the maximum value.",
+        "name": "First Extremum"
       },
       "no_of_dice": {
         "description": "How many dice do you want to throw?",
-        "name": "no_of_dice"
+        "help_text": "The amount of dice you want to throw at once. The upper limit for dice is restricted, and can be changed in settings.",
+        "name": "No. of Dice"
       },
       "second_value": {
         "description": "Enter the maximum (or minimum) value the dice should have.",
-        "name": "second_value"
+        "help_text": "The second extremum of the die range, meaning the die result cannot be more or less than this. If this is smaller than the first given extremum, this value becomes the minimum value. If this is larger than the first given extremum, this value becomes the maximum value.",
+        "name": "Second Extremum"
       }
     },
-    "description": "Throw a die or dice.",
+    "description": "Throw dice.",
+    "help_text": "This command throws a given amount of dice which have a value range determined by the command user.",
     "names": [
       "dice"
     ]
   },
   "guild_call": {
     "description": "Make calls to other servers!",
+    "help_text": "Includes commands related to allowing servers to communicate with one another. You can **connect** and **disconnect** a call from here. The command can only be used on servers.",
     "names": [
       "server_call",
       "guild_call"
@@ -75,12 +88,14 @@
     "sub_commands": {
       "connect": {
         "description": "Connect a call.",
+        "help_text": "This command begins attempting to connect a call to another server. When another connecting server is found, a connection is established, and every message sent to the channel where this command was used will be relayed to the connected server as well. Message-editing and deleting is supported as well.",
         "names": [
           "connect"
         ]
       },
       "disconnect": {
         "description": "Disconnect a call.",
+        "help_text": "If the server call is not connected, this command will stop trying to connect to another server. If the server call is connected, this command will hang up the call immediately.",
         "names": [
           "disconnect"
         ]
@@ -89,6 +104,7 @@
   },
   "info": {
     "description": "Information about various things.",
+    "help_text": "Includes commands that display info about **command** or **member**.",
     "names": [
       "info"
     ],
@@ -97,22 +113,24 @@
         "arguments": {
           "command": {
             "description": "Which command's information do you want to see? (Do not use prefix.)",
+            "help_text": "The command whose information is wanted to be displayed. The command name alone must be typed, i.e. the prefix must be left out.",
             "name": "Command"
           }
         },
         "description": "See information about each of the commands.",
-        "names": [
-          "command"
-        ]
+        "help_text": "This is the command you just used! This command can show information about any command the bot has, and serves as a basic documentation. Use this command should any of the bot's commands ever puzzle you.",
+        "names": ["command"]
       },
       "member": {
         "arguments": {
           "member": {
             "description": "Give the ID, mention or name of the server member whose information you want to see.",
-            "name": "member"
+            "help_text": "The member whose information should be shown. The argument accepts IDs, mentions, Discord names, server nicknames and \"Discord name + discriminator\" combinations. This command can only be used on servers.",
+            "name": "Member"
           }
         },
         "description": "Information about server members.",
+        "help_text": "This command shows basic information about a given server member, such as their full-sized profile picture and the server join date.",
         "names": [
           "member"
         ]
@@ -121,6 +139,7 @@
   },
   "runes": {
     "description": "Convert text to Madoka runes.",
+    "help_text": "These commands are for converting user-inputted text to the runes found in the anime Puella Magi Madoka Magica. The anime has three types of runes - **archaic**, **modern** and **musical** - and this command set allows converting text to any one of them. If a character in the text cannot be converted to the chosen type, conversion to the archaic type is attempted first. If this is unsuccessful as well, the character is left unconverted.",
     "names": [
       "runes"
     ],
@@ -129,10 +148,12 @@
         "arguments": {
           "text": {
             "description": "What text do you want to convert?",
-            "name": "text"
+            "help_text": "The text that you want to convert to the archaic runes. If a character in the text cannot be converted, the character is left as-is.",
+            "name": "Text"
           }
         },
         "description": "Convert text into archaic runes.",
+        "help_text": "This command converts text to the archaic runes found in the anime Puella Magi Madoka Magica.",
         "names": [
           "archaic"
         ]
@@ -141,10 +162,12 @@
         "arguments": {
           "text": {
             "description": "What text do you want to convert?",
-            "name": "text"
+            "help_text": "The text that you want to convert to the modern runes. If a character in the text cannot be converted to the modern type, conversion to the archaic type is attempted first. If this is unsuccessful as well, the character is left unconverted.",
+            "name": "Text"
           }
         },
         "description": "Convert text into modern runes.",
+        "help_text": "This command converts text to the modern runes found in the anime Puella Magi Madoka Magica.",
         "names": [
           "modern"
         ]
@@ -153,10 +176,12 @@
         "arguments": {
           "text": {
             "description": "What text do you want to convert?",
-            "name": "text"
+            "help_text": "The text that you want to convert to the musical runes. If a character in the text cannot be converted to the musical type, conversion to the archaic type is attempted first. If this is unsuccessful as well, the character is left unconverted.",
+            "name": "Text"
           }
         },
         "description": "Convert text into musical runes.",
+        "help_text": "This command converts text to the musical runes found in the anime Puella Magi Madoka Magica.",
         "names": [
           "musical"
         ]
@@ -165,309 +190,28 @@
   },
   "settings": {
     "description": "Configuration and settings.",
+    "help_text": "This set contains commands that allow customising the bot settings to meet one's wishes. As the configuration commands outside the ones under **user** section affect the entire server, most of the commands here require the administator permission by default.",
     "names": [
       "settings"
     ],
     "sub_commands": {
       "category": {
         "description": "Category configuration and settings.",
+        "help_text": "This set has commands that allow customising category settings. Categories are the channel groups on a server, and this command can be used only on a channel that belongs to a category.",
         "names": [
           "category"
         ],
         "sub_commands": {
           "command_rules": {
-            "description": "",
-            "names": [],
-            "sub_commands": {
-              "add": {
-                "description": "",
-                "names": [],
-                "sub_commands": {
-                  "exclusionary": {
-                    "arguments": {
-                      "commands": {
-                        "description": "",
-                        "name": ""
-                      },
-                      "rule": {
-                        "description": "",
-                        "name": ""
-                      }
-                    },
-                    "description": "",
-                    "names": []
-                  },
-                  "inclusionary": {
-                    "arguments": {
-                      "commands": {
-                        "description": "",
-                        "name": ""
-                      },
-                      "rule": {
-                        "description": "",
-                        "name": ""
-                      }
-                    },
-                    "description": "",
-                    "names": []
-                  }
-                }
-              },
-              "display": {
-                "arguments": {
-                  "command": {
-                    "description": "",
-                    "name": ""
-                  }
-                },
-                "description": "",
-                "names": []
-              },
-              "remove": {
-                "arguments": {
-                  "commands": {
-                    "description": "",
-                    "name": ""
-                  },
-                  "rule": {
-                    "description": "",
-                    "name": ""
-                  }
-                },
-                "description": "",
-                "names": []
-              }
-            }
-          },
-          "language": {
-            "description": "Edit the category language.",
-            "names": [
-              "language"
-            ],
-            "sub_commands": {
-              "reset": {
-                "description": "Reset the category language back to default.",
-                "names": [
-                  "reset"
-                ]
-              },
-              "set": {
-                "arguments": {
-                  "language": {
-                    "description": "Which language do you want to set for the category?",
-                    "name": "language"
-                  }
-                },
-                "description": "Set the category language to a specific one.",
-                "names": [
-                  "set"
-                ]
-              }
-            }
-          },
-          "shortcut": {
-            "description": "Manage category shortcuts.",
-            "names": [
-              "shortcut",
-              "sc"
-            ],
-            "sub_commands": {
-              "add": {
-                "arguments": {
-                  "content": {
-                    "description": "Enter the content for the new shortcut.",
-                    "name": "content"
-                  },
-                  "name": {
-                    "description": "Enter the name for the new shortcut.",
-                    "name": "name"
-                  }
-                },
-                "description": "Add a category shortcut.",
-                "names": [
-                  "add"
-                ]
-              },
-              "delete": {
-                "arguments": {
-                  "name": {
-                    "description": "Enter the name of the shortcut you wish to delete.",
-                    "name": "name"
-                  }
-                },
-                "description": "Delete an existing category shortcut.",
-                "names": [
-                  "delete",
-                  "del"
-                ]
-              },
-              "display": {
-                "description": "Display all category shortcuts.",
-                "names": [
-                  "display"
-                ]
-              }
-            }
-          }
-        }
-      },
-      "channel": {
-        "description": "Channel configuration and settings.",
-        "names": [
-          "channel"
-        ],
-        "sub_commands": {
-          "command_rules": {
-            "description": "",
-            "names": [],
-            "sub_commands": {
-              "add": {
-                "description": "",
-                "names": [],
-                "sub_commands": {
-                  "exclusionary": {
-                    "arguments": {
-                      "commands": {
-                        "description": "",
-                        "name": ""
-                      },
-                      "rule": {
-                        "description": "",
-                        "name": ""
-                      }
-                    },
-                    "description": "",
-                    "names": []
-                  },
-                  "inclusionary": {
-                    "arguments": {
-                      "commands": {
-                        "description": "",
-                        "name": ""
-                      },
-                      "rule": {
-                        "description": "",
-                        "name": ""
-                      }
-                    },
-                    "description": "",
-                    "names": []
-                  }
-                }
-              },
-              "display": {
-                "arguments": {
-                  "command": {
-                    "description": "",
-                    "name": ""
-                  }
-                },
-                "description": "",
-                "names": []
-              },
-              "remove": {
-                "arguments": {
-                  "commands": {
-                    "description": "",
-                    "name": ""
-                  },
-                  "rule": {
-                    "description": "",
-                    "name": ""
-                  }
-                },
-                "description": "",
-                "names": []
-              }
-            }
-          },
-          "language": {
-            "description": "Edit the channel language.",
-            "names": [
-              "language"
-            ],
-            "sub_commands": {
-              "reset": {
-                "description": "Reset the channel language back to default.",
-                "names": [
-                  "reset"
-                ]
-              },
-              "set": {
-                "arguments": {
-                  "language": {
-                    "description": "Which language do you want to set for the channel?",
-                    "name": "language"
-                  }
-                },
-                "description": "Set the channel language to a specific one.",
-                "names": [
-                  "set"
-                ]
-              }
-            }
-          },
-          "shortcut": {
-            "description": "Manage channel shortcuts.",
-            "names": [
-              "shortcut",
-              "sc"
-            ],
-            "sub_commands": {
-              "add": {
-                "arguments": {
-                  "content": {
-                    "description": "Enter the content for the new shortcut.",
-                    "name": "content"
-                  },
-                  "name": {
-                    "description": "Enter the name for the new shortcut.",
-                    "name": "name"
-                  }
-                },
-                "description": "Add a channel shortcut.",
-                "names": [
-                  "add"
-                ]
-              },
-              "delete": {
-                "arguments": {
-                  "name": {
-                    "description": "Enter the name of the shortcut you wish to delete.",
-                    "name": "name"
-                  }
-                },
-                "description": "Delete an existing channel shortcut.",
-                "names": [
-                  "delete",
-                  "del"
-                ]
-              },
-              "display": {
-                "description": "Display all channel shortcuts.",
-                "names": [
-                  "display"
-                ]
-              }
-            }
-          }
-        }
-      },
-      "guild": {
-        "description": "Server configuration and settings.",
-        "names": [
-          "server",
-          "guild"
-        ],
-        "sub_commands": {
-          "command_rules": {
-            "description": "Manage who is allowed to use commands in the server.",
+            "description": "Manage who is allowed to use commands in the category.",
+            "help_text": "This set contains commands that allow changing category command rules. You can **add** new command rules, **remove** existing command rules, or **display** the command rules for given command for this category.\n\nCommand rules determine who can use what commands, and can be separated in inclusionary and exclusionary command rules, which can be further divided by members, roles and permissions.\n\nInclusionary command rule means that everyone who is included in the member list of the command rule, *or* has a role that is included in the role list of the command rule *or* has a permission that is included in the permission list of the command rule is *allowed* to use the command, while everyone else is *disallowed* to use the command.\n\nExclusionary command rule means that everyone who is included in the member list of the command rule *or* has a role that is included in the role list of the command rule is *disallowed* to use the command, while everyone else is *allowed* to use the command.",
             "names": [
               "command_rules"
             ],
             "sub_commands": {
               "add": {
                 "description": "Add command rule(s).",
+                "help_text": "This set has commands that can be used to add **inclusionary** or **exclusionary** category command rules.",
                 "names": [
                   "add"
                 ],
@@ -476,14 +220,17 @@
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
-                        "name": "commands"
+                        "help_text": "Commands to which the added command rules should apply. If one wants to use several commands, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                        "name": "Commands"
                       },
                       "rule": {
-                        "description": "Give a member, role or server permission to which you want the rule to apply.",
-                        "name": "rule"
+                        "description": "Give a member, role or server permission to which you want the exclusionary rule to apply.",
+                        "help_text": "To whom the command rules will apply to. The argument accepts member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names.",
+                        "name": "Rule Subject"
                       }
                     },
                     "description": "Add an exclusionary rule.",
+                    "help_text": "The command can be used to add exlusionary category command rules.",
                     "names": [
                       "exclusionary"
                     ]
@@ -492,14 +239,17 @@
                     "arguments": {
                       "commands": {
                         "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
-                        "name": "commands"
+                        "help_text": "Commands to which the added command rules should apply. If several command names are typed, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                        "name": "Commands"
                       },
                       "rule": {
                         "description": "Give a member, role or server permission to which you want the rule to apply.",
-                        "name": "rule"
+                        "help_text": "To whom the command rules will apply to. The argument accepts member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names.",
+                        "name": "Rule Subject"
                       }
                     },
                     "description": "Add an inclusionary rule.",
+                    "help_text": "The command can be used to add inclusionary category command rules.",
                     "names": [
                       "inclusionary"
                     ]
@@ -510,10 +260,12 @@
                 "arguments": {
                   "command": {
                     "description": "Insert the command whose command rules you want to see.",
-                    "name": "command"
+                    "help_text": "The command whose category command rules should be displayed. Only the command name should be used, i.e. the prefix should be emitted.",
+                    "name": "Command"
                   }
                 },
                 "description": "Display given command's command rules.",
+                "help_text": "This command displays the category command rules of a given command. Note that if there are channel command rules given for this command, they will override category command rules and thus the command rules displayed here would not be valid on this channel.",
                 "names": [
                   "display"
                 ]
@@ -522,14 +274,17 @@
                 "arguments": {
                   "commands": {
                     "description": "From which commands do you want to remove the rule? (Separate the commands with a space, do not use the prefix.)",
-                    "name": "commands"
+                    "help_text": "Commands from which the given command rules should be removed. If several command names are typed, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                    "name": "Commands"
                   },
                   "rule": {
                     "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
-                    "name": "rule"
+                    "help_text": "To whom the command rules will no longer apply to. Member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names are accepted.",
+                    "name": "Rule Subject"
                   }
                 },
                 "description": "Remove command rule(s).",
+                "help_text": "This command can be used to remove members, rules and permissions from category command rules.",
                 "names": [
                   "remove"
                 ]
@@ -537,13 +292,15 @@
             }
           },
           "language": {
-            "description": "Edit the server language.",
+            "description": "Edit the category language.",
+            "help_text": "This set contains commands that configure the language the bot uses in this category. You can **set** the category language to a specific one, or **reset** it so that the language defined for server is used instead.",
             "names": [
               "language"
             ],
             "sub_commands": {
               "reset": {
-                "description": "Reset the server language back to default.",
+                "description": "Reset the category language back to default.",
+                "help_text": "The command resets the category language back to default, meaning the bot language will be determined based on the server-level configuration.",
                 "names": [
                   "reset"
                 ]
@@ -551,11 +308,13 @@
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Which language do you want to set for the server?",
-                    "name": "language"
+                    "description": "Which language do you want to set for the category? You can use either language name or flag emoji.",
+                    "help_text": "The language that the bot will use in the category from now on. The argument accepts language names and the appropriate flag emojis, provided that the language has at least one. (For example: 🇬🇧 for English.)",
+                    "name": "Language"
                   }
                 },
-                "description": "Set the server language to a specific one.",
+                "description": "Set the category language to a specific one.",
+                "help_text": "The command sets or changes the language that the bot uses in the category to a given one.",
                 "names": [
                   "set"
                 ]
@@ -563,7 +322,8 @@
             }
           },
           "shortcut": {
-            "description": "Manage server shortcuts.",
+            "description": "Manage category shortcuts.",
+            "help_text": "This set contains commands that can be used to **add**, **delete** or **display** category shortcuts. Shortcut is text that can be called through the use of a command.",
             "names": [
               "shortcut",
               "sc"
@@ -573,14 +333,17 @@
                 "arguments": {
                   "content": {
                     "description": "Enter the content for the new shortcut.",
-                    "name": "content"
+                    "help_text": "This is the text which will be sent once the shortcut is called with a command.",
+                    "name": "Content"
                   },
                   "name": {
                     "description": "Enter the name for the new shortcut.",
-                    "name": "name"
+                    "help_text": "This is the shortcut name. This is what needs to be typed alongside with the shortcut-calling command in order to get the bot to send the shortcut content.",
+                    "name": "Name"
                   }
                 },
-                "description": "Add a server shortcut.",
+                "description": "Add a category shortcut.",
+                "help_text": "This command can be used to add category shortcuts.",
                 "names": [
                   "add"
                 ]
@@ -589,10 +352,371 @@
                 "arguments": {
                   "name": {
                     "description": "Enter the name of the shortcut you wish to delete.",
-                    "name": "name"
+                    "help_text": "This argument should contain the name of the shortcut that is to be deleted.",
+                    "name": "Name"
+                  }
+                },
+                "description": "Delete an existing category shortcut.",
+                "help_text": "This command can be used to delete a given category shortcut.",
+                "names": [
+                  "delete",
+                  "del"
+                ]
+              },
+              "display": {
+                "description": "Display all category shortcuts.",
+                "help_text": "This command displays all shortcuts of this category.",
+                "names": [
+                  "display"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "channel": {
+        "description": "Channel configuration and settings.",
+        "help_text": "This set has commands that allow customising channel settings. This command can only be used on a server.",
+        "names": [
+          "channel"
+        ],
+        "sub_commands": {
+          "command_rules": {
+            "description": "Manage who is allowed to use commands in the channel.",
+            "help_text": "This set contains commands that allow changing channel command rules. You can **add** new command rules for commands, **remove** existing command rules from commands, or **display** the command rules for given command for this channel.\n\nCommand rules determine who can use what commands, and can be separated in inclusionary and exclusionary command rules, which can be further divided by members, roles and permissions.\n\nInclusionary command rule means that everyone who is included in the member list of the command rule, *or* has a role that is included in the role list of the command rule *or* has a permission that is included in the permission list of the command rule is *allowed* to use the command, while everyone else is *disallowed* to use the command.\n\nExclusionary command rule means that everyone who is included in the member list of the command rule *or* has a role that is included in the role list of the command rule is *disallowed* to use the command, while everyone else is *allowed* to use the command.",
+            "names": [
+              "command_rules"
+            ],
+            "sub_commands": {
+              "add": {
+                "description": "Add command rule(s).",
+                "help_text": "This set has commands that can be used to add **inclusionary** or **exclusionary** channel command rules.",
+                "names": [
+                  "add"
+                ],
+                "sub_commands": {
+                  "exclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
+                        "help_text": "Commands to which the added command rules should apply. If several command names are typed, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                        "name": "Commands"
+                      },
+                      "rule": {
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
+                        "help_text": "To whom the command rules will apply to. Member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names are accepted.",
+                        "name": "Rule Subject"
+                      }
+                    },
+                    "description": "Add an exclusionary rule.",
+                    "help_text": "The command can be used to add exlusionary channel command rules.",
+                    "names": [
+                      "exclusionary"
+                    ]
+                  },
+                  "inclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
+                        "help_text": "Commands to which the added command rules should apply. If several command names are typed, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                        "name": "Commands"
+                      },
+                      "rule": {
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
+                        "help_text": "To whom the command rules will apply to. Member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names are accepted.",
+                        "name": "Rule Subject"
+                      }
+                    },
+                    "description": "Add an inclusionary rule.",
+                    "help_text": "The command can be used to add inclusionary channel command rules.",
+                    "names": [
+                      "inclusionary"
+                    ]
+                  }
+                }
+              },
+              "display": {
+                "arguments": {
+                  "command": {
+                    "description": "Insert the command whose command rules you want to see.",
+                    "help_text": "The command whose channel command rules should be displayed. Only the command name should be used, i.e. the prefix should be emitted.",
+                    "name": "Command"
+                  }
+                },
+                "description": "Display given command's command rules.",
+                "help_text": "This command displays the channel command rules of a given command.",
+                "names": [
+                  "display"
+                ]
+              },
+              "remove": {
+                "arguments": {
+                  "commands": {
+                    "description": "From which commands do you want to remove the rule? (Separate the commands with a space, do not use the prefix.)",
+                    "help_text": "Commands from which the command rules should be removed. If several command names are typed, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                    "name": "Commands"
+                  },
+                  "rule": {
+                    "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
+                    "help_text": "To whom the command rules will no longer apply to. Member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names are accepted.",
+                    "name": "Rule Subject"
+                  }
+                },
+                "description": "Remove command rule(s).",
+                "help_text": "This command can be used to remove members, rules and permissions from channel command rules.",
+                "names": [
+                  "remove"
+                ]
+              }
+            }
+          },
+          "language": {
+            "description": "Edit the channel language.",
+            "help_text": "This set contains commands that configure the language the bot uses on this channel. You can **set** the channel language to a specific one, or **reset** it so that the language defined for server or category is used instead.",
+            "names": [
+              "language"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Reset the channel language back to default.",
+                "help_text": "The command resets the channel language back to default, meaning the bot language will be determined based on the server or category-level configuration.",
+                "names": [
+                  "reset"
+                ]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Which language do you want to set for the channel? You can use either language name or flag emoji.",
+                    "help_text": "The language that the bot will use on the channel from now on. The argument accepts language names and the appropriate flag emojis, provided that the language has at least one. (For example: 🇬🇧 for English.)",
+                    "name": "Language"
+                  }
+                },
+                "description": "Set the channel language to a specific one.",
+                "help_text": "The command sets or changes the language that the bot uses on the channel to a given one.",
+                "names": [
+                  "set"
+                ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Manage channel shortcuts.",
+            "help_text": "This set contains commands that can be used to **add**, **delete** or **display** channel shortcuts. Shortcut is text that can be called through the use of a command.",
+            "names": [
+              "shortcut",
+              "sc"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Enter the content for the new shortcut.",
+                    "help_text": "This is the text which will be sent once the shortcut is called with a command.",
+                    "name": "Content"
+                  },
+                  "name": {
+                    "description": "Enter the name for the new shortcut.",
+                    "help_text": "This is the shortcut name. This is what needs to be typed alongside with the shortcut-calling command in order to get the bot to send the shortcut content.",
+                    "name": "Name"
+                  }
+                },
+                "description": "Add a channel shortcut.",
+                "help_text": "This command can be used to add channel shortcuts.",
+                "names": [
+                  "add"
+                ]
+              },
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Enter the name of the shortcut you wish to delete.",
+                    "help_text": "This argument should contain the name of the shortcut that is to be deleted.",
+                    "name": "Name"
+                  }
+                },
+                "description": "Delete an existing channel shortcut.",
+                "help_text": "This command can be used to delete a given channel shortcut.",
+                "names": [
+                  "delete",
+                  "del"
+                ]
+              },
+              "display": {
+                "description": "Display all channel shortcuts.",
+                "help_text": "This command displays all shortcuts of this channel.",
+                "names": [
+                  "display"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "guild": {
+        "description": "Server configuration and settings.",
+        "help_text": "This set has commands that allow customising server settings. This command can only be used on a server.",
+        "names": [
+          "server",
+          "guild"
+        ],
+        "sub_commands": {
+          "command_rules": {
+            "description": "Manage who is allowed to use commands in the server.",
+            "help_text": "This set contains commands that allow changing server command rules. You can **add** new command rules for commands, **remove** existing command rules from commands, or **display** the command rules for given command for this server.\n\nCommand rules determine who can use what commands, and can be separated in inclusionary and exclusionary command rules, which can be further divided by members, roles and permissions.\n\nInclusionary command rule means that everyone who is included in the member list of the command rule, *or* has a role that is included in the role list of the command rule *or* has a permission that is included in the permission list of the command rule is *allowed* to use the command, while everyone else is *disallowed* to use the command.\n\nExclusionary command rule means that everyone who is included in the member list of the command rule *or* has a role that is included in the role list of the command rule is *disallowed* to use the command, while everyone else is *allowed* to use the command.",
+            "names": [
+              "command_rules"
+            ],
+            "sub_commands": {
+              "add": {
+                "description": "Add command rule(s).",
+                "help_text": "This set has commands that can be used to add **inclusionary** or **exclusionary** server command rules.",
+                "names": [
+                  "add"
+                ],
+                "sub_commands": {
+                  "exclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
+                        "help_text": "Commands to which the added command rules should apply. If several command names are typed, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                        "name": "Commands"
+                      },
+                      "rule": {
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
+                        "help_text": "To whom the command rules will apply to. Member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names are accepted.",
+                        "name": "Rule Subject"
+                      }
+                    },
+                    "description": "Add an exclusionary rule.",
+                    "help_text": "The command can be used to add exlusionary server command rules.",
+                    "names": [
+                      "exclusionary"
+                    ]
+                  },
+                  "inclusionary": {
+                    "arguments": {
+                      "commands": {
+                        "description": "To which commands do you want to add the rule? (Separate the commands with a space, do not use the prefix.)",
+                        "help_text": "Commands to which the added command rules should apply. If several command names are typed, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                        "name": "Commands"
+                      },
+                      "rule": {
+                        "description": "Give a member, role or server permission to which you want the rule to apply.",
+                        "help_text": "To whom the command rules will apply to. Member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names are accepted.",
+                        "name": "Rule Subject"
+                      }
+                    },
+                    "description": "Add an inclusionary rule.",
+                    "help_text": "The command can be used to add inclusionary server command rules.",
+                    "names": [
+                      "inclusionary"
+                    ]
+                  }
+                }
+              },
+              "display": {
+                "arguments": {
+                  "command": {
+                    "description": "Insert the command whose command rules you want to see.",
+                    "help_text": "The command whose server command rules should be displayed. Only the command name should be used, i.e. the prefix should be emitted.",
+                    "name": "Command"
+                  }
+                },
+                "description": "Display given command's command rules.",
+                "help_text": "This command displays the server command rules of a given command.",
+                "names": [
+                  "display"
+                ]
+              },
+              "remove": {
+                "arguments": {
+                  "commands": {
+                    "description": "From which commands do you want to remove the rule? (Separate the commands with a space, do not use the prefix.)",
+                    "help_text": "Commands from which the command rules should be removed. If several command names are typed, the names should be separated by spaces. Only the command names should be used, i.e. the prefix should be emitted.",
+                    "name": "Commands"
+                  },
+                  "rule": {
+                    "description": "Give a member, role or server permission to which you want the rule to no longer apply.",
+                    "help_text": "To whom the command rules will no longer apply to. Member IDs, member mentions, member server nicknames, member Discord usernames, role IDs, role mentions, role names and permission names are accepted.",
+                    "name": "Rule Subject"
+                  }
+                },
+                "description": "Remove command rule(s).",
+                "help_text": "This command can be used to remove members, rules and permissions from server command rules.",
+                "names": [
+                  "remove"
+                ]
+              }
+            }
+          },
+          "language": {
+            "description": "Edit the server language.",
+            "help_text": "This set contains commands that configure the language the bot uses on this server. You can **set** the channel language to a specific one, or **reset** it to default.",
+            "names": [
+              "language"
+            ],
+            "sub_commands": {
+              "reset": {
+                "description": "Reset the server language back to default.",
+                "help_text": "The command resets the server language back to default.",
+                "names": [
+                  "reset"
+                ]
+              },
+              "set": {
+                "arguments": {
+                  "language": {
+                    "description": "Which language do you want to set for the server? You can use either language name or flag emoji.",
+                    "help_text": "The language that the bot will use on the server from now on. The argument accepts language names and the appropriate flag emojis, provided that the language has at least one. (For example: 🇬🇧 for English.)",
+                    "name": "Language"
+                  }
+                },
+                "description": "Set the server language to a specific one.",
+                "help_text": "The command sets or changes the language that the bot uses on the server to a given one.",
+                "names": [
+                  "set"
+                ]
+              }
+            }
+          },
+          "shortcut": {
+            "description": "Manage server shortcuts.",
+            "help_text": "This set contains commands that can be used to **add**, **delete** or **display** server shortcuts. Shortcut is text that can be called through the use of a command.",
+            "names": [
+              "shortcut",
+              "sc"
+            ],
+            "sub_commands": {
+              "add": {
+                "arguments": {
+                  "content": {
+                    "description": "Enter the content for the new shortcut.",
+                    "help_text": "This is the text which will be sent once the shortcut is called with a command.",
+                    "name": "Content"
+                  },
+                  "name": {
+                    "description": "Enter the name for the new shortcut.",
+                    "help_text": "This is the shortcut name. This is what needs to be typed alongside with the shortcut-calling command in order to get the bot to send the shortcut content.",
+                    "name": "Name"
+                  }
+                },
+                "description": "Add a server shortcut.",
+                "help_text": "This command can be used to add server shortcuts.",
+                "names": [
+                  "add"
+                ]
+              },
+              "delete": {
+                "arguments": {
+                  "name": {
+                    "description": "Enter the name of the shortcut you wish to delete.",
+                    "help_text": "This argument should contain the name of the shortcut that is to be deleted.",
+                    "name": "Name"
                   }
                 },
                 "description": "Delete an existing server shortcut.",
+                "help_text": "This command can be used to delete a given server shortcut.",
                 "names": [
                   "delete",
                   "del"
@@ -600,6 +724,7 @@
               },
               "display": {
                 "description": "Display all server shortcuts.",
+                "help_text": "This command displays all shortcuts of this server.",
                 "names": [
                   "display"
                 ]
@@ -610,18 +735,21 @@
       },
       "user": {
         "description": "User configuration and settings.",
+        "help_text": "This set has commands that allow customising your user settings.",
         "names": [
           "user"
         ],
         "sub_commands": {
           "language": {
             "description": "Edit your user language.",
+            "help_text": "This set contains commands that configure the language the bot uses in direct messages and on servers which have allowed user languages. You can **set** the your user language to a specific one, or **reset** it.",
             "names": [
               "language"
             ],
             "sub_commands": {
               "reset": {
                 "description": "Reset your user language back to default.",
+                "help_text": "The command your user language back to default.",
                 "names": [
                   "reset"
                 ]
@@ -629,11 +757,13 @@
               "set": {
                 "arguments": {
                   "language": {
-                    "description": "Which language do you want to set for your user?",
-                    "name": "language"
+                    "description": "Which language do you want to set for yourself? You can use either language name or flag emoji.",
+                    "help_text": "The language that the bot will use for you from now on. The argument accepts language names and the appropriate flag emojis, provided that the language has at least one. (For example: 🇬🇧 for English.)",
+                    "name": "Language"
                   }
                 },
                 "description": "Set your user language to a specific one.",
+                "help_text": "The command sets or changes the language that the bot for you to a given one.",
                 "names": [
                   "set"
                 ]
@@ -642,6 +772,7 @@
           },
           "shortcut": {
             "description": "Manage user shortcuts.",
+            "help_text": "This set contains commands that can be used to **add**, **delete** or **display** user shortcuts. Shortcut is text that can be called through the use of a command.",
             "names": [
               "shortcut",
               "sc"
@@ -651,14 +782,17 @@
                 "arguments": {
                   "content": {
                     "description": "Enter the content for the new shortcut.",
-                    "name": "content"
+                    "help_text": "This is the text which will be sent once the shortcut is called with a command.",
+                    "name": "Content"
                   },
                   "name": {
                     "description": "Enter the name for the new shortcut.",
-                    "name": "name"
+                    "help_text": "This is the shortcut name. This is what needs to be typed alongside with the shortcut-calling command in order to get the bot to send the shortcut content.",
+                    "name": "Name"
                   }
                 },
                 "description": "Add a user shortcut.",
+                "help_text": "This command can be used to add user shortcuts.",
                 "names": [
                   "add"
                 ]
@@ -667,10 +801,12 @@
                 "arguments": {
                   "name": {
                     "description": "Enter the name of the shortcut you wish to delete.",
-                    "name": "name"
+                    "help_text": "This argument should contain the name of the shortcut that is to be deleted.",
+                    "name": "Name"
                   }
                 },
                 "description": "Delete an existing user shortcut.",
+                "help_text": "This command can be used to delete a given user shortcut.",
                 "names": [
                   "delete",
                   "del"
@@ -678,6 +814,7 @@
               },
               "display": {
                 "description": "Display all user shortcuts.",
+                "help_text": "This command displays all your shortcuts.",
                 "names": [
                   "display"
                 ]
@@ -692,10 +829,12 @@
     "arguments": {
       "name": {
         "description": "Which shortcut do you want to use?",
-        "name": "name"
+        "help_text": "This is the name of the shortcut to be called.",
+        "name": "Name"
       }
     },
     "description": "Use existing shortcuts.",
+    "help_text": "This command is used to call shortcuts.",
     "names": [
       "shortcut",
       "sc"

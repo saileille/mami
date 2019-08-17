@@ -31,17 +31,14 @@ class Language():
 
         Does not take commands or ID into account.
         """
-        equal = (
-            isinstance(compare, Language) and
-            len(self.flag_codes) == len(compare.flag_codes) and
-            len(self.translators) == len(compare.translators) and
-            len(self.keys.keys()) == len(compare.keys.keys()) and
-            len(self.languages.keys()) == len(compare.languages.keys()) and
-            len(self.permission_names.keys()) == len(compare.permission_names.keys()) and
-            len(self.unit_data.keys()) == len(compare.unit_data.keys()))
-
-        if not equal:
-            return equal
+        if not (isinstance(compare, Language) and
+                len(self.flag_codes) == len(compare.flag_codes) and
+                len(self.translators) == len(compare.translators) and
+                len(self.keys.keys()) == len(compare.keys.keys()) and
+                len(self.languages.keys()) == len(compare.languages.keys()) and
+                len(self.permission_names.keys()) == len(compare.permission_names.keys()) and
+                len(self.unit_data.keys()) == len(compare.unit_data.keys())):
+            return False
 
         for i, flag_code in enumerate(self.flag_codes):
             if compare.flag_codes[i] != flag_code:
@@ -68,7 +65,7 @@ class Language():
             if key not in compare.unit_data or compare.unit_data[key] != value:
                 return False
 
-        return equal
+        return True
 
     @property
     def flag_emoji(self):

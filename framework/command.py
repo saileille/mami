@@ -81,6 +81,7 @@ class Command():
         self.localisation[language_id] = {}
         self.localisation[language_id]["names"] = localisation_pack["names"]
         self.localisation[language_id]["description"] = localisation_pack["description"]
+        self.localisation[language_id]["help_text"] = localisation_pack["help_text"]
 
         if "arguments" in localisation_pack:
             self.add_argument_localisation(localisation_pack["arguments"], language_id)
@@ -92,12 +93,8 @@ class Command():
         1) Loop through arguments.
         2) Call argument class' localisation method on them.
         """
-        for argument_key in localisation_pack:
-            argument_localisation = localisation_pack[argument_key]
-            for argument in self.arguments:
-                if argument_key == argument.obj_id:
-                    argument.add_localisation(language_id, argument_localisation)
-                    break
+        for argument in self.arguments:
+            argument.add_localisation(language_id, localisation_pack[argument.obj_id])
 
     def add_command_localisation(self, full_dir, language_id):
         """Add command localisation."""
@@ -122,18 +119,13 @@ class Command():
         4) Once the bottom of sub-commands is reached, returns to the original loop and
         goes to the next item.
         """
-        for key in command_localisation:
-            localisation_pack = command_localisation[key]
-            for sub_command in self.sub_commands.values():
-                if sub_command.obj_id == key:
-                    sub_command.add_localisation(language_id, localisation_pack)
+        for sub_command in self.sub_commands.values():
+            localisation_pack = command_localisation[sub_command.obj_id]
+            sub_command.add_localisation(language_id, localisation_pack)
 
-                    if "sub_commands" in localisation_pack:
-                        sub_command.add_sub_command_localisation(
-                            localisation_pack["sub_commands"],
-                            language_id)
-
-                    break
+            if "sub_commands" in localisation_pack:
+                sub_command.add_sub_command_localisation(
+                    localisation_pack["sub_commands"], language_id)
 
     def initialise_commands(self, parent_commands=None):
         """
@@ -170,13 +162,14 @@ class Command():
         if default_values.LANGUAGE_ID in self.localisation:
             cmd_localisation = self.localisation[default_values.LANGUAGE_ID]
         elif language_id == default_values.LANGUAGE_ID:
-            cmd_localisation = {"names": [], "description": ""}
+            cmd_localisation = {"names": [], "description": "", "help_text": ""}
         else:
             return None
 
         language_data = {
             "names": cmd_localisation["names"],
-            "description": cmd_localisation["description"]}
+            "description": cmd_localisation["description"],
+            "help_text": cmd_localisation["help_text"]}
 
         if self.arguments:
             language_data["arguments"] = {}
@@ -185,11 +178,12 @@ class Command():
                 if default_values.LANGUAGE_ID in argument.localisation:
                     arg_localisation = argument.localisation[default_values.LANGUAGE_ID]
                 elif language_id == default_values.LANGUAGE_ID:
-                    arg_localisation = {"name": "", "description": ""}
+                    arg_localisation = {"name": "", "description": "", "help_text": ""}
 
                 language_data["arguments"][argument.obj_id] = {
                     "name": arg_localisation["name"],
-                    "description": arg_localisation["description"]}
+                    "description": arg_localisation["description"],
+                    "help_text": arg_localisation["help_text"]}
 
         if self.sub_commands:
             language_data["sub_commands"] = {}
@@ -248,17 +242,31 @@ class Command():
 
         return command_string
 
-    async def get_sub_commands(self, context, command_input=None):
+    async def get_sub_commands(self, context, filter_unallowed=True):
+        """Get a list of sub-commands."""
+        sub_commands = []
+        for sub_command in self.sub_commands.values():
+            if (not filter_unallowed or
+                await sub_command.check_if_allowed(context, verbose=False) is None):
+                sub_commands.append(sub_command)
+
+        return sub_commands
+
+    async def get_sub_command_names(
+            self, context, command_input=None, include_prefix=True,
+            filter_unallowed=True):
         """
-        Get a list of sub-commands.
+        Get a list of sub-command names.
 
         Can be used in embed messages.
         """
         command_string = None
         if command_input is None:
-            command_string = await self.get_command_string(context)
+            command_string = await self.get_command_string(context, include_prefix)
         else:
-            command_string = context.prefix + command_input.command_string
+            command_string = command_input.command_string
+            if include_prefix:
+                command_string = context.prefix + command_string
 
         if self.obj_id is not None:
             command_string += "."
@@ -266,7 +274,8 @@ class Command():
         commands = []
         for sub_command in self.sub_commands.values():
             command_name = sub_command.localisation[context.language_id]["names"][0]
-            if await sub_command.check_if_allowed(context, verbose=False) is None:
+            if (not filter_unallowed or
+                await sub_command.check_if_allowed(context, verbose=False) is None):
                 commands.append(command_string + command_name)
 
         commands.sort()
@@ -311,7 +320,7 @@ class Command():
 
         Used when there is no action function defined.
         """
-        commands = await self.get_sub_commands(context, command_input)
+        commands = await self.get_sub_command_names(context, command_input)
         command_string = context.prefix + command_input.command_string
 
         await embed_messages.no_action(context, commands, command_string)
@@ -329,7 +338,7 @@ class Command():
 
         Used when there is an invalid command used, and when the command has sub-commands.
         """
-        commands = await self.get_sub_commands(context)
+        commands = await self.get_sub_command_names(context)
         command_string = context.prefix + command_input.command_string
         last_working_command_string = await self.get_command_string(context)
 

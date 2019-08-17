@@ -27,6 +27,7 @@ class Argument():
 
         localisation["name"] = argument_localisation["name"]
         localisation["description"] = argument_localisation["description"]
+        localisation["help_text"] = argument_localisation["help_text"]
 
     async def get_info_embed_field(self, context, argument_no):
         """Get the embed field of the argument for command info."""

@@ -44,6 +44,7 @@ async def guild_member_info(context, arguments):
     if str(colour) == "#000000":
         colour = Embed.Empty
 
+    print(member.avatar_url)
     await message.send(context, thumbnail=member.avatar_url, colour=colour)
 
 
@@ -58,20 +59,29 @@ async def get_command_info(context, arguments):
         aliases = await context.language.get_text("no_aliases")
 
     basic_info = (
-        "**{aliases_title}**: {aliases_content}\n"
-        "**{has_sub_commands_title}**: {has_sub_commands_content}").format(
+        "**{aliases_title}**: {aliases_content}").format(
             aliases_title=await context.language.get_text("command_aliases_title"),
-            aliases_content=aliases,
-            has_sub_commands_title=await context.language.get_text(
-                "command_has_sub_commands_title"),
-            has_sub_commands_content=await strings.get_yes_no_emojis(
-                bool(command.sub_commands)))
+            aliases_content=aliases)
 
     related_commands = ""
     for command in command.related_commands:
         if related_commands:
             related_commands += "\n"
         related_commands += command.get_command_string(context, include_prefix=False)
+
+    sub_commands = await command.get_sub_commands(context, filter_unallowed=False)
+
+    sub_commands_string = ""
+    for sub_command in sub_commands:
+        if sub_commands_string:
+            sub_commands_string += "\n"
+
+        sub_command_name = await sub_command.get_command_string(
+            context, include_prefix=False)
+
+        sub_commands_string += (
+            sub_command_name.split(".")[-1] + " - " +
+            sub_command.localisation[context.language_id]["description"])
 
     message = embeds.PaginatedEmbed(
         await context.language.get_text(
@@ -80,6 +90,10 @@ async def get_command_info(context, arguments):
         embeds.EmbedFieldCollection(
             basic_info, await context.language.get_text("basic_command_info_title")))
 
+    if sub_commands_string:
+        message.fields.append(embeds.EmbedFieldCollection(
+            sub_commands_string, await context.language.get_text("sub_commands_title")))
+
     if related_commands:
         message.fields.append(embeds.EmbedFieldCollection(
             related_commands, await context.language.get_text("related_commands_title")))
@@ -87,6 +101,7 @@ async def get_command_info(context, arguments):
     for i, argument in enumerate(command.arguments):
         message.fields.append(await argument.get_info_embed_field(context, i + 1))
 
-    message.embed.description = command.localisation[context.language_id]["description"]
+    message.embed.title = command.localisation[context.language_id]["description"]
+    message.embed.description = command.localisation[context.language_id]["help_text"]
 
     await message.send(context)

@@ -1,10 +1,10 @@
 {
-  "command_used_in_dms": "This command can only be used on a server.",
-  "command_used_in_guild": "This command can only be used in DMs (Direct Messages).",
-  "failed_pre_check_custom_msg_title": "More Information",
-  "no_guild_shortcuts": "This server has no server shortcuts. You can add them with the command `{shortcut_cmd}`.",
-  "no_set_category_language": "This category is using the default language, so it cannot be reset.",
-  "no_set_channel_language": "This channel is using the default language, so it cannot be reset.",
-  "no_set_guild_language": "This server is using the default language, so it cannot be reset.",
-  "no_set_user_language": "You are using the default language, so it cannot be reset."
+  "command_used_in_dms": "Ova se naredba može koristiti samo na serveru.",
+  "command_used_in_guild": "Ova se naredba može koristiti samo u DM-ovima (Direct Messages).",
+  "failed_pre_check_custom_msg_title": "Više informacija",
+  "no_guild_shortcuts": "Ovaj server nema preèaca. Možete ih dodati naredbom `{shortcut_cmd}`.",
+  "no_set_category_language": "Ova kategorija koristi zadani jezik, pa se ne može resetirati.",
+  "no_set_channel_language": "Ovaj kanal koristi zadani jezik, pa se ne može resetirati.",
+  "no_set_guild_language": "Ovaj server koristi zadani jezik, pa se ne može resetirati.",
+  "no_set_user_language": "Koristite zadani jezik, pa ga ne možete resetirati."
 }

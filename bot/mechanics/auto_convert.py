@@ -1,57 +1,9 @@
-"""
-Automatic unit conversion.
-
-Useful regex checks:
-https://ja.wikipedia.org/wiki/%E6%B7%B1%E8%A6%8B%E7%9C%9F
-http://ja.wikipedia.org/wiki/%E6%B7%B1%E8%A6%8B%E7%9C%9F
-ftp://ja.wikipedia.org/wiki/%E6%B7%B1%E8%A6%8B%E7%9C%9F
-www.9anime.to
-9anime.to
-www.9anime
-(https://ja.wikipedia.org/wiki/%E6%B7%B1%E8%A6%8B%E7%9C%9F)
-(http://ja.wikipedia.org/wiki/%E6%B7%B1%E8%A6%8B%E7%9C%9F)
-(ftp://ja.wikipedia.org/wiki/%E6%B7%B1%E8%A6%8B%E7%9C%9F)
-(www.9anime.to)
-(9anime.to)
-(www.9anime)
-
-"5km"
-!!!5 kilometres!!!
-a5 km
-5 km2
-a!5km^2
-1"5km"
-5  km
-
-".5km"
-!!!.5 kilometres!!!
-a.5 km
-.5 km2
-a!.5km^2
-1".5km"
-.5  km
-
-"0.5km"
-!!!0.5 kilometres!!!
-a0.5 km
-55.5km
-0.5 km2
-a!0.5km^2
-1"0.5km"
-0.5  km
-
-"5.km"
-!!!5. kilometres!!!
-a5. km
-5. km2
-a!5.km^2
-1"5.km"
-5.  km
-"""
+"""Automatic unit conversion."""
 import re
 
 from aid import numbers
 from bot.data import default_values
+from bot.data import definitions
 from framework import embeds
 
 conversion_dict = {
@@ -188,13 +140,8 @@ async def send_conversion(context, user_id=None):
     if not unit_matches:
         return
 
-    for reaction in context.message.reactions:
-        if reaction.emoji == "ℹ":
-            async for user in reaction.users():
-                await reaction.remove(user)
-
+    await definitions.CLIENT.remove_reactions(context.message, "ℹ")
     msg = ""
-
     for match in unit_matches:
         if msg != "":
             msg += "\n"

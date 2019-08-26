@@ -73,7 +73,17 @@ class Language():
         if self.flag_codes:
             return self.flag_codes[0]
         else:
-            return None
+            return ""
+
+    @property
+    def flag_and_local_name(self):
+        """Get the flag emoji and the local language name."""
+        lang_string = self.flag_emoji
+        if lang_string:
+            lang_string += " "
+
+        lang_string += self.get_language_name(self.obj_id)
+        return lang_string
 
     @property
     def directory(self):
@@ -329,6 +339,17 @@ class Language():
                     custom_json.save(new_dict, new_dir, compact=False)
                     has_changes = True
 
+    def get_language_name(self, key):
+        """
+        Get localised language name from a language key.
+
+        If language is not found, return the key.
+        """
+        if key in self.languages:
+            return self.languages[key]
+
+        return key
+
     async def get_text(self, key, variables=None):
         """
         Get localised text from the language.
@@ -340,17 +361,6 @@ class Language():
 
         if key in self.keys:
             return self.keys[key].format(**variables)
-
-        return key
-
-    async def get_language(self, key):
-        """
-        Get localised language name from a language key.
-
-        If language is not found, return the key.
-        """
-        if key in self.languages:
-            return self.languages[key]
 
         return key
 
@@ -394,6 +404,25 @@ class Language():
             default_symbol = symbols_and_names["names"][0]
 
         return default_symbol
+
+    async def get_all_languages(self):
+        """Get a list of all language names in an alphabetical order."""
+        languages = []
+        for key, value in definitions.LANGUAGES.items():
+            languages.append(
+                {"flag": value.flag_emoji, "name": self.get_language_name(key)})
+
+        languages.sort(key=lambda item: item["name"])
+
+        lang_list = []
+        for language in languages:
+            lang_string = language["flag"]
+            if lang_string:
+                lang_string += " "
+            lang_string += language["name"]
+            lang_list.append(lang_string)
+
+        return lang_list
 
 
 def get_files(full_dir):

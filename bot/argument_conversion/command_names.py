@@ -20,58 +20,60 @@ async def command_to_command_object(argument, context, verbose=True):
     return command
 
 
-async def command_to_command_rules(argument, context, data_object, verbose):
+async def command_to_command_data(argument, context, data_object, verbose):
     """
     Check if the argument is a valid command name.
 
-    Helper function. If valid, return the CommandRules object for channel, category or
+    Helper function. If valid, return the CommandData object for channel, category or
     guild.
     """
     id_path = await data_functions.get_id_path_from_command_name(argument, context)
 
-    if id_path is None and verbose:
-        custom_msg = await context.language.get_text(
-            "invalid_command_name", {"cmd_name": argument})
+    if id_path is None:
+        if verbose:
+            custom_msg = await context.language.get_text(
+                "invalid_command_name", {"cmd_name": argument})
 
-        await embed_messages.invalid_argument(
-            context, argument, custom_msg)
+            await embed_messages.invalid_argument(
+                context, argument, custom_msg)
 
         return None
 
     return {
-        "rule": await data_object.command_rules.get_object_from_id_path(id_path),
+        "data": await data_object.command_data.get_object_from_id_path(id_path),
         "name": argument}
 
 
-async def command_to_category_command_rules(argument, context, verbose=True):
-    """Convert command name to category command rules."""
-    return await command_to_command_rules(argument, context, context.category_data, verbose)
+async def command_to_category_command_data(argument, context, verbose=True):
+    """Convert command name to category command data."""
+    return await command_to_command_data(
+        argument, context, context.category_data, verbose)
 
 
-async def command_to_channel_command_rules(argument, context, verbose=True):
-    """Convert command name to channel command rules."""
-    return await command_to_command_rules(argument, context, context.channel_data, verbose)
+async def command_to_channel_command_data(argument, context, verbose=True):
+    """Convert command name to channel command data."""
+    return await command_to_command_data(argument, context, context.channel_data, verbose)
 
 
-async def command_to_guild_command_rules(argument, context, verbose=True):
-    """Convert command name to guild command rules."""
-    return await command_to_command_rules(argument, context, context.guild_data, verbose)
+async def command_to_guild_command_data(argument, context, verbose=True):
+    """Convert command name to guild command data."""
+    return await command_to_command_data(argument, context, context.guild_data, verbose)
 
 
 async def command_to_non_empty_command_rules(argument, context, data_object, verbose):
-    """Convert command name to command rules that have something inside."""
-    argument = await command_to_command_rules(argument, context, data_object, verbose)
+    """Convert command name to command data that has some command rules."""
+    argument = await command_to_command_data(argument, context, data_object, verbose)
 
     if argument is not None:
-        if (argument["rule"].inclusionary.is_empty and
-            argument["rule"].exclusionary.is_empty):
-            argument = None
-
+        if argument["data"].command_rules.is_empty:
             if verbose:
                 custom_msg = await context.language.get_text(
                     "display_category_command_rules_no_command_rules")
 
-                await embed_messages.invalid_argument(context, argument, custom_msg)
+                await embed_messages.invalid_argument(
+                    context, argument["name"], custom_msg)
+
+            argument = None
 
     return argument
 
@@ -94,21 +96,21 @@ async def command_to_non_empty_guild_command_rules(argument, context, verbose=Tr
         argument, context, context.guild_data, verbose)
 
 
-async def commands_to_command_rules(argument, context, data_object, verbose):
+async def commands_to_command_data(argument, context, data_object, verbose):
     """
     Check if the argument consists of valid command names.
 
-    If valid, return a list of CommandRules objects for channel, category or guild of that
+    If valid, return a list of CommandData objects for channel, category or guild of that
     command.
     """
     command_names = argument.split(" ")
-    command_rules = []
+    command_data_objects = []
 
     for command_name in command_names:
-        command_rule = await command_to_command_rules(
+        command_data = await command_to_command_data(
             command_name, context, data_object, verbose=False)
 
-        if command_rule is None:
+        if command_data is None:
             if verbose:
                 custom_msg = await context.language.get_text(
                     "invalid_command_name", {"cmd_name": command_name})
@@ -117,53 +119,63 @@ async def commands_to_command_rules(argument, context, data_object, verbose):
 
             return None
 
-        command_rules.append(command_rule)
+        command_data_objects.append(command_data)
 
-    return command_rules
+    return command_data_objects
 
 
-async def commands_to_category_command_rules(argument, context):
-    """Convert command names to category command rules."""
-    return await commands_to_command_rules(
+async def commands_to_category_command_data(argument, context):
+    """Convert command names to category command data."""
+    return await commands_to_command_data(
         argument, context, context.category_data, verbose=True)
 
 
-async def commands_to_channel_command_rules(argument, context):
-    """Convert command names to channel command rules."""
-    return await commands_to_command_rules(
+async def commands_to_channel_command_data(argument, context):
+    """Convert command names to channel command data."""
+    return await commands_to_command_data(
         argument, context, context.channel_data, verbose=True)
 
 
-async def commands_to_guild_command_rules(argument, context):
-    """Convert command names to guild command rules."""
-    return await commands_to_command_rules(argument, context, context.guild_data, verbose=True)
+async def commands_to_guild_command_data(argument, context):
+    """Convert command names to guild command data."""
+    return await commands_to_command_data(
+        argument, context, context.guild_data, verbose=True)
 
 
-async def commands_to_inclusionary_command_rules(argument, context, data_object, verbose):
+async def commands_to_inclusionary_or_exclusionary_command_rules(
+        argument, context, data_object, not_of_type, verbose):
     """
-    Check if argument has commands to which inclusionary rules can be added.
+    Check that argument has commands to which rules of chosen type can be added.
 
-    If any command specified has exclusionary rules attached to it, the argument is
-    invalid. If valid, return a list of CommandRules object for channel, category or guild
+    If any command specified has not_of_type rules attached to it, the argument is
+    invalid. If valid, return a list of CommandData object for channel, category or guild
     of that command.
     """
-    command_rules = await commands_to_command_rules(
+    command_data_objects = await commands_to_command_data(
         argument, context, data_object, verbose)
 
-    if command_rules is None:
+    if command_data_objects is None:
         return None
 
-    for command_rule in command_rules:
-        if not command_rule["rule"].exclusionary.is_empty:
+    for command_data in command_data_objects:
+        command_rules = command_data["data"].command_rules
+        if command_rules.type == not_of_type and not command_rules.is_empty:
             if verbose:
                 custom_msg = await context.language.get_text(
-                    "command_has_exclusionary_rules", {"cmd_name": command_rule["name"]})
+                    "command_has_" + not_of_type + "_rules",
+                    {"cmd_name": command_data["name"]})
 
                 await embed_messages.invalid_argument(context, argument, custom_msg)
 
             return None
 
-    return command_rules
+    return command_data_objects
+
+
+async def commands_to_inclusionary_command_rules(argument, context, data_object, verbose):
+    """Check if argument has commands to which inclusionary rules can be added."""
+    return await commands_to_inclusionary_or_exclusionary_command_rules(
+        argument, context, data_object, "exclusionary", verbose)
 
 
 async def commands_to_category_inclusionary_command_rules(argument, context):
@@ -185,29 +197,9 @@ async def commands_to_guild_inclusionary_command_rules(argument, context):
 
 
 async def commands_to_exclusionary_command_rules(argument, context, data_object, verbose):
-    """
-    Check if argument has commands to which exclusionary rules can be added.
-
-    If any command specified has inclusionary rules attached to it, the argument is
-    invalid. If valid, return a list of dictionaries containing CommandRules objects and
-    names for the channel, category or guild of that command.
-    """
-    command_rules = await commands_to_command_rules(
-        argument, context, data_object, verbose)
-
-    if command_rules is None:
-        return None
-
-    for command_rule in command_rules:
-        if not command_rule["rule"].inclusionary.is_empty:
-            custom_msg = await context.language.get_text(
-                "command_has_inclusionary_rules", {"cmd_name": command_rule["name"]})
-
-            await embed_messages.invalid_argument(context, argument, custom_msg)
-
-            return None
-
-    return command_rules
+    """Check if argument has commands to which exclusionary rules can be added."""
+    return await commands_to_inclusionary_or_exclusionary_command_rules(
+        argument, context, data_object, "inclusionary", verbose)
 
 
 async def commands_to_category_exclusionary_command_rules(argument, context):

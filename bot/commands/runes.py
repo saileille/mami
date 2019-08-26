@@ -4,20 +4,17 @@ from bot.data import default_values
 
 async def translate_archaic(context, arguments):
     """Translate text to archaic runes."""
-    runes = await translate(context, arguments, "archaic")
-    await context.message.channel.send(runes)
+    return await translate(context, arguments, "archaic")
 
 
 async def translate_modern(context, arguments):
     """Translate text to modern runes."""
-    runes = await translate(context, arguments, "modern")
-    await context.message.channel.send(runes)
+    return await translate(context, arguments, "modern")
 
 
 async def translate_musical(context, arguments):
     """Translate text to musical runes."""
-    runes = await translate(context, arguments, "musical")
-    await context.message.channel.send(runes)
+    return await translate(context, arguments, "musical")
 
 
 async def translate(context, arguments, style):
@@ -47,4 +44,5 @@ async def translate(context, arguments, style):
     else:
         runes = runes.replace(" ", " " * large_font_spaces)
 
-    return runes
+    await context.message.channel.send(runes)
+    return True

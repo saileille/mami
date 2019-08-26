@@ -2,7 +2,6 @@
 from discord import Embed
 
 from aid import dates
-from aid import strings
 from framework import embeds
 
 
@@ -44,8 +43,8 @@ async def guild_member_info(context, arguments):
     if str(colour) == "#000000":
         colour = Embed.Empty
 
-    print(member.avatar_url)
     await message.send(context, thumbnail=member.avatar_url, colour=colour)
+    return True
 
 
 async def get_command_info(context, arguments):
@@ -58,16 +57,40 @@ async def get_command_info(context, arguments):
     if aliases == "":
         aliases = await context.language.get_text("no_aliases")
 
+    platforms = ["category", "channel", "guild", "user", "global"]
+    command_use_times = {}
+    for platform in platforms:
+        platform_cmd_data = getattr(getattr(context, platform + "_data"), "command_data")
+        command_data = await platform_cmd_data.get_object_from_id_path(command.id_path)
+
+        language_key = "command_" + platform + "_uses_"
+        number = await context.language.format_number(command_data.use_times)
+        number = "**" + number + "**"
+        if command_data.use_times == 1:
+            language_key += "singular"
+        else:
+            language_key += "plural"
+
+        command_use_times[platform] = await context.language.get_text(
+            language_key, {"times": number})
+
     basic_info = (
-        "**{aliases_title}**: {aliases_content}").format(
+        "{aliases_title}: **{aliases_content}**\n"
+        "{command_use_times[global]}\n"
+        "{command_use_times[guild]}\n"
+        "{command_use_times[category]}\n"
+        "{command_use_times[channel]}\n"
+        "{command_use_times[user]}").format(
             aliases_title=await context.language.get_text("command_aliases_title"),
-            aliases_content=aliases)
+            aliases_content=aliases, command_use_times=command_use_times)
 
     related_commands = ""
     for command in command.related_commands:
         if related_commands:
             related_commands += "\n"
-        related_commands += command.get_command_string(context, include_prefix=False)
+
+        related_commands += await command.get_command_string(
+            context, include_prefix=False)
 
     sub_commands = await command.get_sub_commands(context, filter_unallowed=False)
 
@@ -105,3 +128,4 @@ async def get_command_info(context, arguments):
     message.embed.description = command.localisation[context.language_id]["help_text"]
 
     await message.send(context)
+    return True

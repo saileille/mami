@@ -167,3 +167,11 @@ class Client(discord.Client):
                     cache.CURRENCY_DATA["currencies"][key]["name"] = names["symbols"][key]
 
         custom_json.save(cache.CURRENCY_DATA, "bot\\database\\currency_api\\data.json")
+
+    @staticmethod
+    async def remove_reactions(message, *emojis):
+        """Remove all reactions of the given emojis from a message."""
+        for reaction in message.reactions:
+            if reaction.emoji in emojis:
+                async for user in reaction.users():
+                    await reaction.remove(user)

@@ -312,6 +312,12 @@
               "set": {
                 "arguments": {
                   "language": {
+                    "bonus_fields": [
+                      {
+                        "title": "Valittavat kielet",
+                        "content": "var_all_languages"
+                      }
+                    ],
                     "description": "Minkä kielen haluat asettaa kategorialle? Voit käyttää kielen nimeä tai lippuemojia.",
                     "help_text": "Kieli, jota botti tulee käyttämään kategoriassa tästä lähin. Argumentti hyväksyy kielen nimet ja sopivat lippuemojit, edellyttäen että kielellä on ainakin yksi. (Esimerkiksi: 🇬🇧 englannille.)",
                     "name": "Kieli"
@@ -490,6 +496,12 @@
               "set": {
                 "arguments": {
                   "language": {
+                    "bonus_fields": [
+                      {
+                        "title": "Valittavat kielet",
+                        "content": "var_all_languages"
+                      }
+                    ],
                     "description": "Minkä kielen haluat asettaa kanavalle? Voit käyttää kielen nimeä tai lippuemojia.",
                     "help_text": "Kieli, jota botti tulee käyttämään kanavalla tästä lähin. Argumentti hyväksyy kielen nimet ja sopivat lippuemojit, edellyttäen että kielellä on ainakin yksi. (Esimerkiksi: 🇬🇧 englannille.)",
                     "name": "Kieli"
@@ -669,6 +681,12 @@
               "set": {
                 "arguments": {
                   "language": {
+                    "bonus_fields": [
+                      {
+                        "title": "Valittavat kielet",
+                        "content": "var_all_languages"
+                      }
+                    ],
                     "description": "Minkä kielen haluat asettaa palvelimelle? Voit käyttää kielen nimeä tai lippuemojia.",
                     "help_text": "Kieli, jota botti tulee käyttämään palvelimella tästä lähin. Argumentti hyväksyy kielen nimet ja sopivat lippuemojit, edellyttäen että kielellä on ainakin yksi. (Esimerkiksi: 🇬🇧 englannille.)",
                     "name": "Kieli"
@@ -758,6 +776,12 @@
               "set": {
                 "arguments": {
                   "language": {
+                    "bonus_fields": [
+                      {
+                        "title": "Valittavat kielet",
+                        "content": "var_all_languages"
+                      }
+                    ],
                     "description": "Minkä kielen haluat asettaa käyttäjäasetuksillesi? Voit käyttää kielen nimeä tai lippuemojia.",
                     "help_text": "Kieli, jota botti tulee käyttämään yksityisviesteissäsi tästä lähin. Argumentti hyväksyy kielen nimet ja sopivat lippuemojit, edellyttäen että kielellä on ainakin yksi. (Esimerkiksi: 🇬🇧 englannille.)",
                     "name": "Kieli"

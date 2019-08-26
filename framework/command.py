@@ -5,7 +5,7 @@ from bot.misc import embed_messages
 from bot.data import default_values
 from bot.data import definitions
 from framework import exceptions
-from framework.command_rules import CommandRules
+from framework.command_data import CommandData
 
 
 class Command():
@@ -66,7 +66,7 @@ class Command():
         """Get related commands."""
         if self._related_commands and isinstance(self._related_commands[0], list):
             root_cmd = definitions.COMMANDS
-            for i, id_list in self._related_commands:
+            for i, id_list in enumerate(self._related_commands):
                 self._related_commands[i] = root_cmd.get_sub_command_from_path(id_list)
 
         return self._related_commands
@@ -99,9 +99,7 @@ class Command():
     def add_command_localisation(self, full_dir, language_id):
         """Add command localisation."""
         command_localisation = None
-
         with open(full_dir, "r", encoding="utf-8") as file:
-            command_localisation = None
             try:
                 command_localisation = json.load(file)
             except json.decoder.JSONDecodeError:
@@ -132,22 +130,23 @@ class Command():
         Initialise command stuffs.
 
         Add parent command list for the command
-        Construct the default CommandRules JSON.
+        Construct the default CommandData JSON.
         """
-        guild_default_command_rules = CommandRules()
-        empty_command_rules = CommandRules()
+        guild_command_data = CommandData()
+        default_command_data = CommandData()
+        user_command_data = CommandData(has_command_rules=False)
         if parent_commands is None:
             parent_commands = []
 
         self.initialise_parent_commands(parent_commands)
 
         for permission in self.default_permissions:
-            guild_default_command_rules.inclusionary.permissions.append(permission)
+            guild_command_data.command_rules.permissions.append(permission)
 
         for sub_command in self.sub_commands.values():
-            guild_default_command_rules.sub_commands[sub_command.obj_id], empty_command_rules.sub_commands[sub_command.obj_id] = sub_command.initialise_commands(parent_commands[:])
+            guild_command_data.sub_commands[sub_command.obj_id], default_command_data.sub_commands[sub_command.obj_id], user_command_data.sub_commands[sub_command.obj_id] = sub_command.initialise_commands(parent_commands[:])
 
-        return guild_default_command_rules, empty_command_rules
+        return guild_command_data, default_command_data, user_command_data
 
     def initialise_parent_commands(self, parent_commands):
         """Record the parent commands of the command."""
@@ -158,40 +157,32 @@ class Command():
 
     def create_language_data(self, language_id):
         """Create the language data template for a given command."""
-        cmd_localisation = None
+        default_localisation = None
         if default_values.LANGUAGE_ID in self.localisation:
-            cmd_localisation = self.localisation[default_values.LANGUAGE_ID]
+            default_localisation = self.localisation[default_values.LANGUAGE_ID]
         elif language_id == default_values.LANGUAGE_ID:
-            cmd_localisation = {"names": [], "description": "", "help_text": ""}
+            default_localisation = {"names": [], "description": "", "help_text": ""}
         else:
             return None
 
-        language_data = {
-            "names": cmd_localisation["names"],
-            "description": cmd_localisation["description"],
-            "help_text": cmd_localisation["help_text"]}
+        localisation = {
+            "names": default_localisation["names"],
+            "description": default_localisation["description"],
+            "help_text": default_localisation["help_text"]}
 
         if self.arguments:
-            language_data["arguments"] = {}
+            localisation["arguments"] = {}
             for argument in self.arguments:
-                arg_localisation = None
-                if default_values.LANGUAGE_ID in argument.localisation:
-                    arg_localisation = argument.localisation[default_values.LANGUAGE_ID]
-                elif language_id == default_values.LANGUAGE_ID:
-                    arg_localisation = {"name": "", "description": "", "help_text": ""}
-
-                language_data["arguments"][argument.obj_id] = {
-                    "name": arg_localisation["name"],
-                    "description": arg_localisation["description"],
-                    "help_text": arg_localisation["help_text"]}
+                localisation["arguments"][argument.obj_id] = argument.create_language_data(
+                    language_id)
 
         if self.sub_commands:
-            language_data["sub_commands"] = {}
+            localisation["sub_commands"] = {}
             for sub_command in self.sub_commands.values():
-                language_data["sub_commands"][sub_command.obj_id] = (
+                localisation["sub_commands"][sub_command.obj_id] = (
                     sub_command.create_language_data(language_id))
 
-        return language_data
+        return localisation
 
     def get_sub_command_from_path(self, *id_list):
         """
@@ -209,18 +200,23 @@ class Command():
         return command
 
     async def execute(self, context, command_input):
-        """Execute the command."""
+        """
+        Execute the command.
+
+        Return whether command-use was completed fully and successfully.
+        """
         if self.action is None:
             await self.no_action(context, command_input)
-        else:
-            # Argument handling
-            valid_arguments = await self.validate_arguments(
-                context, command_input.arguments)
+            return True
 
-            if not valid_arguments:
-                return
+        # Argument handling
+        valid_arguments = await self.validate_arguments(
+            context, command_input.arguments)
 
-            await self.action(context, command_input.arguments)
+        if not valid_arguments:
+            return False
+
+        return await self.action(context, command_input.arguments)
 
     async def get_command_string(self, context, include_prefix=True):
         """Get the command string with the context language."""

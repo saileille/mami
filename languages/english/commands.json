@@ -308,6 +308,12 @@
               "set": {
                 "arguments": {
                   "language": {
+                    "bonus_fields": [
+                      {
+                        "title": "Available Languages",
+                        "content": "var_all_languages"
+                      }
+                    ],
                     "description": "Which language do you want to set for the category? You can use either language name or flag emoji.",
                     "help_text": "The language that the bot will use in the category from now on. The argument accepts language names and the appropriate flag emojis, provided that the language has at least one. (For example: 🇬🇧 for English.)",
                     "name": "Language"
@@ -487,6 +493,12 @@
               "set": {
                 "arguments": {
                   "language": {
+                    "bonus_fields": [
+                      {
+                        "title": "Available Languages",
+                        "content": "var_all_languages"
+                      }
+                    ],
                     "description": "Which language do you want to set for the channel? You can use either language name or flag emoji.",
                     "help_text": "The language that the bot will use on the channel from now on. The argument accepts language names and the appropriate flag emojis, provided that the language has at least one. (For example: 🇬🇧 for English.)",
                     "name": "Language"
@@ -667,6 +679,12 @@
               "set": {
                 "arguments": {
                   "language": {
+                    "bonus_fields": [
+                      {
+                        "title": "Available Languages",
+                        "content": "var_all_languages"
+                      }
+                    ],
                     "description": "Which language do you want to set for the server? You can use either language name or flag emoji.",
                     "help_text": "The language that the bot will use on the server from now on. The argument accepts language names and the appropriate flag emojis, provided that the language has at least one. (For example: 🇬🇧 for English.)",
                     "name": "Language"
@@ -757,6 +775,12 @@
               "set": {
                 "arguments": {
                   "language": {
+                    "bonus_fields": [
+                      {
+                        "title": "Available Languages",
+                        "content": "var_all_languages"
+                      }
+                    ],
                     "description": "Which language do you want to set for yourself? You can use either language name or flag emoji.",
                     "help_text": "The language that the bot will use for you from now on. The argument accepts language names and the appropriate flag emojis, provided that the language has at least one. (For example: 🇬🇧 for English.)",
                     "name": "Language"

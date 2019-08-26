@@ -55,6 +55,8 @@ async def connect_guild_call(context_obj, arguments):
 
             break
 
+    return True
+
 
 async def disconnect_guild_call(context_obj, arguments):
     """Hang up or stop trying to connect the call."""
@@ -89,3 +91,4 @@ async def disconnect_guild_call(context_obj, arguments):
             author_icon=connected_channel.guild.icon_url)
 
     await cmd_user_msg.send(context_obj)
+    return True

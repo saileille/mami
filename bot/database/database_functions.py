@@ -8,7 +8,8 @@ from datatypes import config_data
 from framework import custom_json
 
 
-PLURAL = {"category": "categories", "channel": "channels", "guild": "guilds"}
+PLURAL = {
+    "category": "categories", "channel": "channels", "guild": "guilds", "user": "users"}
 
 
 def connect():
@@ -25,47 +26,58 @@ def connect():
 def create_tables():
     """Create the necessary tables if they do not exist already."""
     user_table = """
-        CREATE TABLE IF NOT EXISTS users(
-            id INTEGER PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS "users"(
+            id INTEGER NOT NULL,
             prefix TEXT,
-            language TEXT
+            language TEXT,
+            command_data TEXT,
+            PRIMARY KEY("id")
         );
     """
     channel_table = """
-        CREATE TABLE IF NOT EXISTS channels(
-            id INTEGER PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS "channels"(
+            id INTEGER NOT NULL,
             prefix TEXT,
             language TEXT,
-            checks TEXT,
-            max_dice INTEGER
+            command_data TEXT,
+            max_dice INTEGER,
+            PRIMARY KEY("id")
         );
     """
     category_table = """
-        CREATE TABLE IF NOT EXISTS categories(
-            id INTEGER PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS "categories"(
+            id INTEGER NOT NULL,
             prefix TEXT,
             language TEXT,
-            checks TEXT,
-            max_dice INTEGER
+            command_data TEXT,
+            max_dice INTEGER,
+            PRIMARY KEY("id")
         );
     """
     guild_table = """
-        CREATE TABLE IF NOT EXISTS guilds(
-            id INTEGER PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS "guilds"(
+            id INTEGER NOT NULL,
             prefix TEXT,
             language TEXT,
-            checks TEXT,
-            max_dice INTEGER
+            command_data TEXT,
+            max_dice INTEGER,
+            PRIMARY KEY("id")
         );
     """
     shortcut_table = """
-        CREATE TABLE IF NOT EXISTS shortcuts(
-            name TEXT,
-            platform_id INTEGER,
-            platform_type TEXT,
+        CREATE TABLE IF NOT EXISTS "shortcuts"(
+            name TEXT NOT NULL,
+            platform_id INTEGER NOT NULL,
+            platform_type TEXT NOT NULL,
             creator INTEGER,
             content TEXT,
-            PRIMARY KEY(name, platform_id, platform_type)
+            PRIMARY KEY("name", "platform_id", "platform_type")
+        );
+    """
+    global_table = """
+        CREATE TABLE IF NOT EXISTS "global"(
+            command_data TEXT NOT NULL,
+            PRIMARY KEY("command_data")
         );
     """
 
@@ -74,6 +86,7 @@ def create_tables():
     definitions.DATABASE_CURSOR.execute(category_table)
     definitions.DATABASE_CURSOR.execute(guild_table)
     definitions.DATABASE_CURSOR.execute(shortcut_table)
+    definitions.DATABASE_CURSOR.execute(global_table)
     definitions.DATABASE_CONNECTION.commit()
 
 
@@ -86,14 +99,26 @@ def update_database():
     """
 
 
+async def insert_global_data():
+    """Insert the global data."""
+    statement = """
+        INSERT INTO global(command_data)
+        VALUES(?)
+    """
+
+    variables = (definitions.USER_COMMAND_DATA,)
+    definitions.DATABASE_CURSOR.execute(statement, variables)
+    definitions.DATABASE_CONNECTION.commit()
+
+
 async def insert_user(obj_id):
     """Insert default user. Used when there is no previous record."""
     statement = """
-        INSERT INTO users(id, prefix, language)
-        VALUES(?, NULL, NULL)
+        INSERT INTO users(id, prefix, language, command_data)
+        VALUES(?, NULL, NULL, ?)
     """
 
-    variables = (obj_id,)
+    variables = (obj_id, definitions.USER_COMMAND_DATA)
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
 
@@ -101,11 +126,11 @@ async def insert_user(obj_id):
 async def insert_channel(obj_id):
     """Insert default channel. Used when there is no previous record."""
     statement = """
-        INSERT INTO channels(id, prefix, language, checks, max_dice)
+        INSERT INTO channels(id, prefix, language, command_data, max_dice)
         VALUES(?, NULL, NULL, ?, NULL)
     """
 
-    variables = (obj_id, definitions.EMPTY_COMMAND_RULES)
+    variables = (obj_id, definitions.DEFAULT_COMMAND_DATA)
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
 
@@ -113,11 +138,11 @@ async def insert_channel(obj_id):
 async def insert_category(obj_id):
     """Insert default category. Used when there is no previous record."""
     statement = """
-        INSERT INTO categories(id, prefix, language, checks, max_dice)
+        INSERT INTO categories(id, prefix, language, command_data, max_dice)
         VALUES(?, NULL, NULL, ?, NULL)
     """
 
-    variables = (obj_id, definitions.EMPTY_COMMAND_RULES)
+    variables = (obj_id, definitions.DEFAULT_COMMAND_DATA)
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
 
@@ -125,11 +150,11 @@ async def insert_category(obj_id):
 async def insert_guild(obj_id):
     """Insert default guild. Used when there is no previous record."""
     statement = """
-        INSERT INTO guilds(id, prefix, language, checks, max_dice)
+        INSERT INTO guilds(id, prefix, language, command_data, max_dice)
         VALUES(?, NULL, NULL, ?, NULL)
     """
 
-    variables = (obj_id, definitions.GUILD_DEFAULT_COMMAND_RULES)
+    variables = (obj_id, definitions.GUILD_COMMAND_DATA)
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
 
@@ -170,7 +195,7 @@ def select_all_channels():
     Synchronous method. Used when starting up Mami.
     """
     statement = """
-        SELECT id, prefix, language, checks, max_dice
+        SELECT id, prefix, language, command_data, max_dice
         FROM channels
     """
 
@@ -191,7 +216,7 @@ def select_all_categories():
     Synchronous method. Used when starting up Mami.
     """
     statement = """
-        SELECT id, prefix, language, checks, max_dice
+        SELECT id, prefix, language, command_data, max_dice
         FROM categories
     """
 
@@ -212,7 +237,7 @@ def select_all_guilds():
     Synchronous method. Used when starting up Mami.
     """
     statement = """
-        SELECT id, prefix, language, checks, max_dice
+        SELECT id, prefix, language, command_data, max_dice
         FROM guilds
     """
 
@@ -233,7 +258,7 @@ def select_all_users():
     Synchronous method. Used when starting up Mami.
     """
     statement = """
-        SELECT id, prefix, language
+        SELECT id, prefix, language, command_data
         FROM users
     """
 
@@ -247,10 +272,24 @@ def select_all_users():
     return users
 
 
+async def select_global_data():
+    """Select the global data."""
+    statement = """
+        SELECT command_data FROM global
+    """
+
+    definitions.DATABASE_CURSOR.execute(statement)
+    row = definitions.DATABASE_CURSOR.fetchone()
+    if row is None:
+        await insert_global_data()
+
+    return await config_data.GlobalData.create_object_from_database(row)
+
+
 async def select_channel(obj_id):
     """Select channel based on the ID."""
     statement = """
-        SELECT prefix, language, checks, max_dice
+        SELECT prefix, language, command_data, max_dice
         FROM channels
         WHERE id = ?
     """
@@ -267,7 +306,7 @@ async def select_channel(obj_id):
 async def select_category(obj_id):
     """Select category based on the ID."""
     statement = """
-        SELECT prefix, language, checks, max_dice
+        SELECT prefix, language, command_data, max_dice
         FROM categories
         WHERE id = ?
     """
@@ -284,7 +323,7 @@ async def select_category(obj_id):
 async def select_guild(obj_id):
     """Select guild based on the ID."""
     statement = """
-        SELECT prefix, language, checks, max_dice
+        SELECT prefix, language, command_data, max_dice
         FROM guilds
         WHERE id = ?
     """
@@ -301,7 +340,7 @@ async def select_guild(obj_id):
 async def select_user(obj_id):
     """Select user based on the ID."""
     statement = """
-        SELECT prefix, language
+        SELECT prefix, language, command_data
         FROM users
         WHERE id = ?
     """
@@ -345,12 +384,14 @@ async def update_user(context):
     statement = """
         UPDATE users SET
             prefix = ?,
-            language = ?
+            language = ?,
+            command_data = ?
         WHERE id = ?
     """
 
     variables = (
         context.user_data.prefix, context.user_data.language_id,
+        custom_json.save(context.user_data.command_data),
         context.message.author.id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
@@ -370,7 +411,7 @@ async def update_channel(context):
 
     variables = (
         context.channel_data.prefix, context.channel_data.language_id,
-        custom_json.save(context.channel_data.command_rules),
+        custom_json.save(context.channel_data.command_data),
         context.channel_data.max_dice, context.message.channel.id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
@@ -383,14 +424,14 @@ async def update_category(context):
         UPDATE categories SET
             prefix = ?,
             language = ?,
-            checks = ?,
+            command_data = ?,
             max_dice = ?
         WHERE id = ?
     """
 
     variables = (
         context.category_data.prefix, context.category_data.language_id,
-        custom_json.save(context.category_data.command_rules),
+        custom_json.save(context.category_data.command_data),
         context.category_data.max_dice, context.message.channel.category_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
@@ -403,14 +444,14 @@ async def update_guild(context):
         UPDATE guilds SET
             prefix = ?,
             language = ?,
-            checks = ?,
+            command_data = ?,
             max_dice = ?
         WHERE id = ?
     """
 
     variables = (
         context.guild_data.prefix, context.guild_data.language_id,
-        custom_json.save(context.guild_data.command_rules), context.guild_data.max_dice,
+        custom_json.save(context.guild_data.command_data), context.guild_data.max_dice,
         context.message.guild.id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
@@ -433,18 +474,30 @@ async def update_language(context, platform):
     definitions.DATABASE_CONNECTION.commit()
 
 
-async def update_command_rules(context, platform):
-    """Update command rules for selected platform."""
+async def update_command_data(context, platform):
+    """Update command data for selected platform."""
     statement = """
         UPDATE {table} SET
-            checks = ?
+            command_data = ?
         WHERE id = ?
     """.format(table=PLURAL[platform])
 
     platform_data = getattr(context, platform + "_data")
     platform_id = await get_id_from_platform(context.message, platform)
 
-    variables = (custom_json.save(platform_data.command_rules), platform_id)
+    variables = (custom_json.save(platform_data.command_data), platform_id)
+
+    definitions.DATABASE_CURSOR.execute(statement, variables)
+    definitions.DATABASE_CONNECTION.commit()
+
+
+async def update_global_command_data(context):
+    """Update command data for global data."""
+    statement = """
+        UPDATE global SET
+            command_data = ?
+    """
+    variables = (custom_json.save(context.global_data.command_data),)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -460,12 +513,12 @@ def synchronise_category_update(category_id, category):
     statement = """
         UPDATE categories SET
             language = ?,
-            checks = ?
+            command_data = ?
         WHERE id = ?
     """
 
     variables = (
-        category.language_id, custom_json.save(category.command_rules), category_id)
+        category.language_id, custom_json.save(category.command_data), category_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -481,11 +534,11 @@ def synchronise_channel_update(channel_id, channel):
     statement = """
         UPDATE channels SET
             language = ?,
-            checks = ?
+            command_data = ?
         WHERE id = ?
     """
 
-    variables = (channel.language_id, custom_json.save(channel.command_rules), channel_id)
+    variables = (channel.language_id, custom_json.save(channel.command_data), channel_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -501,11 +554,11 @@ def synchronise_guild_update(guild_id, guild):
     statement = """
         UPDATE guilds SET
             language = ?,
-            checks = ?
+            command_data = ?
         WHERE id = ?
     """
 
-    variables = (guild.language_id, custom_json.save(guild.command_rules), guild_id)
+    variables = (guild.language_id, custom_json.save(guild.command_data), guild_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()
@@ -520,11 +573,12 @@ def synchronise_user_update(user_id, user):
     """
     statement = """
         UPDATE users SET
-            language = ?
+            language = ?,
+            command_data = ?
         WHERE id = ?
     """
 
-    variables = (user.language_id, user_id)
+    variables = (user.language_id, custom_json.save(user.command_data), user_id)
 
     definitions.DATABASE_CURSOR.execute(statement, variables)
     definitions.DATABASE_CONNECTION.commit()

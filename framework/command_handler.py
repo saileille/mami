@@ -56,8 +56,7 @@ async def process_command_call(context, command_string):
     """
     Process the command call.
 
-    Contains everything from the moment prefix has been determined as valid to the moment
-    command is executed.
+    Contains everything from the moment prefix has been determined as valid.
     """
     command_input = CommandInput(command_string)
     await command_input.parse_raw_text()
@@ -80,4 +79,5 @@ async def process_command_call(context, command_string):
         await last_working_command.no_usable_sub_commands(context, command_input)
         return
 
-    await command.execute(context, command_input)
+    if await command.execute(context, command_input):
+        await context.add_command_use(command.id_path)

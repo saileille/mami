@@ -8,6 +8,8 @@ from datatypes import config_data
 class Context():
     """Contains configuration data and the message."""
 
+    global_data = None
+
     def __init__(
             self, message=None, user_data=None, channel_data=None, category_data=None,
             guild_data=None, timestamp=None):
@@ -192,8 +194,14 @@ class Context():
 
             cache[user_id] = self.user_data
 
+    async def get_global_data(self):
+        """Fetch the global data."""
+        if Context.global_data is None:
+            Context.global_data = await database_functions.select_global_data()
+
     async def get_data(self):
-        """Combine three data-gathering functions into one."""
+        """Combine all data-gathering functions into one."""
+        await self.get_global_data()
         await self.get_user_data(self.message.author.id)
 
         if self.message.guild is not None:
@@ -202,6 +210,17 @@ class Context():
 
             if self.message.channel.category_id is not None:
                 await self.get_category_data(self.message.channel.category_id)
+
+    async def add_command_use(self, command_id_list):
+        """Add a command use to all tables."""
+        platforms = ["category", "channel", "guild", "user"]
+        for platform in platforms:
+            platform_data = getattr(self, platform + "_data")
+            await platform_data.command_data.add_command_use(command_id_list)
+            await database_functions.update_command_data(self, platform)
+
+        await Context.global_data.command_data.add_command_use(command_id_list)
+        await database_functions.update_global_command_data(self)
 
     async def clear_cache(self):
         """Clear cache."""

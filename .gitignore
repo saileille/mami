@@ -2,6 +2,7 @@
 bot/data/secrets.py
 bot/database/currency_api/data.json
 bot/database/database.db
+bot/database/database.db.sqbpro
 
 #Folders
 languages/cache/

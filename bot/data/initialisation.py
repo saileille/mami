@@ -209,7 +209,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="commands",
-                                                modification=command_names.commands_to_category_command_rules
+                                                modification=command_names.commands_to_category_command_data
                                             ),
                                             Argument(
                                                 obj_id="rule",
@@ -347,7 +347,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="commands",
-                                                modification=command_names.commands_to_channel_command_rules
+                                                modification=command_names.commands_to_channel_command_data
                                             ),
                                             Argument(
                                                 obj_id="rule",
@@ -485,7 +485,7 @@ def initialise_commands():
                                         arguments=[
                                             Argument(
                                                 obj_id="commands",
-                                                modification=command_names.commands_to_guild_command_rules
+                                                modification=command_names.commands_to_guild_command_data
                                             ),
                                             Argument(
                                                 obj_id="rule",
@@ -660,10 +660,11 @@ def initialise_commands():
         }
     )
 
-    guild_default_command_rules, empty_command_rules = definitions.COMMANDS.initialise_commands()
+    guild_command_data, default_command_data, user_command_data = definitions.COMMANDS.initialise_commands()
 
-    definitions.GUILD_DEFAULT_COMMAND_RULES = custom_json.save(guild_default_command_rules)
-    definitions.EMPTY_COMMAND_RULES = custom_json.save(empty_command_rules)
+    definitions.GUILD_COMMAND_DATA = custom_json.save(guild_command_data)
+    definitions.DEFAULT_COMMAND_DATA = custom_json.save(default_command_data)
+    definitions.USER_COMMAND_DATA = custom_json.save(user_command_data)
 
 
 def initialise_languages():
@@ -734,12 +735,12 @@ def update_config_data():
     channels = database_functions.select_all_channels()
     for channel_id in channels:
         channel = channels[channel_id]
-        channel_command_rules = channel.command_rules.sub_commands
-        channel_default_command_rules = custom_json.load(
-            definitions.EMPTY_COMMAND_RULES).sub_commands
+        channel_command_data = channel.command_data.sub_commands
+        channel_default_command_data = custom_json.load(
+            definitions.DEFAULT_COMMAND_DATA).sub_commands
 
-        synchronise_command_rule_objects(
-            channel_default_command_rules, channel_command_rules)
+        synchronise_command_data(
+            channel_default_command_data, channel_command_data)
 
         if (channel.language_id is not None and
             channel.language_id not in definitions.LANGUAGES):
@@ -750,12 +751,12 @@ def update_config_data():
     categories = database_functions.select_all_categories()
     for category_id in categories:
         category = categories[category_id]
-        category_command_rules = category.command_rules.sub_commands
-        category_default_command_rules = custom_json.load(
-            definitions.EMPTY_COMMAND_RULES,).sub_commands
+        category_command_data = category.command_data.sub_commands
+        category_default_command_data = custom_json.load(
+            definitions.DEFAULT_COMMAND_DATA,).sub_commands
 
-        synchronise_command_rule_objects(
-            category_default_command_rules, category_command_rules)
+        synchronise_command_data(
+            category_default_command_data, category_command_data)
 
         if (category.language_id is not None and
             category.language_id not in definitions.LANGUAGES):
@@ -766,11 +767,11 @@ def update_config_data():
     guilds = database_functions.select_all_guilds()
     for guild_id in guilds:
         guild = guilds[guild_id]
-        guild_command_rules = guild.command_rules.sub_commands
-        guild_default_command_rules = custom_json.load(
-            definitions.GUILD_DEFAULT_COMMAND_RULES).sub_commands
+        guild_command_data = guild.command_data.sub_commands
+        guild_default_command_data = custom_json.load(
+            definitions.GUILD_COMMAND_DATA).sub_commands
 
-        synchronise_command_rule_objects(guild_default_command_rules, guild_command_rules)
+        synchronise_command_data(guild_default_command_data, guild_command_data)
         if (guild.language_id is not None and
             guild.language_id not in definitions.LANGUAGES):
             guild.language_id = None
@@ -780,6 +781,11 @@ def update_config_data():
     users = database_functions.select_all_users()
     for user_id in users:
         user = users[user_id]
+        user_command_data = user.command_data.sub_commands
+        user_default_command_data = custom_json.load(
+            definitions.USER_COMMAND_DATA).sub_commands
+
+        synchronise_command_data(user_default_command_data, user_command_data)
         if (user.language_id is not None and
             user.language_id not in definitions.LANGUAGES):
             user.language_id = None
@@ -787,11 +793,11 @@ def update_config_data():
         database_functions.synchronise_user_update(user_id, user)
 
 
-def synchronise_command_rule_objects(default, control):
+def synchronise_command_data(default, control):
     """
-    Make a command rule dictionary have the same entries as the default one.
+    Make a command data dictionary have the same entries as the default one.
 
-    Helper function. First deletes all command rules from commands which no longer exist.
+    Helper function. First deletes all command data from commands which no longer exist.
     Then adds any possible new commands to the control dictionary and moves on to the
     sub-commands.
     """
@@ -801,7 +807,7 @@ def synchronise_command_rule_objects(default, control):
         if cmd_id not in control:
             control[cmd_id] = default[cmd_id]
 
-        synchronise_command_rule_objects(
+        synchronise_command_data(
             default[cmd_id].sub_commands, control[cmd_id].sub_commands)
 
 

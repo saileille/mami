@@ -74,26 +74,27 @@ async def add_shortcut(context, arguments, platform_type):
         {"shortcut": shortcut.name, "shortcut_call": shortcut_call})
 
     await message.send(context)
+    return True
 
 
 async def add_category_shortcut(context, arguments):
     """Add a category shortcut in the database."""
-    await add_shortcut(context, arguments, "category")
+    return await add_shortcut(context, arguments, "category")
 
 
 async def add_channel_shortcut(context, arguments):
     """Add a channel shortcut in the database."""
-    await add_shortcut(context, arguments, "channel")
+    return await add_shortcut(context, arguments, "channel")
 
 
 async def add_guild_shortcut(context, arguments):
     """Add a guild shortcut in the database."""
-    await add_shortcut(context, arguments, "guild")
+    return await add_shortcut(context, arguments, "guild")
 
 
 async def add_user_shortcut(context, arguments):
     """Add a user shortcut in the database."""
-    await add_shortcut(context, arguments, "user")
+    return await add_shortcut(context, arguments, "user")
 
 
 async def delete_shortcut(context, arguments, platform_type):
@@ -111,26 +112,27 @@ async def delete_shortcut(context, arguments, platform_type):
         platform_type + "_shortcut_deleted_desc", {"shortcut": shortcut_name})
 
     await message.send(context)
+    return True
 
 
 async def delete_category_shortcut(context, arguments):
     """Delete a category shortcut from the database."""
-    await delete_shortcut(context, arguments, "category")
+    return await delete_shortcut(context, arguments, "category")
 
 
 async def delete_channel_shortcut(context, arguments):
     """Delete a channel shortcut from the database."""
-    await delete_shortcut(context, arguments, "channel")
+    return await delete_shortcut(context, arguments, "channel")
 
 
 async def delete_guild_shortcut(context, arguments):
     """Delete a guild shortcut from the database."""
-    await delete_shortcut(context, arguments, "guild")
+    return await delete_shortcut(context, arguments, "guild")
 
 
 async def delete_user_shortcut(context, arguments):
     """Delete a user shortcut from the database."""
-    await delete_shortcut(context, arguments, "user")
+    return await delete_shortcut(context, arguments, "user")
 
 
 async def display_shortcuts(context, platform_type):
@@ -164,28 +166,30 @@ async def display_shortcuts(context, platform_type):
         {"instruction": shortcut_instruction, "example": shortcut_example})
 
     await message.send(context)
+    return True
 
 
 async def display_category_shortcuts(context, arguments):
     """Display all category shortcuts."""
-    await display_shortcuts(context, "category")
+    return await display_shortcuts(context, "category")
 
 
 async def display_channel_shortcuts(context, arguments):
     """Display all channel shortcuts."""
-    await display_shortcuts(context, "channel")
+    return await display_shortcuts(context, "channel")
 
 
 async def display_guild_shortcuts(context, arguments):
     """Display all guild shortcuts."""
-    await display_shortcuts(context, "guild")
+    return await display_shortcuts(context, "guild")
 
 
 async def display_user_shortcuts(context, arguments):
     """Display all user shortcuts."""
-    await display_shortcuts(context, "user")
+    return await display_shortcuts(context, "user")
 
 
 async def use_shortcut(context, arguments):
     """Use a shortcut."""
     await context.message.channel.send(arguments[0].content)
+    return True

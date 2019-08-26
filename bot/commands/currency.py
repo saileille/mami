@@ -35,6 +35,7 @@ async def convert(context, arguments):
         "unit_conversion", {"unit_and_amount": base, "conversion_list": target})
 
     await message.send(context)
+    return True
 
 
 async def search(context, arguments):
@@ -63,6 +64,7 @@ async def search(context, arguments):
         "search_currencies_desc", {"search_term": search_term})
 
     await message.send(context, thumbnail=thumbnail)
+    return True
 
 
 async def view_all(context, arguments):
@@ -88,3 +90,4 @@ async def view_all(context, arguments):
         "view_all_currencies_desc")
 
     await message.send(context, thumbnail=thumbnail)
+    return True

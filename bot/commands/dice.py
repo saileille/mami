@@ -16,7 +16,7 @@ async def throw(context, arguments):
     while len(dice_throws) < no_of_dice:
         dice_throw = random.randint(dice_range[0], dice_range[1])
         dice_throws.append(dice_throw)
-        dice_results.append(":game_die: " + await context.language.format_number(
+        dice_results.append("🎲 " + await context.language.format_number(
             dice_throw))
 
     dice_total = sum(dice_throws)
@@ -53,3 +53,4 @@ async def throw(context, arguments):
         "throw_dice_desc", {"user_mention": context.message.author.mention})
 
     await message.send(context, thumbnail=thumbnail)
+    return True

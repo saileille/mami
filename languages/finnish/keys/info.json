@@ -4,5 +4,22 @@
   "member_info_discord_name": "Discord-nimi: {name}",
   "member_info_join_time": "Liittyi palvelimelle {guild}: {time}",
   "member_info_title": "Tietoa käyttäjästä {name}",
-  "member_info_top_role": "Korkein rooli: {role}"
+  "member_info_top_role": "Korkein rooli: {role}",
+  "argument_name_and_number": "Argumentti {number}: {name}",
+  "basic_command_info_title": "Perustietoa",
+  "command_aliases_title": "Aliakset",
+  "command_category_uses_plural": "Komentoa on käytetty {times} kertaa tässä kategoriassa",
+  "command_category_uses_singular": "Komentoa on käytetty {times} kerran tässä kategoriassa",
+  "command_channel_uses_plural": "Komentoa on käytetty {times} kertaa tällä kanavalla",
+  "command_channel_uses_singular": "Komentoa on käytetty {times} kerran tässä kategoriassa",
+  "command_global_uses_plural": "Komentoa on käytetty {times} kertaa",
+  "command_global_uses_singular": "Komentoa on käytetty {times} kerran",
+  "command_guild_uses_plural": "Komentoa on käytetty {times} kertaa tällä palvelimella",
+  "command_guild_uses_singular": "Komentoa on käytetty {times} kerran tällä palvelimella",
+  "command_info_title": "Tietoa komennosta {command}",
+  "command_user_uses_plural": "Olet käyttänyt komentoa {times} kertaa",
+  "command_user_uses_singular": "Olet käyttänyt komentoa {times} kerran",
+  "no_aliases": "Ei ole",
+  "related_commands_title": "Liittyvät komennot",
+  "sub_commands_title": "Alikomennot"
 }

@@ -2,7 +2,7 @@
 import json
 import os
 
-from framework import command_rules
+from framework import command_data
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -22,13 +22,11 @@ def decode(json_dict):
 
     Used as object_hook parameter in json.loads() function.
     """
-    if "users" in json_dict and "roles" in json_dict:
-        return command_rules.CommandRuleSet.object_from_json_dict(json_dict)
+    if "roles" in json_dict and "users" in json_dict:
+        return command_data.CommandRules.object_from_json_dict(json_dict)
 
-    if ("inclusionary" in json_dict and
-        "exclusionary" in json_dict and
-        "sub_commands" in json_dict):
-        return command_rules.CommandRules.object_from_json_dict(json_dict)
+    if "sub_commands" in json_dict and "use_times" in json_dict:
+        return command_data.CommandData.object_from_json_dict(json_dict)
 
     return json_dict
 

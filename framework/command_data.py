@@ -1,21 +1,20 @@
-"""Contains CommandRules and RuleSet classes."""
+"""Contains CommandData and CommandRules classes."""
 import discord
 
 
-class CommandRules():
-    """Used for checking if the user can use the command."""
+class CommandData():
+    """Command data."""
 
-    def __init__(self, inclusionary=None, exclusionary=None, sub_commands=None):
+    def __init__(
+            self, command_rules=None, use_times=0, sub_commands=None,
+            has_command_rules=True):
         """Object initialisation."""
-        self.inclusionary = inclusionary
-        self.exclusionary = exclusionary
+        self.command_rules = command_rules
+        self.use_times = use_times
         self.sub_commands = sub_commands
 
-        if self.inclusionary is None:
-            self.inclusionary = CommandRuleSet(True)
-
-        if self.exclusionary is None:
-            self.exclusionary = CommandRuleSet(False)
+        if has_command_rules and self.command_rules is None:
+            self.command_rules = CommandRules(True)
 
         if self.sub_commands is None:
             self.sub_commands = {}
@@ -25,8 +24,10 @@ class CommandRules():
         """Make a dictionary of the object fit for JSON encoding."""
         json_dict = {}
 
-        json_dict["inclusionary"] = self.inclusionary.json_dict
-        json_dict["exclusionary"] = self.exclusionary.json_dict
+        if self.command_rules is not None:
+            json_dict["command_rules"] = self.command_rules.json_dict
+
+        json_dict["use_times"] = self.use_times
 
         json_dict["sub_commands"] = {}
 
@@ -37,8 +38,8 @@ class CommandRules():
 
     def __str__(self):
         """Get a string representation of the object."""
-        string = ("Inclusionary:\n{self.inclusionary}\n\n"
-                  "Exclusionary:\n{self.exclusionary}\n\n"
+        string = ("Command Rules:\n{self.command_rules}\n\n"
+                  "Use Times: {self.use_times}\n"
                   "Sub-Commands:")
 
         for key in self.sub_commands:
@@ -53,79 +54,62 @@ class CommandRules():
         if message.channel.guild.owner.id == message.author.id:
             return True
 
-        cmd_rules = await self.get_object_from_id_path(command_id_list)
-        allow_use = await cmd_rules.inclusionary.check_inclusionary(message)
-
-        if allow_use is None:
-            allow_use = await cmd_rules.exclusionary.check_exclusionary(message)
-
-        return allow_use
+        data = await self.get_object_from_id_path(command_id_list)
+        return await data.command_rules.check_rules(message)
 
     async def get_object_from_id_path(self, id_path):
         """
-        Get the CommandRules object based on an ID path.
+        Get the CommandData object based on an ID path.
 
         The function presumes that the ID path is valid.
         """
-        cmd_rules = self
+        cmd_data = self
         for cmd_id in id_path:
-            cmd_rules = cmd_rules.sub_commands[cmd_id]
+            cmd_data = cmd_data.sub_commands[cmd_id]
 
-        return cmd_rules
+        return cmd_data
 
-    async def remove_rule(self, rule):
-        """Remove a rule from command rules."""
-        branch = None
-        if not self.inclusionary.is_empty:
-            branch = self.inclusionary
-        elif not self.exclusionary.is_empty:
-            branch = self.exclusionary
-        else:
-            return
-
-        if isinstance(rule, discord.Member):
-            branch.users.remove(rule.id)
-        elif isinstance(rule, discord.Role):
-            branch.roles.remove(rule.id)
-        elif isinstance(rule, str):
-            branch.permissions.remove(rule)
+    async def add_command_use(self, command_id_list):
+        """Add one command use to the statistics."""
+        data = await self.get_object_from_id_path(command_id_list)
+        data.use_times += 1
 
     @staticmethod
     def object_from_json_dict(json_dict):
         """
-        Return a CommandRules object from a JSON dictionary.
+        Return a CommandData object from a JSON dictionary.
 
         The 'JSON' dictionary might not be all, or even any JSON, though. Stay alert!
         """
-        obj = CommandRules()
+        obj = CommandData(has_command_rules=False)
 
         if isinstance(json_dict, dict):
             for key in json_dict["sub_commands"]:
-                obj.sub_commands[key] = CommandRules.object_from_json_dict(
+                obj.sub_commands[key] = CommandData.object_from_json_dict(
                     json_dict["sub_commands"][key])
 
-            if isinstance(json_dict["inclusionary"], dict):
-                obj.inclusionary = CommandRuleSet.object_from_json_dict(json_dict["inclusionary"])
-            elif isinstance(json_dict["inclusionary"], CommandRuleSet):
-                obj.inclusionary = json_dict["inclusionary"]
+            if "command_rules" in json_dict:
+                if isinstance(json_dict["command_rules"], dict):
+                    obj.command_rules = CommandRules.object_from_json_dict(
+                        json_dict["command_rules"])
 
-            if isinstance(json_dict["exclusionary"], dict):
-                obj.exclusionary = CommandRuleSet.object_from_json_dict(json_dict["exclusionary"])
-            elif isinstance(json_dict["exclusionary"], CommandRuleSet):
-                obj.exclusionary = json_dict["exclusionary"]
+                elif isinstance(json_dict["command_rules"], CommandRules):
+                    obj.command_rules = json_dict["command_rules"]
 
-        elif isinstance(json_dict, CommandRules):
+            obj.use_times = json_dict["use_times"]
+
+        elif isinstance(json_dict, CommandData):
             for key in json_dict.sub_commands:
-                obj.sub_commands[key] = CommandRules.object_from_json_dict(
+                obj.sub_commands[key] = CommandData.object_from_json_dict(
                     json_dict.sub_commands[key])
 
-            obj.inclusionary = json_dict.inclusionary
-            obj.exclusionary = json_dict.exclusionary
+            obj.command_rules = json_dict.command_rules
+            obj.use_times = json_dict.use_times
 
         return obj
 
 
-class CommandRuleSet():
+class CommandRules():
     """Contains set of user, role and permission checks."""
 
     def __init__(self, is_inclusionary, users=None, roles=None, permissions=None):
@@ -140,17 +124,18 @@ class CommandRuleSet():
         if self.roles is None:
             self.roles = []
 
-        if self.permissions is None and is_inclusionary:
-            self.permissions = []
-        elif not is_inclusionary:
-            self.permissions = None
+        if self.permissions is None:
+            if is_inclusionary:
+                self.permissions = []
+            else:
+                self.permissions = None
 
     @property
     def type(self):
         """
-        Determine the object type.
+        Determine the command rule type.
 
-        A simple check to determine if the CommandRuleSet is inclusionary or exclusionary.
+        A simple check to determine if the CommandRules is inclusionary or exclusionary.
         """
         if self.permissions is None:
             return "exclusionary"
@@ -165,9 +150,7 @@ class CommandRuleSet():
         Return True if object is void of data.
         Return False if object has data.
         """
-        return (not self.users and
-                not self.roles and
-                not self.permissions)
+        return not (self.users or self.roles or self.permissions)
 
     @property
     def json_dict(self):
@@ -185,6 +168,13 @@ class CommandRuleSet():
         return ("Users: {self.users}\n"
                 "Roles: {self.roles}\n"
                 "Permissions: {self.permissions}").format(self=self)
+
+    async def check_rules(self, message):
+        """Check the command rules."""
+        if self.type == "inclusionary":
+            return await self.check_inclusionary(message)
+
+        return await self.check_exclusionary(message)
 
     async def check_inclusionary(self, message):
         """Check the object as inclusionary."""
@@ -234,8 +224,13 @@ class CommandRuleSet():
         # will be handled based on whether the rules are for channel, category or guild.
         return allow_use
 
-    async def add_rule(self, rule):
+    async def add_rule(self, rule, ruletype):
         """Add user, role or permission to the object."""
+        if ruletype == "inclusionary" and self.type != "inclusionary":
+            self.permissions = []
+        elif ruletype == "exclusionary" and self.type != "exclusionary":
+            self.permissions = None
+
         if isinstance(rule, discord.Member):
             if rule.id not in self.users:
                 self.users.append(rule.id)
@@ -246,14 +241,23 @@ class CommandRuleSet():
             if rule not in self.permissions:
                 self.permissions.append(rule)
 
+    async def remove_rule(self, rule):
+        """Remove a rule from command rules."""
+        if isinstance(rule, discord.Member):
+            self.users.remove(rule.id)
+        elif isinstance(rule, discord.Role):
+            self.roles.remove(rule.id)
+        elif isinstance(rule, str):
+            self.permissions.remove(rule)
+
     @staticmethod
     def object_from_json_dict(json_dict):
         """
-        Return a CommandRuleSet object from a JSON dictionary.
+        Return a CommandRules object from a JSON dictionary.
 
         The 'dictionary' might not be all, or even any JSON, though. Stay alert!
         """
-        obj = CommandRuleSet(False)
+        obj = CommandRules(False)
 
         if isinstance(json_dict, dict):
             obj.users = json_dict["users"]
@@ -262,7 +266,7 @@ class CommandRuleSet():
             if "permissions" in json_dict:
                 obj.permissions = json_dict["permissions"]
 
-        elif isinstance(json_dict, CommandRuleSet):
+        elif isinstance(json_dict, CommandRules):
             obj.users = json_dict.users
             obj.roles = json_dict.roles
             obj.permissions = json_dict.permissions

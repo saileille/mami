@@ -11,5 +11,15 @@
   "sub_commands_title": "Sub-Commands",
   "command_aliases_title": "Aliases",
   "no_aliases": "None",
-  "argument_name_and_number": "Argument {number}: {name}"
+  "argument_name_and_number": "Argument {number}: {name}",
+  "command_global_uses_plural": "Command has been used {times} times",
+  "command_global_uses_singular": "Command has been used {times} time",
+  "command_guild_uses_plural": "Command has been used {times} times on this server",
+  "command_guild_uses_singular": "Command has been used {times} time on this server",
+  "command_category_uses_plural": "Command has been used {times} times in this category",
+  "command_category_uses_singular": "Command has been used {times} time in this category",
+  "command_channel_uses_plural": "Command has been used {times} times on this channel",
+  "command_channel_uses_singular": "Command has been used {times} time on this channel",
+  "command_user_uses_plural": "You have used the command {times} times",
+  "command_user_uses_singular": "You have used the command {times} time"
 }
